@@ -64,6 +64,18 @@
   color: #ddd;
 }
 
+.footer-social {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
+  margin-left: -6px;
+}
+
+.site-footer .social-link:hover,
+.site-footer .social-link:focus-visible {
+  color: var(--color-red-soft);
+}
+
 .footer-hours {
   margin: 0;
   padding: 0;

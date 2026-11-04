@@ -106,13 +106,12 @@
 }
 
 .drawer__social {
+  display: flex;
+  gap: var(--space-3);
   margin-top: var(--space-5);
-  color: #888;
 }
 
-.drawer__social a {
-  font-size: var(--text-sm);
-  letter-spacing: 0.1em;
+.drawer__social .social-link {
   color: var(--color-white);
 }
 

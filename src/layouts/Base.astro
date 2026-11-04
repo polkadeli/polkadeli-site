@@ -1,5 +1,6 @@
 ---
 import { business, stores, nav } from '../data/site.js';
+import SocialIcons from '../components/SocialIcons.astro';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/header.css';
@@ -39,12 +40,7 @@ const jsonLd = stores.map((s) => ({
       <ul class="site-nav__links">
         {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>
-      <a class="social-link" href={business.facebook} target="_blank" rel="noopener" aria-label="Polka Deli on Facebook">
-        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.8v3h2.6V21h3.1z"/></svg>
-      </a>
-      <a class="social-link" href={business.instagram} target="_blank" rel="noopener" aria-label="Polka Deli on Instagram">
-        <svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path fill="currentColor" d="M12 7.2A4.8 4.8 0 1 0 12 16.8 4.8 4.8 0 0 0 12 7.2zm0 7.9a3.1 3.1 0 1 1 0-6.2 3.1 3.1 0 0 1 0 6.2zM17.1 5.8a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2zM21.9 8c-.1-1.6-.4-3-1.6-4.2S17.6 2.2 16 2.1C14.3 2 9.7 2 8 2.1c-1.6.1-3 .4-4.2 1.6S2.2 6.4 2.1 8C2 9.7 2 14.3 2.1 16c.1 1.6.4 3 1.6 4.2s2.6 1.5 4.2 1.6c1.7.1 6.3.1 8 0 1.6-.1 3-.4 4.2-1.6s1.5-2.6 1.6-4.2c.1-1.7.1-6.3 0-8zm-2.2 9.9a3.2 3.2 0 0 1-1.8 1.8c-1.3.5-4.3.4-5.7.4s-4.4.1-5.7-.4a3.2 3.2 0 0 1-1.8-1.8c-.5-1.3-.4-4.3-.4-5.7s-.1-4.4.4-5.7a3.2 3.2 0 0 1 1.8-1.8c1.3-.5 4.3-.4 5.7-.4s4.4-.1 5.7.4a3.2 3.2 0 0 1 1.8 1.8c.5 1.3.4 4.3.4 5.7s.1 4.4-.4 5.7z"/></svg>
-      </a>
+      <SocialIcons />
     </nav>
     <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
@@ -55,7 +51,7 @@ const jsonLd = stores.map((s) => ({
     <ul class="drawer__links">
       {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
-    <p class="drawer__social"><a href={business.facebook} target="_blank" rel="noopener">Facebook</a> · <a href={business.instagram} target="_blank" rel="noopener">Instagram</a></p>
+    <div class="drawer__social"><SocialIcons size={26} /></div>
   </div>
 
   <main id="main"><slot /></main>
@@ -78,8 +74,7 @@ const jsonLd = stores.map((s) => ({
         <h2>Order</h2>
         <p>Call your store or email<br /><a href={`mailto:${business.email}`}>{business.email}</a></p>
         <p><a href={business.uberEats} target="_blank" rel="noopener">Order on Uber Eats</a></p>
-        <p><a href={business.facebook} target="_blank" rel="noopener">Like us on Facebook</a></p>
-        <p><a href={business.instagram} target="_blank" rel="noopener">Follow us on Instagram</a></p>
+        <div class="footer-social"><SocialIcons size={26} /></div>
       </div>
     </div>
     <p class="footer-copy">© {new Date().getFullYear()} Polka Deli · Polish Food &amp; Market</p>
