@@ -53,6 +53,10 @@ const jsonLd = stores.map((s) => ({
   <main id="main"><slot /></main>
 
   <footer class="footer">
+    <div class="footer-brand">
+      <a href="/" aria-label="Polka Deli home"><img src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="240" height="81" /></a>
+      <p>{business.tagline}</p>
+    </div>
     <div class="footer-inner">
       {stores.map((s) => (
         <div class="footer-store">
@@ -137,6 +141,9 @@ const jsonLd = stores.map((s) => ({
 
   /* Footer: new, the current site has none */
   .footer { background: #1d1c1c; color: #eee; padding: 48px 20px 24px; }
+  .footer-brand { max-width: 1040px; margin: 0 auto 36px; display: flex; align-items: center; gap: 28px; padding-bottom: 28px; border-bottom: 1px solid #3a3838; }
+  .footer-brand img { width: 240px; height: auto; }
+  .footer-brand p { margin: 0; font-size: 20px; color: #ddd; }
   .footer-inner { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
   .footer h2 { font-size: 15px; letter-spacing: .2em; text-transform: uppercase; color: #fff; margin: 0 0 12px; font-weight: 700; border-bottom: 2px solid var(--red); padding-bottom: 8px; display: inline-block; }
   .footer p { margin: 0 0 10px; color: #ddd; }
@@ -145,5 +152,5 @@ const jsonLd = stores.map((s) => ({
   .footer ul { list-style: none; padding: 0; margin: 0; color: #ccc; font-size: 16px; }
   .footer li span { display: inline-block; width: 82px; color: #aaa; }
   .footer .copy { max-width: 1040px; margin: 32px auto 0; padding-top: 16px; border-top: 1px solid #3a3838; font-size: 14px; color: #999; }
-  @media (max-width: 760px) { .footer-inner { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .footer-inner { grid-template-columns: 1fr; } .footer-brand { flex-direction: column; align-items: flex-start; gap: 12px; } .footer-brand img { width: 200px; } }
 </style>
