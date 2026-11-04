@@ -10,8 +10,3 @@
   from = "/copy-of-deli-menu"
   to = "/platters"
   status = 301
-
-[[redirects]]
-  from = "/shop"
-  to = "/products"
-  status = 301

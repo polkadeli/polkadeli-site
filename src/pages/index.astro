@@ -1,142 +1,139 @@
 ---
 import Base from '../layouts/Base.astro';
-import { business, categories } from '../data/site.js';
+import { business, stores } from '../data/site.js';
+const slides = [
+  { src: '/images/slide-pierogi.jpg', alt: 'Pierogi being made on a floured wooden board' },
+  { src: '/images/slide-bread.jpg', alt: 'Fresh bread with wheat' },
+  { src: '/images/slide-kielbasa.jpg', alt: 'Grilled kielbasa with cabbage and potatoes' },
+  { src: '/images/slide-makowiec.jpg', alt: 'Poppy seed roll' },
+  { src: '/images/slide-market.jpg', alt: 'Polish market stall with sausages and baked goods' },
+];
 ---
 <Base>
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="eyebrow">Silver Spring's Polish market</p>
-        <h1>Authentic Polish groceries and food <em>prepared daily</em></h1>
-        <p class="lede">Kielbasa, deli meats, pierogi, cheeses, sweets and baked goods, plus Polish dishes prepared daily to take home.</p>
-        <div class="actions">
-          <a class="btn" href="/deli-menu">See the deli menu</a>
-          <a class="btn btn-ghost" href={business.uberEats}>Order on Uber Eats</a>
+  <section class="hero" aria-label="Welcome to Polka Deli">
+    <div class="slides" aria-hidden="true">
+      {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'slide on' : 'slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
+    </div>
+
+    <div class="stage">
+      <div class="card">
+        <h1 class="logo"><img src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="520" height="176" /></h1>
+
+        <div class="trio">
+          <p class="cell tagline">{business.tagline}</p>
+          <div class="cell drawing"><img src="/images/pierogi-drawing.png" alt="" width="150" height="150" /></div>
+          <a class="cell deli-btn" href="/deli-menu">Deli Menu</a>
         </div>
-      </div>
-      <div class="hero-card" aria-label="Opening hours and address">
-        <h2>Store hours</h2>
-        <ul class="hours">
-          {business.hours.map((h) => <li><span>{h.days}</span><strong>{h.open} – {h.close}</strong></li>)}
+
+        <a class="uber" href={business.uberEats} target="_blank" rel="noopener">Order now with UberEats!</a>
+
+        <ul class="stores">
+          {stores.map((s) => (
+            <li><a href={s.maps}>{s.street}, {s.locality}</a> <span class="sep">|</span> <a href={s.phoneHref}>{s.phone}</a></li>
+          ))}
         </ul>
-        <p class="addr">{business.address}<br />{business.city}</p>
-        <div class="card-links">
-          <a href={business.mapsUrl}>Get directions</a>
-          <a href={business.phoneHref}>{business.phone}</a>
-        </div>
       </div>
-    </div>
-    <div class="dots" aria-hidden="true"></div>
-  </section>
 
-  <section class="section">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>What's on our shelves</h2>
-        <p>More than 120 Polish products, with new items added all the time. Don't see something? Ask us and we'll try to get it.</p>
-      </div>
-      <ul class="cat-grid">
-        {categories.map((c) => (
-          <li class="cat">
-            <span class="cat-count">{c.count}</span>
-            <h3>{c.name}</h3>
-            <p>{c.note}</p>
-          </li>
-        ))}
-      </ul>
-      <p class="center"><a class="btn btn-ghost" href="/products">Browse all products</a></p>
-    </div>
-  </section>
+      <p class="shipping">International parcel shipping service available at our stores</p>
 
-  <section class="section band">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">From our kitchen</p>
-        <h2>Hot food and party platters</h2>
-        <p>Pierogi and other Polish favorites, made fresh every day for lunch or dinner on the go. Hosting a family gathering? Order one of our deli platters.</p>
-        <div class="actions">
-          <a class="btn" href="/deli-menu">Deli menu</a>
-          <a class="btn btn-ghost" href="/platters">Platters</a>
-        </div>
-      </div>
-      <div class="ship">
-        <h3>International parcel shipping</h3>
-        <p>Send packages to family and friends abroad, right from the store.</p>
-        <a href="/shipping">See shipping rates →</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">Our story</p>
-        <h2>Hello from Maria and Joanna</h2>
-        <p>We opened Polka Deli to be a one-stop shop for Polish groceries and the most beloved Polish dishes, on the go. Whether you grew up on pierogi or you're trying them for the first time, we're glad you're here.</p>
-        <a href="/about">Read more about us →</a>
-      </div>
-      <form class="signup" name="newsletter" method="POST" action="/thanks" data-netlify="true">
-        <h3>Get our special offers</h3>
-        <p>Join over 2,400 neighbors. We email a few times a year with special offers and coupons.</p>
-        <label for="email">Email address</label>
-        <div class="signup-row">
-          <input id="email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
-          <button class="btn" type="submit">Subscribe</button>
+      <form class="postcard" name="newsletter" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
+        <svg class="postmark" viewBox="0 0 120 50" aria-hidden="true">
+          <circle cx="24" cy="25" r="20" fill="none" stroke="#bbb" stroke-width="2.5" />
+          <circle cx="24" cy="25" r="13" fill="none" stroke="#bbb" stroke-width="2" />
+          <path d="M50 14c8-5 14 5 22 0s14 5 22 0 14 5 22 0M50 25c8-5 14 5 22 0s14 5 22 0 14 5 22 0M50 36c8-5 14 5 22 0s14 5 22 0 14 5 22 0" fill="none" stroke="#bbb" stroke-width="2.5" />
+        </svg>
+        <h2>Join our mailing list to receive special offers</h2>
+        <p class="hp"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+        <div class="fields">
+          <label><span>Name</span><input name="name" type="text" required autocomplete="name" placeholder="Name" /></label>
+          <label><span>Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
+          <button type="submit">Subscribe Now</button>
         </div>
       </form>
+
+      <div class="dots" role="group" aria-label="Choose background photo">
+        {slides.map((s, i) => <button type="button" aria-label={`Show photo ${i + 1}: ${s.alt}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}
+      </div>
     </div>
   </section>
 </Base>
 
+<script>
+  const slides = [...document.querySelectorAll('.slide')];
+  const dots = [...document.querySelectorAll('.dots button')];
+  let i = 0;
+  let timer;
+  const show = (n) => {
+    slides[i].classList.remove('on'); dots[i].setAttribute('aria-pressed', 'false');
+    i = (n + slides.length) % slides.length;
+    slides[i].classList.add('on'); dots[i].setAttribute('aria-pressed', 'true');
+  };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 3500); } };
+  dots.forEach((d, n) => d.addEventListener('click', () => { show(n); start(); }));
+  document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
+  start();
+</script>
+
 <style>
-  .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 13px; font-weight: 700; color: var(--red); margin: 0 0 12px; }
-  .hero { position: relative; background: var(--paper); overflow: hidden; border-bottom: 1px solid var(--line); }
-  .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: center; padding: 80px 0 88px; position: relative; z-index: 1; }
-  h1 { font-size: clamp(36px, 5.2vw, 62px); letter-spacing: -.01em; }
-  h1 em { font-style: italic; color: var(--red); }
-  .lede { font-size: 19px; color: var(--muted); max-width: 34em; }
-  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-  .hero-card { background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: 0 1px 0 var(--line); }
-  .hero-card h2 { font-size: 22px; }
-  .hours { list-style: none; padding: 0; margin: 0 0 16px; }
-  .hours li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px dashed var(--line); }
-  .hours span { color: var(--muted); }
-  .addr { margin: 0 0 16px; }
-  .card-links { display: flex; gap: 20px; font-weight: 700; }
-  .dots { position: absolute; right: -60px; bottom: -60px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(var(--red) 22%, transparent 23%) 0 0 / 26px 26px; opacity: .08; }
-  .section { padding: 88px 0; }
-  .section-head { max-width: 640px; margin-bottom: 40px; }
-  .section-head h2, .split h2 { font-size: clamp(30px, 3.6vw, 42px); }
-  .section-head p { color: var(--muted); }
-  .cat-grid { list-style: none; padding: 0; margin: 0 0 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-  .cat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; position: relative; }
-  .cat h3 { font-size: 21px; margin-bottom: 4px; }
-  .cat p { margin: 0; color: var(--muted); font-size: 15px; }
-  .cat-count { position: absolute; top: 18px; right: 18px; font-size: 13px; font-weight: 700; color: var(--red); background: #fbe9e9; border-radius: 999px; padding: 2px 10px; }
-  .center { text-align: center; }
-  .band { background: var(--ink); color: #f1ede8; }
-  .band .eyebrow { color: #ff8a8e; }
-  .band p { color: #d9d3cc; }
-  .band .btn-ghost { color: #fff; border-color: #fff; }
-  .band .btn-ghost:hover { background: #fff; color: var(--ink); }
-  .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center; }
-  .ship { background: #383636; border-radius: var(--radius); padding: 28px; border-left: 6px solid var(--red); }
-  .ship a { color: #fff; font-weight: 700; }
-  .signup { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; }
-  .signup p { color: var(--muted); }
-  .signup label { font-weight: 700; font-size: 14px; display: block; margin-bottom: 6px; }
-  .signup-row { display: flex; gap: 8px; }
-  .signup input { flex: 1; min-width: 0; font: inherit; padding: 13px 16px; border: 1px solid #cfc6ba; border-radius: 999px; }
-  .signup input:focus { outline: 2px solid var(--red); outline-offset: 2px; }
-  @media (max-width: 900px) {
-    .hero-grid, .split { grid-template-columns: 1fr; gap: 32px; padding-block: 48px 56px; }
-    .split { padding-block: 0; }
-    .cat-grid { grid-template-columns: 1fr 1fr; }
-    .section { padding: 64px 0; }
-  }
-  @media (max-width: 560px) {
-    .cat-grid { grid-template-columns: 1fr; }
-    .signup-row { flex-direction: column; }
-    .actions .btn { width: 100%; justify-content: center; }
+  .hero { position: relative; overflow: hidden; padding: 28px 16px 36px; min-height: calc(100vh - 56px); }
+  .slides, .slide { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .slide { object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
+  .slide.on { opacity: 1; }
+  .stage { position: relative; max-width: 740px; margin: 0 auto; display: grid; gap: 14px; }
+
+  .card { background: var(--card); padding: 22px 26px 24px; text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,.18); backdrop-filter: blur(3px); }
+  .logo { margin: 0 auto 18px; max-width: 420px; }
+  .logo img { width: 100%; height: auto; }
+
+  .trio { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 2px solid #222; }
+  .cell { display: grid; place-items: center; min-height: 128px; margin: 0; padding: 12px; }
+  .cell + .cell { border-left: 2px solid #222; }
+  .tagline { font-size: 22px; line-height: 1.3; }
+  .drawing img { width: 118px; height: auto; }
+  .deli-btn { background: var(--red); color: #fff; text-decoration: none; font-family: var(--wood); font-size: 30px; margin: 4px; transition: background .15s, color .15s; }
+  .deli-btn:hover, .deli-btn:focus-visible { background: transparent; color: #111; }
+
+  .uber { display: inline-block; margin: 20px 0 14px; background: var(--grey); color: #fff; text-decoration: none; border-radius: 999px; padding: 10px 26px; font-size: 17px; letter-spacing: .04em; transition: background .15s; }
+  .uber:hover, .uber:focus-visible { background: var(--red-hover); }
+  .stores { list-style: none; margin: 0; padding: 0; font-size: 18px; }
+  .stores li { margin: 4px 0; }
+  .stores a { text-decoration: none; }
+  .stores a:hover { color: var(--red); text-decoration: underline; }
+  .sep { color: #888; margin: 0 4px; }
+
+  .shipping { margin: 0; background: var(--red); color: #fff; text-align: center; font-size: 22px; padding: 10px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+
+  .postcard { position: relative; background: rgba(255,255,255,.96); margin: 0 10px; padding: 26px 30px 30px; border: 1px solid #ddd; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
+  .postmark { position: absolute; top: 10px; right: 18px; width: 110px; }
+  .postcard h2 { margin: 0 130px 26px 0; color: var(--red); font-size: 20px; font-weight: 500; }
+  .fields { display: grid; grid-template-columns: 1fr 1fr auto; gap: 18px; align-items: end; }
+  .fields span { position: absolute; left: -999px; }
+  .fields input { width: 100%; font: inherit; font-size: 17px; border: 0; border-bottom: 2px solid #555; background: transparent; padding: 8px 2px; }
+  .fields input:focus { outline: none; border-bottom-color: var(--red); }
+  .fields button { font: inherit; font-size: 17px; background: var(--red); color: #fff; border: 0; border-radius: 999px; padding: 10px 26px; cursor: pointer; transition: background .15s; }
+  .fields button:hover, .fields button:focus-visible { background: var(--red-hover); }
+  .hp { position: absolute; left: -9999px; }
+
+  .dots { display: flex; justify-content: center; gap: 8px; margin-top: 6px; }
+  .dots button { width: 12px; height: 12px; border-radius: 50%; border: 0; background: rgba(255,255,255,.85); padding: 0; cursor: pointer; box-shadow: 0 0 0 1px rgba(0,0,0,.2); }
+  .dots button[aria-pressed='true'] { background: #111; }
+
+  @media (max-width: 760px) {
+    .hero { padding: 76px 12px 28px; }
+    .trio { grid-template-columns: 1fr; border: 0; }
+    .cell + .cell { border-left: 0; }
+    .tagline { border-top: 1px solid #222; border-bottom: 1px solid #222; min-height: 0; padding: 14px 8px; }
+    .drawing { display: none; }
+    .deli-btn { order: 3; min-height: 72px; margin: 16px 0 0; }
+    .uber { display: block; }
+    .sep { display: none; }
+    .stores li a:last-child { display: block; }
+    .stores li { margin: 10px 0; }
+    .postcard { margin: 0; padding: 22px 18px 22px; }
+    .postcard h2 { margin-right: 90px; }
+    .postmark { width: 80px; }
+    .fields { grid-template-columns: 1fr; }
+    .shipping { font-size: 19px; }
   }
 </style>
