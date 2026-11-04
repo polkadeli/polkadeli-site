@@ -8,10 +8,14 @@
 
 .site-footer a {
   color: var(--color-white);
+  text-decoration: none;
 }
 
-.site-footer a:hover {
+/* Underline only on hover or keyboard focus */
+.site-footer a:hover,
+.site-footer a:focus-visible {
   color: var(--color-red-soft);
+  text-decoration: underline;
 }
 
 .footer-brand {
