@@ -69,7 +69,7 @@ const slides = [
     slides[i].classList.add('on'); dots[i].setAttribute('aria-pressed', 'true');
   };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 3500); } };
+  const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 5000); } };
   dots.forEach((d, n) => d.addEventListener('click', () => { show(n); start(); }));
   document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
   start();
