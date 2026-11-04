@@ -1,0 +1,17 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Old Wix addresses that change on the new site
+[[redirects]]
+  from = "/copy-of-deli-menu"
+  to = "/platters"
+  status = 301
+
+[[redirects]]
+  from = "/shop"
+  to = "/products"
+  status = 301

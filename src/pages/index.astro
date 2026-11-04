@@ -1,0 +1,142 @@
+---
+import Base from '../layouts/Base.astro';
+import { business, categories } from '../data/site.js';
+---
+<Base>
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Silver Spring's Polish market</p>
+        <h1>Authentic Polish groceries and food <em>prepared daily</em></h1>
+        <p class="lede">Kielbasa, deli meats, pierogi, cheeses, sweets and baked goods, plus Polish dishes prepared daily to take home.</p>
+        <div class="actions">
+          <a class="btn" href="/deli-menu">See the deli menu</a>
+          <a class="btn btn-ghost" href={business.uberEats}>Order on Uber Eats</a>
+        </div>
+      </div>
+      <div class="hero-card" aria-label="Opening hours and address">
+        <h2>Store hours</h2>
+        <ul class="hours">
+          {business.hours.map((h) => <li><span>{h.days}</span><strong>{h.open} – {h.close}</strong></li>)}
+        </ul>
+        <p class="addr">{business.address}<br />{business.city}</p>
+        <div class="card-links">
+          <a href={business.mapsUrl}>Get directions</a>
+          <a href={business.phoneHref}>{business.phone}</a>
+        </div>
+      </div>
+    </div>
+    <div class="dots" aria-hidden="true"></div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What's on our shelves</h2>
+        <p>More than 120 Polish products, with new items added all the time. Don't see something? Ask us and we'll try to get it.</p>
+      </div>
+      <ul class="cat-grid">
+        {categories.map((c) => (
+          <li class="cat">
+            <span class="cat-count">{c.count}</span>
+            <h3>{c.name}</h3>
+            <p>{c.note}</p>
+          </li>
+        ))}
+      </ul>
+      <p class="center"><a class="btn btn-ghost" href="/products">Browse all products</a></p>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">From our kitchen</p>
+        <h2>Hot food and party platters</h2>
+        <p>Pierogi and other Polish favorites, made fresh every day for lunch or dinner on the go. Hosting a family gathering? Order one of our deli platters.</p>
+        <div class="actions">
+          <a class="btn" href="/deli-menu">Deli menu</a>
+          <a class="btn btn-ghost" href="/platters">Platters</a>
+        </div>
+      </div>
+      <div class="ship">
+        <h3>International parcel shipping</h3>
+        <p>Send packages to family and friends abroad, right from the store.</p>
+        <a href="/shipping">See shipping rates →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Our story</p>
+        <h2>Hello from Maria and Joanna</h2>
+        <p>We opened Polka Deli to be a one-stop shop for Polish groceries and the most beloved Polish dishes, on the go. Whether you grew up on pierogi or you're trying them for the first time, we're glad you're here.</p>
+        <a href="/about">Read more about us →</a>
+      </div>
+      <form class="signup" name="newsletter" method="POST" action="/thanks" data-netlify="true">
+        <h3>Get our special offers</h3>
+        <p>Join over 2,400 neighbors. We email a few times a year with special offers and coupons.</p>
+        <label for="email">Email address</label>
+        <div class="signup-row">
+          <input id="email" name="email" type="email" required placeholder="you@example.com" autocomplete="email" />
+          <button class="btn" type="submit">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 13px; font-weight: 700; color: var(--red); margin: 0 0 12px; }
+  .hero { position: relative; background: var(--paper); overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: center; padding: 80px 0 88px; position: relative; z-index: 1; }
+  h1 { font-size: clamp(36px, 5.2vw, 62px); letter-spacing: -.01em; }
+  h1 em { font-style: italic; color: var(--red); }
+  .lede { font-size: 19px; color: var(--muted); max-width: 34em; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .hero-card { background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: 0 1px 0 var(--line); }
+  .hero-card h2 { font-size: 22px; }
+  .hours { list-style: none; padding: 0; margin: 0 0 16px; }
+  .hours li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px dashed var(--line); }
+  .hours span { color: var(--muted); }
+  .addr { margin: 0 0 16px; }
+  .card-links { display: flex; gap: 20px; font-weight: 700; }
+  .dots { position: absolute; right: -60px; bottom: -60px; width: 260px; height: 260px; border-radius: 50%; background: radial-gradient(var(--red) 22%, transparent 23%) 0 0 / 26px 26px; opacity: .08; }
+  .section { padding: 88px 0; }
+  .section-head { max-width: 640px; margin-bottom: 40px; }
+  .section-head h2, .split h2 { font-size: clamp(30px, 3.6vw, 42px); }
+  .section-head p { color: var(--muted); }
+  .cat-grid { list-style: none; padding: 0; margin: 0 0 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .cat { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; position: relative; }
+  .cat h3 { font-size: 21px; margin-bottom: 4px; }
+  .cat p { margin: 0; color: var(--muted); font-size: 15px; }
+  .cat-count { position: absolute; top: 18px; right: 18px; font-size: 13px; font-weight: 700; color: var(--red); background: #fbe9e9; border-radius: 999px; padding: 2px 10px; }
+  .center { text-align: center; }
+  .band { background: var(--ink); color: #f1ede8; }
+  .band .eyebrow { color: #ff8a8e; }
+  .band p { color: #d9d3cc; }
+  .band .btn-ghost { color: #fff; border-color: #fff; }
+  .band .btn-ghost:hover { background: #fff; color: var(--ink); }
+  .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center; }
+  .ship { background: #383636; border-radius: var(--radius); padding: 28px; border-left: 6px solid var(--red); }
+  .ship a { color: #fff; font-weight: 700; }
+  .signup { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; }
+  .signup p { color: var(--muted); }
+  .signup label { font-weight: 700; font-size: 14px; display: block; margin-bottom: 6px; }
+  .signup-row { display: flex; gap: 8px; }
+  .signup input { flex: 1; min-width: 0; font: inherit; padding: 13px 16px; border: 1px solid #cfc6ba; border-radius: 999px; }
+  .signup input:focus { outline: 2px solid var(--red); outline-offset: 2px; }
+  @media (max-width: 900px) {
+    .hero-grid, .split { grid-template-columns: 1fr; gap: 32px; padding-block: 48px 56px; }
+    .split { padding-block: 0; }
+    .cat-grid { grid-template-columns: 1fr 1fr; }
+    .section { padding: 64px 0; }
+  }
+  @media (max-width: 560px) {
+    .cat-grid { grid-template-columns: 1fr; }
+    .signup-row { flex-direction: column; }
+    .actions .btn { width: 100%; justify-content: center; }
+  }
+</style>
