@@ -33,12 +33,6 @@
   height: auto;
 }
 
-.footer-brand p {
-  margin: 0;
-  font-size: var(--text-lg);
-  color: #ddd;
-}
-
 .footer-columns {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
