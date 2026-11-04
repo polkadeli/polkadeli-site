@@ -1,0 +1,100 @@
+/* Footer: new on this site (the Wix site had none). Both stores, hours and links. */
+
+.site-footer {
+  padding: var(--space-7) 20px var(--space-5);
+  color: #eee;
+  background: var(--color-dark);
+}
+
+.site-footer a {
+  color: var(--color-white);
+}
+
+.site-footer a:hover {
+  color: var(--color-red-soft);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  max-width: var(--width-page);
+  margin: 0 auto 36px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--color-dark-line);
+}
+
+.footer-brand img {
+  width: 240px;
+  height: auto;
+}
+
+.footer-brand p {
+  margin: 0;
+  font-size: var(--text-lg);
+  color: #ddd;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-6);
+  max-width: var(--width-page);
+  margin: 0 auto;
+}
+
+.footer-column h2 {
+  display: inline-block;
+  margin: 0 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  border-bottom: 2px solid var(--color-red);
+}
+
+.footer-column p {
+  margin: 0 0 10px;
+  color: #ddd;
+}
+
+.footer-hours {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 16px;
+  color: #ccc;
+}
+
+.footer-hours span {
+  display: inline-block;
+  width: 82px;
+  color: #aaa;
+}
+
+.footer-copy {
+  max-width: var(--width-page);
+  margin: var(--space-6) auto 0;
+  padding-top: var(--space-4);
+  font-size: 14px;
+  color: #999;
+  border-top: 1px solid var(--color-dark-line);
+}
+
+@media (max-width: 760px) {
+  .footer-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-brand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+
+  .footer-brand img {
+    width: 200px;
+  }
+}

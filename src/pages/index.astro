@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { business, stores } from '../data/site.js';
+import '../styles/home.css';
 const slides = [
   { src: '/images/slide-pierogi.jpg', alt: 'Pierogi being made on a floured wooden board' },
   { src: '/images/slide-bread.jpg', alt: 'Fresh bread with wheat' },
@@ -11,43 +12,43 @@ const slides = [
 ---
 <Base>
   <section class="hero" aria-label="Welcome to Polka Deli">
-    <div class="slides" aria-hidden="true">
-      {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'slide on' : 'slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
+    <div class="hero__slides" aria-hidden="true">
+      {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'hero__slide is-active' : 'hero__slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
     </div>
 
-    <div class="stage">
-      <div class="card">
-        <h1 class="logo"><img src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="520" height="176" /></h1>
+    <div class="hero__stage">
+      <div class="intro-card">
+        <h1 class="intro-card__logo"><img src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="520" height="176" /></h1>
 
         <div class="trio">
-          <p class="cell tagline">{business.tagline}</p>
-          <div class="cell drawing"><img src="/images/pierogi-drawing.png" alt="" width="150" height="150" /></div>
-          <a class="cell deli-btn" href="/deli-menu">Deli Menu</a>
+          <p class="trio__cell trio__tagline">{business.tagline}</p>
+          <div class="trio__cell trio__drawing"><img src="/images/pierogi-drawing.png" alt="" width="150" height="150" /></div>
+          <a class="trio__cell trio__menu" href="/deli-menu">Deli Menu</a>
         </div>
 
-        <a class="uber" href={business.uberEats} target="_blank" rel="noopener">Order now with UberEats!</a>
+        <a class="pill pill--grey" href={business.uberEats} target="_blank" rel="noopener">Order now with UberEats!</a>
 
-        <ul class="stores">
+        <ul class="store-lines">
           {stores.map((s) => (
-            <li><a href={s.maps}>{s.street}, {s.locality}</a> <span class="sep">|</span> <a href={s.phoneHref}>{s.phone}</a></li>
+            <li><a href={s.maps}>{s.street}<span class="store-lines__comma">,</span> <span class="store-lines__city">{s.locality}</span></a> <span class="store-lines__sep">|</span> <a href={s.phoneHref}>{s.phone}</a></li>
           ))}
         </ul>
       </div>
 
-      <p class="shipping">International parcel shipping service available at our stores</p>
+      <p class="shipping-banner">International parcel shipping service available at our stores</p>
 
       <form class="postcard" name="newsletter" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
-        <svg class="postmark" viewBox="0 0 120 50" aria-hidden="true">
+        <svg class="postcard__mark" viewBox="0 0 120 50" aria-hidden="true">
           <circle cx="24" cy="25" r="20" fill="none" stroke="#bbb" stroke-width="2.5" />
           <circle cx="24" cy="25" r="13" fill="none" stroke="#bbb" stroke-width="2" />
           <path d="M50 14c8-5 14 5 22 0s14 5 22 0 14 5 22 0M50 25c8-5 14 5 22 0s14 5 22 0 14 5 22 0M50 36c8-5 14 5 22 0s14 5 22 0 14 5 22 0" fill="none" stroke="#bbb" stroke-width="2.5" />
         </svg>
-        <h2>Join our mailing list to receive special offers</h2>
-        <p class="hp"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
-        <div class="fields">
-          <label><span>Name</span><input name="name" type="text" required autocomplete="name" placeholder="Name" /></label>
-          <label><span>Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
-          <button type="submit">Subscribe Now</button>
+        <h2 class="postcard__title">Join our mailing list to receive special offers</h2>
+        <p class="postcard__trap"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+        <div class="postcard__fields">
+          <label><span class="visually-hidden">Name</span><input name="name" type="text" required autocomplete="name" placeholder="Name" /></label>
+          <label><span class="visually-hidden">Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
+          <button class="pill pill--red" type="submit">Subscribe Now</button>
         </div>
       </form>
 
@@ -59,14 +60,14 @@ const slides = [
 </Base>
 
 <script>
-  const slides = [...document.querySelectorAll('.slide')];
+  const slides = [...document.querySelectorAll('.hero__slide')];
   const dots = [...document.querySelectorAll('.dots button')];
   let i = 0;
   let timer;
   const show = (n) => {
-    slides[i].classList.remove('on'); dots[i].setAttribute('aria-pressed', 'false');
+    slides[i].classList.remove('is-active'); dots[i].setAttribute('aria-pressed', 'false');
     i = (n + slides.length) % slides.length;
-    slides[i].classList.add('on'); dots[i].setAttribute('aria-pressed', 'true');
+    slides[i].classList.add('is-active'); dots[i].setAttribute('aria-pressed', 'true');
   };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 5000); } };
@@ -75,65 +76,3 @@ const slides = [
   start();
 </script>
 
-<style>
-  .hero { position: relative; overflow: hidden; padding: 28px 16px 36px; min-height: calc(100vh - 56px); }
-  .slides, .slide { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .slide { object-fit: cover; opacity: 0; transition: opacity 1.2s ease; }
-  .slide.on { opacity: 1; }
-  .stage { position: relative; max-width: 740px; margin: 0 auto; display: grid; gap: 14px; }
-
-  .card { background: var(--card); padding: 22px 26px 24px; text-align: center; box-shadow: 0 6px 24px rgba(0,0,0,.18); backdrop-filter: blur(3px); }
-  .logo { margin: 0 auto 18px; max-width: 420px; }
-  .logo img { width: 100%; height: auto; }
-
-  .trio { display: grid; grid-template-columns: 1fr 1fr 1fr; border: 2px solid #222; }
-  .cell { display: grid; place-items: center; min-height: 128px; margin: 0; padding: 12px; }
-  .cell + .cell { border-left: 2px solid #222; }
-  .tagline { font-size: 22px; line-height: 1.3; }
-  .drawing img { width: 118px; height: auto; }
-  .deli-btn { background: var(--red); color: #fff; text-decoration: none; font-family: var(--wood); font-size: 30px; margin: 4px; transition: background .15s, color .15s; }
-  .deli-btn:hover, .deli-btn:focus-visible { background: transparent; color: #111; }
-
-  .uber { display: inline-block; margin: 20px 0 14px; background: var(--grey); color: #fff; text-decoration: none; border-radius: 999px; padding: 10px 26px; font-size: 17px; letter-spacing: .04em; transition: background .15s; }
-  .uber:hover, .uber:focus-visible { background: var(--red-hover); }
-  .stores { list-style: none; margin: 0; padding: 0; font-size: 18px; }
-  .stores li { margin: 4px 0; }
-  .stores a { text-decoration: none; }
-  .stores a:hover { color: var(--red); text-decoration: underline; }
-  .sep { color: #888; margin: 0 4px; }
-
-  .shipping { margin: 0; background: var(--red); color: #fff; text-align: center; font-size: 22px; padding: 10px 16px; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
-
-  .postcard { position: relative; background: rgba(255,255,255,.96); margin: 0 10px; padding: 26px 30px 30px; border: 1px solid #ddd; box-shadow: 0 6px 24px rgba(0,0,0,.25); }
-  .postmark { position: absolute; top: 10px; right: 18px; width: 110px; }
-  .postcard h2 { margin: 0 130px 26px 0; color: var(--red); font-size: 20px; font-weight: 500; }
-  .fields { display: grid; grid-template-columns: 1fr 1fr auto; gap: 18px; align-items: end; }
-  .fields span { position: absolute; left: -999px; }
-  .fields input { width: 100%; font: inherit; font-size: 17px; border: 0; border-bottom: 2px solid #555; background: transparent; padding: 8px 2px; }
-  .fields input:focus { outline: none; border-bottom-color: var(--red); }
-  .fields button { font: inherit; font-size: 17px; background: var(--red); color: #fff; border: 0; border-radius: 999px; padding: 10px 26px; cursor: pointer; transition: background .15s; }
-  .fields button:hover, .fields button:focus-visible { background: var(--red-hover); }
-  .hp { position: absolute; left: -9999px; }
-
-  .dots { display: flex; justify-content: center; gap: 8px; margin-top: 6px; }
-  .dots button { width: 12px; height: 12px; border-radius: 50%; border: 0; background: rgba(255,255,255,.85); padding: 0; cursor: pointer; box-shadow: 0 0 0 1px rgba(0,0,0,.2); }
-  .dots button[aria-pressed='true'] { background: #111; }
-
-  @media (max-width: 760px) {
-    .hero { padding: 76px 12px 28px; }
-    .trio { grid-template-columns: 1fr; border: 0; }
-    .cell + .cell { border-left: 0; }
-    .tagline { border-top: 1px solid #222; border-bottom: 1px solid #222; min-height: 0; padding: 14px 8px; }
-    .drawing { display: none; }
-    .deli-btn { order: 3; min-height: 72px; margin: 16px 0 0; }
-    .uber { display: block; }
-    .sep { display: none; }
-    .stores li a:last-child { display: block; }
-    .stores li { margin: 10px 0; }
-    .postcard { margin: 0; padding: 22px 18px 22px; }
-    .postcard h2 { margin-right: 90px; }
-    .postmark { width: 80px; }
-    .fields { grid-template-columns: 1fr; }
-    .shipping { font-size: 19px; }
-  }
-</style>

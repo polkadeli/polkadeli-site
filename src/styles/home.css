@@ -1,0 +1,316 @@
+/* Homepage: photo slideshow behind a frosted card, shipping banner and postcard signup. */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: calc(100vh - var(--header-height));
+  padding: 28px var(--space-4) 36px;
+}
+
+/* Slideshow: photos cross-fade; only the active one is visible */
+.hero__slides,
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero__slide {
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.hero__slide.is-active {
+  opacity: 1;
+}
+
+.hero__stage {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  max-width: var(--width-card);
+  margin: 0 auto;
+}
+
+/* Frosted card */
+.intro-card {
+  padding: 22px 26px var(--space-5);
+  text-align: center;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(3px);
+}
+
+.intro-card__logo {
+  max-width: 420px;
+  margin: 0 auto 18px;
+}
+
+.intro-card__logo img {
+  width: 100%;
+  height: auto;
+}
+
+/* Tagline | drawing | Deli Menu row */
+.trio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid var(--color-rule);
+}
+
+.trio__cell {
+  display: grid;
+  place-items: center;
+  min-height: 128px;
+  margin: 0;
+  padding: var(--space-3);
+}
+
+.trio__cell + .trio__cell {
+  border-left: 2px solid var(--color-rule);
+}
+
+.trio__tagline {
+  font-size: var(--text-xl);
+  line-height: 1.3;
+}
+
+.trio__drawing img {
+  width: 118px;
+  height: auto;
+}
+
+.trio__menu {
+  margin: var(--space-1);
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  color: var(--color-white);
+  text-decoration: none;
+  background: var(--color-red);
+  transition: background var(--ease-fast), color var(--ease-fast);
+}
+
+/* Hover: red fill drops away, as on the current site */
+.trio__menu:hover,
+.trio__menu:focus-visible {
+  color: var(--color-ink);
+  background: transparent;
+}
+
+.pill {
+  display: inline-block;
+  padding: 10px 26px;
+  font: inherit;
+  font-size: 17px;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  text-decoration: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--ease-fast);
+}
+
+.pill:hover,
+.pill:focus-visible {
+  background: var(--color-red-dark);
+}
+
+.pill--grey {
+  background: var(--color-grey);
+}
+
+.pill--red {
+  background: var(--color-red);
+}
+
+.intro-card .pill {
+  margin: 20px 0 14px;
+}
+
+.store-lines {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-base);
+}
+
+.store-lines li {
+  margin: var(--space-1) 0;
+}
+
+.store-lines a {
+  text-decoration: none;
+}
+
+.store-lines a:hover {
+  color: var(--color-red);
+  text-decoration: underline;
+}
+
+.store-lines__sep {
+  margin: 0 var(--space-1);
+  color: #888;
+}
+
+/* Red shipping banner */
+.shipping-banner {
+  margin: 0;
+  padding: 10px var(--space-4);
+  font-size: var(--text-xl);
+  text-align: center;
+  color: var(--color-white);
+  background: var(--color-red);
+  box-shadow: var(--shadow-card);
+}
+
+/* Newsletter postcard */
+.postcard {
+  position: relative;
+  margin: 0 10px;
+  padding: 26px 30px 30px;
+  background: var(--surface-postcard);
+  border: 1px solid #ddd;
+  box-shadow: var(--shadow-raised);
+}
+
+.postcard__mark {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  width: 110px;
+}
+
+.postcard__title {
+  margin: 0 130px 26px 0;
+  font-size: var(--text-lg);
+  font-weight: 500;
+  color: var(--color-red);
+}
+
+.postcard__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 18px;
+  align-items: end;
+}
+
+.postcard__fields input {
+  width: 100%;
+  padding: var(--space-2) 2px;
+  font: inherit;
+  font-size: 17px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid #555;
+}
+
+.postcard__fields input:focus {
+  outline: none;
+  border-bottom-color: var(--color-red);
+}
+
+/* Spam trap, hidden from people */
+.postcard__trap {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Slide dots */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: 6px;
+}
+
+.dots button {
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.85);
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.dots button[aria-pressed='true'] {
+  background: var(--color-ink);
+}
+
+@media (max-width: 760px) {
+  .hero {
+    padding: 76px var(--space-3) 28px;
+  }
+
+  .trio {
+    grid-template-columns: 1fr;
+    border: 0;
+  }
+
+  .trio__cell + .trio__cell {
+    border-left: 0;
+  }
+
+  .trio__tagline {
+    min-height: 0;
+    padding: 14px var(--space-2);
+    border-top: 1px solid var(--color-rule);
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .trio__drawing {
+    display: none;
+  }
+
+  .trio__menu {
+    min-height: 72px;
+    margin: var(--space-4) 0 0;
+  }
+
+  .intro-card .pill {
+    display: block;
+  }
+
+  .store-lines__sep,
+  .store-lines__comma {
+    display: none;
+  }
+
+  /* City and state start on their own line on phones */
+  .store-lines__city {
+    display: block;
+  }
+
+  .store-lines li {
+    margin: 10px 0;
+  }
+
+  .store-lines li a:last-child {
+    display: block;
+  }
+
+  .shipping-banner {
+    font-size: 19px;
+  }
+
+  .postcard {
+    margin: 0;
+    padding: 22px 18px;
+  }
+
+  .postcard__title {
+    margin-right: 90px;
+  }
+
+  .postcard__mark {
+    width: 80px;
+  }
+
+  .postcard__fields {
+    grid-template-columns: 1fr;
+  }
+}

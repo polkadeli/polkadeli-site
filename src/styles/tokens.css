@@ -1,0 +1,61 @@
+/*
+ * Design tokens: the one place to change brand colors, fonts and sizes.
+ * Colors come from the current polkadelimd.com site and the logo.
+ */
+:root {
+  /* Brand colors */
+  --color-red: #c82023;          /* logo red: Deli Menu block, shipping banner, buttons */
+  --color-red-bright: #e21c21;   /* nav hover */
+  --color-red-dark: #950b0b;     /* button hover */
+  --color-red-heading: #8b0000;  /* menu section headings */
+  --color-red-soft: #ff8a8c;     /* links on dark backgrounds */
+
+  /* Neutrals */
+  --color-ink: #111;             /* body text */
+  --color-grey: #4d4d4d;         /* nav text, UberEats pill */
+  --color-muted: #666;           /* small notes */
+  --color-rule: #222;            /* thin dividing lines */
+  --color-white: #fff;
+  --color-dark: #1d1c1c;         /* footer background */
+  --color-dark-line: #3a3838;    /* lines on the footer */
+  --color-black: #000;           /* mobile menu */
+
+  /* Surfaces */
+  --surface-card: rgba(255, 255, 255, 0.93);     /* frosted card over photos */
+  --surface-postcard: rgba(255, 255, 255, 0.96);
+  --shadow-card: 0 6px 24px rgba(0, 0, 0, 0.18);
+  --shadow-raised: 0 6px 24px rgba(0, 0, 0, 0.25);
+
+  /* Fonts */
+  --font-body: 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  --font-nav: 'Barlow', 'Helvetica Neue', sans-serif;
+  --font-display: 'Fredericka the Great', Georgia, serif;
+
+  /* Type sizes */
+  --text-sm: 15px;
+  --text-base: 18px;
+  --text-lg: 20px;
+  --text-xl: 22px;
+  --text-display: 30px;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* Layout */
+  --width-card: 740px;
+  --width-page: 1040px;
+  --header-height: 56px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease-fast: 0.15s ease;
+
+  /* Breakpoints (for reference; CSS variables can't be used in media queries)
+     tablet: max-width 900px  |  phone: max-width 760px */
+}
