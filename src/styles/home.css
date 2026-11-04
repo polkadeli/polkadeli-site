@@ -169,7 +169,7 @@
 /* Newsletter postcard */
 .postcard {
   position: relative;
-  margin: 0 10px;
+  margin: 0;
   padding: 26px 30px 30px;
   background: var(--surface-postcard);
   border: 1px solid #ddd;
