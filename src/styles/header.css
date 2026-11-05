@@ -575,8 +575,8 @@
 
 .order-menu__uber img {
   flex: none;
-  width: 44px;
-  height: auto;
+  width: auto;
+  height: 58px; /* matches the title + two lines of text */
 }
 
 .order-menu__list small {
@@ -617,6 +617,7 @@
 
 .order-menu__list--drawer .order-menu__uber img {
   width: 120px;
+  height: auto;
   display: block;
   margin-bottom: 8px;
 }
