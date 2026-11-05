@@ -1,0 +1,288 @@
+/* Temporary: Shop page layout ideas */
+.si-bar {
+  position: sticky;
+  top: var(--header-height);
+  z-index: 15;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 40px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  color: #fff;
+  background: #1f1f1f;
+}
+
+.si-bar button {
+  padding: 6px 12px;
+  font: inherit;
+  color: #fff;
+  background: #3a3838;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.si-bar button.on {
+  background: var(--color-red);
+}
+
+.si-head,
+.si-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  font-family: var(--font-ui);
+  color: #1f1f1f;
+}
+
+.si-head {
+  padding-top: 56px;
+  padding-bottom: 36px;
+}
+
+.si-head h1,
+.si h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 500;
+}
+
+.si-head h1 {
+  font-size: 52px;
+  margin-bottom: 10px;
+}
+
+.si-head p {
+  margin: 0;
+  max-width: 44em;
+  color: #5e5e5e;
+}
+
+.si {
+  padding-bottom: 90px;
+}
+
+.si h2 span {
+  font-family: var(--font-ui);
+  font-size: 0.55em;
+  color: #5e5e5e;
+}
+
+/* A: photo cards */
+.si-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.si-card {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+}
+
+.si-card__ph {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.si-card__ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.si-card__body {
+  padding: 18px 20px 22px;
+}
+
+.si-card h2 {
+  margin-bottom: 8px;
+  font-size: 26px;
+}
+
+.si-card p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #5e5e5e;
+}
+
+/* B: aisles */
+.si-aisles {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.si-side {
+  position: sticky;
+  top: calc(var(--header-height) + 70px);
+  display: grid;
+  border-left: 1px solid #d9d9d9;
+}
+
+.si-side a {
+  padding: 8px 16px;
+  color: #5e5e5e;
+  text-decoration: none;
+}
+
+.si-side a:hover {
+  color: var(--color-red);
+}
+
+.si-aisle {
+  margin-bottom: 48px;
+  scroll-margin-top: calc(var(--header-height) + 60px);
+}
+
+.si-aisle__banner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 160px;
+  padding: 20px 24px;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.si-aisle__banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.1));
+}
+
+.si-aisle__banner h2,
+.si-aisle__banner small {
+  position: relative;
+}
+
+.si-aisle__banner h2 {
+  font-size: 34px;
+}
+
+.si-aisle__banner h2 span {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.si-cols {
+  columns: 3;
+  column-gap: 32px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.si-cols li {
+  break-inside: avoid;
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.si-cols em {
+  font-style: normal;
+  font-size: 13px;
+  color: #5e5e5e;
+}
+
+/* C: search & filter */
+.si-tools {
+  position: sticky;
+  top: calc(var(--header-height) + 44px);
+  z-index: 5;
+  padding: 16px 0;
+  background: #fff;
+}
+
+.si-tools input {
+  width: 100%;
+  padding: 14px 18px;
+  font: inherit;
+  border: 1px solid #bdbdbd;
+  border-radius: 999px;
+}
+
+.si-tools input:focus {
+  outline: 2px solid var(--color-red);
+  border-color: var(--color-red);
+}
+
+.si-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.si-pills button {
+  padding: 7px 14px;
+  font: inherit;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid #bdbdbd;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.si-pills button.on {
+  color: #fff;
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.si-res {
+  margin-top: 30px;
+}
+
+.si-res h2 {
+  font-size: 28px;
+  color: var(--color-red-heading);
+}
+
+.si-none {
+  margin-top: 30px;
+  color: #5e5e5e;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 900px) {
+  .si-head,
+  .si-wrap,
+  .si-bar {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .si-head h1 {
+    font-size: 38px;
+  }
+
+  .si-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .si-aisles {
+    grid-template-columns: 1fr;
+  }
+
+  .si-side {
+    display: none;
+  }
+
+  .si-cols {
+    columns: 2;
+  }
+}

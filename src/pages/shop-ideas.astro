@@ -1,0 +1,125 @@
+---
+// Temporary page to compare Shop page layout ideas. Not linked from the menu.
+import Base from '../layouts/Base.astro';
+import { columns } from '../data/groceries.js';
+import '../styles/shop-ideas.css';
+
+const groups = columns.flat();
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const photoFor = {
+  Kielbasa: '/images/shop/kabanosy.jpg',
+  Cheese: '/images/media/deli-table.jpg',
+  'Deli Meats': '/images/shop/cold-cuts.jpg',
+  Pierogi: '/images/media/pierogi-2.jpg',
+  Blintzes: '/images/media/paczki.jpg',
+  'Marinated Goods and Jars': '/images/media/jars.jpg',
+  Sweets: '/images/shop/sweets.jpg',
+  'Baked Goods': '/images/media/paczki.jpg',
+  Other: '/images/media/groceries.jpg',
+};
+const name = (i) => (typeof i === 'string' ? i : i.name);
+const note = (i) => (typeof i === 'string' ? '' : i.note);
+const intro = "If you don't see a product listed below please ask, we often add products, and can also custom order.";
+---
+<Base title="Shop ideas · Polka Deli">
+  <div class="si-bar">
+    <b>Shop page ideas:</b>
+    <button data-v="a" class="on">A · Photo cards</button>
+    <button data-v="b">B · Store aisles</button>
+    <button data-v="c">C · Search &amp; filter</button>
+  </div>
+
+  <header class="si-head">
+    <h1>Polish Groceries</h1>
+    <p>{intro}</p>
+  </header>
+
+  <!-- A: photo card per category, items as compact text -->
+  <section class="si si-a" data-view="a">
+    <div class="si-wrap si-cards">
+      {groups.map((g) => (
+        <article class="si-card">
+          <div class="si-card__ph"><img src={photoFor[g.title]} alt="" loading="lazy" /></div>
+          <div class="si-card__body">
+            <h2>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
+            <p>{g.items.map(name).join(' · ')}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <!-- B: aisles with a sticky category list on the left and a photo banner per aisle -->
+  <section class="si si-b" data-view="b" hidden>
+    <div class="si-wrap si-aisles">
+      <nav class="si-side" aria-label="Categories">
+        {groups.map((g) => <a href={`#b-${slug(g.title)}`}>{g.title}</a>)}
+      </nav>
+      <div class="si-aisle-list">
+        {groups.map((g) => (
+          <section class="si-aisle" id={`b-${slug(g.title)}`}>
+            <div class="si-aisle__banner" style={`background-image:url('${photoFor[g.title]}')`}>
+              <h2>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
+              <small>{g.items.length} items</small>
+            </div>
+            <ul class="si-cols">
+              {g.items.map((i) => <li>{name(i)}{note(i) && <em> {note(i)}</em>}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- C: search box + category filter pills over one combined list -->
+  <section class="si si-c" data-view="c" hidden>
+    <div class="si-wrap">
+      <div class="si-tools">
+        <input type="search" placeholder="Search products, e.g. kabanosy, gouda, pączki…" aria-label="Search products" />
+        <div class="si-pills">
+          <button class="on" data-cat="all">All</button>
+          {groups.map((g) => <button data-cat={slug(g.title)}>{g.title}</button>)}
+        </div>
+      </div>
+      <div class="si-results">
+        {groups.map((g) => (
+          <section class="si-res" data-cat={slug(g.title)}>
+            <h2>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
+            <ul class="si-cols">
+              {g.items.map((i) => <li data-q={`${name(i)} ${note(i)}`.toLowerCase()}>{name(i)}{note(i) && <em> {note(i)}</em>}</li>)}
+            </ul>
+          </section>
+        ))}
+        <p class="si-none" hidden>No match. Please ask in store, we can custom order.</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const views = [...document.querySelectorAll('[data-view]')];
+  document.querySelectorAll('.si-bar button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('.si-bar button').forEach((x) => x.classList.toggle('on', x === b));
+    views.forEach((v) => { v.hidden = v.dataset.view !== b.dataset.v; });
+  }));
+
+  // C: search + filter
+  const q = document.querySelector('.si-tools input');
+  const pills = [...document.querySelectorAll('.si-pills button')];
+  const secs = [...document.querySelectorAll('.si-res')];
+  let cat = 'all';
+  const apply = () => {
+    const term = q.value.trim().toLowerCase();
+    let any = false;
+    secs.forEach((s) => {
+      const okCat = cat === 'all' || s.dataset.cat === cat;
+      let shown = 0;
+      s.querySelectorAll('li').forEach((li) => { const ok = okCat && (!term || li.dataset.q.includes(term)); li.hidden = !ok; if (ok) shown++; });
+      s.hidden = shown === 0;
+      if (shown) any = true;
+    });
+    document.querySelector('.si-none').hidden = any;
+  };
+  q.addEventListener('input', apply);
+  pills.forEach((p) => p.addEventListener('click', () => { cat = p.dataset.cat; pills.forEach((x) => x.classList.toggle('on', x === p)); apply(); }));
+</script>
