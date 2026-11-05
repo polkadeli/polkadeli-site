@@ -1,9 +1,13 @@
 ---
-import Base from '../layouts/Base.astro';
-import AboutUs from '../components/AboutUs.astro';
-import { business, stores } from '../data/site.js';
-import { pierogi, sandwiches, entrees } from '../data/menu.js';
-import '../styles/home.css';
+import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import AboutUs from '../../components/AboutUs.astro';
+import { business, stores } from '../../data/site.js';
+import { pierogi, sandwiches, entrees } from '../../data/menu.js';
+import '../../styles/home.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
 
 const slides = [
   { src: '/images/slide-pierogi.jpg', alt: 'Pierogi being made on a floured wooden board' },
@@ -19,10 +23,10 @@ const dishes = [
   {
     img: '/images/media/pierogi.jpg',
     name: 'Pierogi',
-    desc: `${pierogi.fillings.filter((f) => f !== 'Mix Pierogi').join(', ')}. ${pierogi.servedWith}`,
+    desc: `${pierogi.fillings.filter((f) => f !== 'Mix Pierogi').map((f) => tr(lang, f)).join(', ')}. ${tr(lang, pierogi.servedWith)}`,
   },
-  { img: '/images/slide-kielbasa.jpg', name: sampler.name, desc: sampler.desc },
-  { img: '/images/media/kielbasa.jpg', name: kielbasaSandwich.name, desc: kielbasaSandwich.desc },
+  { img: '/images/slide-kielbasa.jpg', name: tr(lang, sampler.name), desc: tr(lang, sampler.desc) },
+  { img: '/images/media/kielbasa.jpg', name: tr(lang, kielbasaSandwich.name), desc: tr(lang, kielbasaSandwich.desc) },
 ];
 
 const offers = [
@@ -42,7 +46,7 @@ const offers = [
 ];
 ---
 <Base overlay>
-  <section class="hero" data-hero aria-label="Welcome to Polka Deli">
+  <section class="hero" data-hero aria-label={t.welcome}>
     <div class="hero__slides" aria-hidden="true">
       {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'hero__slide is-active' : 'hero__slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
     </div>
@@ -50,7 +54,7 @@ const offers = [
     <div class="hero__foot">
       <div class="hero__left">
       <img class="doodle-badge" src="/images/doodles/onfork.svg" alt="" aria-hidden="true" />
-      <h1 data-solid-at>{business.tagline}</h1>
+      <h1 data-solid-at>{t.tagline}</h1>
       <div class="hero__stores">
         {stores.map((s) => (
           <div class="hero-store">
@@ -61,20 +65,20 @@ const offers = [
         ))}
       </div>
       </div>
-      <form class="hero-signup" name="newsletter" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
-        <h2>Join our mailing list to receive special offers</h2>
+      <form class="hero-signup" name="newsletter" method="POST" action={href('/thanks', lang)} data-netlify="true" netlify-honeypot="company">
+        <h2>{t.joinList}</h2>
         <p class="signup__trap"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
         <div class="hero-signup__fields">
-          <label><span class="visually-hidden">Name</span><input name="name" type="text" required autocomplete="name" placeholder="Name" /></label>
-          <label><span class="visually-hidden">Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
+          <label><span class="visually-hidden">{t.name}</span><input name="name" type="text" required autocomplete="name" placeholder={t.name} /></label>
+          <label><span class="visually-hidden">{t.emailAddress}</span><input name="email" type="email" required autocomplete="email" placeholder={t.emailAddress} /></label>
         </div>
         <div class="hero-signup__actions">
-          <p class="hero-signup__privacy"><a href="/#privacy" data-privacy>Privacy policy</a></p>
-          <button type="submit" class="btn">Subscribe Now</button>
+          <p class="hero-signup__privacy"><a href={href('/#privacy', lang)} data-privacy>{t.privacyLink}</a></p>
+          <button type="submit" class="btn">{t.subscribe}</button>
         </div>
       </form>
     </div>
-    <p class="strip">International parcel shipping service available at our stores</p>
+    <p class="strip">{t.shipping}</p>
   </section>
 
   <section class="section">
@@ -83,8 +87,8 @@ const offers = [
         {offers.map((o) => (
           <article class="show">
             <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
-            <h3>{o.title}</h3>
-            <p class="show__items">{o.ticks.map((t, k) => <span>{t}{k < o.ticks.length - 1 ? ',' : ''}</span>)}</p>
+            <h3>{tr(lang, o.title)}</h3>
+            <p class="show__items">{o.ticks.map((x, k) => <span>{tr(lang, x)}{k < o.ticks.length - 1 ? ',' : ''}</span>)}</p>
           </article>
         ))}
       </div>
@@ -103,7 +107,7 @@ const offers = [
           </article>
         ))}
       </div>
-      <p class="center-cta"><a class="btn" href="/deli-menu">Explore Full Menu</a></p>
+      <p class="center-cta"><a class="btn" href={href('/deli-menu', lang)}>{t.exploreMenu}</a></p>
     </div>
   </section>
 

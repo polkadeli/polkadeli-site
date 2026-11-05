@@ -4,43 +4,47 @@
 import { stores } from '../data/site.js';
 import { pierogi, sandwiches, entrees, platters } from '../data/menu.js';
 import '../styles/order-form.css';
+import { langOf, href, tr, ui } from '../i18n.js';
+const lang = langOf(Astro.url);
+const t = ui[lang];
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const groups = [
   {
     title: 'Pierogi', type: 'deli',
-    items: pierogi.prices.map(([size, price]) => ({ key: `pierogi-${slug(size)}`, name: `Pierogi, ${size}`, price, filling: true })),
+    items: pierogi.prices.map(([size, price]) => ({ key: `pierogi-${slug(size)}`, name: `Pierogi, ${size}`, label: `Pierogi, ${tr(lang, size)}`, price, filling: true })),
   },
   {
-    title: 'Sandwiches', type: 'deli',
-    items: sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, name: i.name, price: sandwiches.price })),
+    title: tr(lang, 'Sandwiches'), type: 'deli',
+    items: sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, name: i.name, label: tr(lang, i.name), price: sandwiches.price })),
   },
   {
-    title: 'Entrees', type: 'deli',
-    items: entrees.map((i) => ({ key: `entree-${slug(i.name)}`, name: `${i.name}${i.note ? ` ${i.note}` : ''}`, price: i.price })),
+    title: tr(lang, 'Entrees'), type: 'deli',
+    items: entrees.map((i) => ({ key: `entree-${slug(i.name)}`, name: `${i.name}${i.note ? ` ${i.note}` : ''}`, label: `${tr(lang, i.name)}${i.note ? ` ${tr(lang, i.note)}` : ''}`, price: i.price })),
   },
   {
-    title: 'Platters', type: 'platters',
-    items: platters.flatMap((g) => g.items.map((i) => ({ key: `platter-${slug(i.name)}`, name: i.name, price: i.price, serves: g.serves }))),
+    title: t.platters, type: 'platters',
+    items: platters.flatMap((g) => g.items.map((i) => ({ key: `platter-${slug(i.name)}`, name: i.name, label: tr(lang, i.name), price: i.price, serves: tr(lang, g.serves) }))),
   },
 ];
 const today = new Date().toISOString().slice(0, 10);
 const types = [
-  { value: 'deli', label: 'Deli order', hint: 'Pierogi, sandwiches and entrees' },
-  { value: 'platters', label: 'Platter order', hint: 'Cold cut, bread, party and cake platters · 48 hours notice' },
+  { value: 'deli', label: t.deliOrder, hint: t.deliHint },
+  { value: 'platters', label: t.platterOrder, hint: t.platterHint },
 ];
 ---
 <section class="of" id="order" aria-labelledby="order-title">
-  <h2 class="of__title" id="order-title">Order online</h2>
-  <p class="of__intro">Choose your items and a pickup time. Please provide best phone number to reach you to confirm your order. Platters require 48 hours notice.</p>
+  <h2 class="of__title" id="order-title">{t.orderOnline}</h2>
+  <p class="of__intro">{t.orderIntro}</p>
 
-  <form class="of__form" name="order" method="POST" action="/thanks?order=1" data-netlify="true" netlify-honeypot="company">
+  <form class="of__form" name="order" method="POST" action={href('/thanks', lang) + '?order=1'} data-netlify="true" netlify-honeypot="company"
+    data-tax-md={t.taxMd} data-tax-later={t.taxLater}>
     <input type="hidden" name="form-name" value="order" />
-    <p class="of__trap"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+    <p class="of__trap"><label>{t.leaveEmpty} <input name="company" tabindex="-1" autocomplete="off" /></label></p>
     <textarea name="order-summary" class="of__summary-field" hidden></textarea>
     <input type="hidden" name="order-total" />
 
-    <div class="of__types" role="radiogroup" aria-label="Order type">
+    <div class="of__types" role="radiogroup" aria-label={t.orderType}>
       {types.map((t, i) => (
         <label class="of__type">
           <input type="radio" name="order-type" value={t.value === 'deli' ? 'Deli order' : 'Platter order'} data-type={t.value} checked={i === 0} />
@@ -57,13 +61,13 @@ const types = [
             {g.note && <p class="of__note">{g.note}</p>}
             {g.items.map((it) => (
               <div class="of__row" data-name={it.name} data-price={it.price.replace('$', '')}>
-                <label class="of__name" for={`q-${it.key}`}>{it.name}{it.serves && <span class="of__serves"> · {it.serves}</span>}</label>
+                <label class="of__name" for={`q-${it.key}`}>{it.label}{it.serves && <span class="of__serves"> · {it.serves}</span>}</label>
                 <span class="of__price">{it.price}</span>
-                <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`Quantity of ${it.name}`} />
+                <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`${t.quantityOf} ${it.label}`} />
                 {it.filling && (
-                  <select class="of__filling" name={`filling-${it.key}`} aria-label={`Filling for ${it.name}`}>
-                    <option value="" selected disabled>Choose a filling</option>
-                    {pierogi.fillings.map((f) => <option>{f}</option>)}
+                  <select class="of__filling" name={`filling-${it.key}`} aria-label={`${t.fillingFor} ${it.label}`}>
+                    <option value="" selected disabled>{t.chooseFilling}</option>
+                    {pierogi.fillings.map((f) => <option value={f}>{tr(lang, f)}</option>)}
                   </select>
                 )}
               </div>
@@ -74,32 +78,32 @@ const types = [
 
       <aside class="of__side">
         <div class="of__box">
-          <h3>Pickup</h3>
-          <label class="of__field">Store
+          <h3>{t.pickup}</h3>
+          <label class="of__field">{t.store}
             <select name="store" required>
               {stores.map((s) => <option value={s.city}>{s.city}, {s.locality.split(', ')[1].split(' ')[0]} · {s.street}</option>)}
             </select>
           </label>
           <div class="of__two">
-            <label class="of__field">Date<input name="pickup-date" type="date" min={today} required /></label>
-            <label class="of__field">Time<input name="pickup-time" type="time" required /></label>
+            <label class="of__field">{t.date}<input name="pickup-date" type="date" min={today} required /></label>
+            <label class="of__field">{t.time}<input name="pickup-time" type="time" required /></label>
           </div>
 
-          <h3>Your details</h3>
-          <label class="of__field">Name<input name="name" type="text" autocomplete="name" required /></label>
-          <label class="of__field">Phone<input name="phone" type="tel" autocomplete="tel" required /></label>
-          <label class="of__field">Email<input name="email" type="email" autocomplete="email" required /></label>
-          <label class="of__field">Notes<textarea name="notes" rows="3" placeholder="Allergies, special requests…"></textarea></label>
+          <h3>{t.yourDetails}</h3>
+          <label class="of__field">{t.fullName}<input name="name" type="text" autocomplete="name" required /></label>
+          <label class="of__field">{t.phone}<input name="phone" type="tel" autocomplete="tel" required /></label>
+          <label class="of__field">{t.email}<input name="email" type="email" autocomplete="email" required /></label>
+          <label class="of__field">{t.notes}<textarea name="notes" rows="3" placeholder={t.notesHint}></textarea></label>
 
           <div class="of__summary" aria-live="polite">
-            <p class="of__empty">No items yet.</p>
+            <p class="of__empty">{t.noItems}</p>
             <ul class="of__lines"></ul>
-            <p class="of__sub"><span>Subtotal</span><b data-sub>$0.00</b></p>
-            <p class="of__sub of__taxline"><span data-taxlabel>MD sales tax (6%)</span><b data-tax>$0.00</b></p>
-            <p class="of__total"><span>Estimated total</span><b>$0.00</b></p>
+            <p class="of__sub"><span>{t.subtotal}</span><b data-sub>$0.00</b></p>
+            <p class="of__sub of__taxline"><span data-taxlabel>{t.taxMd}</span><b data-tax>$0.00</b></p>
+            <p class="of__total"><span>{t.estTotal}</span><b>$0.00</b></p>
           </div>
-          <p class="of__error" role="alert" hidden>Please add at least one item.</p>
-          <button class="of__send" type="submit">Send order</button>
+          <p class="of__error" role="alert" hidden>{t.addItem}</p>
+          <button class="of__send" type="submit">{t.sendOrder}</button>
         </div>
       </aside>
     </div>
@@ -138,7 +142,7 @@ const types = [
     const tax = md ? Math.round(sub * TAX_MD * 100) / 100 : 0;
     const total = sub + tax;
     form.querySelector('[data-sub]').textContent = money(sub);
-    form.querySelector('[data-taxlabel]').textContent = md ? 'MD sales tax (6%)' : 'Sales tax (added at pickup)';
+    form.querySelector('[data-taxlabel]').textContent = md ? form.dataset.taxMd : form.dataset.taxLater;
     form.querySelector('[data-tax]').textContent = md ? money(tax) : '—';
     totalEl.textContent = money(total);
     empty.hidden = items.length > 0;

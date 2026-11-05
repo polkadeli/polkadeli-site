@@ -1,8 +1,12 @@
 ---
 // Shop ("Polish Groceries"): store-aisle layout. Products come from src/data/groceries.js.
-import Base from '../layouts/Base.astro';
-import { columns } from '../data/groceries.js';
-import '../styles/shop.css';
+import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import { columns } from '../../data/groceries.js';
+import '../../styles/shop.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
 
 const groups = columns.flat();
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -22,25 +26,25 @@ const photo = (t) => photoFor[t] ?? '/images/media/groceries.jpg';
 const name = (i) => (typeof i === 'string' ? i : i.name);
 const note = (i) => (typeof i === 'string' ? '' : i.note);
 ---
-<Base title="Polish Groceries · Polka Deli" description="Polish groceries at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.">
+<Base title={t.shopTitle} description={t.shopDesc}>
   <div class="shop">
     <header class="shop__head">
-      <h1>Polish Groceries</h1>
-      <p>If you don't see a product listed below please ask, we often add products, and can also custom order if a product is available.</p>
+      <h1>{t.shopH1}</h1>
+      <p>{t.shopIntro}</p>
     </header>
 
     <div class="shop__body">
-      <nav class="shop__side" aria-label="Grocery categories">
-        {groups.map((g) => <a href={`#${slug(g.title)}`}>{g.title}</a>)}
+      <nav class="shop__side" aria-label={t.shopCats}>
+        {groups.map((g) => <a href={`#${slug(g.title)}`}>{tr(lang, g.title)}</a>)}
       </nav>
 
       <div>
         {groups.map((g) => (
           <section class="aisle" id={slug(g.title)} aria-labelledby={`h-${slug(g.title)}`}>
             <div class="aisle__body">
-              <h2 class="aisle__title" id={`h-${slug(g.title)}`}><img class="aisle__dot" src={photo(g.title)} alt="" loading="lazy" />{g.title}{g.tag && <span> {g.tag}</span>}</h2>
+              <h2 class="aisle__title" id={`h-${slug(g.title)}`}><img class="aisle__dot" src={photo(g.title)} alt="" loading="lazy" />{tr(lang, g.title)}{g.tag && <span> {tr(lang, g.tag)}</span>}</h2>
               <ul class="aisle__list">
-                {g.items.map((i) => <li>{name(i)}{note(i) && <em> {note(i)}</em>}</li>)}
+                {g.items.map((i) => <li>{tr(lang, name(i), g.title)}{note(i) && <em> {tr(lang, note(i), g.title)}</em>}</li>)}
               </ul>
             </div>
           </section>

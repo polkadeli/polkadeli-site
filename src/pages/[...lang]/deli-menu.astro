@@ -1,10 +1,14 @@
 ---
 // Deli Menu and Platters on one page. All items and prices come from src/data/menu.js.
-import Base from '../layouts/Base.astro';
-import OrderForm from '../components/OrderForm.astro';
-import { business, stores } from '../data/site.js';
-import { pierogi, sandwiches, entrees, platters } from '../data/menu.js';
-import '../styles/menu-page.css';
+import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import OrderForm from '../../components/OrderForm.astro';
+import { business, stores } from '../../data/site.js';
+import { pierogi, sandwiches, entrees, platters } from '../../data/menu.js';
+import '../../styles/menu-page.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
 const ss = stores[0];
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 // Platters as a 2x2 grid so each row lines up: Cold Cuts | Party Trays, then Cake | Bread.
@@ -12,16 +16,16 @@ const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
 const platterGrid = ['Cold Cut Platters', 'Party Trays', 'Cake Platter', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
 const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
 const tabs = [
-  ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
-  ...platterTabs.map((g) => [slug(g.heading), g.heading]),
-  ['order', 'Order online'],
+  ['pierogi', 'Pierogi'], ['sandwiches', tr(lang, 'Sandwiches')], ['entrees', tr(lang, 'Entrees')],
+  ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading)]),
+  ['order', t.orderOnline],
 ];
 ---
-<Base title="Deli Menu & Platters · Polka Deli" description="Pierogi, sandwiches, Polish entrees and party platters from Polka Deli. Call 301-384-3354 or email your order.">
+<Base title={t.menuTitle} description={t.menuDesc}>
   <div class="mp">
-    <h1 class="mp-title mp-title--photo"><img src="/images/media/printed-menu-2.jpg" alt="Polka Deli printed menu: Menu, always fresh" /></h1>
+    <h1 class="mp-title mp-title--photo"><img src="/images/media/printed-menu-2.jpg" alt={t.menuAlt} /></h1>
 
-    <nav class="mp-tabs" aria-label="Menu sections">
+    <nav class="mp-tabs" aria-label={t.menuSections}>
       <div class="mp-wrap">
         {tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
       </div>
@@ -29,7 +33,7 @@ const tabs = [
 
     <div class="mp-wrap">
       <section class="mp-group" id="deli">
-        <h2 class="mp-group__title">Deli Menu</h2>
+        <h2 class="mp-group__title">{t.deliMenu}</h2>
 
         <div class="mp-grid">
           <div class="mp-col">
@@ -37,30 +41,30 @@ const tabs = [
               <h3>Pierogi</h3>
               <ul class="mp-items mp-items--split">
                 {pierogi.prices.map(([size, price]) => (
-                  <li><p class="mp-item"><span>{size}</span><b>{price}</b></p></li>
+                  <li><p class="mp-item"><span>{tr(lang, size)}</span><b>{price}</b></p></li>
                 ))}
               </ul>
-              <p class="mp-pick"><span>Pick one:</span> {pierogi.fillings.join(', ')}</p>
-              <p class="mp-note">{pierogi.servedWith}</p>
+              <p class="mp-pick"><span>{t.pickOne}</span> {pierogi.fillings.map((f) => tr(lang, f)).join(', ')}</p>
+              <p class="mp-note">{tr(lang, pierogi.servedWith)}</p>
             </section>
             <section class="mp-cat" id="sandwiches">
-              <h3>Sandwiches <span class="mp-badge">{sandwiches.price} each</span></h3>
+              <h3>{tr(lang, 'Sandwiches')} <span class="mp-badge">{sandwiches.price} {t.each}</span></h3>
               <ul class="mp-items">
                 {sandwiches.items.map((item) => (
-                  <li><p class="mp-item"><span>{item.name}</span></p><p class="mp-desc">{item.desc}</p></li>
+                  <li><p class="mp-item"><span>{tr(lang, item.name)}</span></p><p class="mp-desc">{tr(lang, item.desc)}</p></li>
                 ))}
               </ul>
-              <p class="mp-note">{sandwiches.side[0]} <b>{sandwiches.side[1]}</b></p>
+              <p class="mp-note">{tr(lang, sandwiches.side[0])} <b>{sandwiches.side[1]}</b></p>
             </section>
           </div>
           <div class="mp-col">
             <section class="mp-cat" id="entrees">
-              <h3>Entrees</h3>
+              <h3>{tr(lang, 'Entrees')}</h3>
               <ul class="mp-items">
                 {entrees.map((item) => (
                   <li>
-                    <p class="mp-item"><span>{item.name}{item.note && <em> {item.note}</em>}</span><b>{item.price}</b></p>
-                    {item.desc && <p class="mp-desc">{item.desc}</p>}
+                    <p class="mp-item"><span>{tr(lang, item.name)}{item.note && <em> {tr(lang, item.note)}</em>}</span><b>{item.price}</b></p>
+                    {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
                   </li>
                 ))}
               </ul>
@@ -71,19 +75,19 @@ const tabs = [
 
       <section class="mp-group" id="platters">
         <div class="mp-group__head">
-          <h2 class="mp-group__title">Platters</h2>
-          <p class="mp-email">Order ahead with our <a href="#order">online order form</a></p>
+          <h2 class="mp-group__title">{t.platters}</h2>
+          <p class="mp-email">{t.orderAhead} <a href="#order">{t.orderFormLink}</a></p>
         </div>
         <div class="mp-grid">
           {platterGrid.map((g) => (
             <section class="mp-cat" id={slug(g.heading)}>
-              <h3>{g.heading}{g.serves && <span class="mp-badge mp-badge--line">{g.serves}</span>}</h3>
+              <h3>{tr(lang, g.heading)}{g.serves && <span class="mp-badge mp-badge--line">{tr(lang, g.serves)}</span>}</h3>
               <ul class="mp-items">
                 {g.items.map((item) => (
                   <li>
-                    <p class="mp-item"><span>{item.name}</span><b>{item.price}</b></p>
-                    {item.desc && <p class="mp-desc">{item.desc}</p>}
-                    {item.list && <ul class="mp-list">{item.list.map((l) => <li>{l}</li>)}</ul>}
+                    <p class="mp-item"><span>{tr(lang, item.name)}</span><b>{item.price}</b></p>
+                    {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
+                    {item.list && <ul class="mp-list">{item.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
                   </li>
                 ))}
               </ul>

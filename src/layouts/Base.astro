@@ -1,5 +1,6 @@
 ---
 import { business, stores, nav } from '../data/site.js';
+import { langOf, href, switchHref, hours, tr, ui } from '../i18n.js';
 import SocialIcons from '../components/SocialIcons.astro';
 import PrivacyPolicy from '../components/PrivacyPolicy.astro';
 import '../styles/tokens.css';
@@ -7,12 +8,17 @@ import '../styles/base.css';
 import '../styles/header.css';
 import '../styles/footer.css';
 import '../styles/legal.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
 const {
-  title = 'Polka Deli · Polish Food & Market in Silver Spring, MD and Vienna, VA',
-  description = 'Authentic Polish groceries and food prepared daily. Kielbasa, deli meats, pierogi, cheese, sweets and party platters in Silver Spring, MD and Vienna, VA.',
+  title = t.siteTitle,
+  description = t.siteDesc,
   overlay = false, // true: header sits transparent over a full-screen photo (home page)
 } = Astro.props;
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = Astro.url.pathname.replace(/^\/pl(?=\/|$)/, '').replace(/\/$/, '') || '/';
+const links = nav.map((n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href }));
+// Links to this same page in English and in Polish (EN | PL switch)
+const sw = { en: switchHref(Astro.url, 'en'), pl: switchHref(Astro.url, 'pl') };
 const jsonLd = stores.map((s) => ({
   '@context': 'https://schema.org',
   '@type': 'GroceryStore',
@@ -24,7 +30,7 @@ const jsonLd = stores.map((s) => ({
 }));
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -36,23 +42,29 @@ const jsonLd = stores.map((s) => ({
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="alternate" hreflang="en" href={new URL(sw.en, Astro.site)} />
+  <link rel="alternate" hreflang="pl" href={new URL(sw.pl, Astro.site)} />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">{t.skip}</a>
   <header class:list={['site-header', overlay ? 'site-header--overlay' : 'is-solid']}>
     <div class="site-header__bar">
-      <a class="site-header__logo" href="/" aria-label="Polka Deli home">
+      <a class="site-header__logo" href={href('/', lang)} aria-label={t.home}>
         <img class="logo-white" src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
         <img class="logo-color" src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
       </a>
       <nav class="site-nav" aria-label="Main">
         <ul class="site-nav__links">
-          {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+          {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
         </ul>
       </nav>
+      <div class="lang-switch" role="group" aria-label={t.language}>
+        <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+        <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
+      </div>
       <div class="phone-menu">
-        <button type="button" class="phone-menu__btn social-link" aria-label="Call a store" aria-expanded="false" aria-controls="phone-list">
+        <button type="button" class="phone-menu__btn social-link" aria-label={t.callStore} aria-expanded="false" aria-controls="phone-list">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
         </button>
         <ul class="phone-menu__list" id="phone-list" hidden>
@@ -62,18 +74,18 @@ const jsonLd = stores.map((s) => ({
         </ul>
       </div>
       <div class="site-header__social"><SocialIcons size={24} /></div>
-      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
-      <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">{t.orderUber}</a>
+      <button class="menu-button" type="button" aria-label={t.openMenu} aria-expanded="false" aria-controls="drawer">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
   <div class="drawer" id="drawer" hidden>
-    <button class="drawer__close" type="button" aria-label="Close menu">×</button>
+    <button class="drawer__close" type="button" aria-label={t.closeMenu}>×</button>
     <ul class="drawer__links">
-      {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+      {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
-    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
+    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">{t.orderUber}</a>
     <div class="drawer__social"><SocialIcons size={26} /></div>
   </div>
 
@@ -87,26 +99,26 @@ const jsonLd = stores.map((s) => ({
             <h2>{s.city}</h2>
             <p><a href={s.maps}>{s.street},<br />{s.locality}</a></p>
             <p><a href={s.phoneHref}>{s.phone}</a></p>
-            <dl class="footer-hours">{s.hours.map(([d, h]) => <div><dt>{d}</dt><dd>{h}</dd></div>)}</dl>
+            <dl class="footer-hours">{s.hours.map(([d, h]) => <div><dt>{tr(lang, d)}</dt><dd>{hours(lang, h)}</dd></div>)}</dl>
           </div>
         ))}
         <div class="footer-column">
-          <h2>Contact us</h2>
-          <p><a href="/find-us#contact-title">Send us a message</a></p>
+          <h2>{t.contactUs}</h2>
+          <p><a href={href('/find-us#contact-title', lang)}>{t.sendMessage}</a></p>
           <div class="footer-social"><SocialIcons size={24} /></div>
         </div>
       </div>
       <div class="footer-copy">
-        <span>© {new Date().getFullYear()} Polka Deli · Polish Food &amp; Market</span>
-        <span><a href="/#privacy" data-privacy>Privacy</a></span>
+        <span>© {new Date().getFullYear()} {t.copy}</span>
+        <span><a href={href('/#privacy', lang)} data-privacy>{t.privacy}</a></span>
       </div>
     </div>
   </footer>
 
   <dialog class="privacy-dialog" id="privacy" aria-labelledby="privacy-title">
     <div class="privacy-dialog__head">
-      <h2 id="privacy-title">Privacy Policy</h2>
-      <button type="button" class="privacy-dialog__close" aria-label="Close privacy policy">×</button>
+      <h2 id="privacy-title">{t.privacyPolicy}</h2>
+      <button type="button" class="privacy-dialog__close" aria-label={t.closePrivacy}>×</button>
     </div>
     <div class="privacy-dialog__body"><PrivacyPolicy /></div>
   </dialog>

@@ -435,3 +435,15 @@ main p {
     grid-template-columns: 1fr;
   }
 }
+
+/* Polish headline is longer: let it run wider so it stays at three lines */
+html[lang='pl'] .hero h1 {
+  max-width: 22ch;
+  font-size: 56px;
+}
+
+@media (max-width: 900px) {
+  html[lang='pl'] .hero h1 {
+    font-size: 36px;
+  }
+}

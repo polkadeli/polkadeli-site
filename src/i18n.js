@@ -1,0 +1,325 @@
+// English / Polish. English pages live at /…, Polish pages at /pl/….
+// Page text: `ui` below. Menu and shop items keep their English names in src/data and are
+// translated here (`pl`), so prices and items are still edited in one place.
+// Polish text was translated from the English site: have a native speaker check it.
+
+export const langs = ['en', 'pl'];
+
+// Language of the current page, from its address.
+export const langOf = (url) => (url.pathname === '/pl' || url.pathname.startsWith('/pl/') ? 'pl' : 'en');
+
+// getStaticPaths for pages in src/pages/[...lang]/: one English and one Polish copy.
+export const langPaths = () => [{ params: { lang: undefined } }, { params: { lang: 'pl' } }];
+
+// Address of a page in a language: href('/shop', 'pl') → '/pl/shop', href('/#about', 'pl') → '/pl/#about'.
+export const href = (path, lang) => {
+  if (lang !== 'pl') return path;
+  return path === '/' ? '/pl/' : `/pl${path}`;
+};
+
+// The same page in the other language.
+export const switchHref = (url, to) => {
+  const p = url.pathname.replace(/^\/pl(?=\/|$)/, '') || '/';
+  return href(p, to);
+};
+
+// Shop store hours: 24-hour times in Polish ("11:00 am – 6:30 pm" → "11:00 – 18:30").
+const to24 = (s) => s.replace(/(\d{1,2}):(\d{2}) (am|pm)/g, (_, h, m, ap) => `${(+h % 12) + (ap === 'pm' ? 12 : 0)}:${m}`);
+export const hours = (lang, s) => (lang === 'pl' ? to24(s) : s);
+
+// Translate a piece of menu or shop data (English text → Polish). Unknown text stays English.
+export const tr = (lang, s, group) => {
+  if (lang !== 'pl' || !s) return s;
+  return (group && pl.groups[group]?.[s]) ?? pl.words[s] ?? s;
+};
+
+export const ui = {
+  en: {
+    siteTitle: 'Polka Deli · Polish Food & Market in Silver Spring, MD and Vienna, VA',
+    siteDesc: 'Authentic Polish groceries and food prepared daily. Kielbasa, deli meats, pierogi, cheese, sweets and party platters in Silver Spring, MD and Vienna, VA.',
+    nav: { '/deli-menu': 'Our Menu', '/shop': 'Shop', '/#about': 'About', '/find-us': 'Visit us' },
+    skip: 'Skip to content',
+    home: 'Polka Deli home',
+    callStore: 'Call a store',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    language: 'Language',
+    orderUber: 'Order with Uber Eats',
+    contactUs: 'Contact us',
+    sendMessage: 'Send us a message',
+    copy: 'Polka Deli · Polish Food & Market',
+    privacy: 'Privacy',
+    privacyPolicy: 'Privacy Policy',
+    closePrivacy: 'Close privacy policy',
+    // Home
+    tagline: 'Authentic Polish groceries and food prepared daily',
+    welcome: 'Welcome to Polka Deli',
+    joinList: 'Join our mailing list to receive special offers',
+    name: 'Name',
+    emailAddress: 'Email Address',
+    privacyLink: 'Privacy policy',
+    subscribe: 'Subscribe Now',
+    shipping: 'International parcel shipping service available at our stores',
+    exploreMenu: 'Explore Full Menu',
+    // About
+    aboutHello: "Hello! We're glad you're here!",
+    aboutWho: ["We are Maria and Joanna, Polish natives, friends,", " and we're pretty good cooks."],
+    aboutText: 'Our love of Poland, cooking and Polish food is what brought us here. We wanted one place where you could find everything that reminded us of home: Polish goods, groceries, and the most beloved homemade Polish dishes, made fresh to order.',
+    aboutAlt: 'Maria and Joanna in the store',
+    // Menu page
+    menuTitle: 'Deli Menu & Platters · Polka Deli',
+    menuDesc: 'Pierogi, sandwiches, Polish entrees and party platters from Polka Deli. Call 301-384-3354 or order online.',
+    menuAlt: 'Polka Deli printed menu: Menu, always fresh',
+    menuSections: 'Menu sections',
+    deliMenu: 'Deli Menu',
+    pickOne: 'Pick one:',
+    each: 'each',
+    platters: 'Platters',
+    orderAhead: 'Order ahead with our',
+    orderFormLink: 'online order form',
+    // Order form
+    orderOnline: 'Order online',
+    orderIntro: 'Choose your items and a pickup time. Please provide best phone number to reach you to confirm your order. Platters require 48 hours notice.',
+    orderType: 'Order type',
+    deliOrder: 'Deli order',
+    deliHint: 'Pierogi, sandwiches and entrees',
+    platterOrder: 'Platter order',
+    platterHint: 'Cold cut, bread, party and cake platters · 48 hours notice',
+    quantityOf: 'Quantity of',
+    fillingFor: 'Filling for',
+    chooseFilling: 'Choose a filling',
+    pickup: 'Pickup',
+    store: 'Store',
+    date: 'Date',
+    time: 'Time',
+    yourDetails: 'Your details',
+    fullName: 'Name',
+    phone: 'Phone',
+    email: 'Email',
+    notes: 'Notes',
+    notesHint: 'Allergies, special requests…',
+    noItems: 'No items yet.',
+    subtotal: 'Subtotal',
+    taxMd: 'MD sales tax (6%)',
+    taxLater: 'Sales tax (added at pickup)',
+    estTotal: 'Estimated total',
+    addItem: 'Please add at least one item.',
+    sendOrder: 'Send order',
+    // Shop
+    shopTitle: 'Polish Groceries · Polka Deli',
+    shopDesc: 'Polish groceries at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.',
+    shopH1: 'Polish Groceries',
+    shopIntro: "If you don't see a product listed below please ask, we often add products, and can also custom order if a product is available.",
+    shopCats: 'Grocery categories',
+    // Visit us
+    visitTitle: 'Visit Us · Polka Deli',
+    visitDesc: 'Polka Deli store hours and directions: Silver Spring, MD (13438 New Hampshire Ave) and Vienna, VA (431 Maple Ave W).',
+    visitUs: 'Visit us',
+    visitAlt: 'Kielbasa and cold cuts in the Polka Deli deli case',
+    storeHours: 'Store hours',
+    contactTitle: 'Suggestions? Contact us',
+    contactText: ['For questions about any of our products, or help with placing your order, send us a message using the form, or', 'give us a call.'],
+    followUs: 'Follow us',
+    message: 'Message',
+    send: 'Send',
+    leaveEmpty: 'Leave this empty',
+    // Thanks
+    thanksTitle: 'Thank you · Polka Deli',
+    thanksDesc: 'Thanks for getting in touch with Polka Deli.',
+    thankYou: 'Thank You',
+    thanksMsg: 'Thanks! We got your message and will be in touch soon.',
+    thanksOrder: "Thank you for your order! We'll call you to confirm it before your pickup time.",
+    backHome: 'Back to the homepage',
+    backMenu: 'Back to the menu',
+  },
+  pl: {
+    siteTitle: 'Polka Deli · Polskie delikatesy w Silver Spring, MD i Vienna, VA',
+    siteDesc: 'Autentyczne polskie produkty i jedzenie przygotowywane codziennie. Kiełbasy, wędliny, pierogi, sery, słodycze i półmiski na przyjęcia w Silver Spring, MD i Vienna, VA.',
+    nav: { '/deli-menu': 'Nasze menu', '/shop': 'Sklep', '/#about': 'O nas', '/find-us': 'Odwiedź nas' },
+    skip: 'Przejdź do treści',
+    home: 'Polka Deli, strona główna',
+    callStore: 'Zadzwoń do sklepu',
+    openMenu: 'Otwórz menu',
+    closeMenu: 'Zamknij menu',
+    language: 'Język',
+    orderUber: 'Zamów przez Uber Eats',
+    contactUs: 'Kontakt',
+    sendMessage: 'Napisz do nas',
+    copy: 'Polka Deli · Polish Food & Market',
+    privacy: 'Prywatność',
+    privacyPolicy: 'Polityka prywatności',
+    closePrivacy: 'Zamknij politykę prywatności',
+    tagline: 'Autentyczne polskie produkty i jedzenie przygotowywane codziennie',
+    welcome: 'Witamy w Polka Deli',
+    joinList: 'Zapisz się do naszego newslettera, aby otrzymywać oferty specjalne',
+    name: 'Imię',
+    emailAddress: 'Adres e-mail',
+    privacyLink: 'Polityka prywatności',
+    subscribe: 'Zapisz się',
+    shipping: 'W naszych sklepach można nadać paczkę za granicę',
+    exploreMenu: 'Zobacz całe menu',
+    aboutHello: 'Dzień dobry! Cieszymy się, że tu jesteś!',
+    aboutWho: ['Jesteśmy Maria i Joanna, rodowite Polki, przyjaciółki,', ' i całkiem niezłe kucharki.'],
+    aboutText: 'To miłość do Polski, gotowania i polskiego jedzenia nas tu sprowadziła. Chciałyśmy stworzyć jedno miejsce, w którym znajdziesz wszystko, co przypomina nam dom: polskie produkty, artykuły spożywcze i najbardziej lubiane domowe polskie dania, przygotowywane na bieżąco.',
+    aboutAlt: 'Maria i Joanna w sklepie',
+    menuTitle: 'Menu i półmiski · Polka Deli',
+    menuDesc: 'Pierogi, kanapki, polskie dania i półmiski na przyjęcia z Polka Deli. Zadzwoń pod 301-384-3354 lub zamów online.',
+    menuAlt: 'Drukowane menu Polka Deli: Menu, zawsze świeże',
+    menuSections: 'Sekcje menu',
+    deliMenu: 'Menu deli',
+    pickOne: 'Do wyboru:',
+    each: 'za sztukę',
+    platters: 'Półmiski',
+    orderAhead: 'Zamów z wyprzedzeniem przez nasz',
+    orderFormLink: 'formularz zamówień online',
+    orderOnline: 'Zamów online',
+    orderIntro: 'Wybierz produkty i godzinę odbioru. Podaj numer telefonu, pod którym najłatwiej Cię złapać, abyśmy mogli potwierdzić zamówienie. Półmiski trzeba zamówić 48 godzin wcześniej.',
+    orderType: 'Rodzaj zamówienia',
+    deliOrder: 'Zamówienie z deli',
+    deliHint: 'Pierogi, kanapki i dania główne',
+    platterOrder: 'Zamówienie półmisków',
+    platterHint: 'Półmiski wędlin, pieczywa, tace i patery ciast · 48 godzin wcześniej',
+    quantityOf: 'Ilość:',
+    fillingFor: 'Farsz:',
+    chooseFilling: 'Wybierz farsz',
+    pickup: 'Odbiór',
+    store: 'Sklep',
+    date: 'Data',
+    time: 'Godzina',
+    yourDetails: 'Twoje dane',
+    fullName: 'Imię i nazwisko',
+    phone: 'Telefon',
+    email: 'E-mail',
+    notes: 'Uwagi',
+    notesHint: 'Alergie, specjalne życzenia…',
+    noItems: 'Brak produktów.',
+    subtotal: 'Suma częściowa',
+    taxMd: 'Podatek MD (6%)',
+    taxLater: 'Podatek (doliczany przy odbiorze)',
+    estTotal: 'Szacowana suma',
+    addItem: 'Dodaj co najmniej jeden produkt.',
+    sendOrder: 'Wyślij zamówienie',
+    shopTitle: 'Polskie produkty · Polka Deli',
+    shopDesc: 'Polskie produkty w Polka Deli: kiełbasy, sery, wędliny, mrożone pierogi i naleśniki, przetwory, słodycze i wypieki.',
+    shopH1: 'Polskie produkty',
+    shopIntro: 'Jeśli nie widzisz produktu na liście, zapytaj nas. Często dodajemy nowe produkty i możemy też sprowadzić produkt na zamówienie, jeśli jest dostępny.',
+    shopCats: 'Kategorie produktów',
+    visitTitle: 'Odwiedź nas · Polka Deli',
+    visitDesc: 'Godziny otwarcia i dojazd do Polka Deli: Silver Spring, MD (13438 New Hampshire Ave) i Vienna, VA (431 Maple Ave W).',
+    visitUs: 'Odwiedź nas',
+    visitAlt: 'Kiełbasy i wędliny w ladzie Polka Deli',
+    storeHours: 'Godziny otwarcia',
+    contactTitle: 'Masz sugestie? Napisz do nas',
+    contactText: ['Jeśli masz pytania o nasze produkty lub potrzebujesz pomocy przy zamówieniu, wyślij nam wiadomość przez formularz lub', 'zadzwoń do nas.'],
+    followUs: 'Obserwuj nas',
+    message: 'Wiadomość',
+    send: 'Wyślij',
+    leaveEmpty: 'Zostaw puste',
+    thanksTitle: 'Dziękujemy · Polka Deli',
+    thanksDesc: 'Dziękujemy za kontakt z Polka Deli.',
+    thankYou: 'Dziękujemy',
+    thanksMsg: 'Dziękujemy! Otrzymaliśmy Twoją wiadomość i wkrótce się odezwiemy.',
+    thanksOrder: 'Dziękujemy za zamówienie! Zadzwonimy, aby je potwierdzić przed godziną odbioru.',
+    backHome: 'Wróć na stronę główną',
+    backMenu: 'Wróć do menu',
+  },
+};
+
+// Polish names for menu and shop data. `groups` is for words that change by shop category.
+const pl = {
+  words: {
+    // Days
+    'Mon–Fri': 'Pon–Pt', Saturday: 'Sobota', Sunday: 'Niedziela',
+    // Home page cards
+    'Deli Meats and Cheeses': 'Wędliny i sery', Groceries: 'Produkty spożywcze',
+    Sandwiches: 'Kanapki', 'Hearty Entrees': 'Sycące dania', Soups: 'Zupy',
+    'Cold Cut Platters': 'Półmiski wędlin', 'Party Trays': 'Tace na przyjęcia', 'Cake Platters': 'Patery ciast', Breads: 'Pieczywo',
+    Kielbasa: 'Kiełbasy', 'Deli Meats and Cheese': 'Wędliny i sery', 'Blintzes, Noodles': 'Naleśniki, makarony',
+    'Marinated Goods': 'Przetwory', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Półmiski',
+    // Menu
+    Entrees: 'Dania główne',
+    '12 pieces': '12 sztuk', '6 pieces': '6 sztuk',
+    'Potato & Cheese': 'Ruskie (ziemniaki i ser)', 'Meat & Kraut': 'Mięso i kapusta', 'Kraut & Mushroom': 'Kapusta i grzyby', 'Mix Pierogi': 'Pierogi mieszane',
+    'Served with onions and sour cream': 'Podawane z cebulką i śmietaną',
+    'Smoked Kielbasa': 'Kiełbasa wędzona', 'Sub roll, kraut, grilled onions, mustard, horseradish sauce': 'Bułka, kapusta, grillowana cebula, musztarda, sos chrzanowy',
+    'Sub roll, bacon, lettuce, tomato': 'Bułka, bekon, sałata, pomidor',
+    'Kielbasa Reuben': 'Reuben z kiełbasą', 'Rye bread, cheese, kraut, Russian dressing': 'Chleb żytni, ser, kapusta, sos rosyjski',
+    'Pork Schnitzel': 'Sznycel wieprzowy', 'Sub roll, lettuce, tomato, horseradish sauce': 'Bułka, sałata, pomidor, sos chrzanowy',
+    'Ham or Turkey & Cheese': 'Szynka lub indyk z serem', 'Sub roll, lettuce, tomato, mayo, mustard': 'Bułka, sałata, pomidor, majonez, musztarda',
+    'Add a side of Polish potato salad': 'Dodaj porcję polskiej sałatki ziemniaczanej',
+    'Sweet Cheese Crepes': 'Naleśniki z serem na słodko', '3 crepes served with fruit jam and sour cream': '3 naleśniki z dżemem owocowym i śmietaną',
+    'Stuffed Cabbage & Roasted Potatoes': 'Gołąbki z pieczonymi ziemniakami', 'Topped with tomato sauce': 'Polane sosem pomidorowym',
+    'Kielbasa w/ Rye Bread & Potato Salad': 'Kiełbasa z chlebem żytnim i sałatką ziemniaczaną', '(fresh or smoked)': '(biała lub wędzona)',
+    'Kraut, grilled onions, mustard, horseradish sauce': 'Kapusta, grillowana cebula, musztarda, sos chrzanowy',
+    'Kielbasa & 4 Pierogi': 'Kiełbasa i 4 pierogi',
+    'Polish Sampler': 'Polski zestaw', 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce': 'Kiełbasa biała i wędzona, 4 pierogi, kapusta, grillowana cebula, musztarda, sos chrzanowy',
+    'Schnitzel & Potato Dumplings': 'Sznycel z kopytkami', '(pork or chicken)': '(wieprzowy lub z kurczaka)', 'Sauerkraut, horseradish sauce': 'Kiszona kapusta, sos chrzanowy',
+    'Soup of the Day': 'Zupa dnia',
+    // Platters
+    'Serve 15–18': '15–18 osób', 'Serve 6': '6 osób', 'Serves 8–10': '8–10 osób',
+    'Kielbasa Platter': 'Półmisek kiełbas', 'Variety of smoked kielbasa': 'Różne kiełbasy wędzone',
+    'Cheese Platter': 'Półmisek serów', 'Variety of cheese': 'Różne sery',
+    'Mixed Platter': 'Półmisek mieszany', 'Variety of kielbasa, cheese and cold cuts': 'Różne kiełbasy, sery i wędliny',
+    'Bread Tray': 'Taca pieczywa', 'Variety of breads and condiments': 'Różne pieczywo i dodatki',
+    'Polish Feast': 'Polska uczta', '3 Pork Schnitzels': '3 sznycle wieprzowe', '3 Stuffed Cabbages': '3 gołąbki',
+    '6 Grilled Kielbasas with Kraut and Onion': '6 grillowanych kiełbas z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
+    '1 lb Salad': '1 funt sałatki', 'Grilled Kielbasa & Pierogi': 'Grillowana kiełbasa i pierogi', '24 Pierogi (potato & cheese)': '24 pierogi ruskie',
+    'Cake Platter': 'Patera ciast', 'Polish Cake Platter': 'Patera polskich ciast', 'Variety of Polish cakes and cheesecakes': 'Różne polskie ciasta i serniki',
+    // Shop categories and notes
+    Cheese: 'Sery', 'Deli Meats': 'Wędliny', Blintzes: 'Naleśniki', Sweets: 'Słodycze', 'Baked Goods': 'Wypieki', Other: 'Inne',
+    '(Frozen)': '(mrożone)', '(Assorted flavors)': '(różne smaki)',
+  },
+  groups: {
+    Kielbasa: {
+      Wedding: 'Weselna', Traditional: 'Tradycyjna', Hunters: 'Myśliwska', Original: 'Oryginalna', Juniper: 'Jałowcowa',
+      Cherrywood: 'Wędzona drewnem wiśniowym', 'Kabanosy Mini': 'Kabanosy mini', 'Kabanosy, spicy': 'Kabanosy ostre',
+      'Fresh kielbasa': 'Biała kiełbasa', 'Cracow dry Kielbasa': 'Krakowska sucha', 'Zywiecka Kielbasa': 'Żywiecka',
+      'Ring Kielbasa': 'Kiełbasa w pętach', Homemade: 'Domowa',
+    },
+    Cheese: { Krolewicz: 'Królewicz', Krolewski: 'Królewski', 'Krolewski smoked': 'Królewski wędzony', 'Radamer Hard': 'Radamer twardy' },
+    'Deli Meats': {
+      Kiszka: 'Kaszanka', 'Chicken Wieners': 'Parówki z kurczaka', 'Veal Wieners': 'Parówki cielęce', 'Pork Wieners': 'Parówki wieprzowe',
+      'Pork/Veal Wieners': 'Parówki wieprzowo-cielęce', 'Tyrolian Ham': 'Szynka tyrolska', 'Gypsy Ham': 'Szynka cygańska',
+      'Traditional Ham': 'Szynka tradycyjna', 'Polish Ham': 'Szynka polska', Mortadella: 'Mortadela', 'Pork Butt': 'Karkówka',
+      'Stuffed Bacon': 'Boczek faszerowany', 'Canadian Bacon': 'Bekon kanadyjski', 'Cold Smoked Pork Loin': 'Schab wędzony na zimno',
+      'Homemade Pork Loin': 'Schab domowy', 'Smoked Liver Sausage': 'Pasztetowa wędzona', 'Liver Sausage': 'Pasztetowa',
+      'Homemade Pate': 'Pasztet domowy', 'Country Headcheese': 'Salceson wiejski', 'Pork Blood Tongue': 'Salceson ozorkowy czarny',
+      'Pork Tongue': 'Ozorki wieprzowe', 'Chicken Headcheese': 'Salceson drobiowy', 'Danish Bacon': 'Boczek duński',
+      'Smoked Turkey': 'Indyk wędzony', 'Picante salami': 'Salami pikantne', 'Hungarian Salami': 'Salami węgierskie',
+      'Old Forest Salami': 'Salami staropolskie', 'Hunter Bacon': 'Boczek myśliwski', 'Smoked Ribs': 'Żeberka wędzone',
+      'Hot Smoked Mackerel': 'Makrela wędzona na gorąco', Meatloaf: 'Pieczeń rzymska', 'Bacon Roll': 'Boczek zwijany',
+    },
+    Pierogi: {
+      Meat: 'Z mięsem', Sauerkraut: 'Z kapustą', 'Sauerkraut & Mushroom': 'Z kapustą i grzybami',
+      'Sauerkraut, Potato & Bacon': 'Z kapustą, ziemniakami i boczkiem', Beef: 'Z wołowiną', 'Potato & Cheese': 'Ruskie',
+      'Potato & Cheddar': 'Z ziemniakami i cheddarem', 'Potato & Sauerkraut': 'Z ziemniakami i kapustą',
+      'Potato & Mushroom': 'Z ziemniakami i grzybami', Potato: 'Z ziemniakami', 'Sweet Cheese': 'Z serem na słodko',
+      Fruit: 'Z owocami', Mushroom: 'Z grzybami', 'Silesian Dumplings (Kluski Slaskie)': 'Kluski śląskie',
+      'Potato Dumplings (Kopytka)': 'Kopytka', 'Potato Pyzy': 'Pyzy ziemniaczane', 'Meat Pyzy': 'Pyzy z mięsem',
+    },
+    Blintzes: {
+      Peach: 'Z brzoskwiniami', Apple: 'Z jabłkami', 'Cherry Cheese': 'Z serem i wiśniami',
+      'Strawberry Cheese': 'Z serem i truskawkami', 'Sweet cheese': 'Z serem na słodko',
+    },
+    'Marinated Goods': {
+      Pickles: 'Ogórki konserwowe', Sauerkraut: 'Kapusta kiszona', 'Red Cabbage': 'Czerwona kapusta',
+      'Cucumbers in Brine': 'Ogórki kiszone', 'Sweet Red Pepper': 'Słodka czerwona papryka', "Hunter's Stew (Bigos)": 'Bigos',
+      Horseradish: 'Chrzan', 'Beets w/ horseradish': 'Ćwikła z chrzanem',
+    },
+    Sweets: {
+      '(Chocolate covered marshmallow)': '(pianki w czekoladzie)', 'Jaffa Cakes': 'Delicje',
+      '(Delicje) (Orange, Raspberry, Cherry)': '(pomarańczowe, malinowe, wiśniowe)', '(Chocolate covered wafers)': '(wafelki w czekoladzie)',
+      'Milka Chocolate': 'Czekolada Milka', 'Wedel Chocolate': 'Czekolada Wedel', 'Chocolate Covered Plum': 'Śliwka w czekoladzie',
+      Krowki: 'Krówki', '(Caramel candy)': '(cukierki mleczne)', 'Gingerbread in chocolate': 'Pierniki w czekoladzie',
+    },
+    'Baked Goods': {
+      Chrusciki: 'Chruściki', Paczki: 'Pączki', 'Sweet Bun': 'Drożdżówka', Napoleon: 'Napoleonka',
+      'Apple Cherry Cake': 'Ciasto jabłkowo-wiśniowe', 'Apple Cake': 'Szarlotka', 'Poppyseed Roll': 'Makowiec',
+      'Poppyseed Cheesecake': 'Sernik z makiem',
+    },
+    Other: {
+      'Fresh Yeast': 'Drożdże świeże', 'White Borshch in box': 'Biały barszcz w kartonie',
+      'Instant Soups': 'Zupki instant', 'Instant Pudding': 'Budyń instant',
+    },
+  },
+};

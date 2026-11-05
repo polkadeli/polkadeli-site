@@ -1,12 +1,14 @@
 ---
 // "About us" block (Maria and Joanna). Used on the home page and on Visit us.
 import '../styles/about-us.css';
+import { langOf, ui } from '../i18n.js';
+const t = ui[langOf(Astro.url)];
 ---
 <section class="au" id="about" aria-labelledby="about-title">
-  <div class="au__photo"><img src="/images/media/owners.jpg" alt="Maria and Joanna in the store" loading="lazy" /></div>
+  <div class="au__photo"><img src="/images/media/owners.jpg" alt={t.aboutAlt} loading="lazy" /></div>
   <div class="au__text">
-    <h2 id="about-title">Hello! We're glad you're here!</h2>
-    <h3>We are Maria and Joanna, Polish natives, friends,<br class="au__br" /> and we're pretty good cooks.</h3>
-    <p>Our love of Poland, cooking and Polish food is what brought us here. We wanted one place where you could find everything that reminded us of home: Polish goods, groceries, and the most beloved homemade Polish dishes, made fresh to order.</p>
+    <h2 id="about-title">{t.aboutHello}</h2>
+    <h3>{t.aboutWho[0]}<br class="au__br" />{t.aboutWho[1]}</h3>
+    <p>{t.aboutText}</p>
   </div>
 </section>
