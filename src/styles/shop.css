@@ -207,3 +207,9 @@
 .shop__side {
   border-left: 0;
 }
+
+/* Category list text lines up with the page title; red marker sits just outside */
+.shop__side a {
+  margin-left: -16px;
+  padding-left: 14px;
+}
