@@ -1073,3 +1073,8 @@ main p {
   object-position: 68% bottom;
   transform-origin: 68% 100%;
 }
+
+/* Smaller owners photo */
+.about--v2 {
+  grid-template-columns: 0.7fr 1.3fr;
+}
