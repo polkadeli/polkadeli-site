@@ -570,7 +570,12 @@
 .order-menu__list a.order-menu__uber {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
+}
+
+.order-menu > .order-menu__list .order-menu__uber img {
+  order: 2; /* logo on the right */
 }
 
 .order-menu__uber img {
