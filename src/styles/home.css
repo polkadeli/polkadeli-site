@@ -957,17 +957,8 @@ main p {
   scroll-margin-top: var(--header-height);
 }
 
-/* Pierog on a fork, above the Deli Menu heading */
-.doodle-fork {
-  display: block;
-  width: 190px;
-  height: auto;
-  margin-bottom: 14px;
-  filter: invert(1);
-}
-
-@media (max-width: 900px) {
-  .doodle-fork {
-    width: 150px;
-  }
+/* Pierog on a fork divider: wider drawing */
+.doodle-divider img.doodle-divider__fork {
+  width: 170px;
+  height: 80px;
 }
