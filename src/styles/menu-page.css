@@ -392,3 +392,7 @@
   justify-content: flex-start;
   gap: 12px;
 }
+
+.mp-items--split .mp-item {
+  gap: 40px;
+}
