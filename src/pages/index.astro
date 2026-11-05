@@ -48,10 +48,10 @@ const offers = [
     <div class="hero__slides" aria-hidden="true">
       {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'hero__slide is-active' : 'hero__slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
     </div>
-    <div class="hero__copy">
-      <h1>{business.tagline}</h1>
-    </div>
+    <div class="hero__copy"></div>
     <div class="hero__foot">
+      <div class="hero__left">
+      <h1>{business.tagline}</h1>
       <div class="hero__stores">
         {stores.map((s) => (
           <div class="hero-store">
@@ -60,6 +60,7 @@ const offers = [
             <a class="hero-store__phone" href={s.phoneHref}>{s.phone}</a>
           </div>
         ))}
+      </div>
       </div>
       <form class="hero-signup" name="newsletter" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
         <h2>Join our mailing list to receive special offers</h2>

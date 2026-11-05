@@ -832,8 +832,22 @@ main p {
   }
 }
 
-/* Headline sits lower, just above the store addresses */
+/* Headline sits low, just above the store addresses */
 .hero__copy {
-  justify-content: flex-end;
-  padding-bottom: 44px;
+  padding: 0;
+}
+
+.hero__left h1 {
+  margin-bottom: 40px;
+}
+
+@media (max-width: 900px) {
+  .hero__copy {
+    min-height: 0;
+    padding-top: calc(var(--header-height) + 160px);
+  }
+
+  .hero__left h1 {
+    margin-bottom: 28px;
+  }
 }
