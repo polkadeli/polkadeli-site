@@ -338,3 +338,29 @@
   font-weight: 700;
   color: #1f1f1f;
 }
+
+/* Deli Menu heading with the email line beside it */
+.mp-tabs {
+  top: var(--header-height);
+}
+
+.mp {
+  padding-top: 0;
+}
+
+.mp-group__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 30px;
+}
+
+.mp-group__head .mp-group__title {
+  margin-bottom: 0 !important;
+}
+
+.mp-email {
+  color: #5e5e5e;
+}

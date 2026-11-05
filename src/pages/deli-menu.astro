@@ -14,12 +14,7 @@ const tabs = [
 ---
 <Base title="Deli Menu & Platters · Polka Deli" description="Pierogi, sandwiches, Polish entrees and party platters from Polka Deli. Call 301-384-3354 or email your order.">
   <div class="mp">
-    <header class="mp-head">
-      <div class="mp-wrap">
-        <h1>Deli Menu &amp; Platters</h1>
-        <p>Please call <a href={ss.phoneHref}>{ss.phone}</a> to order or email your order: <a href={orderMail}>{business.email}</a></p>
-      </div>
-    </header>
+    <h1 class="visually-hidden">Deli Menu &amp; Platters</h1>
 
     <nav class="mp-tabs" aria-label="Menu sections">
       <div class="mp-wrap">
@@ -29,7 +24,10 @@ const tabs = [
 
     <div class="mp-wrap">
       <section class="mp-group" id="deli">
-        <h2 class="mp-group__title">Deli Menu</h2>
+        <div class="mp-group__head">
+          <h2 class="mp-group__title">Deli Menu</h2>
+          <p class="mp-email">Email your order: <a href={orderMail}>{business.email}</a></p>
+        </div>
 
         <div class="mp-grid">
           <section class="mp-cat" id="pierogi">
