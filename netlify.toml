@@ -3,7 +3,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "22.23.4"   # Astro needs 22.23.4 or newer
 
 # Old Wix addresses that change on the new site
 [[redirects]]
