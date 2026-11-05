@@ -1042,3 +1042,28 @@ main p {
     font-size: 22px;
   }
 }
+
+/* About v2 tweaks: photo cropped on the left, heading on one line */
+.about--v2 {
+  grid-template-columns: 0.9fr 1.1fr;
+}
+
+.about--v2 .about__zoom {
+  aspect-ratio: 1;
+}
+
+.about--v2 .about__zoom img {
+  object-position: right bottom;
+}
+
+.about__text h2 {
+  font-size: 44px;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .about__text h2 {
+    font-size: 36px;
+    white-space: normal;
+  }
+}
