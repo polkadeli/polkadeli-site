@@ -449,3 +449,18 @@
     padding: 24px 20px 6px;
   }
 }
+
+/* Title as a photo of the printed menu card */
+.mp-title--photo {
+  padding-top: 32px;
+  padding-bottom: 8px;
+}
+
+.mp-title--photo img {
+  display: block;
+  width: 100%;
+  max-width: 1120px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 12px;
+}
