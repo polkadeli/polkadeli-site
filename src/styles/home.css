@@ -1078,3 +1078,9 @@ main p {
 .about--v2 {
   grid-template-columns: 0.7fr 1.3fr;
 }
+
+@media (max-width: 900px) {
+  .br-desk {
+    display: none;
+  }
+}
