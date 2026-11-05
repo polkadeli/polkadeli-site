@@ -212,6 +212,12 @@
   border-bottom-color: var(--color-red);
 }
 
+.postcard__privacy {
+  margin: var(--space-4) 0 0;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
 /* Spam trap, hidden from people */
 .postcard__trap {
   position: absolute;

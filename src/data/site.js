@@ -3,6 +3,7 @@ export const business = {
   name: 'Polka Deli',
   tagline: 'Authentic Polish groceries and food prepared daily',
   email: 'polkadelistore@gmail.com',
+  privacyEmail: 'info@polkadelimd.com',
   facebook: 'https://www.facebook.com/PolkaDeliMD/',
   instagram: 'https://www.instagram.com/polkadelimd',
   uberEats: 'https://www.ubereats.com/washington-dc/food-delivery/polka-deli/uOT7qknHTkWl-ivMgRA6TQ',

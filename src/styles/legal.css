@@ -1,0 +1,34 @@
+/* Long-form text pages such as Privacy: readable column, simple headings. */
+
+.legal {
+  max-width: 620px;
+  margin: var(--space-4) auto 0;
+  text-align: left;
+}
+
+.legal__date {
+  margin: 0 0 var(--space-5);
+  font-size: var(--text-sm);
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.legal h2 {
+  margin: var(--space-6) 0 var(--space-2);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-red-heading);
+}
+
+.legal p,
+.legal li {
+  line-height: 1.6;
+}
+
+.legal ul {
+  padding-left: 1.2em;
+}
+
+.legal li + li {
+  margin-top: var(--space-2);
+}
