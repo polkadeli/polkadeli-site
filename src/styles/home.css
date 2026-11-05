@@ -957,8 +957,15 @@ main p {
   scroll-margin-top: var(--header-height);
 }
 
-/* Pierog on a fork divider: wider drawing */
-.doodle-divider img.doodle-divider__fork {
-  width: 170px;
-  height: 80px;
+/* Hero badge: pierog on a fork (wide drawing) */
+.doodle-badge {
+  width: 200px;
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .doodle-badge {
+    width: 150px;
+    height: auto;
+  }
 }
