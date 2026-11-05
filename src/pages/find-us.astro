@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import VisitStores from '../components/VisitStores.astro';
 import SocialIcons from '../components/SocialIcons.astro';
-import AboutUs from '../components/AboutUs.astro';
 import { business, stores } from '../data/site.js';
 import '../styles/visit.css';
 ---
@@ -10,8 +9,6 @@ import '../styles/visit.css';
   <VisitStores />
 
   <div class="visit-rest">
-    <div class="visit-about"><AboutUs /></div>
-
     <div class="follow">
       <span>Follow us</span>
       <SocialIcons size={24} />

@@ -223,3 +223,7 @@
 .follow .social-link:hover {
   color: var(--color-red);
 }
+
+.visit-rest {
+  padding-top: 40px;
+}
