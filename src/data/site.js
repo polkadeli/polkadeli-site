@@ -6,6 +6,8 @@ export const business = {
   privacyEmail: 'info@polkadelimd.com',
   facebook: 'https://www.facebook.com/PolkaDeliMD/',
   instagram: 'https://www.instagram.com/polkadelimd',
+  // Clover Online Ordering: prepaid pickup at the Silver Spring store only
+  cloverOrder: 'https://polkadelimd.cloveronline.com',
   uberEats: 'https://www.ubereats.com/washington-dc/food-delivery/polka-deli/uOT7qknHTkWl-ivMgRA6TQ',
 };
 
