@@ -387,3 +387,8 @@
   padding: 0 0 0 24px !important;
   border-left: 1px solid #e6e6e6;
 }
+
+.mp-items--split .mp-item {
+  justify-content: flex-start;
+  gap: 12px;
+}
