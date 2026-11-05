@@ -1067,3 +1067,9 @@ main p {
     white-space: normal;
   }
 }
+
+/* Shift the crop left so Maria and Joanna sit right of center */
+.about--v2 .about__zoom img {
+  object-position: 68% bottom;
+  transform-origin: 68% 100%;
+}
