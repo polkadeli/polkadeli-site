@@ -17,12 +17,12 @@
 }
 
 .shop__head {
-  padding: 64px 0 40px;
+  padding: 44px 0 28px;
 }
 
 .shop__head h1 {
-  margin-bottom: 12px;
-  font-size: 56px;
+  margin-bottom: 8px;
+  font-size: 48px;
 }
 
 .shop__head p {
@@ -47,7 +47,7 @@
 
 .shop__side a {
   margin-left: -1px;
-  padding: 8px 16px;
+  padding: 4px 16px;
   color: #5e5e5e;
   text-decoration: none;
   border-left: 2px solid transparent;
@@ -64,58 +64,35 @@
 }
 
 .aisle {
-  margin-bottom: 52px;
+  margin-bottom: 36px;
   scroll-margin-top: calc(var(--header-height) + 24px);
 }
 
-.aisle__banner {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  height: 170px;
-  padding: 20px 24px;
-  overflow: hidden;
-  color: #fff;
-  background-position: center;
-  background-size: cover;
-  border-radius: 10px;
+.aisle__title {
+  padding-bottom: 8px;
+  font-size: 26px !important;
+  color: var(--color-red-heading);
+  border-bottom: 1px solid #1f1f1f;
 }
 
-.aisle__banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.1));
-}
-
-.aisle__banner h2,
-.aisle__banner small {
-  position: relative;
-}
-
-.aisle__banner h2 {
-  font-size: 34px;
-}
-
-.aisle__banner h2 span {
+.aisle__title span {
   font-family: var(--font-ui);
-  font-size: 0.5em;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.55em;
+  color: #5e5e5e;
 }
 
 .aisle__list {
   columns: 2;
   column-gap: 48px;
-  margin: 18px 0 0;
+  margin: 6px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .aisle__list li {
   break-inside: avoid;
-  padding: 7px 0;
-  border-bottom: 1px solid #eee;
+  padding: 3px 0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .aisle__list em {
@@ -145,41 +122,11 @@
     display: none;
   }
 
-  .aisle__banner {
-    height: 130px;
-  }
-
-  .aisle__banner h2 {
-    font-size: 28px;
+  .aisle__title {
+    font-size: 24px !important;
   }
 
   .aisle__list {
     columns: 2;
   }
 }
-
-/* ================= TEMPORARY: heading ideas (switcher) ================= */
-.cs-picker{position:fixed;left:16px;bottom:16px;z-index:60;display:flex;flex-wrap:wrap;gap:6px;align-items:center;max-width:calc(100vw - 32px);padding:10px 12px;font-size:13px;color:#fff;background:rgba(0,0,0,.88);border-radius:8px}
-.cs-picker button{padding:6px 10px;font:inherit;color:#fff;background:#3a3838;border:0;border-radius:6px;cursor:pointer}
-.cs-picker button.on{background:var(--color-red)}
-
-.aisle__thumb{display:none}
-
-/* B: slim photo strip, lighter overlay, smaller white title */
-.shop[data-shop-style='b'] .aisle__banner{height:84px;padding:0 22px;align-items:center;border-radius:0}
-.shop[data-shop-style='b'] .aisle__banner::before{background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,0) 60%)}
-.shop[data-shop-style='b'] .aisle__banner h2{font-size:28px}
-
-/* C: small photo next to a dark red title, thin line under */
-.shop[data-shop-style='c'] .aisle__banner{height:auto;padding:0 0 14px;align-items:center;justify-content:flex-start;gap:18px;color:var(--color-red-heading);background:none !important;border-radius:0;border-bottom:1px solid #1f1f1f}
-.shop[data-shop-style='c'] .aisle__banner::before{display:none}
-.shop[data-shop-style='c'] .aisle__thumb{display:block;width:72px;height:72px;object-fit:cover;border-radius:50%}
-.shop[data-shop-style='c'] .aisle__banner h2{font-size:30px}
-.shop[data-shop-style='c'] .aisle__banner h2 span{color:#5e5e5e}
-
-/* D: text only, dark red title over a thin line */
-.shop[data-shop-style='d'] .aisle__banner{height:auto;padding:0 0 12px;color:var(--color-red-heading);background:none !important;border-radius:0;border-bottom:1px solid #1f1f1f}
-.shop[data-shop-style='d'] .aisle__banner::before{display:none}
-.shop[data-shop-style='d'] .aisle__banner h2{font-size:30px}
-.shop[data-shop-style='d'] .aisle__banner h2 span{color:#5e5e5e}
-.shop[data-shop-style='d'] .aisle{margin-bottom:56px}

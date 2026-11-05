@@ -6,30 +6,11 @@ import '../styles/shop.css';
 
 const groups = columns.flat();
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-// Banner photo for each aisle (swap any of these as better photos come in).
-const photoFor = {
-  Kielbasa: '/images/shop/kabanosy.jpg',
-  Cheese: '/images/media/deli-table.jpg',
-  'Deli Meats': '/images/shop/cold-cuts.jpg',
-  Pierogi: '/images/media/pierogi-2.jpg',
-  Blintzes: '/images/media/paczki.jpg',
-  'Marinated Goods': '/images/media/jars.jpg',
-  Sweets: '/images/shop/sweets.jpg',
-  'Baked Goods': '/images/media/paczki.jpg',
-  Other: '/images/media/groceries.jpg',
-};
 const name = (i) => (typeof i === 'string' ? i : i.name);
 const note = (i) => (typeof i === 'string' ? '' : i.note);
 ---
 <Base title="Polish Groceries · Polka Deli" description="Polish groceries at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.">
-  <div class="shop" data-shop-style="a">
-    <div class="cs-picker" id="cs-picker">
-      <b>Heading ideas:</b>
-      <button data-v="a" class="on">A · Current</button>
-      <button data-v="b">B · Slim photo strip</button>
-      <button data-v="c">C · Photo beside title</button>
-      <button data-v="d">D · Text only</button>
-    </div>
+  <div class="shop">
     <header class="shop__head">
       <h1>Polish Groceries</h1>
       <p>If you don't see a product listed below please ask, we often add products, and can also custom order if a product is available.</p>
@@ -43,10 +24,7 @@ const note = (i) => (typeof i === 'string' ? '' : i.note);
       <div>
         {groups.map((g) => (
           <section class="aisle" id={slug(g.title)} aria-labelledby={`h-${slug(g.title)}`}>
-            <div class="aisle__banner" style={`background-image:url('${photoFor[g.title] ?? '/images/media/groceries.jpg'}')`}>
-              <img class="aisle__thumb" src={photoFor[g.title] ?? '/images/media/groceries.jpg'} alt="" loading="lazy" />
-              <h2 id={`h-${slug(g.title)}`}>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
-            </div>
+            <h2 class="aisle__title" id={`h-${slug(g.title)}`}>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
             <ul class="aisle__list">
               {g.items.map((i) => <li>{name(i)}{note(i) && <em> {note(i)}</em>}</li>)}
             </ul>
@@ -58,13 +36,6 @@ const note = (i) => (typeof i === 'string' ? '' : i.note);
 </Base>
 
 <script>
-  // Temporary: switch heading ideas.
-  const shop = document.querySelector('.shop');
-  document.querySelectorAll('#cs-picker button').forEach((b) => b.addEventListener('click', () => {
-    shop.dataset.shopStyle = b.dataset.v;
-    document.querySelectorAll('#cs-picker button').forEach((x) => x.classList.toggle('on', x === b));
-  }));
-
   // Highlight the category in view.
   const links = [...document.querySelectorAll('.shop__side a')];
   const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
