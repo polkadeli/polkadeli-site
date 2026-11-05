@@ -10,3 +10,9 @@
   from = "/copy-of-deli-menu"
   to = "/platters"
   status = 301
+
+# The privacy policy is now a pop-up on the home page
+[[redirects]]
+  from = "/privacy"
+  to = "/#privacy"
+  status = 301

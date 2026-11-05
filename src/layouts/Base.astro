@@ -1,10 +1,12 @@
 ---
 import { business, stores, nav } from '../data/site.js';
 import SocialIcons from '../components/SocialIcons.astro';
+import PrivacyPolicy from '../components/PrivacyPolicy.astro';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/header.css';
 import '../styles/footer.css';
+import '../styles/legal.css';
 const {
   title = 'Polka Deli · Polish Food & Market in Silver Spring, MD and Vienna, VA',
   description = 'Authentic Polish groceries and food prepared daily. Kielbasa, deli meats, pierogi, cheese, sweets and party platters in Silver Spring, MD and Vienna, VA.',
@@ -78,7 +80,7 @@ const jsonLd = stores.map((s) => ({
             <label><span class="visually-hidden">Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
             <button type="submit">Subscribe Now</button>
           </div>
-          <p class="signup__privacy">We'll only email you news and offers, and we'll never sell your information. Unsubscribe anytime. <a href="/privacy">Privacy policy</a></p>
+          <p class="signup__privacy">We'll only email you news and offers, and we'll never sell your information. Unsubscribe anytime. <a href="/#privacy" data-privacy>Privacy policy</a></p>
         </div>
       </form>
       <div class="footer-columns">
@@ -97,10 +99,18 @@ const jsonLd = stores.map((s) => ({
       </div>
       <div class="footer-copy">
         <span>© {new Date().getFullYear()} Polka Deli · Polish Food &amp; Market</span>
-        <span><a href="/privacy">Privacy</a></span>
+        <span><a href="/#privacy" data-privacy>Privacy</a></span>
       </div>
     </div>
   </footer>
+
+  <dialog class="privacy-dialog" id="privacy" aria-labelledby="privacy-title">
+    <div class="privacy-dialog__head">
+      <h2 id="privacy-title">Privacy Policy</h2>
+      <button type="button" class="privacy-dialog__close" aria-label="Close privacy policy">×</button>
+    </div>
+    <div class="privacy-dialog__body"><PrivacyPolicy /></div>
+  </dialog>
 
   <script>
     const burger = document.querySelector('.menu-button');
@@ -114,6 +124,15 @@ const jsonLd = stores.map((s) => ({
     burger.addEventListener('click', () => setOpen(true));
     close.addEventListener('click', () => setOpen(false));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !drawer.hidden) setOpen(false); });
+
+    // Privacy policy pop-up: any link with data-privacy opens it; /#privacy opens it on load.
+    const privacy = document.getElementById('privacy');
+    const openPrivacy = (e) => { e?.preventDefault(); if (!privacy.open) privacy.showModal(); };
+    document.querySelectorAll('[data-privacy]').forEach((a) => a.addEventListener('click', openPrivacy));
+    privacy.querySelector('.privacy-dialog__close').addEventListener('click', () => privacy.close());
+    privacy.addEventListener('click', (e) => { if (e.target === privacy) privacy.close(); });
+    privacy.addEventListener('close', () => { if (location.hash === '#privacy') history.replaceState(null, '', location.pathname); });
+    if (location.hash === '#privacy') openPrivacy();
 
     // Overlay header: transparent over the home page photo, then a see-through white bar once the photo is scrolled past.
     const header = document.querySelector('.site-header--overlay');
