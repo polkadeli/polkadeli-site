@@ -112,3 +112,21 @@ label {
   display: flex;
   width: 100%;
 }
+
+/* Labels use normal letter spacing everywhere */
+.ct__field,
+.of__field,
+.vs__label,
+.store__label,
+.ct__lines dt,
+.ct__follow span,
+.hero-store__city,
+.footer-column h2,
+.phone-menu__city,
+.mp-label,
+.mp-badge--line,
+.serve,
+.pick,
+.hrs {
+  letter-spacing: 0 !important;
+}
