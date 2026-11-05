@@ -105,18 +105,15 @@ const offers = [
   <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-1.svg" alt="" /><span></span></div>
   <section class="section">
     <div class="wrap">
-      {offers.map((o, i) => (
-        <div class="offer">
-          <span class="offer__num">{String(i + 1).padStart(2, '0')}</span>
-          <div class="offer__ph"><img src={o.img} alt="" loading="lazy" /></div>
-          <div>
+      <div class="showcase">
+        {offers.map((o) => (
+          <article class="show">
+            <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
             <h3>{o.title}</h3>
-            <p>{o.text}</p>
-            <ul class="ticks">{o.ticks.map((t) => <li>{t}</li>)}</ul>
-            <a class="btn" href={o.href}>{o.button ?? o.title}</a>
-          </div>
-        </div>
-      ))}
+            <ul class="ticks ticks--one">{o.ticks.map((t) => <li>{t}</li>)}</ul>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 
