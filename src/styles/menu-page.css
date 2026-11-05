@@ -463,3 +463,139 @@
 .mp-item em {
   white-space: nowrap;
 }
+
+/* ================= TEMPORARY: category style ideas (switcher) ================= */
+.cs-picker {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  max-width: calc(100vw - 32px);
+  padding: 10px 12px;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.88);
+  border-radius: 8px;
+}
+
+.cs-picker button {
+  padding: 6px 10px;
+  font: inherit;
+  color: #fff;
+  background: #3a3838;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cs-picker button.on {
+  background: var(--color-red);
+}
+
+/* Shared: every style replaces the thin top rules between categories */
+.mp[data-cat-style] .mp-cat,
+.mp[data-cat-style] .mp-col > .mp-cat:first-child,
+.mp[data-cat-style] .mp-grid > .mp-cat:nth-child(-n + 2) {
+  border-top: 0;
+}
+
+.mp[data-cat-style] .mp-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mp[data-cat-style] .mp-grid {
+  gap: 24px;
+}
+
+/* A: soft gray cards */
+.mp[data-cat-style='a'] .mp-cat {
+  padding: 30px 32px 26px !important;
+  background: #f6f4f1;
+  border-radius: 14px;
+}
+
+/* B: red title bar on top of each category */
+.mp[data-cat-style='b'] .mp-cat {
+  padding: 0 0 20px !important;
+  overflow: hidden;
+  border: 1px solid #e6e6e6 !important;
+}
+
+.mp[data-cat-style='b'] .mp-cat h3 {
+  margin: 0 0 18px;
+  padding: 14px 24px;
+  color: #fff;
+  background: var(--color-red);
+}
+
+.mp[data-cat-style='b'] .mp-cat h3 .mp-badge--line {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.mp[data-cat-style='b'] .mp-cat h3 .mp-badge {
+  color: #fff;
+}
+
+.mp[data-cat-style='b'] .mp-cat > :not(h3) {
+  margin-left: 24px !important;
+  margin-right: 24px !important;
+}
+
+/* C: red line down the left side */
+.mp[data-cat-style='c'] .mp-cat {
+  padding: 6px 0 10px 26px !important;
+  border-left: 4px solid var(--color-red);
+}
+
+.mp[data-cat-style='c'] .mp-col,
+.mp[data-cat-style='c'] .mp-grid {
+  gap: 48px;
+}
+
+/* D: white boxes with a dark frame and the title sitting on the frame line */
+.mp[data-cat-style='d'] .mp-cat {
+  position: relative;
+  margin-top: 16px;
+  padding: 34px 28px 22px !important;
+  border: 1.5px solid #1f1f1f !important;
+}
+
+.mp[data-cat-style='d'] .mp-cat h3 {
+  position: absolute;
+  top: -22px;
+  left: 20px;
+  margin: 0;
+  padding: 0 10px;
+  background: #fff;
+}
+
+@media (max-width: 900px) {
+  .mp[data-cat-style='a'] .mp-cat {
+    padding: 24px 20px 18px !important;
+  }
+
+  .mp[data-cat-style='b'] .mp-cat > :not(h3) {
+    margin-left: 18px !important;
+    margin-right: 18px !important;
+  }
+
+  .mp[data-cat-style='b'] .mp-cat h3 {
+    padding: 12px 18px;
+  }
+
+  .mp[data-cat-style='d'] .mp-cat {
+    padding: 30px 18px 18px !important;
+  }
+
+  .mp[data-cat-style] .mp-grid > .mp-col:nth-child(2) > .mp-cat:first-child,
+  .mp[data-cat-style] .mp-grid > .mp-cat:nth-child(2) {
+    padding-top: inherit;
+  }
+}
