@@ -1118,3 +1118,28 @@ main p {
     padding-bottom: 96px;
   }
 }
+
+/* Pierogi card photo: zoom in on the front plate and brighten */
+.dish img[src$="/media/pierogi.jpg"] {
+  object-position: 35% 70%;
+  transform: scale(1.45);
+  transform-origin: 38% 68%;
+  filter: brightness(1.18) contrast(1.03) saturate(1.05);
+}
+
+.dish img {
+  overflow: hidden;
+}
+
+.dish {
+  overflow: hidden;
+}
+
+.dish__ph {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.dish__ph img {
+  border-radius: 0;
+}

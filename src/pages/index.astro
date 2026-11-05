@@ -93,7 +93,7 @@ const offers = [
       <div class="dishes">
         {dishes.map((d) => (
           <article class:list={['dish', !d.img && 'dish--text']}>
-            {d.img && <img src={d.img} alt="" loading="lazy" />}
+            {d.img && <div class="dish__ph"><img src={d.img} alt="" loading="lazy" /></div>}
             <h3>{d.name}</h3>
             <p>{d.desc}</p>
             <span class="dish__price">{d.price}</span>
