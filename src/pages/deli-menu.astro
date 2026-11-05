@@ -7,9 +7,15 @@ import { pierogi, sandwiches, entrees, platters } from '../data/menu.js';
 import '../styles/menu-page.css';
 const ss = stores[0];
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+// Platters layout: left column, then right column.
+const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
+const platterCols = [
+  ['Cold Cut Platters', 'Cake Platter', 'Bread Tray'],
+  ['Party Trays'],
+].map((col) => col.map((h) => byHeading[h]).filter(Boolean));
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
-  ...platters.map((g) => [slug(g.heading), g.heading]),
+  ...platterCols.flat().map((g) => [slug(g.heading), g.heading]),
   ['order', 'Order online'],
 ];
 ---
@@ -71,7 +77,9 @@ const tabs = [
           <p class="mp-email">Order ahead with our <a href="#order">online order form</a></p>
         </div>
         <div class="mp-grid">
-          {platters.map((g) => (
+          {platterCols.map((col) => (
+            <div class="mp-col">
+            {col.map((g) => (
             <section class="mp-cat" id={slug(g.heading)}>
               <h3>{g.heading}{g.serves && <span class="mp-badge mp-badge--line">{g.serves}</span>}</h3>
               <ul class="mp-items">
@@ -84,6 +92,8 @@ const tabs = [
                 ))}
               </ul>
             </section>
+            ))}
+            </div>
           ))}
         </div>
       </section>
