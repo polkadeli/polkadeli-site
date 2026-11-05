@@ -281,3 +281,8 @@
 .of__title {
   margin-bottom: 10px;
 }
+
+/* Space between the intro and the first category */
+.of p.of__intro {
+  margin-bottom: 44px;
+}
