@@ -1311,3 +1311,14 @@ main p {
   transform-origin: 30% 60%;
   filter: brightness(1.15);
 }
+
+/* Equal space above and below each pierogi divider (section padding on both sides) */
+.doodle-divider {
+  padding-top: 0;
+}
+
+@media (max-width: 900px) {
+  .doodle-divider {
+    padding-top: 0;
+  }
+}
