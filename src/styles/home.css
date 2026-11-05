@@ -951,3 +951,7 @@ main p {
     height: 280px;
   }
 }
+
+#about {
+  scroll-margin-top: var(--header-height);
+}
