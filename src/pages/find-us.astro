@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import PageCard from '../components/PageCard.astro';
+import SocialIcons from '../components/SocialIcons.astro';
+import { business, stores } from '../data/site.js';
+import '../styles/page.css';
+import '../styles/visit.css';
+const mapEmbed = (s) => `https://maps.google.com/maps?q=${encodeURIComponent(`Polka Deli, ${s.street}, ${s.locality}`)}&z=15&output=embed`;
+---
+<Base title="Visit Us · Polka Deli" description="Polka Deli store hours and directions: Silver Spring, MD (13438 New Hampshire Ave) and Vienna, VA (431 Maple Ave W).">
+  <PageCard title="VISIT US" background="/images/bg-wood.jpg" wide>
+    <div class="stores">
+      {stores.map((s) => (
+        <section class="store" aria-label={`Polka Deli ${s.city}`}>
+          <h2 class="store__address"><a href={s.maps} target="_blank" rel="noopener">{s.street}, {s.locality}</a></h2>
+          <p class="store__phone"><a href={s.phoneHref}>{s.phone}</a></p>
+          <h3 class="store__hours-title">Store hours</h3>
+          <ul class="store__hours">{s.hours.map(([d, h]) => <li>{d}: {h}</li>)}</ul>
+          <iframe class="store__map" title={`Map of Polka Deli ${s.city}`} src={mapEmbed(s)} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
+      ))}
+    </div>
+
+    <div class="follow">
+      <span>Follow us</span>
+      <SocialIcons size={24} />
+    </div>
+
+    <section class="contact" aria-labelledby="contact-title">
+      <h2 class="contact__title" id="contact-title">Suggestions? Contact us</h2>
+      <p class="contact__intro">For questions about any of our products, or help with placing your order, don't hesitate to contact us:<br />
+        <em>Email: <a href={`mailto:${business.email}`}>{business.email}</a> <span class="contact__sep">/</span> Phone: <a href={stores[0].phoneHref}>{stores[0].phone}</a></em></p>
+
+      <form class="contact__form" name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
+        <input type="hidden" name="form-name" value="contact" />
+        <p class="contact__trap"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+        <label class="contact__field"><span class="visually-hidden">Name</span><input name="name" type="text" placeholder="Name *" autocomplete="name" required /></label>
+        <label class="contact__field"><span class="visually-hidden">Email</span><input name="email" type="email" placeholder="Email *" autocomplete="email" required /></label>
+        <label class="contact__field"><span class="visually-hidden">Message</span><textarea name="message" rows="5" placeholder="Message"></textarea></label>
+        <button class="contact__send" type="submit">Send</button>
+      </form>
+    </section>
+  </PageCard>
+</Base>

@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import PageCard from '../components/PageCard.astro';
+import '../styles/page.css';
+import '../styles/about.css';
+---
+<Base title="About Us · Polka Deli" description="Polka Deli is run by Maria and Joanna, Polish natives, friends and good cooks: a one-stop shop for Polish groceries and beloved Polish dishes.">
+  <PageCard title="ABOUT US" background="/images/bg-baking.jpg">
+    <figure class="about">
+      <img class="about__photo" src="/images/about-owners.jpg" alt="Maria and Joanna behind the counter at Polka Deli" width="1400" height="1050" />
+      <figcaption class="about__story">
+        <p>Hello! We're glad you're here! We are Maria and Joanna, Polish natives, friends, and good cooks. The love of cooking and Polish food lead us here and we decided we needed to open a one stop shop for Polish groceries and most beloved Polish dishes, on the go.</p>
+      </figcaption>
+    </figure>
+  </PageCard>
+</Base>
