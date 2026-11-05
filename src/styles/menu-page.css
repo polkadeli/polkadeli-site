@@ -388,3 +388,8 @@
     border-top: 1px solid #1f1f1f;
   }
 }
+
+/* Pierogi divider before the order form (the menu column already has side padding) */
+.mp-divider {
+  padding: 64px 0 0;
+}
