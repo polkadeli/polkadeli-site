@@ -581,7 +581,7 @@
 .order-menu__uber img {
   flex: none;
   width: auto;
-  height: 58px; /* matches the title + two lines of text */
+  height: 42px; /* matches the title + one line of text */
 }
 
 .order-menu__list small {
