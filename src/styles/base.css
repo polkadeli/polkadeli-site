@@ -98,8 +98,7 @@ label {
 .btn,
 .vs__btn,
 .ct__send,
-.of__send,
-.signup__bar button {
+.of__send {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -117,22 +116,16 @@ label {
 .ct__field,
 .of__field,
 .vs__label,
-.store__label,
 .ct__lines dt,
 .ct__follow span,
 .hero-store__city,
 .footer-column h2,
 .phone-menu__city,
-.mp-label,
-.mp-badge--line,
-.serve,
-.pick,
-.hrs {
+.mp-badge--line {
   letter-spacing: 0 !important;
 }
 
 /* "Store hours" labels in red */
-.vs__label,
-.store__label {
+.vs__label {
   color: var(--color-red) !important;
 }

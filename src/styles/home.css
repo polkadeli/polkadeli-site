@@ -1,4 +1,9 @@
-/* Home page: full-screen carousel, about, deli menu, what we offer, visit us, groceries, contact. */
+/*
+ * Home page: full-screen photo carousel with the headline, store addresses and mailing list,
+ * the three category cards, the menu teaser cards, pierogi dividers and About us (AboutUs component).
+ */
+
+/* ---------- Page basics ---------- */
 
 main {
   font-family: var(--font-ui);
@@ -27,6 +32,10 @@ main p {
   padding: 0 40px;
 }
 
+.section {
+  padding: 110px 0;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -45,92 +54,16 @@ main p {
   background: var(--color-red-dark);
 }
 
-.btn--glass {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+.center-cta {
+  text-align: center;
 }
 
-.btn--glass:hover,
-.btn--glass:focus-visible {
-  background: rgba(255, 255, 255, 0.25);
-}
+/* ---------- Hero: carousel with headline, stores and signup ---------- */
 
-/* Section label: red dot and text over a thin rule */
-.kicker {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-bottom: 14px;
-  margin-bottom: 26px !important;
-  font-size: 15px;
-  border-bottom: 1px solid #d9d9d9;
-}
-
-.kicker::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-red);
-}
-
-.head {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-  align-items: end;
-  margin-bottom: 48px;
-}
-
-.head h2,
-.section__title {
-  font-size: 56px;
-}
-
-.section__title {
-  margin-bottom: 48px !important;
-}
-
-.head p {
-  justify-self: end;
-  max-width: 30em;
-  color: #5e5e5e;
-}
-
-.head a {
-  color: inherit;
-}
-
-.section {
-  padding: 110px 0;
-}
-
-.section--tight {
-  padding-top: 0;
-}
-
-.section--dark {
-  color: var(--color-white);
-  background: var(--color-dark);
-}
-
-.section--dark .kicker {
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-.section--dark .head p {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.section--mist {
-  background: #f4f4f4;
-}
-
-/* Hero carousel */
 .hero {
   position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   height: 100svh;
   min-height: 640px;
@@ -155,6 +88,7 @@ main p {
   transform: scale(1);
 }
 
+/* Dark gradients so white text stays readable on any photo */
 .hero::before,
 .hero::after {
   content: '';
@@ -175,502 +109,41 @@ main p {
   background: linear-gradient(180deg, rgba(10, 6, 4, 0.55), transparent);
 }
 
+/* Empty spacer that pushes the content to the bottom of the photo */
 .hero__copy {
   position: relative;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
+  flex: 1;
+  width: 100%;
   max-width: 1360px;
   margin: 0 auto;
-  padding: 0 40px;
+}
+
+.hero__foot {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 580px;
+  gap: 40px;
+  align-items: end;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 40px 96px;
+}
+
+.doodle-badge {
+  width: 200px;
+  height: auto;
+  margin-bottom: 18px;
+  filter: invert(1);
+  opacity: 0.92;
 }
 
 .hero h1 {
   max-width: 14ch;
-  font-size: 76px;
-}
-
-.hero__cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 32px;
-}
-
-.hero__foot {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 40px;
-  z-index: 2;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 30px;
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-.hero__stores {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 15px;
-  line-height: 1.7;
-  opacity: 0.92;
-}
-
-.hero__stores a {
-  text-decoration: none;
-}
-
-.hero__stores a:hover {
-  text-decoration: underline;
-}
-
-.hero__ctrl {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.hero__arrow {
-  width: 42px;
-  height: 42px;
-  font-size: 18px;
-  color: var(--color-white);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.hero__dots {
-  display: flex;
-  gap: 8px;
-}
-
-.hero__dots button {
-  width: 9px;
-  height: 9px;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.45);
-  border: 0;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.hero__dots button[aria-pressed='true'] {
-  width: 28px;
-  background: var(--color-white);
-  border-radius: 6px;
-}
-
-.strip {
-  padding: 13px;
-  font-family: var(--font-ui);
-  font-size: 16px;
-  letter-spacing: 0.04em;
-  text-align: center;
-  color: var(--color-white);
-  background: var(--color-red);
-}
-
-/* About */
-.about {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-}
-
-.about__photo {
-  width: 100%;
-  aspect-ratio: 10 / 9;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.about__photo--square {
-  aspect-ratio: 1;
-}
-
-.about h3 {
-  margin: 30px 0 12px;
-  font-size: 30px;
-}
-
-.about p:not(.kicker) {
-  max-width: 34em;
-  color: #5e5e5e;
-}
-
-.about h2 {
-  margin-bottom: 36px;
-  font-size: 40px;
-}
-
-/* Deli menu dishes */
-.dishes {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-bottom: 40px;
-}
-
-.dish {
-  padding: 12px 12px 22px;
-  background: #262626;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-}
-
-.dish img {
-  width: 100%;
-  aspect-ratio: 6 / 5;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-.dish h3 {
-  margin: 18px 6px 4px;
-  font-size: 26px;
-}
-
-.dish p {
-  margin: 0 6px 16px;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.dish--text {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 30px 18px;
-}
-
-.dish__price {
-  margin: 0 6px;
-  font-weight: 700;
-  font-size: 18px;
-}
-
-/* Numbered offers */
-.offer {
-  display: grid;
-  grid-template-columns: 70px 340px 1fr;
-  gap: 36px;
-  align-items: start;
-  padding: 40px 0;
-  border-top: 1px solid #d9d9d9;
-}
-
-.offer:last-child {
-  border-bottom: 1px solid #d9d9d9;
-}
-
-.offer__num {
-  font-family: var(--font-heading);
-  font-size: 28px;
-  color: var(--color-red);
-}
-
-.offer img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.offer h3 {
-  margin-bottom: 10px;
-  font-size: 36px;
-}
-
-.offer p {
-  max-width: 36em;
-  color: #5e5e5e;
-}
-
-.ticks {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px 30px;
-  max-width: 34em;
-  margin: 20px 0 24px;
-  padding: 0;
-  list-style: none;
-}
-
-.ticks li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-}
-
-.ticks li::before {
-  content: '✓';
-  display: inline-grid;
-  place-items: center;
-  flex: none;
-  width: 20px;
-  height: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-white);
-  background: var(--color-red);
-  border-radius: 50%;
-}
-
-/* Visit us */
-.stores {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr 1fr;
-  gap: 16px;
-}
-
-.stores__photo {
-  width: 100%;
-  height: 100%;
-  min-height: 420px;
-  object-fit: cover;
-  border-radius: 12px;
-}
-
-.store {
-  display: flex;
-  flex-direction: column;
-  padding: 34px 30px;
-  background: var(--color-white);
-  border-radius: 12px;
-}
-
-.store h3 {
-  margin-bottom: 6px;
-  font-size: 32px;
-}
-
-.store__addr {
-  margin-bottom: 18px !important;
-  color: #5e5e5e;
-}
-
-.store__addr a {
-  text-decoration: none;
-}
-
-.store__label {
-  margin-bottom: 4px !important;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #5e5e5e;
-}
-
-.store table {
-  width: 100%;
-  margin-bottom: 26px;
-  font-size: 16px;
-  border-collapse: collapse;
-}
-
-.store td {
-  padding: 8px 0;
-  border-bottom: 1px solid #d9d9d9;
-}
-
-.store td:last-child {
-  text-align: right;
-}
-
-.store .btn {
-  align-self: flex-start;
-  margin-top: auto;
-}
-
-/* Groceries collage */
-.collage {
-  position: relative;
-  height: 640px;
-}
-
-.collage img {
-  position: absolute;
-  object-fit: cover;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-}
-
-.collage .c1 { left: 6%; top: 0; width: 190px; height: 240px; }
-.collage .c2 { left: 3%; top: 270px; width: 280px; height: 200px; }
-.collage .c3 { left: 9%; top: 500px; width: 240px; height: 150px; }
-.collage .c4 { right: 4%; top: 10px; width: 290px; height: 200px; }
-.collage .c5 { right: 11%; top: 240px; width: 200px; height: 170px; }
-.collage .c6 { right: 3%; top: 390px; width: 270px; height: 250px; }
-
-.collage__text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 420px;
-  text-align: center;
-  transform: translate(-50%, -50%);
-}
-
-.collage__text h2 {
-  margin-bottom: 14px;
-  font-size: 52px;
-}
-
-.collage__text p {
-  margin-bottom: 22px;
-  color: #5e5e5e;
-}
-
-@media (max-width: 900px) {
-  .wrap,
-  .hero__copy,
-  .hero__foot {
-    padding: 0 20px;
-  }
-
-  .hero {
-    height: auto;
-    min-height: 92vh;
-  }
-
-  .hero__copy {
-    justify-content: flex-end;
-    min-height: 92vh;
-    padding-top: 120px;
-    padding-bottom: 110px;
-  }
-
-  .hero h1 {
-    font-size: 44px;
-  }
-
-  .hero__stores,
-  .hero__arrow {
-    display: none;
-  }
-
-  .hero__foot {
-    bottom: 28px;
-  }
-
-  .section {
-    padding: 70px 0;
-  }
-
-  .section--tight {
-    padding-top: 0;
-  }
-
-  .head {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    margin-bottom: 32px;
-  }
-
-  .head h2,
-  .section__title {
-    font-size: 38px;
-  }
-
-  .head p {
-    justify-self: start;
-  }
-
-  .about {
-    grid-template-columns: 1fr;
-    gap: 50px;
-  }
-
-  .about h2 {
-    font-size: 30px;
-  }
-
-  .dishes,
-  .stores {
-    grid-template-columns: 1fr;
-  }
-
-  .stores__photo {
-    min-height: 300px;
-  }
-
-  .offer {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .offer h3 {
-    font-size: 30px;
-  }
-
-  .ticks {
-    grid-template-columns: 1fr;
-  }
-
-  .collage {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    height: auto;
-  }
-
-  .collage img {
-    position: static;
-    width: 100% !important;
-    height: 150px !important;
-  }
-
-  .collage__text {
-    position: static;
-    grid-column: 1 / -1;
-    order: -1;
-    width: auto;
-    margin-bottom: 20px;
-    transform: none;
-  }
-
-  .collage__text h2 {
-    font-size: 38px;
-  }
-}
-
-/* ---- Hero v2: store addresses and mailing list above the fold ---- */
-.hero {
-  display: flex;
-  flex-direction: column;
-}
-
-.hero__copy {
-  flex: 1;
-  width: 100%;
-  height: auto;
-  padding-top: calc(var(--header-height) + 20px);
-}
-
-.hero h1 {
+  margin-bottom: 12vh;
   font-size: 68px;
-}
-
-.hero__foot {
-  position: relative;
-  bottom: auto;
-  display: grid;
-  grid-template-columns: 1fr 440px;
-  gap: 40px;
-  align-items: end;
-  width: 100%;
-  padding-bottom: 76px;
 }
 
 .hero__stores {
@@ -678,7 +151,7 @@ main p {
   grid-template-columns: repeat(2, minmax(0, 320px));
   gap: 28px;
   font-size: 17px;
-  opacity: 1;
+  line-height: 1.7;
 }
 
 .hero-store {
@@ -690,25 +163,12 @@ main p {
   margin-bottom: 4px !important;
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.8);
 }
 
-.hero-store__addr {
-  display: block;
-  font-family: var(--font-heading);
-  font-size: 21px;
-  line-height: 1.3;
-  color: var(--color-white);
-  text-decoration: none;
-}
-
+.hero-store__addr,
 .hero-store__phone {
-  display: inline-block;
-  margin-top: 6px;
-  font-weight: 700;
-  font-size: 18px;
   color: var(--color-white);
   text-decoration: none;
 }
@@ -717,6 +177,21 @@ main p {
   text-decoration: underline;
 }
 
+.hero-store__addr {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 21px;
+  line-height: 1.3;
+}
+
+.hero-store__phone {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+/* Mailing list box */
 .hero-signup {
   padding: 26px 26px 18px;
   color: var(--color-ink);
@@ -726,7 +201,7 @@ main p {
 
 .hero-signup h2 {
   margin-bottom: 16px;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1.25;
 }
 
@@ -754,140 +229,149 @@ main p {
   border-color: var(--color-red);
 }
 
-.hero-signup .btn {
-  justify-content: center;
-  width: 100%;
-  font: inherit;
-  font-weight: 700;
-  border: 0;
-  cursor: pointer;
-}
-
-.hero-signup__privacy {
-  margin-top: 8px !important;
-  font-size: 12px;
-  text-align: right;
-  color: #5e5e5e;
-}
-
-.hero__ctrl {
-  position: absolute;
-  z-index: 2;
-  left: 50%;
-  bottom: 22px;
-  transform: translateX(-50%);
-}
-
-.hero__arrow {
-  width: 34px;
-  height: 34px;
-  font-size: 16px;
-}
-
-@media (max-width: 1100px) {
-  .hero__foot {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-
-  .hero-signup {
-    max-width: 520px;
-  }
-}
-
-@media (max-width: 900px) {
-  .hero {
-    min-height: 0;
-  }
-
-  .hero__copy {
-    min-height: 0;
-    padding-top: calc(var(--header-height) + 90px);
-    padding-bottom: 36px;
-  }
-
-  .hero h1 {
-    font-size: 40px;
-  }
-
-  .hero__foot {
-    padding-bottom: 70px;
-  }
-
-  .hero__stores {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .hero-store__addr {
-    font-size: 19px;
-  }
-
-  .hero-signup {
-    padding: 20px 18px 14px;
-  }
-
-  .hero-signup__fields {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Headline sits low, just above the store addresses */
-.hero__copy {
-  padding: 0;
-}
-
-.hero__left h1 {
-  margin-bottom: 12vh;
-}
-
-@media (max-width: 900px) {
-  .hero__copy {
-    min-height: 0;
-    padding-top: calc(var(--header-height) + 160px);
-  }
-
-  .hero__left h1 {
-    margin-bottom: 28px;
-  }
-}
-
-/* Hero signup v2: smaller title, wider fields, compact button */
-.hero__foot {
-  grid-template-columns: 1fr 520px;
-}
-
-.hero-signup h2 {
-  font-size: 20px;
-}
-
-.hero-signup .btn {
-  width: auto;
-  padding: 8px 22px;
-  font-size: 15px;
-}
-
 .hero-signup__actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.hero-signup__actions .hero-signup__privacy {
-  margin-top: 0 !important;
+.hero-signup__privacy {
+  font-size: 12px;
+  color: #5e5e5e;
 }
 
-@media (max-width: 1100px) {
-  .hero__foot {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-signup {
-    max-width: 560px;
-  }
+.hero-signup .btn {
+  justify-content: center;
+  padding: 8px 22px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  border: 0;
+  cursor: pointer;
 }
 
-/* ---- Hand-drawn food doodles: dividers, headline badge, Deli Menu watermark ---- */
+/* Red shipping strip along the bottom edge of the photo */
+.strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  margin: 0;
+  padding: 13px;
+  font-size: 16px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--color-white);
+  background: var(--color-red);
+}
+
+/* ---------- Category cards (Deli Meats and Cheeses, Platters, Groceries) ---------- */
+
+.showcase,
+.dishes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.show,
+.dish {
+  padding: 12px 12px 22px;
+  overflow: hidden;
+  background: var(--color-white);
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+}
+
+.show__ph,
+.dish__ph {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.show__ph {
+  aspect-ratio: 6 / 5;
+}
+
+.show__ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.show h3,
+.dish h3 {
+  margin: 18px 6px 4px;
+  font-size: 26px;
+}
+
+.show__items {
+  margin: 0 6px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #5e5e5e;
+}
+
+/* Items wrap only between commas, never inside a name */
+.show__items span {
+  white-space: nowrap;
+}
+
+.show__items span + span::before {
+  content: ' ';
+  white-space: normal;
+}
+
+/* ---------- Menu teaser cards ---------- */
+
+.dishes {
+  margin-bottom: 40px;
+}
+
+.dish__ph img {
+  width: 100%;
+  aspect-ratio: 6 / 5;
+  object-fit: cover;
+}
+
+.dish p {
+  margin: 0 6px 16px;
+  font-size: 15px;
+  color: #5e5e5e;
+}
+
+/* ---------- Photo crops (zoom in on the food) ---------- */
+
+.show__ph img[src$='/media/deli-table.jpg'] {
+  object-position: 58% 76%;
+  transform: scale(1.9);
+  transform-origin: 58% 74%;
+}
+
+.show__ph img[src$='/media/kielbasa.jpg'] {
+  object-position: 30% 60%;
+  transform: scale(1.4);
+  transform-origin: 30% 60%;
+  filter: brightness(1.15);
+}
+
+.dish img[src$='/media/pierogi.jpg'] {
+  object-position: 35% 70%;
+  transform: scale(1.45);
+  transform-origin: 38% 68%;
+  filter: brightness(1.18) contrast(1.03) saturate(1.05);
+}
+
+.dish img[src$='/media/kielbasa.jpg'] {
+  object-position: 30% 75%;
+  transform: scale(1.5);
+  transform-origin: 28% 72%;
+  filter: brightness(1.08);
+}
+
+/* ---------- Pierogi dividers between sections ---------- */
+
 .doodle-divider {
   display: flex;
   align-items: center;
@@ -909,420 +393,69 @@ main p {
   object-fit: contain;
 }
 
-.doodle-badge {
-  width: 96px;
-  height: 96px;
-  margin-bottom: 18px;
-  filter: invert(1);
-  opacity: 0.92;
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1100px) {
+  .hero__foot {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .hero-signup {
+    max-width: 560px;
+  }
 }
 
-.section--dark {
-  position: relative;
-  overflow: hidden;
-}
-
-.section--dark .wrap {
-  position: relative;
-}
-
-.doodle-watermark {
-  position: absolute;
-  top: -40px;
-  right: -60px;
-  width: 460px;
-  height: 460px;
-  filter: invert(1);
-  opacity: 0.08;
-  pointer-events: none;
-}
+/* ---------- Phone ---------- */
 
 @media (max-width: 900px) {
+  .wrap,
   .doodle-divider {
     padding: 0 20px;
   }
 
-  .doodle-badge {
-    width: 72px;
-    height: 72px;
+  .section {
+    padding: 70px 0;
   }
 
-  .doodle-watermark {
-    width: 280px;
-    height: 280px;
+  .hero {
+    height: auto;
+    min-height: 0;
   }
-}
 
-#about {
-  scroll-margin-top: var(--header-height);
-}
+  .hero__copy {
+    padding-top: calc(var(--header-height) + 160px);
+  }
 
-/* Hero badge: pierog on a fork (wide drawing) */
-.doodle-badge {
-  width: 200px;
-  height: auto;
-}
+  .hero__foot {
+    padding: 0 20px 96px;
+  }
 
-@media (max-width: 900px) {
   .doodle-badge {
     width: 150px;
-    height: auto;
   }
-}
 
-/* Owners photo, zoomed in on Maria and Joanna */
-.about__zoom {
-  aspect-ratio: 1;
-  overflow: hidden;
-  border-radius: 12px;
-}
+  .hero h1 {
+    margin-bottom: 28px;
+    font-size: 40px;
+  }
 
-.about__zoom img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(1.3);
-  transform-origin: 92% 70%;
-}
-
-/* About photos: top cropped off */
-.about .about__photo {
-  aspect-ratio: 4 / 3;
-  object-position: center bottom;
-}
-
-.about__zoom {
-  aspect-ratio: 4 / 3;
-}
-
-.about__zoom img {
-  object-position: center bottom;
-  transform-origin: 92% 100%;
-}
-
-/* About v2: one photo left, text right */
-.about--v2 {
-  grid-template-columns: 1.15fr 1fr;
-  gap: 72px;
-  align-items: center;
-}
-
-.about--v2 .about__zoom {
-  aspect-ratio: 5 / 4;
-}
-
-.about__text h2 {
-  margin-bottom: 24px;
-  font-size: 48px;
-}
-
-.about__text h3 {
-  margin: 0 0 18px;
-  padding-left: 18px;
-  font-size: 26px;
-  line-height: 1.3;
-  border-left: 3px solid var(--color-red);
-}
-
-.about__text p {
-  font-size: 18px;
-}
-
-@media (max-width: 900px) {
-  .about--v2 {
+  .hero__stores {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 18px;
   }
 
-  .about__text h2 {
-    font-size: 34px;
+  .hero-store__addr {
+    font-size: 19px;
   }
 
-  .about__text h3 {
-    font-size: 22px;
+  .hero-signup {
+    padding: 20px 18px 14px;
   }
-}
 
-/* About v2 tweaks: photo cropped on the left, heading on one line */
-.about--v2 {
-  grid-template-columns: 0.9fr 1.1fr;
-}
-
-.about--v2 .about__zoom {
-  aspect-ratio: 1;
-}
-
-.about--v2 .about__zoom img {
-  object-position: right bottom;
-}
-
-.about__text h2 {
-  font-size: 44px;
-  white-space: nowrap;
-}
-
-@media (max-width: 1100px) {
-  .about__text h2 {
-    font-size: 36px;
-    white-space: normal;
-  }
-}
-
-/* Shift the crop left so Maria and Joanna sit right of center */
-.about--v2 .about__zoom img {
-  object-position: 68% bottom;
-  transform-origin: 68% 100%;
-}
-
-/* Smaller owners photo */
-.about--v2 {
-  grid-template-columns: 0.7fr 1.3fr;
-}
-
-@media (max-width: 900px) {
-  .br-desk {
-    display: none;
-  }
-}
-
-/* Wider signup box */
-.hero__foot {
-  grid-template-columns: 1fr 580px;
-}
-
-.doodle-divider img.flip {
-  transform: scaleX(-1);
-}
-
-/* Contact section sits under a divider, so give it top spacing */
-.doodle-divider + .section--tight {
-  padding-top: 70px;
-}
-
-/* Shipping strip pinned to the bottom of the first screen */
-.strip--hero {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  margin: 0;
-}
-
-.hero__foot {
-  padding-bottom: 96px;
-}
-
-@media (max-width: 900px) {
-  .hero__foot {
-    padding-bottom: 96px;
-  }
-}
-
-/* Pierogi card photo: zoom in on the front plate and brighten */
-.dish img[src$="/media/pierogi.jpg"] {
-  object-position: 35% 70%;
-  transform: scale(1.45);
-  transform-origin: 38% 68%;
-  filter: brightness(1.18) contrast(1.03) saturate(1.05);
-}
-
-.dish img {
-  overflow: hidden;
-}
-
-.dish {
-  overflow: hidden;
-}
-
-.dish__ph {
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.dish__ph img {
-  border-radius: 0;
-}
-
-/* Smoked Kielbasa card: zoom in on the sausages in the deli case */
-.dish img[src$="/media/kielbasa.jpg"] {
-  object-position: 30% 75%;
-  transform: scale(1.5);
-  transform-origin: 28% 72%;
-  filter: brightness(1.08);
-}
-
-/* Dividers sit a little lower, with breathing room after a dark section */
-.doodle-divider {
-  padding-top: 56px;
-}
-
-@media (max-width: 900px) {
-  .doodle-divider {
-    padding-top: 36px;
-  }
-}
-
-/* Offer photos sit in a rounded frame so they can be zoomed */
-.offer__ph {
-  overflow: hidden;
-  border-radius: 10px;
-}
-
-.offer__ph img {
-  border-radius: 0;
-}
-
-/* Deli Menu row photo: zoomed in on the spread on the table */
-.offer__ph img[src$="/media/deli-table.jpg"] {
-  object-position: 58% 76%;
-  transform: scale(1.9);
-  transform-origin: 58% 74%;
-}
-
-/* What we offer: three-column showcase */
-.showcase {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-}
-
-.show__ph {
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-  margin-bottom: 22px;
-  border-radius: 10px;
-}
-
-.show__ph img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.show__ph img[src$="/media/deli-table.jpg"] {
-  object-position: 58% 76%;
-  transform: scale(1.9);
-  transform-origin: 58% 74%;
-}
-
-.show h3 {
-  margin-bottom: 16px;
-  font-size: 32px;
-}
-
-.ticks--one {
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin: 0;
-}
-
-@media (max-width: 900px) {
-  .showcase {
+  .hero-signup__fields,
+  .showcase,
+  .dishes {
     grid-template-columns: 1fr;
-    gap: 44px;
   }
-
-  .show h3 {
-    font-size: 28px;
-  }
-}
-
-/* Showcase lists: plain items, no check bullets */
-.show .ticks li::before {
-  display: none;
-}
-
-.show .ticks {
-  gap: 6px;
-}
-
-.show .ticks li {
-  font-size: 17px;
-}
-
-.show__items {
-  font-size: 17px;
-  line-height: 1.6;
-  color: #5e5e5e;
-}
-
-/* Keep each item on one line; wrap only between items */
-.show__items span {
-  white-space: nowrap;
-}
-
-.show__items span + span::before {
-  content: " ";
-  white-space: normal;
-}
-
-/* Deli Menu teaser: white background (was dark) */
-.section--dark {
-  color: #1f1f1f;
-  background: var(--color-white);
-}
-
-.section--dark .head p {
-  color: #5e5e5e;
-}
-
-.dish {
-  background: var(--color-white);
-  border: 1px solid #e6e6e6;
-}
-
-.dish p {
-  color: #5e5e5e;
-}
-
-/* Showcase cards match the Deli Menu cards above */
-.showcase {
-  gap: 16px;
-}
-
-.show {
-  padding: 12px 12px 22px;
-  background: var(--color-white);
-  border: 1px solid #e6e6e6;
-  border-radius: 12px;
-}
-
-.show__ph {
-  aspect-ratio: 6 / 5;
-  margin-bottom: 0;
-  border-radius: 8px;
-}
-
-.show h3 {
-  margin: 18px 6px 4px;
-  font-size: 26px;
-}
-
-.show__items {
-  margin: 0 6px !important;
-  font-size: 15px;
-}
-
-/* Deli Meats and Cheeses card: zoom in on the case and brighten */
-.show__ph img[src$="/media/kielbasa.jpg"] {
-  object-position: 30% 60%;
-  transform: scale(1.4);
-  transform-origin: 30% 60%;
-  filter: brightness(1.15);
-}
-
-/* Equal space above and below each pierogi divider (section padding on both sides) */
-.doodle-divider {
-  padding-top: 0;
-}
-
-@media (max-width: 900px) {
-  .doodle-divider {
-    padding-top: 0;
-  }
-}
-
-.center-cta {
-  text-align: center;
 }

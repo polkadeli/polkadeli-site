@@ -1,4 +1,4 @@
-/* Footer: mailing list signup, both stores, contact and social links. */
+/* Footer: both stores, contact and social links, copyright. Also holds the shared spam-trap style for signup forms. */
 
 .site-footer {
   color: var(--color-white);
@@ -16,93 +16,11 @@
   text-decoration: none;
 }
 
-.site-footer a:hover,
-.site-footer a:focus-visible {
+.site-footer a:focus-visible,
+.site-footer a:hover {
   text-decoration: underline;
 }
 
-/* Signup: title left, white bar with a red button right */
-.signup {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 40px;
-  align-items: center;
-  padding-bottom: 44px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.signup__title {
-  margin: 0;
-  font-family: var(--font-heading);
-  font-weight: 500;
-  font-size: 30px;
-  line-height: 1.2;
-}
-
-.signup__bar {
-  display: flex;
-  gap: 10px;
-  padding: 8px;
-  background: var(--color-white);
-  border-radius: var(--radius-pill);
-}
-
-.signup__bar label {
-  flex: 1;
-  min-width: 0;
-}
-
-.signup__bar label + label {
-  border-left: 1px solid #d9d9d9;
-}
-
-.signup__bar input {
-  width: 100%;
-  padding: 10px 18px;
-  font: inherit;
-  font-size: 16px;
-  color: var(--color-ink);
-  background: transparent;
-  border: 0;
-}
-
-.signup__bar input:focus {
-  outline: none;
-}
-
-.signup__bar:focus-within {
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
-}
-
-.signup__bar button {
-  padding: 12px 24px;
-  font: inherit;
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--color-white);
-  background: var(--color-red);
-  border: 0;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  transition: background var(--ease-fast);
-}
-
-.signup__bar button:hover,
-.signup__bar button:focus-visible {
-  background: var(--color-red-dark);
-}
-
-.signup__privacy {
-  margin: 12px 0 0 18px;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.65);
-}
-
-.signup__privacy a {
-  text-decoration: underline;
-}
-
-/* Spam trap: hidden from people */
 .signup__trap {
   position: absolute;
   left: -9999px;
@@ -142,8 +60,8 @@
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.footer-social .social-link:hover,
-.footer-social .social-link:focus-visible {
+.footer-social .social-link:focus-visible,
+.footer-social .social-link:hover {
   color: var(--color-ink);
   background: var(--color-white);
   text-decoration: none;
@@ -164,30 +82,6 @@
     padding: 56px 20px 0;
   }
 
-  .signup {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    padding-bottom: 30px;
-  }
-
-  .signup__title {
-    font-size: 24px;
-  }
-
-  .signup__bar {
-    flex-direction: column;
-    border-radius: 14px;
-  }
-
-  .signup__bar label + label {
-    border-left: 0;
-    border-top: 1px solid #d9d9d9;
-  }
-
-  .signup__privacy {
-    margin-left: 0;
-  }
-
   .footer-columns {
     grid-template-columns: 1fr;
   }
@@ -197,4 +91,3 @@
     gap: 6px;
   }
 }
-

@@ -76,10 +76,8 @@ const offers = [
         </div>
       </form>
     </div>
-    <p class="strip strip--hero">International parcel shipping service available at our stores</p>
+    <p class="strip">International parcel shipping service available at our stores</p>
   </section>
-
-
 
   <section class="section">
     <div class="wrap">
@@ -96,12 +94,12 @@ const offers = [
   </section>
 
   <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-1.svg" alt="" /><span></span></div>
-  <section class="section section--dark">
+  <section class="section">
     <div class="wrap">
       <div class="dishes">
         {dishes.map((d) => (
-          <article class:list={['dish', !d.img && 'dish--text']}>
-            {d.img && <div class="dish__ph"><img src={d.img} alt="" loading="lazy" /></div>}
+          <article class="dish">
+            <div class="dish__ph"><img src={d.img} alt="" loading="lazy" /></div>
             <h3>{d.name}</h3>
             <p>{d.desc}</p>
           </article>
@@ -110,7 +108,6 @@ const offers = [
       <p class="center-cta"><a class="btn" href="/deli-menu">Explore Full Menu</a></p>
     </div>
   </section>
-
 
   <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-3.svg" alt="" /><span></span></div>
   <section class="section">
@@ -131,5 +128,4 @@ const offers = [
   const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 6000); } };
   document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
   start();
-
 </script>
