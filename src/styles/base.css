@@ -63,3 +63,28 @@ a {
 html {
   scroll-behavior: smooth;
 }
+
+/*
+ * Typography rule: no orphans or widows.
+ * Headings are balanced across lines; paragraphs, list items and table text never end on a single word.
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p,
+li,
+td,
+dd,
+blockquote,
+figcaption,
+label {
+  text-wrap: pretty;
+  orphans: 2;
+  widows: 2;
+}
