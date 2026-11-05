@@ -18,14 +18,7 @@ const tabs = [
 ];
 ---
 <Base title="Deli Menu & Platters · Polka Deli" description="Pierogi, sandwiches, Polish entrees and party platters from Polka Deli. Call 301-384-3354 or email your order.">
-  <div class="mp" data-cat-style="a">
-    <div class="cs-picker" id="cs-picker">
-      <b>Category style ideas:</b>
-      <button data-v="a" class="on">A · Soft cards</button>
-      <button data-v="b">B · Red title bars</button>
-      <button data-v="c">C · Red side line</button>
-      <button data-v="d">D · Framed boxes</button>
-    </div>
+  <div class="mp">
     <h1 class="mp-title mp-title--photo"><img src="/images/media/printed-menu-2.jpg" alt="Polka Deli printed menu: Menu, always fresh" /></h1>
 
     <nav class="mp-tabs" aria-label="Menu sections">
@@ -107,13 +100,6 @@ const tabs = [
 </Base>
 
 <script>
-  // Temporary: switch category style ideas.
-  const mp = document.querySelector('.mp');
-  document.querySelectorAll('#cs-picker button').forEach((b) => b.addEventListener('click', () => {
-    mp.dataset.catStyle = b.dataset.v;
-    document.querySelectorAll('#cs-picker button').forEach((x) => x.classList.toggle('on', x === b));
-  }));
-
   // Highlight the tab for the section in view.
   const tabs = [...document.querySelectorAll('.mp-tabs a')];
   const secs = tabs.map((a) => document.querySelector(a.getAttribute('href')));
