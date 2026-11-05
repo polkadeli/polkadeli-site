@@ -19,11 +19,10 @@ const dishes = [
   {
     img: '/images/media/pierogi.jpg',
     name: 'Pierogi',
-    desc: `${pierogi.prices.map(([q, p]) => `${q} — ${p}`).join(' · ')}. (Pick one) ${pierogi.fillings.join(', ')}. ${pierogi.servedWith}`,
-    price: pierogi.prices[0][1],
+    desc: `${pierogi.fillings.filter((f) => f !== 'Mix Pierogi').join(', ')}. ${pierogi.servedWith}`,
   },
-  { img: '/images/slide-kielbasa.jpg', name: sampler.name, desc: sampler.desc, price: sampler.price },
-  { img: '/images/media/kielbasa.jpg', name: kielbasaSandwich.name, desc: kielbasaSandwich.desc, price: sandwiches.price },
+  { img: '/images/slide-kielbasa.jpg', name: sampler.name, desc: sampler.desc },
+  { img: '/images/media/kielbasa.jpg', name: kielbasaSandwich.name, desc: kielbasaSandwich.desc },
 ];
 
 const offers = [
@@ -94,7 +93,6 @@ const offers = [
             {d.img && <div class="dish__ph"><img src={d.img} alt="" loading="lazy" /></div>}
             <h3>{d.name}</h3>
             <p>{d.desc}</p>
-            <span class="dish__price">{d.price}</span>
           </article>
         ))}
       </div>
