@@ -10,7 +10,7 @@ const orderMail = `mailto:${business.email}?subject=${encodeURIComponent('Deli O
 const platterMail = `mailto:${business.email}?subject=${encodeURIComponent('Platter Order')}`;
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 const tabs = [
-  ['entrees', 'Entrees'], ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'],
+  ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
   ...platters.map((g) => [slug(g.heading), g.heading]),
   ['order', 'Order online'],
 ];
@@ -31,19 +31,6 @@ const tabs = [
 
         <div class="mp-grid">
           <div class="mp-col">
-            <section class="mp-cat" id="entrees">
-              <h3>Entrees</h3>
-              <ul class="mp-items">
-                {entrees.map((item) => (
-                  <li>
-                    <p class="mp-item"><span>{item.name}{item.note && <em> {item.note}</em>}</span><b>{item.price}</b></p>
-                    {item.desc && <p class="mp-desc">{item.desc}</p>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          </div>
-          <div class="mp-col">
             <section class="mp-cat" id="pierogi">
               <h3>Pierogi</h3>
               <ul class="mp-items mp-items--split">
@@ -62,6 +49,19 @@ const tabs = [
                 ))}
               </ul>
               <p class="mp-note">{sandwiches.side[0]} <b>{sandwiches.side[1]}</b></p>
+            </section>
+          </div>
+          <div class="mp-col">
+            <section class="mp-cat" id="entrees">
+              <h3>Entrees</h3>
+              <ul class="mp-items">
+                {entrees.map((item) => (
+                  <li>
+                    <p class="mp-item"><span>{item.name}{item.note && <em> {item.note}</em>}</span><b>{item.price}</b></p>
+                    {item.desc && <p class="mp-desc">{item.desc}</p>}
+                  </li>
+                ))}
+              </ul>
             </section>
           </div>
         </div>
