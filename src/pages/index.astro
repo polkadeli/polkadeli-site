@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import AboutUs from '../components/AboutUs.astro';
 import { business, stores } from '../data/site.js';
 import { pierogi, sandwiches, entrees } from '../data/menu.js';
 import '../styles/home.css';
@@ -158,15 +159,8 @@ const offers = [
   </section>
 
   <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-3.svg" alt="" /><span></span></div>
-  <section class="section" id="about">
-    <div class="wrap about about--v2">
-      <div class="about__zoom"><img src="/images/about-owners.jpg" alt="Maria and Joanna in the store" loading="lazy" /></div>
-      <div class="about__text">
-        <h2>Hello! We're glad you're here!</h2>
-        <h3>We are Maria and Joanna, Polish natives, friends,<br class="br-desk" /> and we're pretty good cooks.</h3>
-        <p>Our love of Poland, cooking and Polish food is what brought us here. We wanted one place where you could find everything that reminded us of home: Polish goods, groceries, and the most beloved homemade Polish dishes, made fresh to order.</p>
-      </div>
-    </div>
+  <section class="section">
+    <div class="wrap"><AboutUs /></div>
   </section>
 </Base>
 

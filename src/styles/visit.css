@@ -138,3 +138,29 @@
     letter-spacing: 0.2em;
   }
 }
+
+/* About us below the maps */
+.visit-about {
+  margin: 56px 0 8px;
+  padding-top: 48px;
+  border-top: 1px solid #d9d9d9;
+}
+
+.visit-about .au {
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 44px;
+}
+
+.visit-about .au__text h2 {
+  font-size: 34px;
+}
+
+.visit-about .au__text h3 {
+  font-size: 21px;
+}
+
+@media (max-width: 900px) {
+  .visit-about .au {
+    grid-template-columns: 1fr;
+  }
+}

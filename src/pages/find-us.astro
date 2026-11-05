@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import PageCard from '../components/PageCard.astro';
 import SocialIcons from '../components/SocialIcons.astro';
+import AboutUs from '../components/AboutUs.astro';
 import { business, stores } from '../data/site.js';
 import '../styles/page.css';
 import '../styles/visit.css';
@@ -20,6 +21,8 @@ const mapEmbed = (s) => `https://maps.google.com/maps?q=${encodeURIComponent(`Po
         </section>
       ))}
     </div>
+
+    <div class="visit-about"><AboutUs /></div>
 
     <div class="follow">
       <span>Follow us</span>
