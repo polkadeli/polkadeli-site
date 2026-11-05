@@ -10,7 +10,7 @@ const orderMail = `mailto:${business.email}?subject=${encodeURIComponent('Deli O
 const platterMail = `mailto:${business.email}?subject=${encodeURIComponent('Platter Order')}`;
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 const tabs = [
-  ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
+  ['entrees', 'Entrees'], ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'],
   ...platters.map((g) => [slug(g.heading), g.heading]),
   ['order', 'Order online'],
 ];
@@ -30,38 +30,40 @@ const tabs = [
         <h2 class="mp-group__title">Deli Menu</h2>
 
         <div class="mp-grid">
-          <section class="mp-cat" id="pierogi">
-            <h3>Pierogi</h3>
-            <ul class="mp-items">
-              {pierogi.prices.map(([size, price]) => (
-                <li><p class="mp-item"><span>{size}</span><b>{price}</b></p></li>
-              ))}
-            </ul>
-            <p class="mp-pick"><span>Pick one:</span> {pierogi.fillings.join(', ')}</p>
-            <p class="mp-note">{pierogi.servedWith}</p>
-          </section>
-
-          <section class="mp-cat" id="sandwiches">
-            <h3>Sandwiches <span class="mp-badge">{sandwiches.price} each</span></h3>
-            <ul class="mp-items">
-              {sandwiches.items.map((item) => (
-                <li><p class="mp-item"><span>{item.name}</span></p><p class="mp-desc">{item.desc}</p></li>
-              ))}
-            </ul>
-            <p class="mp-note">{sandwiches.side[0]} <b>{sandwiches.side[1]}</b></p>
-          </section>
-
-          <section class="mp-cat mp-cat--wide" id="entrees">
-            <h3>Entrees</h3>
-            <ul class="mp-items mp-items--two">
-              {entrees.map((item) => (
-                <li>
-                  <p class="mp-item"><span>{item.name}{item.note && <em> {item.note}</em>}</span><b>{item.price}</b></p>
-                  {item.desc && <p class="mp-desc">{item.desc}</p>}
-                </li>
-              ))}
-            </ul>
-          </section>
+          <div class="mp-col">
+            <section class="mp-cat" id="entrees">
+              <h3>Entrees</h3>
+              <ul class="mp-items">
+                {entrees.map((item) => (
+                  <li>
+                    <p class="mp-item"><span>{item.name}{item.note && <em> {item.note}</em>}</span><b>{item.price}</b></p>
+                    {item.desc && <p class="mp-desc">{item.desc}</p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+          <div class="mp-col">
+            <section class="mp-cat" id="pierogi">
+              <h3>Pierogi</h3>
+              <ul class="mp-items">
+                {pierogi.prices.map(([size, price]) => (
+                  <li><p class="mp-item"><span>{size}</span><b>{price}</b></p></li>
+                ))}
+              </ul>
+              <p class="mp-pick"><span>Pick one:</span> {pierogi.fillings.join(', ')}</p>
+              <p class="mp-note">{pierogi.servedWith}</p>
+            </section>
+            <section class="mp-cat" id="sandwiches">
+              <h3>Sandwiches <span class="mp-badge">{sandwiches.price} each</span></h3>
+              <ul class="mp-items">
+                {sandwiches.items.map((item) => (
+                  <li><p class="mp-item"><span>{item.name}</span></p><p class="mp-desc">{item.desc}</p></li>
+                ))}
+              </ul>
+              <p class="mp-note">{sandwiches.side[0]} <b>{sandwiches.side[1]}</b></p>
+            </section>
+          </div>
         </div>
       </section>
 
