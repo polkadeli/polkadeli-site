@@ -1227,3 +1227,16 @@ main p {
     font-size: 28px;
   }
 }
+
+/* Showcase lists: plain items, no check bullets */
+.show .ticks li::before {
+  display: none;
+}
+
+.show .ticks {
+  gap: 6px;
+}
+
+.show .ticks li {
+  font-size: 17px;
+}
