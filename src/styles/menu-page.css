@@ -373,3 +373,18 @@
   color: #fff;
   border-color: #fff;
 }
+
+/* No rule above the first category under each group heading */
+.mp-col > .mp-cat:first-child,
+.mp-grid > .mp-cat:nth-child(-n + 2) {
+  padding-top: 0;
+  border-top: 0;
+}
+
+@media (max-width: 900px) {
+  .mp-grid > .mp-col:nth-child(2) > .mp-cat:first-child,
+  .mp-grid > .mp-cat:nth-child(2) {
+    padding-top: 28px;
+    border-top: 1px solid #1f1f1f;
+  }
+}
