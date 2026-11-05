@@ -79,7 +79,7 @@ export const ui = {
     orderFormLink: 'online order form',
     // Order form
     orderOnline: 'Order online',
-    orderPickup: 'Order for pickup',
+    orderPickup: 'Order for pickup in Silver Spring',
     orderTitle: 'Order for pickup · Polka Deli',
     orderDesc: 'Order pierogi, sandwiches, entrees and platters online for pickup at Polka Deli in Silver Spring, MD.',
     pickupOnly: 'Online orders are for pickup at our Silver Spring store only.',
@@ -177,7 +177,7 @@ export const ui = {
     orderAhead: 'Zamów z wyprzedzeniem przez nasz',
     orderFormLink: 'formularz zamówień online',
     orderOnline: 'Zamów online',
-    orderPickup: 'Zamów z odbiorem',
+    orderPickup: 'Zamów z odbiorem w Silver Spring',
     orderTitle: 'Zamów z odbiorem · Polka Deli',
     orderDesc: 'Zamów online pierogi, kanapki, dania i półmiski z odbiorem w Polka Deli w Silver Spring, MD.',
     pickupOnly: 'Zamówienia online można odebrać tylko w naszym sklepie w Silver Spring.',

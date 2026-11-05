@@ -25,7 +25,7 @@ const tabs = [
 
     <nav class="mp-tabs" aria-label={t.menuSections}>
       <div class="mp-wrap">
-        {tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+        <div class="mp-tabs__links">{tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</div>
         <a class="mp-order" href={href('/order', lang)}>{t.orderPickup}</a>
       </div>
     </nav>

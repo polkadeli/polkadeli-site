@@ -632,3 +632,24 @@
     padding-bottom: 80px;
   }
 }
+
+/* Section links scroll sideways if they run out of room; the order button never moves */
+.mp-tabs .mp-wrap {
+  overflow: visible;
+}
+
+.mp-tabs__links {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mp-tabs__links::-webkit-scrollbar {
+  display: none;
+}
+
+.mp-tabs a.mp-order {
+  margin-left: 16px;
+}
