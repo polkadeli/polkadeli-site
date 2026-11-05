@@ -76,13 +76,6 @@ const offers = [
         </div>
       </form>
     </div>
-    <div class="hero__ctrl" role="group" aria-label="Background photos">
-      <button type="button" class="hero__arrow" data-prev aria-label="Previous photo">‹</button>
-      <div class="hero__dots">
-        {slides.map((s, i) => <button type="button" aria-label={`Show photo ${i + 1}: ${s.alt}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}
-      </div>
-      <button type="button" class="hero__arrow" data-next aria-label="Next photo">›</button>
-    </div>
   </section>
 
   <p class="strip">International parcel shipping service available at our stores</p>
@@ -189,19 +182,15 @@ const offers = [
 
 <script>
   const slides = [...document.querySelectorAll('.hero__slide')];
-  const dots = [...document.querySelectorAll('.hero__dots button')];
   let i = 0;
   let timer;
   const show = (n) => {
-    slides[i].classList.remove('is-active'); dots[i].setAttribute('aria-pressed', 'false');
+    slides[i].classList.remove('is-active');
     i = (n + slides.length) % slides.length;
-    slides[i].classList.add('is-active'); dots[i].setAttribute('aria-pressed', 'true');
+    slides[i].classList.add('is-active');
   };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 6000); } };
-  dots.forEach((d, n) => d.addEventListener('click', () => { show(n); start(); }));
-  document.querySelector('[data-prev]').addEventListener('click', () => { show(i - 1); start(); });
-  document.querySelector('[data-next]').addEventListener('click', () => { show(i + 1); start(); });
   document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
   start();
 
