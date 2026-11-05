@@ -131,6 +131,9 @@ const today = new Date().toISOString().slice(0, 10);
     if (!items.length) { e.preventDefault(); error.hidden = false; error.scrollIntoView({ block: 'center' }); return; }
     form.querySelector('[name="order-summary"]').value = items.map((x) => `${x.qty} x ${x.name} — ${money(x.qty * x.price)}`).join('\n');
     form.querySelector('[name="order-total"]').value = money(total);
+    // Send only the readable summary, not every quantity box, so the store's email stays short.
+    form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = true; });
+    addEventListener('pageshow', () => form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = false; }), { once: true });
   });
   render();
 </script>
