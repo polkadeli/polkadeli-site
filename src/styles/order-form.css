@@ -463,3 +463,18 @@
 .of__store b {
   color: #1f1f1f;
 }
+
+/* "Pickup at Silver Spring only" notice: its own line, red, with a red bar on the left */
+.of .of__notice {
+  margin: 14px 0 12px;
+  padding: 4px 0 4px 16px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-red);
+  border-left: 4px solid var(--color-red);
+}
+
+.of .of__intro {
+  text-wrap: balance;
+}

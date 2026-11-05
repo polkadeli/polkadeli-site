@@ -36,7 +36,8 @@ const types = [
 ---
 <section class="of" id="order" aria-labelledby="order-title">
   <h2 class="of__title" id="order-title">{t.orderOnline}</h2>
-  <p class="of__intro"><b>{t.pickupOnly}</b> {t.orderIntro}</p>
+  <p class="of__notice">{t.pickupOnly}</p>
+  <p class="of__intro">{t.orderIntro}</p>
 
   <form class="of__form" name="order" method="POST" action={href('/thanks', lang) + '?order=1'} data-netlify="true" netlify-honeypot="company"
     >
