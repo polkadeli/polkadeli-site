@@ -1,37 +1,68 @@
 ---
+// Shop ("Polish Groceries"): store-aisle layout. Products come from src/data/groceries.js.
 import Base from '../layouts/Base.astro';
-import PageCard from '../components/PageCard.astro';
-import { business, stores } from '../data/site.js';
-import { columns, photos } from '../data/groceries.js';
-import '../styles/page.css';
+import { columns } from '../data/groceries.js';
 import '../styles/shop.css';
-const ss = stores[0];
-const orderMail = `mailto:${business.email}?subject=${encodeURIComponent('Groceries Order')}`;
+
+const groups = columns.flat();
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+// Banner photo for each aisle (swap any of these as better photos come in).
+const photoFor = {
+  Kielbasa: '/images/shop/kabanosy.jpg',
+  Cheese: '/images/media/deli-table.jpg',
+  'Deli Meats': '/images/shop/cold-cuts.jpg',
+  Pierogi: '/images/media/pierogi-2.jpg',
+  Blintzes: '/images/media/paczki.jpg',
+  'Marinated Goods and Jars': '/images/media/jars.jpg',
+  Sweets: '/images/shop/sweets.jpg',
+  'Baked Goods': '/images/media/paczki.jpg',
+  Other: '/images/media/groceries.jpg',
+};
+const name = (i) => (typeof i === 'string' ? i : i.name);
+const note = (i) => (typeof i === 'string' ? '' : i.note);
 ---
-<Base title="Groceries · Polka Deli" description="Polish groceries at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.">
-  <PageCard title="Groceries" background="/images/bg-wood.jpg" wide>
-    <p class="page-card__intro">If you don't see a product listed below please ask, we often add products, and can also custom order.<br />
-      Please call <a href={ss.phoneHref}>{ss.phone}</a> to order or email your order: <a href={orderMail}>{business.email}</a></p>
+<Base title="Polish Groceries · Polka Deli" description="Polish groceries at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.">
+  <div class="shop">
+    <header class="shop__head">
+      <h1>Polish Groceries</h1>
+      <p>If you don't see a product listed below please ask, we often add products, and can also custom order.</p>
+    </header>
 
-    <div class="groceries">
-      {columns.map((col) => (
-        <div class="groceries__column">
-          {col.map((group) => (
-            <section class="groceries__group">
-              <h2 class="groceries__title">{group.title}{group.tag && <span class="groceries__tag"> {group.tag}</span>}</h2>
-              <ul class="groceries__list">
-                {group.items.map((item) => typeof item === 'string'
-                  ? <li>{item}</li>
-                  : <li>{item.name}<span class="groceries__note">{item.note}</span></li>)}
-              </ul>
-            </section>
-          ))}
-        </div>
-      ))}
+    <div class="shop__body">
+      <nav class="shop__side" aria-label="Grocery categories">
+        {groups.map((g) => <a href={`#${slug(g.title)}`}>{g.title}</a>)}
+      </nav>
+
+      <div>
+        {groups.map((g) => (
+          <section class="aisle" id={slug(g.title)} aria-labelledby={`h-${slug(g.title)}`}>
+            <div class="aisle__banner" style={`background-image:url('${photoFor[g.title] ?? '/images/media/groceries.jpg'}')`}>
+              <h2 id={`h-${slug(g.title)}`}>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
+              <small>{g.items.length} items</small>
+            </div>
+            <ul class="aisle__list">
+              {g.items.map((i) => <li>{name(i)}{note(i) && <em> {note(i)}</em>}</li>)}
+            </ul>
+          </section>
+        ))}
+      </div>
     </div>
-
-    <ul class="photo-grid">
-      {photos.map((p) => <li><img src={p.src} alt={p.alt} loading="lazy" width="800" height="600" /></li>)}
-    </ul>
-  </PageCard>
+  </div>
 </Base>
+
+<script>
+  // Highlight the category in view.
+  const links = [...document.querySelectorAll('.shop__side a')];
+  const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
+  let lock = 0;
+  const setOn = (k) => links.forEach((a, i) => a.classList.toggle('is-on', i === k));
+  const onScroll = () => {
+    if (Date.now() < lock) return;
+    let k = 0;
+    secs.forEach((s, i) => { if (s.getBoundingClientRect().top < 200) k = i; });
+    setOn(k);
+  };
+  links.forEach((a, i) => a.addEventListener('click', () => { setOn(i); lock = Date.now() + 900; }));
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

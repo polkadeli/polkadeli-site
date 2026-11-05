@@ -1,72 +1,159 @@
-/* Shop ("Groceries"): four columns of red underlined categories, then a photo grid. */
+/* Shop: store-aisle layout. Category list on the left, a photo banner and product list per aisle. */
 
-.groceries {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-5);
-  text-align: left;
+.shop {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px 90px;
+  font-family: var(--font-ui);
+  color: #1f1f1f;
 }
 
-.groceries__group + .groceries__group {
-  margin-top: var(--space-5);
-}
-
-.groceries__title {
-  margin: 0 0 var(--space-1);
-  font-size: var(--text-xl);
-  font-weight: 700;
-  text-transform: uppercase;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  color: var(--color-red-shop);
-}
-
-.groceries__tag {
-  text-transform: none;
-}
-
-.groceries__list {
+.shop h1,
+.shop h2 {
   margin: 0;
-  padding: 0;
-  list-style: none;
-  line-height: 1.45;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.12;
 }
 
-.groceries__note {
-  display: block;
-  font-size: var(--text-sm);
-  color: var(--color-muted);
+.shop__head {
+  padding: 64px 0 40px;
 }
 
-.photo-grid {
+.shop__head h1 {
+  margin-bottom: 12px;
+  font-size: 56px;
+}
+
+.shop__head p {
+  max-width: 44em;
+  margin: 0;
+  color: #5e5e5e;
+}
+
+.shop__body {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-5);
-  margin: var(--space-7) 0 0;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.shop__side {
+  position: sticky;
+  top: calc(var(--header-height) + 24px);
+  display: grid;
+  border-left: 1px solid #d9d9d9;
+}
+
+.shop__side a {
+  margin-left: -1px;
+  padding: 8px 16px;
+  color: #5e5e5e;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+
+.shop__side a:hover {
+  color: #1f1f1f;
+}
+
+.shop__side a.is-on {
+  font-weight: 700;
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.aisle {
+  margin-bottom: 52px;
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
+.aisle__banner {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 170px;
+  padding: 20px 24px;
+  overflow: hidden;
+  color: #fff;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.aisle__banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.1));
+}
+
+.aisle__banner h2,
+.aisle__banner small {
+  position: relative;
+}
+
+.aisle__banner h2 {
+  font-size: 34px;
+}
+
+.aisle__banner h2 span {
+  font-family: var(--font-ui);
+  font-size: 0.5em;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.aisle__list {
+  columns: 3;
+  column-gap: 32px;
+  margin: 18px 0 0;
   padding: 0;
   list-style: none;
 }
 
-.photo-grid img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+.aisle__list li {
+  break-inside: avoid;
+  padding: 7px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.aisle__list em {
+  font-style: normal;
+  font-size: 13px;
+  color: #5e5e5e;
 }
 
 @media (max-width: 900px) {
-  .groceries,
-  .photo-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .shop {
+    padding: 0 20px 60px;
   }
-}
 
-@media (max-width: 480px) {
-  .groceries {
+  .shop__head {
+    padding: 44px 0 28px;
+  }
+
+  .shop__head h1 {
+    font-size: 38px;
+  }
+
+  .shop__body {
     grid-template-columns: 1fr;
   }
 
-  .photo-grid {
-    gap: var(--space-3);
+  .shop__side {
+    display: none;
+  }
+
+  .aisle__banner {
+    height: 130px;
+  }
+
+  .aisle__banner h2 {
+    font-size: 28px;
+  }
+
+  .aisle__list {
+    columns: 2;
   }
 }
