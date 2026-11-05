@@ -22,7 +22,14 @@ const name = (i) => (typeof i === 'string' ? i : i.name);
 const note = (i) => (typeof i === 'string' ? '' : i.note);
 ---
 <Base title="Polish Groceries · Polka Deli" description="Polish groceries at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.">
-  <div class="shop">
+  <div class="shop" data-shop-style="a">
+    <div class="cs-picker" id="cs-picker">
+      <b>Heading ideas:</b>
+      <button data-v="a" class="on">A · Current</button>
+      <button data-v="b">B · Slim photo strip</button>
+      <button data-v="c">C · Photo beside title</button>
+      <button data-v="d">D · Text only</button>
+    </div>
     <header class="shop__head">
       <h1>Polish Groceries</h1>
       <p>If you don't see a product listed below please ask, we often add products, and can also custom order if a product is available.</p>
@@ -37,6 +44,7 @@ const note = (i) => (typeof i === 'string' ? '' : i.note);
         {groups.map((g) => (
           <section class="aisle" id={slug(g.title)} aria-labelledby={`h-${slug(g.title)}`}>
             <div class="aisle__banner" style={`background-image:url('${photoFor[g.title] ?? '/images/media/groceries.jpg'}')`}>
+              <img class="aisle__thumb" src={photoFor[g.title] ?? '/images/media/groceries.jpg'} alt="" loading="lazy" />
               <h2 id={`h-${slug(g.title)}`}>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
             </div>
             <ul class="aisle__list">
@@ -50,6 +58,13 @@ const note = (i) => (typeof i === 'string' ? '' : i.note);
 </Base>
 
 <script>
+  // Temporary: switch heading ideas.
+  const shop = document.querySelector('.shop');
+  document.querySelectorAll('#cs-picker button').forEach((b) => b.addEventListener('click', () => {
+    shop.dataset.shopStyle = b.dataset.v;
+    document.querySelectorAll('#cs-picker button').forEach((x) => x.classList.toggle('on', x === b));
+  }));
+
   // Highlight the category in view.
   const links = [...document.querySelectorAll('.shop__side a')];
   const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
