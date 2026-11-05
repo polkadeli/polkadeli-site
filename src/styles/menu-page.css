@@ -96,13 +96,6 @@
   font-size: 40px;
 }
 
-.mp-group__title::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #d9d9d9;
-}
-
 .mp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
