@@ -26,9 +26,11 @@ const tabs = [
     <nav class="mp-tabs" aria-label={t.menuSections}>
       <div class="mp-wrap">
         <div class="mp-tabs__links">{tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</div>
-        <a class="mp-order" href={href('/order', lang)}>{t.orderPickup}</a>
+        <a class="mp-order mp-order--bar" href={href('/order', lang)} tabindex="-1">{t.orderPickup}</a>
       </div>
     </nav>
+    <!-- Desktop: big order button just under the red bar. Once it scrolls away, a smaller one appears in the red bar. -->
+    <div class="mp-orderdock"><div class="mp-wrap"><a class="mp-order" href={href('/order', lang)}>{t.orderPickup}</a></div></div>
 
     <div class="mp-wrap">
       <section class="mp-group" id="deli">
@@ -102,6 +104,15 @@ const tabs = [
 </Base>
 
 <script>
+  // Show the small order button in the red bar once the big one has scrolled out of view.
+  const big = document.querySelector('.mp-orderdock .mp-order');
+  const bar = document.querySelector('.mp-tabs');
+  new IntersectionObserver(([e]) => {
+    const show = !e.isIntersecting && e.boundingClientRect.top < 200;
+    bar.classList.toggle('show-order', show);
+    bar.querySelector('.mp-order--bar').tabIndex = show ? 0 : -1;
+  }, { rootMargin: '-140px 0px 0px 0px' }).observe(big);
+
   // Highlight the tab for the section in view.
   const tabs = [...document.querySelectorAll('.mp-tabs a:not(.mp-order)')];
   const secs = tabs.map((a) => document.querySelector(a.getAttribute('href')));

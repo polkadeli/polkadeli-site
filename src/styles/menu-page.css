@@ -653,3 +653,55 @@
 .mp-tabs a.mp-order {
   margin-left: 16px;
 }
+
+/* Order button under the red bar (desktop): red, larger, with a shadow, sticks while scrolling */
+.mp-orderdock {
+  height: 0;
+}
+
+.mp-orderdock .mp-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mp-orderdock a.mp-order {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  margin: 18px 0 0;
+  padding: 0 26px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 17px;
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  background: var(--color-red);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  transition: background var(--ease-fast);
+}
+
+.mp-orderdock a.mp-order:hover,
+.mp-orderdock a.mp-order:focus-visible {
+  color: #fff;
+  background: var(--color-red-dark);
+}
+
+@media (max-width: 900px) {
+  .mp-orderdock {
+    display: none;
+  }
+}
+
+/* Small white order button in the red bar: hidden until the big one scrolls away */
+.mp-tabs a.mp-order--bar {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.mp-tabs.show-order a.mp-order--bar {
+  visibility: visible;
+  opacity: 1;
+}
