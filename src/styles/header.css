@@ -61,6 +61,39 @@
   color: var(--color-red-bright);
 }
 
+/* "Order with Uber Eats" pill, same grey as the homepage UberEats button */
+.header-order {
+  margin-left: var(--space-3);
+  padding: 6px 18px;
+  font-family: var(--font-nav);
+  font-size: var(--text-sm);
+  color: var(--color-white);
+  white-space: nowrap;
+  text-decoration: none;
+  background: var(--color-grey);
+  border-radius: var(--radius-pill);
+  transition: background var(--ease-fast);
+}
+
+.header-order:hover,
+.header-order:focus-visible {
+  background: var(--color-red-dark);
+}
+
+.header-order--drawer {
+  display: inline-block;
+  margin: var(--space-5) 0 0;
+  padding: 10px 20px;
+  font-size: var(--text-base);
+}
+
+/* Narrower desktops: tighten link spacing so everything fits on one line */
+@media (max-width: 1280px) {
+  .site-nav__links a {
+    padding: var(--space-1) 20px;
+  }
+}
+
 /* Menu button: only shown on phones and tablets */
 .menu-button {
   display: none;

@@ -43,6 +43,7 @@ const jsonLd = stores.map((s) => ({
         {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
       </ul>
       <SocialIcons />
+      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
     </nav>
     <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
       <span></span><span></span><span></span>
@@ -53,6 +54,7 @@ const jsonLd = stores.map((s) => ({
     <ul class="drawer__links">
       {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
+    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
     <div class="drawer__social"><SocialIcons size={26} /></div>
   </div>
 
