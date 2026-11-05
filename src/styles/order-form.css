@@ -356,3 +356,72 @@
   border-color: var(--color-red);
   color: var(--color-red);
 }
+
+/* Deli order / Platter order switch */
+.of__types {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 36px;
+}
+
+.of__type {
+  cursor: pointer;
+}
+
+.of__type input {
+  position: absolute;
+  opacity: 0;
+}
+
+.of__type-box {
+  display: block;
+  height: 100%;
+  padding: 18px 22px;
+  border: 1px solid #bdbdbd;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.of__type-box b {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 24px;
+}
+
+.of__type-box small {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  color: #5e5e5e;
+}
+
+.of__type:hover .of__type-box {
+  border-color: #1f1f1f;
+}
+
+.of__type input:checked + .of__type-box {
+  background: #fff5f5;
+  border: 2px solid var(--color-red);
+  padding: 17px 21px;
+}
+
+.of__type input:checked + .of__type-box b {
+  color: var(--color-red);
+}
+
+.of__type input:focus-visible + .of__type-box {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+.of__group[hidden] {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .of__types {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}

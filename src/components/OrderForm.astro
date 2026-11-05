@@ -8,23 +8,27 @@ import '../styles/order-form.css';
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const groups = [
   {
-    title: 'Pierogi',
+    title: 'Pierogi', type: 'deli',
     items: pierogi.prices.map(([size, price]) => ({ key: `pierogi-${slug(size)}`, name: `Pierogi, ${size}`, price, filling: true })),
   },
   {
-    title: 'Sandwiches',
+    title: 'Sandwiches', type: 'deli',
     items: sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, name: i.name, price: sandwiches.price })),
   },
   {
-    title: 'Entrees',
+    title: 'Entrees', type: 'deli',
     items: entrees.map((i) => ({ key: `entree-${slug(i.name)}`, name: `${i.name}${i.note ? ` ${i.note}` : ''}`, price: i.price })),
   },
   {
-    title: 'Platters',
+    title: 'Platters', type: 'platters',
     items: platters.flatMap((g) => g.items.map((i) => ({ key: `platter-${slug(i.name)}`, name: i.name, price: i.price, serves: g.serves }))),
   },
 ];
 const today = new Date().toISOString().slice(0, 10);
+const types = [
+  { value: 'deli', label: 'Deli order', hint: 'Pierogi, sandwiches and entrees' },
+  { value: 'platters', label: 'Platter order', hint: 'Cold cut, bread, party and cake platters · 48 hours notice' },
+];
 ---
 <section class="of" id="order" aria-labelledby="order-title">
   <h2 class="of__title" id="order-title">Order online</h2>
@@ -36,10 +40,19 @@ const today = new Date().toISOString().slice(0, 10);
     <textarea name="order-summary" class="of__summary-field" hidden></textarea>
     <input type="hidden" name="order-total" />
 
+    <div class="of__types" role="radiogroup" aria-label="Order type">
+      {types.map((t, i) => (
+        <label class="of__type">
+          <input type="radio" name="order-type" value={t.value === 'deli' ? 'Deli order' : 'Platter order'} data-type={t.value} checked={i === 0} />
+          <span class="of__type-box"><b>{t.label}</b><small>{t.hint}</small></span>
+        </label>
+      ))}
+    </div>
+
     <div class="of__cols">
       <div class="of__items">
         {groups.map((g) => (
-          <fieldset class="of__group">
+          <fieldset class="of__group" data-type={g.type}>
             <legend>{g.title}</legend>
             {g.note && <p class="of__note">{g.note}</p>}
             {g.items.map((it) => (
@@ -139,6 +152,26 @@ const today = new Date().toISOString().slice(0, 10);
     const sel = r.querySelector('.of__filling');
     if (sel) sel.required = (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0;
   });
+  // Deli and platter orders are separate: show one set of items at a time.
+  const pad = (n) => String(n).padStart(2, '0');
+  const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const dateInput = form.querySelector('[name="pickup-date"]');
+  const setType = () => {
+    const type = form.querySelector('[name="order-type"]:checked').dataset.type;
+    form.querySelectorAll('.of__group').forEach((g) => {
+      const on = g.dataset.type === type;
+      g.hidden = !on;
+      if (!on) g.querySelectorAll('.of__qty').forEach((q) => { q.value = 0; });
+    });
+    // Platters need 48 hours notice, so the earliest pickup date moves out two days.
+    const min = new Date();
+    if (type === 'platters') min.setDate(min.getDate() + 2);
+    dateInput.min = isoDay(min);
+    if (dateInput.value && dateInput.value < dateInput.min) dateInput.value = '';
+    syncFillings();
+    render();
+  };
+  form.querySelectorAll('[name="order-type"]').forEach((r) => r.addEventListener('change', setType));
   form.addEventListener('input', () => { syncFillings(); render(); });
   form.addEventListener('change', syncFillings);
   form.addEventListener('submit', (e) => {
@@ -156,5 +189,5 @@ const today = new Date().toISOString().slice(0, 10);
     form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = true; });
     addEventListener('pageshow', () => form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = false; }), { once: true });
   });
-  render();
+  setType();
 </script>
