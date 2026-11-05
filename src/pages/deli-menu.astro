@@ -6,8 +6,6 @@ import { business, stores } from '../data/site.js';
 import { pierogi, sandwiches, entrees, platters } from '../data/menu.js';
 import '../styles/menu-page.css';
 const ss = stores[0];
-const orderMail = `mailto:${business.email}?subject=${encodeURIComponent('Deli Order')}`;
-const platterMail = `mailto:${business.email}?subject=${encodeURIComponent('Platter Order')}`;
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
@@ -70,7 +68,7 @@ const tabs = [
       <section class="mp-group" id="platters">
         <div class="mp-group__head">
           <h2 class="mp-group__title">Platters</h2>
-          <p class="mp-email">Please email your order to: <a href={platterMail}>{business.email}</a></p>
+          <p class="mp-email">Order ahead with our <a href="#order">online order form</a></p>
         </div>
         <div class="mp-grid">
           {platters.map((g) => (

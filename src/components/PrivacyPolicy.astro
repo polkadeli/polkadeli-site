@@ -2,7 +2,6 @@
 // Privacy policy text, shown in a pop-up (see Base.astro). Update the date when the policy changes.
 import { business, stores } from '../data/site.js';
 const effective = 'November 5, 2026';
-const mail = `mailto:${business.privacyEmail}`;
 ---
 <article class="legal">
   <p class="legal__date">Effective {effective}</p>
@@ -39,7 +38,7 @@ const mail = `mailto:${business.privacyEmail}`;
   <h2>Unsubscribing and your choices</h2>
   <ul>
     <li>Every newsletter has an <strong>unsubscribe</strong> link at the bottom. One click and you're off the list.</li>
-    <li>You can ask us to see, correct or delete the information we have about you at any time by emailing <a href={mail}>{business.privacyEmail}</a>.</li>
+    <li>You can ask us to see, correct or delete the information we have about you at any time through the <a href="/find-us#contact-title">contact form</a> on our Visit us page.</li>
   </ul>
 
   <h2>How long we keep it</h2>
@@ -52,5 +51,5 @@ const mail = `mailto:${business.privacyEmail}`;
   <p>If we change how we handle your information, we'll update this policy and the date at the top.</p>
 
   <h2>Contact us</h2>
-  <p>Questions about your privacy? Email <a href={mail}>{business.privacyEmail}</a>, or call us at <a href={stores[0].phoneHref}>{stores[0].phone}</a> (Silver Spring) or <a href={stores[1].phoneHref}>{stores[1].phone}</a> (Vienna).</p>
+  <p>Questions about your privacy? Send us a message using the <a href="/find-us#contact-title">contact form</a>, or call us at <a href={stores[0].phoneHref}>{stores[0].phone}</a> (Silver Spring) or <a href={stores[1].phoneHref}>{stores[1].phone}</a> (Vienna).</p>
 </article>
