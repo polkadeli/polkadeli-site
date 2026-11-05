@@ -1098,3 +1098,23 @@ main p {
 .doodle-divider + .section--tight {
   padding-top: 70px;
 }
+
+/* Shipping strip pinned to the bottom of the first screen */
+.strip--hero {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  margin: 0;
+}
+
+.hero__foot {
+  padding-bottom: 96px;
+}
+
+@media (max-width: 900px) {
+  .hero__foot {
+    padding-bottom: 96px;
+  }
+}
