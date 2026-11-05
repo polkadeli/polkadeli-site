@@ -38,7 +38,6 @@ const note = (i) => (typeof i === 'string' ? '' : i.note);
           <section class="aisle" id={slug(g.title)} aria-labelledby={`h-${slug(g.title)}`}>
             <div class="aisle__banner" style={`background-image:url('${photoFor[g.title] ?? '/images/media/groceries.jpg'}')`}>
               <h2 id={`h-${slug(g.title)}`}>{g.title}{g.tag && <span> {g.tag}</span>}</h2>
-              <small>{g.items.length} items</small>
             </div>
             <ul class="aisle__list">
               {g.items.map((i) => <li>{name(i)}{note(i) && <em> {note(i)}</em>}</li>)}
