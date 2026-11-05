@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import PageCard from '../components/PageCard.astro';
+import { business, stores } from '../data/site.js';
+import { pierogi, sandwiches, entrees } from '../data/menu.js';
+import '../styles/page.css';
+import '../styles/menu.css';
+const ss = stores[0];
+const orderMail = `mailto:${business.email}?subject=${encodeURIComponent('Deli Order')}`;
+---
+<Base title="Deli Menu · Polka Deli" description="Pierogi, sandwiches and Polish entrees made daily at Polka Deli. Call 301-384-3354 or email your order.">
+  <PageCard title="Deli Menu" background="/images/bg-pierogi.jpg" wide>
+    <p class="page-card__intro">Please call <a href={ss.phoneHref}>{ss.phone}</a> to order or email your order: <a href={orderMail}>{business.email}</a></p>
+
+    <div class="menu">
+      <section class="menu__column" aria-labelledby="h-pierogi">
+        <h2 class="menu__heading" id="h-pierogi">Pierogi</h2>
+        {pierogi.prices.map(([size, price]) => <p class="menu__price-line">{size} – {price}</p>)}
+        <p class="menu__note">(Pick one)</p>
+        <ul class="menu__choices">{pierogi.fillings.map((f) => <li>{f}</li>)}</ul>
+        <p class="menu__aside">{pierogi.servedWith}</p>
+      </section>
+
+      <section class="menu__column" aria-labelledby="h-sandwiches">
+        <h2 class="menu__heading" id="h-sandwiches">Sandwiches</h2>
+        <p class="menu__price-line">{sandwiches.price} each</p>
+        <ul class="menu__items">
+          {sandwiches.items.map((item) => (
+            <li class="menu__item">
+              <p class="menu__item-head">{item.name}</p>
+              <p class="menu__desc">{item.desc}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="menu__aside">{sandwiches.side[0]} … {sandwiches.side[1]}</p>
+      </section>
+
+      <section class="menu__column" aria-labelledby="h-entrees">
+        <h2 class="menu__heading" id="h-entrees">Entrees</h2>
+        <ul class="menu__items">
+          {entrees.map((item) => (
+            <li class="menu__item">
+              <p class="menu__item-head"><span class="menu__item-name">{item.name}{item.note && <span class="menu__item-note"> {item.note}</span>}</span><span class="menu__leader" aria-hidden="true"></span><span class="menu__price">{item.price}</span></p>
+              {item.desc && <p class="menu__desc">{item.desc}</p>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  </PageCard>
+</Base>

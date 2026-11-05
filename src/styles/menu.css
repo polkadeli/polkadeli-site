@@ -1,0 +1,115 @@
+/* Menus (Deli Menu, Platters): columns split by thin red rules, prices on dot leaders. */
+
+.menu {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr 1.45fr;
+  text-align: left;
+}
+
+.menu__column {
+  padding: 0 var(--space-5);
+}
+
+.menu__column:first-child {
+  padding-left: 0;
+}
+
+.menu__column:last-child {
+  padding-right: 0;
+}
+
+.menu__column + .menu__column {
+  border-left: 2px solid var(--color-red-heading);
+}
+
+.menu__heading {
+  margin: 0 0 var(--space-1);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-red-heading);
+}
+
+.menu__price-line {
+  margin: 0;
+}
+
+.menu__note {
+  margin: var(--space-4) 0 var(--space-1);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.menu__choices {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu__choices li::before {
+  content: '– ';
+}
+
+.menu__aside {
+  margin: var(--space-5) 0 0;
+  font-style: italic;
+}
+
+.menu__items {
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu__item + .menu__item {
+  margin-top: var(--space-4);
+}
+
+/* Name ........ $price */
+.menu__item-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.menu__item-note {
+  text-transform: none;
+}
+
+.menu__leader {
+  flex: 1;
+  min-width: 16px;
+  border-bottom: 2px dotted currentColor;
+  opacity: 0.45;
+}
+
+.menu__price {
+  white-space: nowrap;
+}
+
+.menu__desc {
+  margin: 0;
+  color: #333;
+}
+
+@media (max-width: 900px) {
+  .menu {
+    grid-template-columns: 1fr;
+  }
+
+  .menu__column,
+  .menu__column:first-child,
+  .menu__column:last-child {
+    padding: 0;
+  }
+
+  .menu__column + .menu__column {
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+    border-left: 0;
+    border-top: 2px solid var(--color-red-heading);
+  }
+}
