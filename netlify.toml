@@ -8,11 +8,17 @@
 # Old Wix addresses that change on the new site
 [[redirects]]
   from = "/copy-of-deli-menu"
-  to = "/platters"
+  to = "/deli-menu#platters"
   status = 301
 
 # The privacy policy is now a pop-up on the home page
 [[redirects]]
   from = "/privacy"
   to = "/#privacy"
+  status = 301
+
+# Platters are now part of the Deli Menu page
+[[redirects]]
+  from = "/platters"
+  to = "/deli-menu#platters"
   status = 301
