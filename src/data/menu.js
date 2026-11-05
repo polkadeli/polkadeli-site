@@ -15,7 +15,7 @@ export const sandwiches = {
     { name: 'Smoked Kielbasa', desc: 'Sub roll, kraut, grilled onions, mustard, horseradish sauce' },
     { name: 'BLT', desc: 'Sub roll, bacon, lettuce, tomato' },
     { name: 'Kielbasa Reuben', desc: 'Rye bread, cheese, kraut, Russian dressing' },
-    { name: 'Schnitzel Pork', desc: 'Sub roll, lettuce, tomato, horseradish sauce' },
+    { name: 'Pork Schnitzel', desc: 'Sub roll, lettuce, tomato, horseradish sauce' },
     { name: 'Ham or Turkey & Cheese', desc: 'Sub roll, lettuce, tomato, mayo, mustard' },
   ],
   side: ['Add a side of Polish potato salad', '$1'],
