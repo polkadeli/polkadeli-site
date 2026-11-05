@@ -286,3 +286,24 @@
 .of p.of__intro {
   margin-bottom: 44px;
 }
+
+/* Narrower quantity boxes */
+.of__row,
+.of__row {
+  grid-template-columns: 1fr auto 48px;
+}
+
+.of__qty {
+  width: 48px;
+  padding: 6px 4px;
+}
+
+@media (max-width: 900px) {
+  .of__row {
+    grid-template-columns: 1fr auto 48px;
+  }
+
+  .of__qty {
+    width: 48px;
+  }
+}
