@@ -346,6 +346,13 @@ main p {
   color: rgba(255, 255, 255, 0.7);
 }
 
+.dish--text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px 18px;
+}
+
 .dish__price {
   margin: 0 6px;
   font-weight: 700;
@@ -635,5 +642,192 @@ main p {
 
   .collage__text h2 {
     font-size: 38px;
+  }
+}
+
+/* ---- Hero v2: store addresses and mailing list above the fold ---- */
+.hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero__copy {
+  flex: 1;
+  width: 100%;
+  height: auto;
+  padding-top: calc(var(--header-height) + 20px);
+}
+
+.hero h1 {
+  font-size: 68px;
+}
+
+.hero__foot {
+  position: relative;
+  bottom: auto;
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: 40px;
+  align-items: end;
+  width: 100%;
+  padding-bottom: 76px;
+}
+
+.hero__stores {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 320px));
+  gap: 28px;
+  font-size: 17px;
+  opacity: 1;
+}
+
+.hero-store {
+  padding-left: 18px;
+  border-left: 3px solid var(--color-red);
+}
+
+.hero-store__city {
+  margin-bottom: 4px !important;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.hero-store__addr {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 21px;
+  line-height: 1.3;
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.hero-store__phone {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-white);
+  text-decoration: none;
+}
+
+.hero-store a:hover {
+  text-decoration: underline;
+}
+
+.hero-signup {
+  padding: 26px 26px 18px;
+  color: var(--color-ink);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+}
+
+.hero-signup h2 {
+  margin-bottom: 16px;
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.hero-signup__fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.hero-signup input {
+  width: 100%;
+  padding: 11px 14px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--color-ink);
+  background: var(--color-white);
+  border: 1px solid #bdbdbd;
+  border-radius: 0;
+}
+
+.hero-signup input:focus {
+  outline: 2px solid var(--color-red);
+  outline-offset: -1px;
+  border-color: var(--color-red);
+}
+
+.hero-signup .btn {
+  justify-content: center;
+  width: 100%;
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  cursor: pointer;
+}
+
+.hero-signup__privacy {
+  margin-top: 8px !important;
+  font-size: 12px;
+  text-align: right;
+  color: #5e5e5e;
+}
+
+.hero__ctrl {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 22px;
+  transform: translateX(-50%);
+}
+
+.hero__arrow {
+  width: 34px;
+  height: 34px;
+  font-size: 16px;
+}
+
+@media (max-width: 1100px) {
+  .hero__foot {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .hero-signup {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 0;
+  }
+
+  .hero__copy {
+    min-height: 0;
+    padding-top: calc(var(--header-height) + 90px);
+    padding-bottom: 36px;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .hero__foot {
+    padding-bottom: 70px;
+  }
+
+  .hero__stores {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .hero-store__addr {
+    font-size: 19px;
+  }
+
+  .hero-signup {
+    padding: 20px 18px 14px;
+  }
+
+  .hero-signup__fields {
+    grid-template-columns: 1fr;
   }
 }
