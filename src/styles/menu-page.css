@@ -364,3 +364,9 @@
 .mp-email {
   color: #5e5e5e;
 }
+
+/* Email line sits right next to the heading */
+.mp-group__head {
+  justify-content: flex-start;
+  gap: 8px 20px;
+}
