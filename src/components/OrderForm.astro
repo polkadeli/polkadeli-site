@@ -81,11 +81,13 @@ const today = new Date().toISOString().slice(0, 10);
           <div class="of__summary" aria-live="polite">
             <p class="of__empty">No items yet.</p>
             <ul class="of__lines"></ul>
+            <p class="of__sub"><span>Subtotal</span><b data-sub>$0.00</b></p>
+            <p class="of__sub of__taxline"><span data-taxlabel>MD sales tax (6%)</span><b data-tax>$0.00</b></p>
             <p class="of__total"><span>Estimated total</span><b>$0.00</b></p>
           </div>
           <p class="of__error" role="alert" hidden>Please add at least one item.</p>
           <button class="of__send" type="submit">Send order</button>
-          <p class="of__small">Prices before tax. Platters may need a day's notice.</p>
+          <p class="of__small">Platters may need a day's notice.</p>
         </div>
       </aside>
     </div>
@@ -100,6 +102,7 @@ const today = new Date().toISOString().slice(0, 10);
   const totalEl = form.querySelector('.of__total b');
   const error = form.querySelector('.of__error');
   const money = (n) => `$${n.toFixed(2)}`;
+  const TAX_MD = 0.06; // Maryland sales tax rate
 
   const collect = () => rows
     .map((r) => {
@@ -117,7 +120,14 @@ const today = new Date().toISOString().slice(0, 10);
       li.innerHTML = `<span>${x.qty} × ${x.name}</span><b>${money(x.qty * x.price)}</b>`;
       lines.append(li);
     });
-    const total = items.reduce((t, x) => t + x.qty * x.price, 0);
+    const sub = items.reduce((t, x) => t + x.qty * x.price, 0);
+    // Maryland sales tax for the Silver Spring store. Vienna's rate isn't set yet, so tax is added at pickup there.
+    const md = form.querySelector('[name="store"]').value === 'Silver Spring';
+    const tax = md ? Math.round(sub * TAX_MD * 100) / 100 : 0;
+    const total = sub + tax;
+    form.querySelector('[data-sub]').textContent = money(sub);
+    form.querySelector('[data-taxlabel]').textContent = md ? 'MD sales tax (6%)' : 'Sales tax (added at pickup)';
+    form.querySelector('[data-tax]').textContent = md ? money(tax) : '—';
     totalEl.textContent = money(total);
     empty.hidden = items.length > 0;
     rows.forEach((r) => r.classList.toggle('is-picked', (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0));
@@ -130,7 +140,10 @@ const today = new Date().toISOString().slice(0, 10);
     const { items, total } = render();
     if (!items.length) { e.preventDefault(); error.hidden = false; error.scrollIntoView({ block: 'center' }); return; }
     form.querySelector('[name="order-summary"]').value = items.map((x) => `${x.qty} x ${x.name} — ${money(x.qty * x.price)}`).join('\n');
-    form.querySelector('[name="order-total"]').value = money(total);
+    const md = form.querySelector('[name="store"]').value === 'Silver Spring';
+    form.querySelector('[name="order-total"]').value = md
+      ? `${money(total)} (incl. ${form.querySelector('[data-tax]').textContent} MD tax)`
+      : `${money(total)} + sales tax at pickup`;
     // Send only the readable summary, not every quantity box, so the store's email stays short.
     form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = true; });
     addEventListener('pageshow', () => form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = false; }), { once: true });

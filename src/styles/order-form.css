@@ -335,3 +335,19 @@
     gap: 10px;
   }
 }
+
+.of__sub {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  font-size: 14px;
+  border-top: 1px solid #d9d9d9;
+}
+
+.of__taxline {
+  margin-top: 0;
+  padding-top: 2px;
+  border-top: 0;
+}
