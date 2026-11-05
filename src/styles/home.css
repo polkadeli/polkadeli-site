@@ -831,3 +831,9 @@ main p {
     grid-template-columns: 1fr;
   }
 }
+
+/* Headline sits lower, just above the store addresses */
+.hero__copy {
+  justify-content: flex-end;
+  padding-bottom: 44px;
+}
