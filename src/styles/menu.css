@@ -6,6 +6,14 @@
   text-align: left;
 }
 
+.menu--two {
+  grid-template-columns: 1fr 1fr;
+}
+
+.menu__group + .menu__group {
+  margin-top: var(--space-5);
+}
+
 .menu__column {
   padding: 0 var(--space-5);
 }
