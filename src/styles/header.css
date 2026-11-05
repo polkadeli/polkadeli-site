@@ -499,3 +499,11 @@
     display: none;
   }
 }
+
+/* EN / PL keep the same width when bold, so nothing shifts when you switch */
+.lang-switch a {
+  display: inline-block;
+  width: 2.6em;
+  padding: 4px 0;
+  text-align: center;
+}
