@@ -2,10 +2,10 @@
 // The browser sends item keys and quantities only; prices come from src/data/menu.js here.
 //
 // Netlify environment variables (Site configuration > Environment variables):
-//   CLOVER_MERCHANT_ID    Merchant ID from the Clover dashboard
+//   CLOVER_MERCHANT_ID    optional; defaults to Polka Deli's merchant ID below
 //   CLOVER_PRIVATE_TOKEN  Ecommerce API private token (Settings > Ecommerce > Ecommerce API Tokens)
 //   CLOVER_ENV            "production" (default) or "sandbox" for testing
-// Without the first two, the function runs in TEST MODE: no payment; the order page emails
+// Without the private token, the function runs in TEST MODE: no payment; the order page emails
 // the order to the store (Netlify Forms, marked TEST) and shows the thank-you page.
 import { getStore } from '@netlify/blobs';
 import { orderItems, fillings, cents, TAX_MD } from '../../src/data/orderItems.js';
@@ -60,7 +60,7 @@ export default async (req, context) => {
 
   const site = new URL(req.url).origin; // the address this request came to (staging or live)
   const thanks = `${site}${lang === 'pl' ? '/pl' : ''}/thanks`;
-  const merchant = process.env.CLOVER_MERCHANT_ID;
+  const merchant = process.env.CLOVER_MERCHANT_ID || 'XESF2ZXD2SF94'; // Polka Deli's Clover merchant ID (not secret)
   const token = process.env.CLOVER_PRIVATE_TOKEN;
 
   // TEST MODE: no Clover keys yet. The page emails the order itself (marked not paid)
