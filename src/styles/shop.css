@@ -1,0 +1,72 @@
+/* Shop ("Groceries"): four columns of red underlined categories, then a photo grid. */
+
+.groceries {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  text-align: left;
+}
+
+.groceries__group + .groceries__group {
+  margin-top: var(--space-5);
+}
+
+.groceries__title {
+  margin: 0 0 var(--space-1);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--color-red-shop);
+}
+
+.groceries__tag {
+  text-transform: none;
+}
+
+.groceries__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.45;
+}
+
+.groceries__note {
+  display: block;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+  margin: var(--space-7) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.photo-grid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .groceries,
+  .photo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .groceries {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-grid {
+    gap: var(--space-3);
+  }
+}
