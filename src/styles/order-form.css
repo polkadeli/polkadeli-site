@@ -351,3 +351,8 @@
   padding-top: 2px;
   border-top: 0;
 }
+
+.of__filling:required:invalid {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}

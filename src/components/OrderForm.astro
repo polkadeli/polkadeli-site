@@ -9,7 +9,6 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g
 const groups = [
   {
     title: 'Pierogi',
-    note: `Pick one filling: ${pierogi.fillings.join(', ')}`,
     items: pierogi.prices.map(([size, price]) => ({ key: `pierogi-${slug(size)}`, name: `Pierogi, ${size}`, price, filling: true })),
   },
   {
@@ -50,6 +49,7 @@ const today = new Date().toISOString().slice(0, 10);
                 <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`Quantity of ${it.name}`} />
                 {it.filling && (
                   <select class="of__filling" name={`filling-${it.key}`} aria-label={`Filling for ${it.name}`}>
+                    <option value="" selected disabled>Choose a filling</option>
                     {pierogi.fillings.map((f) => <option>{f}</option>)}
                   </select>
                 )}
@@ -134,8 +134,17 @@ const today = new Date().toISOString().slice(0, 10);
     return { items, total };
   };
 
-  form.addEventListener('input', render);
+  // A filling must be chosen for any pierogi being ordered.
+  const syncFillings = () => rows.forEach((r) => {
+    const sel = r.querySelector('.of__filling');
+    if (sel) sel.required = (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0;
+  });
+  form.addEventListener('input', () => { syncFillings(); render(); });
+  form.addEventListener('change', syncFillings);
   form.addEventListener('submit', (e) => {
+    syncFillings();
+    const missing = rows.find((r) => r.querySelector('.of__filling')?.required && !r.querySelector('.of__filling').value);
+    if (missing) { e.preventDefault(); missing.querySelector('.of__filling').reportValidity(); return; }
     const { items, total } = render();
     if (!items.length) { e.preventDefault(); error.hidden = false; error.scrollIntoView({ block: 'center' }); return; }
     form.querySelector('[name="order-summary"]').value = items.map((x) => `${x.qty} x ${x.name} — ${money(x.qty * x.price)}`).join('\n');
