@@ -307,3 +307,22 @@
     width: 48px;
   }
 }
+
+/* Price sits after the item name with the same gap as the menu above (40px); quantity stays at the right */
+.of__row,
+.of__row:is(div) {
+  grid-template-columns: minmax(0, max-content) 1fr 48px;
+  column-gap: 40px;
+}
+
+.of__price {
+  justify-self: start;
+}
+
+@media (max-width: 900px) {
+  .of__row,
+  .of__row:is(div) {
+    grid-template-columns: minmax(0, max-content) 1fr 48px;
+    column-gap: 16px;
+  }
+}
