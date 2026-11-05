@@ -29,7 +29,7 @@ const today = new Date().toISOString().slice(0, 10);
 ---
 <section class="of" id="order" aria-labelledby="order-title">
   <h2 class="of__title" id="order-title">Order online</h2>
-  <p class="of__intro">Choose your items and a pickup time. Please provide best phone number to reach you to confirm your order.</p>
+  <p class="of__intro">Choose your items and a pickup time. Please provide best phone number to reach you to confirm your order. Platters require 48 hours notice.</p>
 
   <form class="of__form" name="order" method="POST" action="/thanks?order=1" data-netlify="true" netlify-honeypot="company">
     <input type="hidden" name="form-name" value="order" />
@@ -87,7 +87,6 @@ const today = new Date().toISOString().slice(0, 10);
           </div>
           <p class="of__error" role="alert" hidden>Please add at least one item.</p>
           <button class="of__send" type="submit">Send order</button>
-          <p class="of__small">Platters may need a day's notice.</p>
         </div>
       </aside>
     </div>
