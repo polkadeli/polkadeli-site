@@ -83,7 +83,7 @@
 }
 
 .trio__menu {
-  margin: var(--space-1);
+  margin: 0; /* red fills the cell edge to edge */
   font-family: var(--font-display);
   font-size: var(--text-display);
   color: var(--color-white);
