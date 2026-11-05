@@ -1275,3 +1275,31 @@ main p {
 .dish p {
   color: #5e5e5e;
 }
+
+/* Showcase cards match the Deli Menu cards above */
+.showcase {
+  gap: 16px;
+}
+
+.show {
+  padding: 12px 12px 22px;
+  background: var(--color-white);
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+}
+
+.show__ph {
+  aspect-ratio: 6 / 5;
+  margin-bottom: 0;
+  border-radius: 8px;
+}
+
+.show h3 {
+  margin: 18px 6px 4px;
+  font-size: 26px;
+}
+
+.show__items {
+  margin: 0 6px !important;
+  font-size: 15px;
+}
