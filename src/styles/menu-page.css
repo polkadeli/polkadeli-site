@@ -419,3 +419,13 @@
     margin-left: 0;
   }
 }
+
+/* Sandwich price: plain red price like the others, no pill */
+.mp-badge:not(.mp-badge--line) {
+  padding: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-red);
+  background: none;
+  border-radius: 0;
+}
