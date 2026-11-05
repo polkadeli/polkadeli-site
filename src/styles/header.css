@@ -425,3 +425,9 @@
     font-size: 16px;
   }
 }
+
+/* Slimmer Order button: same font size, less padding */
+.header-order:not(.header-order--drawer) {
+  height: 36px;
+  padding: 0 16px;
+}
