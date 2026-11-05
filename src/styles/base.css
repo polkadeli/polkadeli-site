@@ -93,3 +93,22 @@ label {
 .nobr {
   white-space: nowrap;
 }
+
+/* All pill buttons match the menu bar button height (36px) */
+.btn,
+.vs__btn,
+.ct__send,
+.of__send,
+.signup__bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 18px;
+  line-height: 1;
+}
+
+.of__send {
+  display: flex;
+  width: 100%;
+}
