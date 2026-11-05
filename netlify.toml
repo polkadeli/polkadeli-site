@@ -22,3 +22,9 @@
   from = "/platters"
   to = "/deli-menu#platters"
   status = 301
+
+# About is now a section on the home page
+[[redirects]]
+  from = "/about"
+  to = "/#about"
+  status = 301
