@@ -173,3 +173,28 @@
   object-fit: cover;
   border-radius: 50%;
 }
+
+/* Title sits above the card; only the product list is on the soft card */
+.aisle {
+  margin-bottom: 36px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+}
+
+.aisle__list {
+  margin-top: 12px;
+  padding: 18px 32px 20px;
+  background: #f6f4f1;
+  border-radius: 14px;
+}
+
+@media (max-width: 900px) {
+  .aisle {
+    padding: 0;
+  }
+
+  .aisle__list {
+    padding: 14px 20px 16px;
+  }
+}
