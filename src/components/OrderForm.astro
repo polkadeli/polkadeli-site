@@ -165,9 +165,9 @@ const types = [
       g.hidden = !on;
       if (!on) g.querySelectorAll('.of__qty').forEach((q) => { q.value = 0; });
     });
-    // Platters need 48 hours notice, so the earliest pickup date moves out two days.
+    // Platters need 24 hours notice, so the earliest pickup date is tomorrow.
     const min = new Date();
-    if (type === 'platters') min.setDate(min.getDate() + 2);
+    if (type === 'platters') min.setDate(min.getDate() + 1);
     dateInput.min = isoDay(min);
     if (dateInput.value && dateInput.value < dateInput.min) dateInput.value = '';
     syncFillings();
