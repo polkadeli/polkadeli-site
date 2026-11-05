@@ -886,3 +886,105 @@ main p {
     max-width: 560px;
   }
 }
+
+/* ---- Pierogi doodle ideas (each switched on by a body class) ---- */
+.doodle-divider,
+.doodle-badge,
+.doodle-watermark {
+  display: none;
+}
+
+.doodle-a .doodle-divider {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.doodle-divider span {
+  flex: 1;
+  height: 1px;
+  background: #d9d9d9;
+}
+
+.doodle-divider img {
+  width: 76px;
+  height: 76px;
+}
+
+.doodle-b .doodle-badge {
+  display: block;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 18px;
+  filter: invert(1);
+  opacity: 0.92;
+}
+
+.section--dark {
+  position: relative;
+  overflow: hidden;
+}
+
+.doodle-d .doodle-watermark {
+  display: block;
+  position: absolute;
+  top: -40px;
+  right: -60px;
+  width: 460px;
+  height: 460px;
+  filter: invert(1);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.section--dark .wrap {
+  position: relative;
+}
+
+.doodle-picker {
+  position: fixed;
+  left: 16px;
+  top: 100px;
+  z-index: 60;
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: var(--color-white);
+  background: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.doodle-picker label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .doodle-a .doodle-divider {
+    padding: 0 20px;
+  }
+
+  .doodle-b .doodle-badge {
+    width: 72px;
+    height: 72px;
+  }
+
+  .doodle-d .doodle-watermark {
+    width: 280px;
+    height: 280px;
+  }
+
+  .doodle-picker {
+    top: auto;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    font-size: 13px;
+  }
+}

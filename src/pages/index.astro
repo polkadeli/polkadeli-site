@@ -51,6 +51,7 @@ const offers = [
     <div class="hero__copy"></div>
     <div class="hero__foot">
       <div class="hero__left">
+      <img class="doodle-badge" src="/images/pierogi-drawing.png" alt="" aria-hidden="true" />
       <h1>{business.tagline}</h1>
       <div class="hero__stores">
         {stores.map((s) => (
@@ -102,6 +103,7 @@ const offers = [
   </section>
 
   <section class="section section--dark">
+    <img class="doodle-watermark" src="/images/pierogi-drawing.png" alt="" aria-hidden="true" />
     <div class="wrap">
       <p class="kicker">Deli Menu</p>
       <div class="head">
@@ -122,6 +124,7 @@ const offers = [
     </div>
   </section>
 
+  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/pierogi-drawing.png" alt="" /><span></span></div>
   <section class="section">
     <div class="wrap">
       {offers.map((o, i) => (
@@ -158,6 +161,7 @@ const offers = [
     </div>
   </section>
 
+  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/pierogi-drawing.png" alt="" /><span></span></div>
   <section class="section">
     <div class="wrap collage">
       <img class="c1" src="/images/shop/kabanosy.jpg" alt="" loading="lazy" />
@@ -174,6 +178,7 @@ const offers = [
     </div>
   </section>
 
+  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/pierogi-drawing.png" alt="" /><span></span></div>
   <section class="section section--tight">
     <div class="wrap">
       <p class="kicker">Suggestions?</p>
@@ -184,6 +189,13 @@ const offers = [
       </div>
     </div>
   </section>
+  <div class="doodle-picker" id="doodle-picker">
+    <b>Pierogi doodle ideas</b>
+    <label><input type="checkbox" data-d="a" checked /> 1. Section dividers</label>
+    <label><input type="checkbox" data-d="b" checked /> 2. Badge above headline</label>
+    <label><input type="checkbox" data-d="c" checked /> 3. Footer stamp</label>
+    <label><input type="checkbox" data-d="d" checked /> 4. Watermark in Deli Menu</label>
+  </div>
 </Base>
 
 <script>
@@ -203,4 +215,10 @@ const offers = [
   document.querySelector('[data-next]').addEventListener('click', () => { show(i + 1); start(); });
   document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
   start();
+
+  // Temporary: switch doodle ideas on and off while choosing.
+  const picker = document.getElementById('doodle-picker');
+  const applyDoodles = () => picker.querySelectorAll('input').forEach((c) => document.body.classList.toggle(`doodle-${c.dataset.d}`, c.checked));
+  picker.addEventListener('change', applyDoodles);
+  applyDoodles();
 </script>
