@@ -526,3 +526,39 @@
     white-space: normal;
   }
 }
+
+/* Platters: its own full-width warm band with white cards, set apart from the Deli Menu */
+#platters {
+  position: relative;
+  isolation: isolate;
+  margin-top: 72px;
+  padding: 64px 0 72px;
+}
+
+#platters::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: -1;
+  width: 100vw;
+  background: #f1ebe3;
+  transform: translateX(-50%);
+}
+
+#platters .mp-cat {
+  background: #fff;
+}
+
+.mp-divider {
+  padding-top: 0;
+  margin-top: 56px;
+}
+
+@media (max-width: 900px) {
+  #platters {
+    margin-top: 48px;
+    padding: 44px 0 52px;
+  }
+}
