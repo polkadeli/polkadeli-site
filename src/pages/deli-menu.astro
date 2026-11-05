@@ -6,6 +6,7 @@ import { pierogi, sandwiches, entrees, platters } from '../data/menu.js';
 import '../styles/menu-page.css';
 const ss = stores[0];
 const orderMail = `mailto:${business.email}?subject=${encodeURIComponent('Deli Order')}`;
+const platterMail = `mailto:${business.email}?subject=${encodeURIComponent('Platter Order')}`;
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
@@ -24,10 +25,7 @@ const tabs = [
 
     <div class="mp-wrap">
       <section class="mp-group" id="deli">
-        <div class="mp-group__head">
-          <h2 class="mp-group__title">Deli Menu</h2>
-          <p class="mp-email">Email your order: <a href={orderMail}>{business.email}</a></p>
-        </div>
+        <h2 class="mp-group__title">Deli Menu</h2>
 
         <div class="mp-grid">
           <section class="mp-cat" id="pierogi">
@@ -66,7 +64,10 @@ const tabs = [
       </section>
 
       <section class="mp-group" id="platters">
-        <h2 class="mp-group__title">Platters</h2>
+        <div class="mp-group__head">
+          <h2 class="mp-group__title">Platters</h2>
+          <p class="mp-email">Email your order: <a href={platterMail}>{business.email}</a></p>
+        </div>
         <div class="mp-grid">
           {platters.map((g) => (
             <section class="mp-cat" id={slug(g.heading)}>
