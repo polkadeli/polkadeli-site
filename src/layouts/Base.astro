@@ -51,6 +51,16 @@ const jsonLd = stores.map((s) => ({
           {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
         </ul>
       </nav>
+      <div class="phone-menu">
+        <button type="button" class="phone-menu__btn social-link" aria-label="Call a store" aria-expanded="false" aria-controls="phone-list">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+        </button>
+        <ul class="phone-menu__list" id="phone-list" hidden>
+          {stores.map((s) => (
+            <li><a href={s.phoneHref}><span class="phone-menu__city">{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</span><span class="phone-menu__num">{s.phone}</span></a></li>
+          ))}
+        </ul>
+      </div>
       <div class="site-header__social"><SocialIcons size={24} /></div>
       <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">Order now</a>
       <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
@@ -121,6 +131,14 @@ const jsonLd = stores.map((s) => ({
     privacy.addEventListener('click', (e) => { if (e.target === privacy) privacy.close(); });
     privacy.addEventListener('close', () => { if (location.hash === '#privacy') history.replaceState(null, '', location.pathname); });
     if (location.hash === '#privacy') openPrivacy();
+
+    // Phone dropdown in the header
+    const pBtn = document.querySelector('.phone-menu__btn');
+    const pList = document.getElementById('phone-list');
+    const setPhone = (open) => { pBtn.setAttribute('aria-expanded', String(open)); pList.hidden = !open; };
+    pBtn.addEventListener('click', (e) => { e.stopPropagation(); setPhone(pList.hidden); });
+    document.addEventListener('click', (e) => { if (!pList.hidden && !e.target.closest('.phone-menu')) setPhone(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pList.hidden) { setPhone(false); pBtn.focus(); } });
 
     // Overlay header: transparent over the home page photo, then a see-through white bar.
     const header = document.querySelector('.site-header--overlay');
