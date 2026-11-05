@@ -122,11 +122,13 @@ const jsonLd = stores.map((s) => ({
     privacy.addEventListener('close', () => { if (location.hash === '#privacy') history.replaceState(null, '', location.pathname); });
     if (location.hash === '#privacy') openPrivacy();
 
-    // Overlay header: transparent over the home page photo, then a see-through white bar once the photo is scrolled past.
+    // Overlay header: transparent over the home page photo, then a see-through white bar.
     const header = document.querySelector('.site-header--overlay');
     if (header) {
-      const hero = document.querySelector('[data-hero]');
-      const update = () => header.classList.toggle('is-solid', scrollY > (hero ? hero.offsetHeight - header.offsetHeight : 40));
+      // Turns white when the bar reaches the element marked data-solid-at (the home headline).
+      const mark = document.querySelector('[data-solid-at]');
+      const point = () => (mark ? mark.getBoundingClientRect().top + scrollY - header.offsetHeight : 40);
+      const update = () => header.classList.toggle('is-solid', scrollY > point());
       addEventListener('scroll', update, { passive: true });
       addEventListener('resize', update);
       update();
