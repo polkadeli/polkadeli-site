@@ -425,3 +425,30 @@
     gap: 10px;
   }
 }
+
+/* Pierogi rows: filling dropdown sits right next to the item name */
+.of__row:has(.of__filling) {
+  grid-template-columns: max-content minmax(0, 1fr) auto 48px;
+}
+
+.of__row:has(.of__filling) .of__name { grid-column: 1; grid-row: 1; }
+.of__row:has(.of__filling) .of__filling { grid-column: 2; grid-row: 1; justify-self: start; max-width: 100%; }
+.of__row:has(.of__filling) .of__price { grid-column: 3; grid-row: 1; }
+.of__row:has(.of__filling) .of__qty { grid-column: 4; grid-row: 1; }
+
+@media (max-width: 600px) {
+  .of__row:has(.of__filling) {
+    grid-template-columns: minmax(0, 1fr) auto 48px;
+  }
+
+  .of__row:has(.of__filling) .of__name { grid-column: 1; }
+  .of__row:has(.of__filling) .of__price { grid-column: 2; }
+  .of__row:has(.of__filling) .of__qty { grid-column: 3; }
+  .of__row:has(.of__filling) .of__filling { grid-column: 1 / -1; grid-row: 2; }
+}
+
+@media (min-width: 601px) {
+  .of__row:has(.of__filling) {
+    grid-template-columns: 9.5em minmax(0, 1fr) auto 48px;
+  }
+}
