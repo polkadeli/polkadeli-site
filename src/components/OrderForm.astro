@@ -1,0 +1,136 @@
+---
+// Online order form. Items and prices come from src/data/menu.js.
+// Submissions go to Netlify Forms (form name "order"), which emails each order to the store.
+import { stores } from '../data/site.js';
+import { pierogi, sandwiches, entrees, platters } from '../data/menu.js';
+import '../styles/order-form.css';
+
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const groups = [
+  {
+    title: 'Pierogi',
+    note: `Pick one filling: ${pierogi.fillings.join(', ')}`,
+    items: pierogi.prices.map(([size, price]) => ({ key: `pierogi-${slug(size)}`, name: `Pierogi, ${size}`, price, filling: true })),
+  },
+  {
+    title: 'Sandwiches',
+    items: sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, name: i.name, price: sandwiches.price })),
+  },
+  {
+    title: 'Entrees',
+    items: entrees.map((i) => ({ key: `entree-${slug(i.name)}`, name: `${i.name}${i.note ? ` ${i.note}` : ''}`, price: i.price })),
+  },
+  {
+    title: 'Platters',
+    items: platters.flatMap((g) => g.items.map((i) => ({ key: `platter-${slug(i.name)}`, name: i.name, price: i.price, serves: g.serves }))),
+  },
+];
+const today = new Date().toISOString().slice(0, 10);
+---
+<section class="of" id="order" aria-labelledby="order-title">
+  <h2 class="of__title" id="order-title">Order online</h2>
+  <p class="of__intro">Choose your items and a pickup time. We'll email you to confirm your order. Pay when you pick up.</p>
+
+  <form class="of__form" name="order" method="POST" action="/thanks?order=1" data-netlify="true" netlify-honeypot="company">
+    <input type="hidden" name="form-name" value="order" />
+    <p class="of__trap"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+    <textarea name="order-summary" class="of__summary-field" hidden></textarea>
+    <input type="hidden" name="order-total" />
+
+    <div class="of__cols">
+      <div class="of__items">
+        {groups.map((g) => (
+          <fieldset class="of__group">
+            <legend>{g.title}</legend>
+            {g.note && <p class="of__note">{g.note}</p>}
+            {g.items.map((it) => (
+              <div class="of__row" data-name={it.name} data-price={it.price.replace('$', '')}>
+                <label class="of__name" for={`q-${it.key}`}>{it.name}{it.serves && <span class="of__serves"> · {it.serves}</span>}</label>
+                <span class="of__price">{it.price}</span>
+                <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`Quantity of ${it.name}`} />
+                {it.filling && (
+                  <select class="of__filling" name={`filling-${it.key}`} aria-label={`Filling for ${it.name}`}>
+                    {pierogi.fillings.map((f) => <option>{f}</option>)}
+                  </select>
+                )}
+              </div>
+            ))}
+          </fieldset>
+        ))}
+      </div>
+
+      <aside class="of__side">
+        <div class="of__box">
+          <h3>Pickup</h3>
+          <label class="of__field">Store
+            <select name="store" required>
+              {stores.map((s) => <option value={s.city}>{s.city}, {s.locality.split(', ')[1].split(' ')[0]} · {s.street}</option>)}
+            </select>
+          </label>
+          <div class="of__two">
+            <label class="of__field">Date<input name="pickup-date" type="date" min={today} required /></label>
+            <label class="of__field">Time<input name="pickup-time" type="time" required /></label>
+          </div>
+
+          <h3>Your details</h3>
+          <label class="of__field">Name<input name="name" type="text" autocomplete="name" required /></label>
+          <label class="of__field">Phone<input name="phone" type="tel" autocomplete="tel" required /></label>
+          <label class="of__field">Email<input name="email" type="email" autocomplete="email" required /></label>
+          <label class="of__field">Notes<textarea name="notes" rows="3" placeholder="Allergies, special requests…"></textarea></label>
+
+          <div class="of__summary" aria-live="polite">
+            <p class="of__empty">No items yet.</p>
+            <ul class="of__lines"></ul>
+            <p class="of__total"><span>Estimated total</span><b>$0.00</b></p>
+          </div>
+          <p class="of__error" role="alert" hidden>Please add at least one item.</p>
+          <button class="of__send" type="submit">Send order</button>
+          <p class="of__small">Prices before tax. Platters may need a day's notice.</p>
+        </div>
+      </aside>
+    </div>
+  </form>
+</section>
+
+<script>
+  const form = document.querySelector('.of__form');
+  const rows = [...form.querySelectorAll('.of__row')];
+  const lines = form.querySelector('.of__lines');
+  const empty = form.querySelector('.of__empty');
+  const totalEl = form.querySelector('.of__total b');
+  const error = form.querySelector('.of__error');
+  const money = (n) => `$${n.toFixed(2)}`;
+
+  const collect = () => rows
+    .map((r) => {
+      const qty = parseInt(r.querySelector('.of__qty').value, 10) || 0;
+      const filling = r.querySelector('.of__filling')?.value;
+      return { qty, name: r.dataset.name + (filling ? ` (${filling})` : ''), price: parseFloat(r.dataset.price) };
+    })
+    .filter((x) => x.qty > 0);
+
+  const render = () => {
+    const items = collect();
+    lines.innerHTML = '';
+    items.forEach((x) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${x.qty} × ${x.name}</span><b>${money(x.qty * x.price)}</b>`;
+      lines.append(li);
+    });
+    const total = items.reduce((t, x) => t + x.qty * x.price, 0);
+    totalEl.textContent = money(total);
+    empty.hidden = items.length > 0;
+    rows.forEach((r) => r.classList.toggle('is-picked', (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0));
+    if (items.length) error.hidden = true;
+    return { items, total };
+  };
+
+  form.addEventListener('input', render);
+  form.addEventListener('submit', (e) => {
+    const { items, total } = render();
+    if (!items.length) { e.preventDefault(); error.hidden = false; error.scrollIntoView({ block: 'center' }); return; }
+    form.querySelector('[name="order-summary"]').value = items.map((x) => `${x.qty} x ${x.name} — ${money(x.qty * x.price)}`).join('\n');
+    form.querySelector('[name="order-total"]').value = money(total);
+  });
+  render();
+</script>

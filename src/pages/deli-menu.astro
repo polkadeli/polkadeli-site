@@ -1,6 +1,7 @@
 ---
 // Deli Menu and Platters on one page. All items and prices come from src/data/menu.js.
 import Base from '../layouts/Base.astro';
+import OrderForm from '../components/OrderForm.astro';
 import { business, stores } from '../data/site.js';
 import { pierogi, sandwiches, entrees, platters } from '../data/menu.js';
 import '../styles/menu-page.css';
@@ -11,6 +12,7 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
   ...platters.map((g) => [slug(g.heading), g.heading]),
+  ['order', 'Order online'],
 ];
 ---
 <Base title="Deli Menu & Platters · Polka Deli" description="Pierogi, sandwiches, Polish entrees and party platters from Polka Deli. Call 301-384-3354 or email your order.">
@@ -86,7 +88,7 @@ const tabs = [
         </div>
       </section>
 
-      <p class="mp-order">Please call <a href={ss.phoneHref}>{ss.phone}</a> to order or email your order: <a href={orderMail}>{business.email}</a></p>
+      <OrderForm />
     </div>
   </div>
 </Base>
