@@ -370,3 +370,20 @@
   justify-content: flex-start;
   gap: 8px 20px;
 }
+
+/* Pierogi sizes on one line, split in two */
+.mp-items--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.mp-items--split > li {
+  padding: 0 24px 0 0 !important;
+  border-bottom: 0;
+}
+
+.mp-items--split > li + li {
+  padding: 0 0 0 24px !important;
+  border-left: 1px solid #e6e6e6;
+}
