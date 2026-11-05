@@ -91,3 +91,23 @@
     gap: 6px;
   }
 }
+
+/* Store hours under each address */
+.footer-hours {
+  margin: 12px 0 0;
+  font-size: 14px;
+}
+
+.footer-hours div {
+  display: flex;
+  gap: 12px;
+}
+
+.footer-hours dt {
+  min-width: 70px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footer-hours dd {
+  margin: 0;
+}

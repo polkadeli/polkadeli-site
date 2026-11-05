@@ -87,6 +87,7 @@ const jsonLd = stores.map((s) => ({
             <h2>{s.city}</h2>
             <p><a href={s.maps}>{s.street},<br />{s.locality}</a></p>
             <p><a href={s.phoneHref}>{s.phone}</a></p>
+            <dl class="footer-hours">{s.hours.map(([d, h]) => <div><dt>{d}</dt><dd>{h}</dd></div>)}</dl>
           </div>
         ))}
         <div class="footer-column">
