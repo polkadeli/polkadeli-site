@@ -130,3 +130,25 @@
     columns: 2;
   }
 }
+
+/* Categories as soft warm-gray cards (same as the Our Menu page) */
+.aisle {
+  margin-bottom: 24px;
+  padding: 26px 32px 22px;
+  background: #f6f4f1;
+  border-radius: 14px;
+}
+
+.aisle__title {
+  border-bottom-color: #1f1f1f;
+}
+
+.aisle__list li {
+  border-bottom-color: #e6e2dc;
+}
+
+@media (max-width: 900px) {
+  .aisle {
+    padding: 20px 20px 16px;
+  }
+}
