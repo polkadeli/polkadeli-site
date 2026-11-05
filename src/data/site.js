@@ -12,7 +12,7 @@ export const business = {
 export const stores = [
   {
     city: 'Silver Spring',
-    street: '13438 New Hampshire Avenue',
+    street: '13438 New Hampshire Ave',
     locality: 'Silver Spring, MD 20904',
     phone: '301-384-3354',
     phoneHref: 'tel:+13013843354',

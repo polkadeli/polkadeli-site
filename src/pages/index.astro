@@ -57,7 +57,7 @@ const offers = [
         {stores.map((s) => (
           <div class="hero-store">
             <p class="hero-store__city">{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</p>
-            <a class="hero-store__addr" href={s.maps}>{s.street}<br />{s.locality}</a>
+            <a class="hero-store__addr" href={s.maps}><span class="nobr">{s.street}</span><br />{s.locality}</a>
             <a class="hero-store__phone" href={s.phoneHref}>{s.phone}</a>
           </div>
         ))}
