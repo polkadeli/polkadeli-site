@@ -1322,3 +1322,7 @@ main p {
     padding-top: 0;
   }
 }
+
+.center-cta {
+  text-align: center;
+}
