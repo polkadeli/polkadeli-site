@@ -110,7 +110,7 @@ const offers = [
           <article class="show">
             <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
             <h3>{o.title}</h3>
-            <ul class="ticks ticks--one">{o.ticks.map((t) => <li>{t}</li>)}</ul>
+            <p class="show__items">{o.ticks.join(', ')}</p>
           </article>
         ))}
       </div>
