@@ -1089,3 +1089,12 @@ main p {
 .hero__foot {
   grid-template-columns: 1fr 580px;
 }
+
+.doodle-divider img.flip {
+  transform: scaleX(-1);
+}
+
+/* Contact section sits under a divider, so give it top spacing */
+.doodle-divider + .section--tight {
+  padding-top: 70px;
+}
