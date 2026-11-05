@@ -904,8 +904,9 @@ main p {
 }
 
 .doodle-divider img {
-  width: 76px;
-  height: 76px;
+  width: 110px;
+  height: 80px;
+  object-fit: contain;
 }
 
 .doodle-badge {
