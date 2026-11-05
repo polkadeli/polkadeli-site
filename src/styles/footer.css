@@ -199,23 +199,3 @@
   }
 }
 
-.signup__head {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-/* Pierogi doodle stamp, shown only when switched on (home page idea picker) */
-.doodle-stamp {
-  display: none;
-  flex: none;
-  width: 92px;
-  height: 92px;
-  filter: invert(1);
-  opacity: 0.9;
-  transform: rotate(-8deg);
-}
-
-.doodle-c .doodle-stamp {
-  display: block;
-}
