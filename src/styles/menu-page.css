@@ -464,3 +464,29 @@
   margin: 0 auto;
   border-radius: 12px;
 }
+
+/* Menu photo banner: full width, square edges */
+.mp-title--photo {
+  max-width: none;
+  padding: 0;
+}
+
+.mp-title--photo img {
+  width: 100%;
+  max-width: none;
+  height: 360px;
+  object-fit: cover;
+  object-position: center 55%;
+  border-radius: 0;
+}
+
+@media (max-width: 900px) {
+  .mp-title--photo,
+  .mp-title {
+    padding: 0;
+  }
+
+  .mp-title--photo img {
+    height: 200px;
+  }
+}
