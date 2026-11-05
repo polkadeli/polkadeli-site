@@ -1084,3 +1084,8 @@ main p {
     display: none;
   }
 }
+
+/* Wider signup box */
+.hero__foot {
+  grid-template-columns: 1fr 580px;
+}
