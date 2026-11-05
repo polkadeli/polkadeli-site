@@ -198,3 +198,12 @@
     padding: 14px 20px 16px;
   }
 }
+
+/* No thin lines on the Shop page */
+.aisle__list li {
+  border-bottom: 0;
+}
+
+.shop__side {
+  border-left: 0;
+}
