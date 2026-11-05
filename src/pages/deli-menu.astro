@@ -10,8 +10,8 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '
 // Platters layout: left column, then right column.
 const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
 const platterCols = [
-  ['Cold Cut Platters', 'Cake Platter', 'Bread Tray'],
-  ['Party Trays'],
+  ['Cold Cut Platters', 'Cake Platter'],
+  ['Party Trays', 'Bread Tray'],
 ].map((col) => col.map((h) => byHeading[h]).filter(Boolean));
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', 'Sandwiches'], ['entrees', 'Entrees'],
