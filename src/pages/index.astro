@@ -98,10 +98,6 @@ const offers = [
   <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-1.svg" alt="" /><span></span></div>
   <section class="section section--dark">
     <div class="wrap">
-      <div class="head">
-        <h2>Deli Menu</h2>
-        <p>Please call <a href={stores[0].phoneHref}>{stores[0].phone}</a> to order or email your order: <a href={`mailto:${business.email}`}>Polkadelistore@gmail.com</a></p>
-      </div>
       <div class="dishes">
         {dishes.map((d) => (
           <article class:list={['dish', !d.img && 'dish--text']}>
