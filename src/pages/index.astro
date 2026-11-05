@@ -106,7 +106,10 @@ const offers = [
     <div class="wrap">
       <p class="kicker">Deli Menu</p>
       <div class="head">
-        <h2>Deli Menu</h2>
+        <div class="head__title">
+          <img class="doodle-fork" src="/images/doodles/pierogi-fork.svg" alt="" aria-hidden="true" />
+          <h2>Deli Menu</h2>
+        </div>
         <p>Please call <a href={stores[0].phoneHref}>{stores[0].phone}</a> to order or email your order: <a href={`mailto:${business.email}`}>Polkadelistore@gmail.com</a></p>
       </div>
       <div class="dishes">
