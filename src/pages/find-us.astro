@@ -1,27 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import PageCard from '../components/PageCard.astro';
+import VisitStores from '../components/VisitStores.astro';
 import SocialIcons from '../components/SocialIcons.astro';
 import AboutUs from '../components/AboutUs.astro';
 import { business, stores } from '../data/site.js';
-import '../styles/page.css';
 import '../styles/visit.css';
-const mapEmbed = (s) => `https://maps.google.com/maps?q=${encodeURIComponent(`Polka Deli, ${s.street}, ${s.locality}`)}&z=15&output=embed`;
 ---
 <Base title="Visit Us · Polka Deli" description="Polka Deli store hours and directions: Silver Spring, MD (13438 New Hampshire Ave) and Vienna, VA (431 Maple Ave W).">
-  <PageCard title="VISIT US" background="/images/bg-wood.jpg" wide>
-    <div class="stores">
-      {stores.map((s) => (
-        <section class="store" aria-label={`Polka Deli ${s.city}`}>
-          <h2 class="store__address"><a href={s.maps} target="_blank" rel="noopener">{s.street}, {s.locality}</a></h2>
-          <p class="store__phone"><a href={s.phoneHref}>{s.phone}</a></p>
-          <h3 class="store__hours-title">Store hours</h3>
-          <ul class="store__hours">{s.hours.map(([d, h]) => <li>{d}: {h}</li>)}</ul>
-          <iframe class="store__map" title={`Map of Polka Deli ${s.city}`} src={mapEmbed(s)} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </section>
-      ))}
-    </div>
+  <VisitStores />
 
+  <div class="visit-rest">
     <div class="visit-about"><AboutUs /></div>
 
     <div class="follow">
@@ -43,5 +31,5 @@ const mapEmbed = (s) => `https://maps.google.com/maps?q=${encodeURIComponent(`Po
         <button class="contact__send" type="submit">Send</button>
       </form>
     </section>
-  </PageCard>
+  </div>
 </Base>

@@ -1,0 +1,22 @@
+---
+// "Visit us": deli case photo plus a card per store (address, hours, call button).
+import { stores } from '../data/site.js';
+import '../styles/visit-stores.css';
+---
+<section class="vs">
+  <div class="vs__wrap">
+    <h1 class="vs__title">Visit us</h1>
+    <div class="vs__grid">
+      <img class="vs__photo" src="/images/media/kielbasa.jpg" alt="Kielbasa and cold cuts in the Polka Deli deli case" loading="lazy" />
+      {stores.map((s) => (
+        <div class="vs__store">
+          <h2>{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</h2>
+          <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener">{s.street}, {s.locality}</a></p>
+          <p class="vs__label">Store hours</p>
+          <table>{s.hours.map(([d, h]) => <tr><td>{d}</td><td>{h}</td></tr>)}</table>
+          <a class="vs__btn" href={s.phoneHref}>{s.phone}</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

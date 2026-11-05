@@ -164,3 +164,62 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Page body below the store block */
+.visit-rest {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px 80px;
+  font-family: var(--font-ui);
+}
+
+.visit-rest .visit-about {
+  margin: 0;
+  padding-top: 90px;
+  border-top: 0;
+}
+
+.visit-rest .visit-about .au {
+  grid-template-columns: 0.7fr 1.3fr;
+  gap: 64px;
+}
+
+.visit-rest .visit-about .au__text h2 {
+  font-size: 44px;
+}
+
+.visit-rest .visit-about .au__text h3 {
+  font-size: 26px;
+}
+
+@media (max-width: 900px) {
+  .visit-rest {
+    padding: 0 20px 60px;
+  }
+
+  .visit-rest .visit-about {
+    padding-top: 60px;
+  }
+
+  .visit-rest .visit-about .au {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .visit-rest .visit-about .au__text h2 {
+    font-size: 32px;
+  }
+
+  .visit-rest .visit-about .au__text h3 {
+    font-size: 22px;
+  }
+}
+
+.follow .social-link {
+  color: #1f1f1f;
+  border: 1px solid #d9d9d9;
+}
+
+.follow .social-link:hover {
+  color: var(--color-red);
+}

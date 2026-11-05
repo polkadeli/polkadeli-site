@@ -111,23 +111,6 @@ const offers = [
     </div>
   </section>
 
-  <section class="section section--mist">
-    <div class="wrap">
-      <h2 class="section__title">Visit us</h2>
-      <div class="stores">
-        <img class="stores__photo" src="/images/media/kielbasa.jpg" alt="Kielbasa and cold cuts in the Polka Deli deli case" loading="lazy" />
-        {stores.map((s) => (
-          <div class="store">
-            <h3>{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</h3>
-            <p class="store__addr"><a href={s.maps}>{s.street}, {s.locality}</a></p>
-            <p class="store__label">Store hours</p>
-            <table>{s.hours.map(([d, h]) => <tr><td>{d}</td><td>{h}</td></tr>)}</table>
-            <a class="btn" href={s.phoneHref}>{s.phone}</a>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
 
   <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-2.svg" alt="" /><span></span></div>
   <section class="section">
