@@ -279,23 +279,23 @@
 }
 
 .mp-tabs a {
-  padding: 20px 0 10px;
+  padding: 11px 0 8px;
   margin: 0 18px;
 }
 
 .mp-tabs a:first-child {
-  padding: 20px 0 10px;
+  padding: 11px 0 8px;
   margin: 0 18px 0 0;
 }
 
 @media (max-width: 900px) {
   .mp-tabs a {
-    padding: 16px 0 9px;
+    padding: 10px 0 7px;
     margin: 0 12px;
   }
 
   .mp-tabs a:first-child {
-    padding: 16px 0 9px;
+    padding: 10px 0 7px;
     margin: 0 12px 0 0;
   }
 }
