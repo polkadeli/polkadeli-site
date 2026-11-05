@@ -393,3 +393,73 @@
 .mp-divider {
   padding: 64px 0 0;
 }
+
+/* ---------- Readability: bigger text, more air, stronger contrast ---------- */
+.mp {
+  font-size: 18px;
+}
+
+.mp-cat {
+  padding: 36px 0 44px;
+}
+
+.mp-cat h3 {
+  margin-bottom: 22px;
+}
+
+.mp-items > li {
+  padding: 16px 0;
+}
+
+.mp-item {
+  font-size: 19px;
+  line-height: 1.35;
+}
+
+.mp-item b {
+  font-size: 19px;
+}
+
+.mp-desc,
+.mp-list,
+.mp-pick,
+.mp-note {
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: #444;
+}
+
+.mp-desc {
+  margin-top: 4px !important;
+}
+
+.mp-list li {
+  padding: 1px 0;
+}
+
+.mp-pick span {
+  color: #1f1f1f;
+}
+
+.mp-badge--line {
+  font-size: 13px;
+}
+
+@media (max-width: 900px) {
+  .mp-item,
+  .mp-item b {
+    font-size: 18px;
+  }
+
+  .mp-desc,
+  .mp-list,
+  .mp-pick,
+  .mp-note {
+    font-size: 16px;
+  }
+}
+
+/* Keep notes like "(fresh or smoked)" together */
+.mp-item em {
+  white-space: nowrap;
+}
