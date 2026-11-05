@@ -12,7 +12,7 @@ export const columns = [
   [
     { title: 'Pierogi', tag: '(Frozen)', items: ['Meat', 'Sauerkraut', 'Sauerkraut & Mushroom', 'Sauerkraut, Potato & Bacon', 'Beef', 'Potato & Cheese', 'Potato & Cheddar', 'Potato & Sauerkraut', 'Potato & Mushroom', 'Potato', 'Sweet Cheese', 'Fruit', 'Mushroom', 'Silesian Dumplings (Kluski Slaskie)', 'Potato Dumplings (Kopytka)', 'Potato Pyzy', 'Meat Pyzy'] },
     { title: 'Blintzes', tag: '(Frozen)', items: ['Peach', 'Apple', 'Cherry Cheese', 'Strawberry Cheese', 'Sweet cheese'] },
-    { title: 'Marinated Goods and Jars', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', 'Cucumbers in Brine', 'Sweet Red Pepper', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets w/ horseradish'] },
+    { title: 'Marinated Goods', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', 'Cucumbers in Brine', 'Sweet Red Pepper', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets w/ horseradish'] },
   ],
   [
     { title: 'Sweets', items: [
