@@ -984,3 +984,18 @@ main p {
   transform: scale(1.3);
   transform-origin: 92% 70%;
 }
+
+/* About photos: top cropped off */
+.about .about__photo {
+  aspect-ratio: 4 / 3;
+  object-position: center bottom;
+}
+
+.about__zoom {
+  aspect-ratio: 4 / 3;
+}
+
+.about__zoom img {
+  object-position: center bottom;
+  transform-origin: 92% 100%;
+}
