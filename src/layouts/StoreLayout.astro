@@ -1,0 +1,113 @@
+---
+/**
+ * Shop mockup layout: the normal site layout plus a store bar (categories,
+ * search, cart button) and a slide-in cart. The cart lives in the browser
+ * only (localStorage); in the real store Shopify's cart replaces it.
+ */
+import Base from './Base.astro';
+import { categories, cartCatalog, money } from '../data/shop-sample.js';
+import '../styles/store.css';
+const { title, description, active } = Astro.props;
+---
+<Base title={title} description={description}>
+  <div class="store">
+    <p class="store-notice">Preview of the online shop with <strong>sample products and prices</strong>. Nothing here is for sale yet.</p>
+    <div class="store-bar">
+      <div class="store-bar__inner">
+        <a class="store-bar__home" href="/shop-preview">Shop</a>
+        <nav class="store-bar__cats" aria-label="Shop categories">
+          {categories.map((c) => <a href={`/shop-preview?c=${c.slug}`} aria-current={active === c.slug ? 'page' : undefined}>{c.name}</a>)}
+        </nav>
+        <button class="cart-button" type="button" data-cart-open aria-label="Open cart">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8L5 8Zm4 0V6a3 3 0 0 1 6 0v2"/></svg>
+          <span class="cart-button__label">Cart</span>
+          <span class="cart-button__count" data-cart-count hidden>0</span>
+        </button>
+      </div>
+    </div>
+
+    <slot />
+  </div>
+
+  <div class="cart-drawer" data-cart-drawer hidden>
+    <div class="cart-drawer__scrim" data-cart-close></div>
+    <aside class="cart-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="cart-title">
+      <header class="cart-drawer__head">
+        <h2 id="cart-title">Your cart</h2>
+        <button class="cart-drawer__close" type="button" data-cart-close aria-label="Close cart">×</button>
+      </header>
+      <p class="cart-drawer__added" data-cart-added hidden></p>
+      <ul class="cart-lines" data-cart-lines></ul>
+      <p class="cart-empty" data-cart-empty>Your cart is empty. <a href="/shop-preview">Start shopping</a></p>
+      <footer class="cart-drawer__foot" data-cart-foot>
+        <p class="cart-total"><span>Subtotal</span><span data-cart-subtotal>$0.00</span></p>
+        <p class="cart-fine">Pickup or delivery is chosen on the next step. Counter items are weighed when packed.</p>
+        <a class="btn btn--red btn--block" href="/shop-preview/cart">View cart &amp; check out</a>
+      </footer>
+    </aside>
+  </div>
+
+  <script type="application/json" id="catalog" set:html={JSON.stringify(cartCatalog)}></script>
+  <script>
+    const catalog = JSON.parse(document.getElementById('catalog').textContent);
+    const KEY = 'polka-cart-preview';
+    const money = (n) => `$${n.toFixed(2)}`;
+    const read = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch { return []; } };
+    const write = (lines) => { try { localStorage.setItem(KEY, JSON.stringify(lines)); } catch {} render(); };
+
+    const drawer = document.querySelector('[data-cart-drawer]');
+    const openCart = () => { drawer.hidden = false; requestAnimationFrame(() => drawer.classList.add('is-open')); drawer.querySelector('.cart-drawer__close').focus(); };
+    const closeCart = () => { drawer.classList.remove('is-open'); setTimeout(() => (drawer.hidden = true), 250); };
+
+    function lineHTML(l, i) {
+      const p = catalog[l.slug]; if (!p) return '';
+      const [label, price] = p.v[l.v];
+      const img = p.i ? `<img src="${p.i.src}" style="object-position:${p.i.pos}" alt="" width="64" height="64">` : '<span class="cart-line__ph" aria-hidden="true"></span>';
+      return `<li class="cart-line">${img}<div class="cart-line__info"><a href="/shop-preview/${l.slug}">${p.n}</a><span>${label}${p.w ? ' · weighed' : ''}</span>
+        <div class="qty qty--sm"><button type="button" data-qty="${i}" data-d="-1" aria-label="Fewer">−</button><span>${l.q}</span><button type="button" data-qty="${i}" data-d="1" aria-label="More">+</button></div></div>
+        <span class="cart-line__price">${money(price * l.q)}</span></li>`;
+    }
+
+    function render() {
+      const lines = read();
+      const count = lines.reduce((s, l) => s + l.q, 0);
+      const subtotal = lines.reduce((s, l) => s + (catalog[l.slug]?.v[l.v][1] || 0) * l.q, 0);
+      document.querySelectorAll('[data-cart-count]').forEach((el) => { el.textContent = count; el.hidden = count === 0; });
+      document.querySelectorAll('[data-cart-lines]').forEach((el) => (el.innerHTML = lines.map(lineHTML).join('')));
+      document.querySelectorAll('[data-cart-subtotal]').forEach((el) => (el.textContent = money(subtotal)));
+      document.querySelectorAll('[data-cart-empty]').forEach((el) => (el.hidden = lines.length > 0));
+      document.querySelectorAll('[data-cart-foot]').forEach((el) => (el.hidden = lines.length === 0));
+      document.dispatchEvent(new CustomEvent('cart:change', { detail: { lines, subtotal, catalog } }));
+    }
+
+    function add(slug, v, q) {
+      const lines = read();
+      const hit = lines.find((l) => l.slug === slug && l.v === v);
+      if (hit) hit.q += q; else lines.push({ slug, v, q });
+      write(lines);
+      const added = drawer.querySelector('[data-cart-added]');
+      added.textContent = `Added: ${catalog[slug].n}, ${catalog[slug].v[v][0]}`;
+      added.hidden = false;
+      openCart();
+    }
+
+    document.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-add],[data-cart-open],[data-cart-close],[data-qty]');
+      if (!t) return;
+      if (t.dataset.add) {
+        const form = t.closest('[data-product-form]');
+        const v = form ? Number(form.querySelector('input[name=variant]:checked')?.value || 0) : Number(t.dataset.variant);
+        const q = form ? Number(form.querySelector('[data-qty-value]').textContent) : 1;
+        add(t.dataset.add, v, q);
+      } else if (t.hasAttribute('data-cart-open')) { drawer.querySelector('[data-cart-added]').hidden = true; openCart(); }
+      else if (t.hasAttribute('data-cart-close')) closeCart();
+      else if (t.dataset.qty) {
+        const lines = read(); const l = lines[Number(t.dataset.qty)];
+        l.q += Number(t.dataset.d);
+        write(lines.filter((x) => x.q > 0));
+      }
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !drawer.hidden) closeCart(); });
+    render();
+  </script>
+</Base>

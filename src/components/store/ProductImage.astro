@@ -1,0 +1,11 @@
+---
+// Product photo, or a branded tile when a product has no photo yet.
+const { image, name, class: cls = '' } = Astro.props;
+---
+{image
+  ? <img class:list={['product-img', cls]} src={image.src} alt={name} style={`object-position:${image.pos}`} loading="lazy" width="600" height="600" />
+  : <div class:list={['product-img', 'product-img--none', cls]} role="img" aria-label={`${name} (photo coming soon)`}>
+      <span class="product-img__dot" aria-hidden="true"></span>
+      <span class="product-img__name">{name}</span>
+      <span class="product-img__note">photo coming soon</span>
+    </div>}

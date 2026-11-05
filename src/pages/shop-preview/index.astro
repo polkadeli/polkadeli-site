@@ -1,0 +1,107 @@
+---
+import StoreLayout from '../../layouts/StoreLayout.astro';
+import ProductCard from '../../components/store/ProductCard.astro';
+import ProductImage from '../../components/store/ProductImage.astro';
+import { categories, products } from '../../data/shop-sample.js';
+const bestsellers = products.filter((x) => x.badge === 'Bestseller');
+---
+<StoreLayout title="Shop online (preview) · Polka Deli" description="Preview of the Polka Deli online grocery shop.">
+  <section class="store-hero">
+    <div class="store-hero__card">
+      <h1 class="store-hero__title">Shop Online</h1>
+      <p>Polish groceries from our deli counter and shelves.<br />Order ahead for <strong>pickup in Silver Spring or Vienna</strong>, or <strong>local delivery</strong>.</p>
+      <ul class="store-hero__perks">
+        <li>Ready in about 2 hours</li>
+        <li>Meats sliced to order</li>
+        <li>Delivery within 10 miles</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="store-section" aria-labelledby="h-cats">
+    <h2 class="store-heading" id="h-cats">Shop by category</h2>
+    <ul class="cat-tiles">
+      {categories.map((c) => (
+        <li>
+          <a class="cat-tile" href={`/shop-preview?c=${c.slug}`} data-cat-link={c.slug}>
+            <ProductImage image={c.image} name={c.name} class="cat-tile__img" />
+            <span class="cat-tile__text"><strong>{c.name}</strong><span>{c.blurb}</span></span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="store-section" aria-labelledby="h-best" data-hide-when-filtered>
+    <h2 class="store-heading" id="h-best">Customer favorites</h2>
+    <ul class="product-grid">{bestsellers.map((x) => <ProductCard product={x} />)}</ul>
+  </section>
+
+  <section class="store-section" aria-labelledby="h-all" id="all">
+    <div class="grid-toolbar">
+      <h2 class="store-heading" id="h-all" data-grid-title>All products</h2>
+      <div class="grid-toolbar__controls">
+        <label class="visually-hidden" for="search">Search products</label>
+        <input class="search" id="search" type="search" placeholder="Search, e.g. kabanosy" />
+        <label class="visually-hidden" for="sort">Sort</label>
+        <select class="sort" id="sort">
+          <option value="featured">Featured</option>
+          <option value="az">Name, A to Z</option>
+          <option value="low">Price, low to high</option>
+          <option value="high">Price, high to low</option>
+        </select>
+      </div>
+    </div>
+    <div class="chips" role="group" aria-label="Filter by category">
+      <button type="button" class="chip" data-chip="" aria-pressed="true">All</button>
+      {categories.map((c) => <button type="button" class="chip" data-chip={c.slug} aria-pressed="false">{c.name}</button>)}
+    </div>
+    <p class="grid-count" data-grid-count aria-live="polite"></p>
+    <ul class="product-grid" data-grid>{products.map((x) => <ProductCard product={x} />)}</ul>
+    <p class="grid-empty" data-grid-empty hidden>No products match. Try another word, or call us: we add products daily.</p>
+  </section>
+
+  <script>
+    const names = Object.fromEntries([...document.querySelectorAll('[data-chip]')].map((b) => [b.dataset.chip, b.textContent]));
+    const grid = document.querySelector('[data-grid]');
+    const cards = [...grid.children];
+    const search = document.getElementById('search');
+    const sort = document.getElementById('sort');
+    let cat = new URLSearchParams(location.search).get('c') || '';
+
+    function apply() {
+      const q = search.value.trim().toLowerCase();
+      const shown = cards.filter((li) => {
+        const ok = (!cat || li.dataset.category === cat) && (!q || li.dataset.name.includes(q));
+        li.hidden = !ok; return ok;
+      });
+      const by = { az: (a, b) => a.dataset.name.localeCompare(b.dataset.name), low: (a, b) => a.dataset.price - b.dataset.price, high: (a, b) => b.dataset.price - a.dataset.price };
+      const order = by[sort.value] ? [...cards].sort(by[sort.value]) : cards;
+      order.forEach((li) => grid.appendChild(li));
+      document.querySelectorAll('[data-chip]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.chip === cat)));
+      document.querySelectorAll('.store-bar__cats a').forEach((a) => a.toggleAttribute('aria-current', a.href.endsWith(`c=${cat}`) && !!cat));
+      document.querySelector('[data-grid-title]').textContent = cat ? names[cat] : 'All products';
+      document.querySelector('[data-grid-count]').textContent = `${shown.length} product${shown.length === 1 ? '' : 's'}`;
+      document.querySelector('[data-grid-empty]').hidden = shown.length > 0;
+      document.querySelector('[data-hide-when-filtered]').hidden = !!(cat || q);
+    }
+
+    function setCat(c, scroll) {
+      cat = c;
+      history.replaceState(null, '', c ? `?c=${c}#all` : location.pathname);
+      apply();
+      if (scroll) document.getElementById('all').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('click', (e) => {
+      const chip = e.target.closest('[data-chip]');
+      const link = e.target.closest('[data-cat-link], .store-bar__cats a');
+      if (chip) setCat(chip.dataset.chip, false);
+      else if (link) { e.preventDefault(); setCat(new URL(link.href).searchParams.get('c'), true); }
+    });
+    search.addEventListener('input', apply);
+    sort.addEventListener('change', apply);
+    apply();
+    if (cat) document.getElementById('all').scrollIntoView();
+  </script>
+</StoreLayout>

@@ -1,0 +1,21 @@
+---
+import ProductImage from './ProductImage.astro';
+import { listPrice, catBySlug } from '../../data/shop-sample.js';
+const { product: x } = Astro.props;
+const href = `/shop-preview/${x.slug}`;
+---
+<li class="product-card" data-category={x.category} data-name={x.name.toLowerCase()} data-price={x.price}>
+  <a class="product-card__media" href={href} tabindex="-1" aria-hidden="true">
+    <ProductImage image={x.image} name={x.name} />
+    {x.badge && <span class="product-card__badge">{x.badge}</span>}
+  </a>
+  <div class="product-card__body">
+    <p class="product-card__cat">{catBySlug[x.category].name}</p>
+    <h3 class="product-card__name"><a href={href}>{x.name}</a></h3>
+    <p class="product-card__meta">{x.weighed ? 'Cut to order' : x.size}</p>
+    <div class="product-card__foot">
+      <span class="product-card__price">{listPrice(x)}</span>
+      <button class="btn-add" type="button" data-add={x.slug} data-variant="0" aria-label={`Add ${x.name}, ${x.variants[0][0]}, to cart`}>Add</button>
+    </div>
+  </div>
+</li>

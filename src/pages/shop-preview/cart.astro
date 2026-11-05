@@ -1,0 +1,66 @@
+---
+import StoreLayout from '../../layouts/StoreLayout.astro';
+import { fulfillment } from '../../data/shop-sample.js';
+const days = ['Today', 'Tomorrow', 'Saturday', 'Sunday', 'Monday'];
+---
+<StoreLayout title="Cart (preview) · Polka Deli" description="Your Polka Deli cart.">
+  <div class="store-section">
+    <h1 class="store-heading store-heading--page">Your cart</h1>
+    <div class="cart-page">
+      <div class="cart-page__lines">
+        <ul class="cart-lines cart-lines--page" data-cart-lines></ul>
+        <p class="cart-empty" data-cart-empty>Your cart is empty. <a href="/shop-preview">Start shopping</a></p>
+        <label class="notes" data-cart-foot>
+          <span>Notes for the deli (optional)</span>
+          <textarea rows="3" placeholder="e.g. Please slice the ham extra thin"></textarea>
+        </label>
+      </div>
+
+      <aside class="summary" data-cart-foot>
+        <fieldset class="ship">
+          <legend>How would you like to get your order?</legend>
+          {fulfillment.map((f, i) => (
+            <label class="ship__opt">
+              <input type="radio" name="ship" value={f.id} data-fee={f.fee} checked={i === 0} />
+              <span><strong>{f.label}</strong><small>{f.note}</small></span>
+              <em>{f.fee ? `$${f.fee.toFixed(2)}` : 'Free'}</em>
+            </label>
+          ))}
+        </fieldset>
+        <label class="when">
+          <span>Pickup or delivery day</span>
+          <select>{days.map((d) => <option>{d}</option>)}</select>
+        </label>
+        <dl class="summary__rows">
+          <div><dt>Subtotal</dt><dd data-cart-subtotal>$0.00</dd></div>
+          <div><dt>Delivery</dt><dd data-fee-out>Free</dd></div>
+          <div class="summary__total"><dt>Estimated total</dt><dd data-total>$0.00</dd></div>
+        </dl>
+        <p class="cart-fine" data-min-note hidden>Local delivery has a $45 minimum.</p>
+        <button class="btn btn--red btn--block" type="button" data-checkout>Check out</button>
+        <p class="cart-fine">Taxes calculated at checkout. Pay by card, Apple Pay or Google Pay.</p>
+        <p class="checkout-note" data-checkout-note hidden>In the real store this button opens Shopify's secure checkout, where the customer pays and you get the order in the Shopify app.</p>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    let subtotal = 0;
+    const money = (n) => `$${n.toFixed(2)}`;
+    function update() {
+      const opt = document.querySelector('input[name=ship]:checked');
+      const fee = Number(opt.dataset.fee);
+      document.querySelector('[data-fee-out]').textContent = fee ? money(fee) : 'Free';
+      document.querySelector('[data-total]').textContent = money(subtotal + fee);
+      const short = opt.value === 'delivery' && subtotal < 45;
+      document.querySelector('[data-min-note]').hidden = !short;
+      document.querySelector('[data-checkout]').disabled = short;
+    }
+    document.addEventListener('cart:change', (e) => { subtotal = e.detail.subtotal; update(); });
+    document.querySelectorAll('input[name=ship]').forEach((r) => r.addEventListener('change', update));
+    document.querySelector('[data-checkout]').addEventListener('click', () => (document.querySelector('[data-checkout-note]').hidden = false));
+    // The layout's script renders the cart before this runs; read its total once.
+    subtotal = Number(document.querySelector('[data-cart-subtotal]').textContent.replace('$', '')) || 0;
+    update();
+  </script>
+</StoreLayout>
