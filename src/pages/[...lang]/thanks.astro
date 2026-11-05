@@ -10,11 +10,16 @@ const t = ui[lang];
 <Base title={t.thanksTitle} description={t.thanksDesc}>
   <PageCard title={t.thankYou} background="/images/bg-pierogi.jpg">
     <p class="page-card__intro thanks-msg" data-default>{t.thanksMsg}<br /><a href={href('/', lang)}>{t.backHome}</a></p>
-    <p class="page-card__intro thanks-msg" data-order hidden>{t.thanksOrder}<br /><a href={href('/deli-menu', lang)}>{t.backMenu}</a></p>
+    <p class="page-card__intro thanks-msg" data-order="1" hidden>{t.thanksOrder}<br /><a href={href('/deli-menu', lang)}>{t.backMenu}</a></p>
+    <p class="page-card__intro thanks-msg" data-order="paid" hidden>{t.thanksPaid}<br /><a href={href('/deli-menu', lang)}>{t.backMenu}</a></p>
+    <p class="page-card__intro thanks-msg" data-order="test" hidden>{t.thanksTest}<br /><a href={href('/deli-menu', lang)}>{t.backMenu}</a></p>
     <script>
-      if (new URLSearchParams(location.search).has('order')) {
+      // ?order=paid after Clover payment, ?order=test in test mode, ?order=1 from the old form
+      const kind = new URLSearchParams(location.search).get('order');
+      const msg = kind && document.querySelector(`[data-order="${kind}"]`);
+      if (msg) {
         document.querySelector('[data-default]').hidden = true;
-        document.querySelector('[data-order]').hidden = false;
+        msg.hidden = false;
       }
     </script>
   </PageCard>

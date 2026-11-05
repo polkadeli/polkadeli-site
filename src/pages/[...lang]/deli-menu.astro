@@ -26,11 +26,11 @@ const tabs = [
     <nav class="mp-tabs" aria-label={t.menuSections}>
       <div class="mp-wrap">
         <div class="mp-tabs__links">{tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</div>
-        <a class="mp-order mp-order--bar" href={business.cloverOrder} target="_blank" rel="noopener" tabindex="-1">{t.orderPickup}</a>
+        <a class="mp-order mp-order--bar" href={href('/order', lang)} tabindex="-1">{t.orderPickup}</a>
       </div>
     </nav>
     <!-- Desktop: big order button just under the red bar. Once it scrolls away, a smaller one appears in the red bar. -->
-    <div class="mp-orderdock"><div class="mp-wrap"><a class="mp-order" href={business.cloverOrder} target="_blank" rel="noopener">{t.orderPickup}</a></div></div>
+    <div class="mp-orderdock"><div class="mp-wrap"><a class="mp-order" href={href('/order', lang)}>{t.orderPickup}</a></div></div>
 
     <div class="mp-wrap">
       <section class="mp-group" id="deli">
@@ -99,7 +99,7 @@ const tabs = [
 
     </div>
     <!-- Phone: order button stays at the bottom of the screen -->
-    <a class="mp-order-bar" href={business.cloverOrder} target="_blank" rel="noopener">{t.orderPickup}</a>
+    <a class="mp-order-bar" href={href('/order', lang)}>{t.orderPickup}</a>
   </div>
 </Base>
 

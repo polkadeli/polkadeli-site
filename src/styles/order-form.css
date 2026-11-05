@@ -478,3 +478,20 @@
 .of .of__intro {
   text-wrap: balance;
 }
+
+.of__paynote {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: #5e5e5e;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.of__send:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.of__payfail {
+  margin: 0 0 18px;
+}
