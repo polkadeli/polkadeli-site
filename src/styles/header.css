@@ -507,3 +507,93 @@
   padding: 4px 0;
   text-align: center;
 }
+
+/* "Order now" dropdown: pickup (our site) or delivery (Uber Eats) */
+.order-menu {
+  position: relative;
+}
+
+.order-menu__btn {
+  border: 0;
+  cursor: pointer;
+}
+
+.order-menu__btn::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin: -3px 0 0 9px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.order-menu__list {
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+}
+
+.order-menu > .order-menu__list {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 30;
+  width: 340px;
+  background: var(--color-white);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.order-menu__list a {
+  display: block;
+  padding: 12px 14px;
+  font-family: var(--font-ui);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.order-menu__list li + li a {
+  border-top: 1px solid #eee;
+}
+
+.order-menu__list a:hover,
+.order-menu__list a:focus-visible {
+  background: #fdf1f1;
+}
+
+.order-menu__list b {
+  display: block;
+  font-size: 16px;
+  color: var(--color-red);
+}
+
+.order-menu__list small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13.5px;
+  color: #5e5e5e;
+}
+
+/* Phone menu (drawer) version */
+.drawer__label {
+  margin: 24px 0 8px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.order-menu__list--drawer {
+  padding: 0;
+  background: var(--color-white);
+}
+
+@media (max-width: 900px) {
+  .order-menu {
+    display: none;
+  }
+}
+
+.order-menu__list small {
+  text-wrap: balance;
+}

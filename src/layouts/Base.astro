@@ -76,7 +76,14 @@ const jsonLd = stores.map((s) => ({
         </ul>
       </div>
       <div class="site-header__social"><SocialIcons size={24} /></div>
-      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">{t.orderUber}</a>
+      <!-- Order now: choose pickup (our order page) or delivery (Uber Eats) -->
+      <div class="order-menu">
+        <button type="button" class="header-order order-menu__btn" aria-expanded="false" aria-controls="order-list">{t.orderNow}</button>
+        <ul class="order-menu__list" id="order-list" hidden>
+          <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>
+          <li><a href={business.uberEats} target="_blank" rel="noopener"><b>{t.deliveryTitle}</b><small>{t.deliveryHint}</small></a></li>
+        </ul>
+      </div>
       <button class="menu-button" type="button" aria-label={t.openMenu} aria-expanded="false" aria-controls="drawer">
         <span></span><span></span><span></span>
       </button>
@@ -91,7 +98,11 @@ const jsonLd = stores.map((s) => ({
       <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
       <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
     </div>
-    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">{t.orderUber}</a>
+    <p class="drawer__label">{t.orderNow}</p>
+    <ul class="order-menu__list order-menu__list--drawer">
+          <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>
+          <li><a href={business.uberEats} target="_blank" rel="noopener"><b>{t.deliveryTitle}</b><small>{t.deliveryHint}</small></a></li>
+    </ul>
     <div class="drawer__social"><SocialIcons size={26} /></div>
   </div>
 
@@ -158,6 +169,14 @@ const jsonLd = stores.map((s) => ({
     pBtn.addEventListener('click', (e) => { e.stopPropagation(); setPhone(pList.hidden); });
     document.addEventListener('click', (e) => { if (!pList.hidden && !e.target.closest('.phone-menu')) setPhone(false); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pList.hidden) { setPhone(false); pBtn.focus(); } });
+
+    // Order now dropdown in the header
+    const oBtn = document.querySelector('.order-menu__btn');
+    const oList = document.getElementById('order-list');
+    const setOrder = (open) => { oBtn.setAttribute('aria-expanded', String(open)); oList.hidden = !open; };
+    oBtn.addEventListener('click', (e) => { e.stopPropagation(); setOrder(oList.hidden); });
+    document.addEventListener('click', (e) => { if (!oList.hidden && !e.target.closest('.order-menu')) setOrder(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !oList.hidden) { setOrder(false); oBtn.focus(); } });
 
     // Overlay header: transparent over the home page photo, then a see-through white bar.
     const header = document.querySelector('.site-header--overlay');
