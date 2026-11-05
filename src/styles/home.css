@@ -1303,3 +1303,11 @@ main p {
   margin: 0 6px !important;
   font-size: 15px;
 }
+
+/* Deli Meats and Cheeses card: zoom in on the case and brighten */
+.show__ph img[src$="/media/kielbasa.jpg"] {
+  object-position: 30% 60%;
+  transform: scale(1.4);
+  transform-origin: 30% 60%;
+  filter: brightness(1.15);
+}
