@@ -130,3 +130,9 @@ label {
 .hrs {
   letter-spacing: 0 !important;
 }
+
+/* "Store hours" labels in red */
+.vs__label,
+.store__label {
+  color: var(--color-red) !important;
+}
