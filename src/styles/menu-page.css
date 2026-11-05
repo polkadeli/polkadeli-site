@@ -429,3 +429,23 @@
   background: none;
   border-radius: 0;
 }
+
+/* "Polka Deli Menu · Always fresh…" title art */
+.mp-title {
+  max-width: 1200px;
+  margin: 0 auto !important;
+  padding: 36px 40px 12px;
+  text-align: center;
+}
+
+.mp-title img {
+  display: inline-block;
+  width: min(560px, 100%);
+  height: auto;
+}
+
+@media (max-width: 900px) {
+  .mp-title {
+    padding: 24px 20px 6px;
+  }
+}
