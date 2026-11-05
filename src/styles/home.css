@@ -1162,3 +1162,20 @@ main p {
     padding-top: 36px;
   }
 }
+
+/* Offer photos sit in a rounded frame so they can be zoomed */
+.offer__ph {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.offer__ph img {
+  border-radius: 0;
+}
+
+/* Deli Menu row photo: zoomed in on the spread on the table */
+.offer__ph img[src$="/media/deli-table.jpg"] {
+  object-position: 58% 76%;
+  transform: scale(1.9);
+  transform-origin: 58% 74%;
+}
