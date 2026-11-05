@@ -8,6 +8,7 @@ import '../styles/footer.css';
 const {
   title = 'Polka Deli · Polish Food & Market in Silver Spring, MD and Vienna, VA',
   description = 'Authentic Polish groceries and food prepared daily. Kielbasa, deli meats, pierogi, cheese, sweets and party platters in Silver Spring, MD and Vienna, VA.',
+  overlay = false, // true: header sits transparent over a full-screen photo (home page)
 } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const jsonLd = stores.map((s) => ({
@@ -17,7 +18,7 @@ const jsonLd = stores.map((s) => ({
   url: 'https://www.polkadelimd.com',
   telephone: s.phone,
   address: { '@type': 'PostalAddress', streetAddress: s.street, addressLocality: s.locality.split(',')[0], addressRegion: s.locality.split(', ')[1].split(' ')[0], postalCode: s.locality.split(' ').pop(), addressCountry: 'US' },
-  sameAs: [business.facebook],
+  sameAs: [business.facebook, business.instagram],
 }));
 ---
 <!doctype html>
@@ -32,55 +33,73 @@ const jsonLd = stores.map((s) => ({
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <nav class="site-nav" aria-label="Main">
-      <ul class="site-nav__links">
-        {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
-      </ul>
-      <SocialIcons />
-      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
-    </nav>
-    <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-      <span></span><span></span><span></span>
-    </button>
+  <header class:list={['site-header', overlay ? 'site-header--overlay' : 'is-solid']}>
+    <div class="site-header__bar">
+      <a class="site-header__logo" href="/" aria-label="Polka Deli home">
+        <img class="logo-white" src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
+        <img class="logo-color" src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul class="site-nav__links">
+          {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="site-header__social"><SocialIcons size={24} /></div>
+      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">Order now</a>
+      <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
   <div class="drawer" id="drawer" hidden>
     <button class="drawer__close" type="button" aria-label="Close menu">×</button>
     <ul class="drawer__links">
       {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
-    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
+    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">Order now</a>
     <div class="drawer__social"><SocialIcons size={26} /></div>
   </div>
 
   <main id="main"><slot /></main>
 
   <footer class="site-footer">
-    <div class="footer-brand">
-      <a href="/" aria-label="Polka Deli home"><img src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="240" height="81" /></a>
-    </div>
-    <div class="footer-columns">
-      {stores.map((s) => (
-        <div class="footer-column">
-          <h2>{s.city}</h2>
-          <p><a href={s.maps}>{s.street}<br />{s.locality}</a></p>
-          <p><a href={s.phoneHref}>{s.phone}</a></p>
-          <ul class="footer-hours">{s.hours.map(([d, h]) => <li><span>{d}</span>{h}</li>)}</ul>
+    <div class="site-footer__inner">
+      <form class="signup" name="newsletter" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
+        <h2 class="signup__title">Join our mailing list to receive special offers</h2>
+        <div>
+          <p class="signup__trap"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+          <div class="signup__bar">
+            <label><span class="visually-hidden">Name</span><input name="name" type="text" required autocomplete="name" placeholder="Name" /></label>
+            <label><span class="visually-hidden">Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
+            <button type="submit">Subscribe Now</button>
+          </div>
+          <p class="signup__privacy">We'll only email you news and offers, and we'll never sell your information. Unsubscribe anytime. <a href="/privacy">Privacy policy</a></p>
         </div>
-      ))}
-      <div class="footer-column">
-        <h2>Online</h2>
-        <p><a href={`mailto:${business.email}`}>{business.email}</a></p>
-        <p><a href={business.uberEats} target="_blank" rel="noopener">Order on Uber Eats</a></p>
-        <div class="footer-social"><SocialIcons size={26} /></div>
+      </form>
+      <div class="footer-columns">
+        {stores.map((s) => (
+          <div class="footer-column">
+            <h2>{s.city}</h2>
+            <p><a href={s.maps}>{s.street}, {s.locality}</a></p>
+            <p><a href={s.phoneHref}>{s.phone}</a></p>
+          </div>
+        ))}
+        <div class="footer-column">
+          <h2>Contact us</h2>
+          <p><a href={`mailto:${business.email}`}>{business.email}</a></p>
+          <div class="footer-social"><SocialIcons size={24} /></div>
+        </div>
+      </div>
+      <div class="footer-copy">
+        <span>© {new Date().getFullYear()} Polka Deli · Polish Food &amp; Market</span>
+        <span><a href="/privacy">Privacy</a></span>
       </div>
     </div>
-    <p class="footer-copy">© {new Date().getFullYear()} Polka Deli · Polish Food &amp; Market · <a href="/privacy">Privacy</a></p>
   </footer>
 
   <script>
@@ -95,6 +114,16 @@ const jsonLd = stores.map((s) => ({
     burger.addEventListener('click', () => setOpen(true));
     close.addEventListener('click', () => setOpen(false));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !drawer.hidden) setOpen(false); });
+
+    // Overlay header: transparent over the home page photo, then a see-through white bar once the photo is scrolled past.
+    const header = document.querySelector('.site-header--overlay');
+    if (header) {
+      const hero = document.querySelector('[data-hero]');
+      const update = () => header.classList.toggle('is-solid', scrollY > (hero ? hero.offsetHeight - header.offsetHeight : 40));
+      addEventListener('scroll', update, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
   </script>
 </body>
 </html>

@@ -1,60 +1,171 @@
 ---
 import Base from '../layouts/Base.astro';
 import { business, stores } from '../data/site.js';
+import { pierogi, sandwiches, entrees } from '../data/menu.js';
 import '../styles/home.css';
+
 const slides = [
   { src: '/images/slide-pierogi.jpg', alt: 'Pierogi being made on a floured wooden board' },
-  { src: '/images/slide-bread.jpg', alt: 'Fresh bread with wheat' },
   { src: '/images/slide-kielbasa.jpg', alt: 'Grilled kielbasa with cabbage and potatoes' },
+  { src: '/images/slide-bread.jpg', alt: 'Fresh bread with wheat' },
   { src: '/images/slide-makowiec.jpg', alt: 'Poppy seed roll' },
   { src: '/images/slide-market.jpg', alt: 'Polish market stall with sausages and baked goods' },
 ];
+
+const sampler = entrees.find((e) => e.name === 'Polish Sampler');
+const kielbasaSandwich = sandwiches.items.find((s) => s.name === 'Smoked Kielbasa');
+const dishes = [
+  {
+    img: '/images/slide-pierogi.jpg',
+    name: 'Pierogi',
+    desc: `${pierogi.prices.map(([q, p]) => `${q} — ${p}`).join(' · ')}. (Pick one) ${pierogi.fillings.join(', ')}. ${pierogi.servedWith}`,
+    price: pierogi.prices[0][1],
+  },
+  { img: '/images/slide-kielbasa.jpg', name: sampler.name, desc: sampler.desc, price: sampler.price },
+  { img: '/images/shop/fresh-sausage.jpg', name: kielbasaSandwich.name, desc: kielbasaSandwich.desc, price: sandwiches.price },
+];
+
+const offers = [
+  {
+    img: '/images/slide-kielbasa.jpg', title: 'Deli Menu', href: '/deli-menu',
+    text: `Please call ${stores[0].phone} to order or email your order: Polkadelistore@gmail.com`,
+    ticks: ['Pierogi', 'Sandwiches', 'Entrees', 'Soup of the day'],
+  },
+  {
+    img: '/images/shop/cold-cuts.jpg', title: 'Platters', href: '/platters',
+    text: `Please call ${stores[0].phone} to order or email your order: Polkadelistore@gmail.com`,
+    ticks: ['Cold Cut Platters', 'Bread Tray', 'Party Trays', 'Cake Platter'],
+  },
+  {
+    img: '/images/shop/sweets.jpg', title: 'Groceries', href: '/shop', button: 'Shop',
+    text: "If you don't see a product listed below please ask, we add products daily.",
+    ticks: ['Kielbasa', 'Cheese', 'Deli Meats', 'Pierogi (Frozen)', 'Blintzes (Frozen)', 'Marinated Goods and Jars', 'Sweets', 'Baked Goods'],
+  },
+];
 ---
-<Base>
-  <section class="hero" aria-label="Welcome to Polka Deli">
+<Base overlay>
+  <section class="hero" data-hero aria-label="Welcome to Polka Deli">
     <div class="hero__slides" aria-hidden="true">
       {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'hero__slide is-active' : 'hero__slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
     </div>
-
-    <div class="hero__stage">
-      <div class="intro-card">
-        <h1 class="intro-card__logo"><img src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="520" height="176" /></h1>
-
-        <div class="trio">
-          <div class="trio__cell trio__drawing"><img src="/images/pierogi-drawing.png" alt="" width="150" height="150" /></div>
-          <p class="trio__cell trio__tagline">{business.tagline}</p>
-          <a class="trio__cell trio__menu" href="/deli-menu">Deli Menu</a>
-        </div>
-
-        <a class="pill pill--grey" href={business.uberEats} target="_blank" rel="noopener">Order now with UberEats!</a>
-
-        <ul class="store-lines">
-          {stores.map((s) => (
-            <li><a href={s.maps}>{s.street}<span class="store-lines__comma">,</span> <span class="store-lines__city">{s.locality}</span></a> <span class="store-lines__sep">|</span> <a href={s.phoneHref}>{s.phone}</a></li>
-          ))}
-        </ul>
+    <div class="hero__copy">
+      <h1>{business.tagline}</h1>
+      <div class="hero__cta">
+        <a class="btn" href="/deli-menu">Deli Menu</a>
+        <a class="btn btn--glass" href={business.uberEats} target="_blank" rel="noopener">Order now with UberEats!</a>
       </div>
-
-      <p class="shipping-banner">International parcel shipping service available at our stores</p>
-
-      <form class="postcard" name="newsletter" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
-        <svg class="postcard__mark" viewBox="0 0 120 50" aria-hidden="true">
-          <circle cx="24" cy="25" r="20" fill="none" stroke="#bbb" stroke-width="2.5" />
-          <circle cx="24" cy="25" r="13" fill="none" stroke="#bbb" stroke-width="2" />
-          <path d="M50 14c8-5 14 5 22 0s14 5 22 0 14 5 22 0M50 25c8-5 14 5 22 0s14 5 22 0 14 5 22 0M50 36c8-5 14 5 22 0s14 5 22 0 14 5 22 0" fill="none" stroke="#bbb" stroke-width="2.5" />
-        </svg>
-        <h2 class="postcard__title">Join our mailing list to receive special offers</h2>
-        <p class="postcard__trap"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
-        <div class="postcard__fields">
-          <label><span class="visually-hidden">Name</span><input name="name" type="text" required autocomplete="name" placeholder="Name" /></label>
-          <label><span class="visually-hidden">Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
-          <button class="pill pill--red" type="submit">Subscribe Now</button>
+    </div>
+    <div class="hero__foot">
+      <ul class="hero__stores">
+        {stores.map((s) => <li><a href={s.maps}>{s.street}, {s.locality}</a> | <a href={s.phoneHref}>{s.phone}</a></li>)}
+      </ul>
+      <div class="hero__ctrl" role="group" aria-label="Background photos">
+        <button type="button" class="hero__arrow" data-prev aria-label="Previous photo">‹</button>
+        <div class="hero__dots">
+          {slides.map((s, i) => <button type="button" aria-label={`Show photo ${i + 1}: ${s.alt}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}
         </div>
-        <p class="postcard__privacy">We'll only email you news and offers, and we'll never sell your information. Unsubscribe anytime. <a href="/privacy">Privacy policy</a></p>
-      </form>
+        <button type="button" class="hero__arrow" data-next aria-label="Next photo">›</button>
+      </div>
+    </div>
+  </section>
 
-      <div class="dots" role="group" aria-label="Choose background photo">
-        {slides.map((s, i) => <button type="button" aria-label={`Show photo ${i + 1}: ${s.alt}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}
+  <p class="strip">International parcel shipping service available at our stores</p>
+
+  <section class="section">
+    <div class="wrap about">
+      <div>
+        <img class="about__photo" src="/images/about-owners.jpg" alt="Maria and Joanna in the store" loading="lazy" />
+        <h3>We are Maria and Joanna, Polish natives, friends, and good cooks.</h3>
+        <p>The love of cooking and Polish food lead us here and we decided we needed to open a one stop shop for Polish groceries and most beloved Polish dishes, on the go.</p>
+      </div>
+      <div>
+        <p class="kicker">About us</p>
+        <h2>Hello! We're glad you're here!</h2>
+        <img class="about__photo about__photo--square" src="/images/store-interior.jpg" alt="Inside Polka Deli" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap">
+      <p class="kicker">Deli Menu</p>
+      <div class="head">
+        <h2>Deli Menu</h2>
+        <p>Please call <a href={stores[0].phoneHref}>{stores[0].phone}</a> to order or email your order: <a href={`mailto:${business.email}`}>Polkadelistore@gmail.com</a></p>
+      </div>
+      <div class="dishes">
+        {dishes.map((d) => (
+          <article class="dish">
+            <img src={d.img} alt="" loading="lazy" />
+            <h3>{d.name}</h3>
+            <p>{d.desc}</p>
+            <span class="dish__price">{d.price}</span>
+          </article>
+        ))}
+      </div>
+      <a class="btn" href="/deli-menu">Deli Menu</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      {offers.map((o, i) => (
+        <div class="offer">
+          <span class="offer__num">{String(i + 1).padStart(2, '0')}</span>
+          <img src={o.img} alt="" loading="lazy" />
+          <div>
+            <h3>{o.title}</h3>
+            <p>{o.text}</p>
+            <ul class="ticks">{o.ticks.map((t) => <li>{t}</li>)}</ul>
+            <a class="btn" href={o.href}>{o.button ?? o.title}</a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--mist">
+    <div class="wrap">
+      <p class="kicker">Visit us</p>
+      <h2 class="section__title">Visit us</h2>
+      <div class="stores">
+        <img class="stores__photo" src="/images/chalkboard-menu.jpg" alt="Chalkboard menu at the counter" loading="lazy" />
+        {stores.map((s) => (
+          <div class="store">
+            <h3>{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</h3>
+            <p class="store__addr"><a href={s.maps}>{s.street}, {s.locality}</a></p>
+            <p class="store__label">Store hours</p>
+            <table>{s.hours.map(([d, h]) => <tr><td>{d}</td><td>{h}</td></tr>)}</table>
+            <a class="btn" href={s.phoneHref}>{s.phone}</a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap collage">
+      <img class="c1" src="/images/shop/kabanosy.jpg" alt="" loading="lazy" />
+      <img class="c2" src="/images/slide-bread.jpg" alt="" loading="lazy" />
+      <img class="c3" src="/images/shop/jars.jpg" alt="" loading="lazy" />
+      <img class="c4" src="/images/slide-makowiec.jpg" alt="" loading="lazy" />
+      <img class="c5" src="/images/shop/headcheese.jpg" alt="" loading="lazy" />
+      <img class="c6" src="/images/slide-market.jpg" alt="" loading="lazy" />
+      <div class="collage__text">
+        <h2>Groceries</h2>
+        <p>If you don't see a product listed below please ask, we add products daily.</p>
+        <a class="btn" href="/shop">Shop</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="wrap">
+      <p class="kicker">Suggestions?</p>
+      <div class="head">
+        <h2>Contact us</h2>
+        <p>For questions about any of our products, or help with placing your order, don't hesitate to contact us:<br />
+          <b>Email:</b> <a href={`mailto:${business.email}`}>{business.email}</a> / <b>Phone:</b> <a href={stores[0].phoneHref}>{stores[0].phone}</a></p>
       </div>
     </div>
   </section>
@@ -62,7 +173,7 @@ const slides = [
 
 <script>
   const slides = [...document.querySelectorAll('.hero__slide')];
-  const dots = [...document.querySelectorAll('.dots button')];
+  const dots = [...document.querySelectorAll('.hero__dots button')];
   let i = 0;
   let timer;
   const show = (n) => {
@@ -71,9 +182,10 @@ const slides = [
     slides[i].classList.add('is-active'); dots[i].setAttribute('aria-pressed', 'true');
   };
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 5000); } };
+  const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 6000); } };
   dots.forEach((d, n) => d.addEventListener('click', () => { show(n); start(); }));
+  document.querySelector('[data-prev]').addEventListener('click', () => { show(i - 1); start(); });
+  document.querySelector('[data-next]').addEventListener('click', () => { show(i + 1); start(); });
   document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
   start();
 </script>
-

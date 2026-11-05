@@ -1,110 +1,200 @@
-/* Footer: new on this site (the Wix site had none). Both stores, hours and links. */
+/* Footer: mailing list signup, both stores, contact and social links. */
 
 .site-footer {
-  padding: var(--space-7) 20px var(--space-5);
-  color: #eee;
+  color: var(--color-white);
   background: var(--color-dark);
+  font-family: var(--font-ui);
+}
+
+.site-footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 70px 40px 0;
 }
 
 .site-footer a {
-  color: var(--color-white);
   text-decoration: none;
 }
 
-/* Underline only on hover or keyboard focus */
 .site-footer a:hover,
 .site-footer a:focus-visible {
-  color: var(--color-red-soft);
   text-decoration: underline;
 }
 
-.footer-brand {
-  display: flex;
+/* Signup: title left, white bar with a red button right */
+.signup {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 40px;
   align-items: center;
-  gap: 28px;
-  max-width: var(--width-page);
-  margin: 0 auto 36px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--color-dark-line);
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.footer-brand img {
-  width: 240px;
-  height: auto;
+.signup__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.signup__bar {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  background: var(--color-white);
+  border-radius: var(--radius-pill);
+}
+
+.signup__bar label {
+  flex: 1;
+  min-width: 0;
+}
+
+.signup__bar label + label {
+  border-left: 1px solid #d9d9d9;
+}
+
+.signup__bar input {
+  width: 100%;
+  padding: 10px 18px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--color-ink);
+  background: transparent;
+  border: 0;
+}
+
+.signup__bar input:focus {
+  outline: none;
+}
+
+.signup__bar:focus-within {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+.signup__bar button {
+  padding: 12px 24px;
+  font: inherit;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-white);
+  background: var(--color-red);
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--ease-fast);
+}
+
+.signup__bar button:hover,
+.signup__bar button:focus-visible {
+  background: var(--color-red-dark);
+}
+
+.signup__privacy {
+  margin: 12px 0 0 18px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.signup__privacy a {
+  text-decoration: underline;
+}
+
+/* Spam trap: hidden from people */
+.signup__trap {
+  position: absolute;
+  left: -9999px;
 }
 
 .footer-columns {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
-  max-width: var(--width-page);
-  margin: 0 auto;
+  gap: 24px;
+  margin-top: 56px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .footer-column h2 {
-  display: inline-block;
-  margin: 0 0 var(--space-3);
-  padding-bottom: var(--space-2);
-  font-size: var(--text-sm);
+  margin: 0 0 10px;
+  font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-white);
-  border-bottom: 2px solid var(--color-red);
 }
 
 .footer-column p {
-  margin: 0 0 10px;
-  color: #ddd;
+  margin: 0 0 4px;
 }
 
 .footer-social {
   display: flex;
-  gap: var(--space-3);
-  margin-top: var(--space-1);
-  margin-left: -6px;
+  gap: 10px;
+  margin-top: 14px;
 }
 
-.site-footer .social-link:hover,
-.site-footer .social-link:focus-visible {
-  color: var(--color-red-soft);
+.footer-social .social-link {
+  width: 46px;
+  height: 46px;
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
-.footer-hours {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 16px;
-  color: #ccc;
-}
-
-.footer-hours span {
-  display: inline-block;
-  width: 82px;
-  color: #aaa;
+.footer-social .social-link:hover,
+.footer-social .social-link:focus-visible {
+  color: var(--color-ink);
+  background: var(--color-white);
+  text-decoration: none;
 }
 
 .footer-copy {
-  max-width: var(--width-page);
-  margin: var(--space-6) auto 0;
-  padding-top: var(--space-4);
-  font-size: 14px;
-  color: #999;
-  border-top: 1px solid var(--color-dark-line);
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding: 22px 0 30px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
+  .site-footer__inner {
+    padding: 56px 20px 0;
+  }
+
+  .signup {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-bottom: 30px;
+  }
+
+  .signup__title {
+    font-size: 24px;
+  }
+
+  .signup__bar {
+    flex-direction: column;
+    border-radius: 14px;
+  }
+
+  .signup__bar label + label {
+    border-left: 0;
+    border-top: 1px solid #d9d9d9;
+  }
+
+  .signup__privacy {
+    margin-left: 0;
+  }
+
   .footer-columns {
     grid-template-columns: 1fr;
   }
 
-  .footer-brand {
+  .footer-copy {
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
-  }
-
-  .footer-brand img {
-    width: 200px;
+    gap: 6px;
   }
 }
