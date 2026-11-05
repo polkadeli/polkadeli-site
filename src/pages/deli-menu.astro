@@ -99,11 +99,17 @@ const tabs = [
   // Highlight the tab for the section in view.
   const tabs = [...document.querySelectorAll('.mp-tabs a')];
   const secs = tabs.map((a) => document.querySelector(a.getAttribute('href')));
+  const setOn = (k) => tabs.forEach((a, i) => a.classList.toggle('is-on', i === k));
+  let lock = 0;
   const onScroll = () => {
-    let k = 0;
-    secs.forEach((s, i) => { if (s.getBoundingClientRect().top < 220) k = i; });
-    tabs.forEach((a, i) => a.classList.toggle('is-on', i === k));
+    if (Date.now() < lock) return;
+    // The section nearest the top wins; side-by-side sections (same top) go to the first one.
+    let k = 0, best = -Infinity;
+    secs.forEach((s, i) => { const t = Math.round(s.getBoundingClientRect().top); if (t < 220 && t > best) { best = t; k = i; } });
+    setOn(k);
   };
+  // A clicked tab stays underlined while the page scrolls to it.
+  tabs.forEach((a, i) => a.addEventListener('click', () => { setOn(i); lock = Date.now() + 900; }));
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 </script>
