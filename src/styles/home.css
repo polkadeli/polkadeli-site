@@ -1143,3 +1143,11 @@ main p {
 .dish__ph img {
   border-radius: 0;
 }
+
+/* Smoked Kielbasa card: zoom in on the sausages in the deli case */
+.dish img[src$="/media/kielbasa.jpg"] {
+  object-position: 30% 75%;
+  transform: scale(1.5);
+  transform-origin: 28% 72%;
+  filter: brightness(1.08);
+}
