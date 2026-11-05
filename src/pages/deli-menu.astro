@@ -34,11 +34,12 @@ const tabs = [
         <div class="mp-grid">
           <section class="mp-cat" id="pierogi">
             <h3>Pierogi</h3>
-            <ul class="mp-sizes">
-              {pierogi.prices.map(([size, price]) => <li><span>{size}</span><b>{price}</b></li>)}
+            <ul class="mp-items">
+              {pierogi.prices.map(([size, price]) => (
+                <li><p class="mp-item"><span>{size}</span><b>{price}</b></p></li>
+              ))}
             </ul>
-            <p class="mp-label">Pick one</p>
-            <ul class="mp-chips">{pierogi.fillings.map((f) => <li>{f}</li>)}</ul>
+            <p class="mp-pick"><span>Pick one:</span> {pierogi.fillings.join(', ')}</p>
             <p class="mp-note">{pierogi.servedWith}</p>
           </section>
 

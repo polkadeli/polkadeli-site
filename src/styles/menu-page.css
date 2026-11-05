@@ -327,3 +327,14 @@
     font-size: 26px;
   }
 }
+
+.mp-pick {
+  margin-top: 14px !important;
+  font-size: 15px;
+  color: #5e5e5e;
+}
+
+.mp-pick span {
+  font-weight: 700;
+  color: #1f1f1f;
+}
