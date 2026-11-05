@@ -567,16 +567,16 @@
   color: var(--color-red);
 }
 
-.order-menu__uber b {
+.order-menu__list a.order-menu__uber {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .order-menu__uber img {
   flex: none;
-  width: 24px;
-  height: 24px;
+  width: 44px;
+  height: auto;
 }
 
 .order-menu__list small {
@@ -608,4 +608,15 @@
 
 .order-menu__list small {
   text-wrap: balance;
+}
+
+/* Phone menu: logo above the text so the words keep the full width */
+.order-menu__list--drawer a.order-menu__uber {
+  display: block;
+}
+
+.order-menu__list--drawer .order-menu__uber img {
+  width: 120px;
+  display: block;
+  margin-bottom: 8px;
 }
