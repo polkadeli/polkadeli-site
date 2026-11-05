@@ -88,3 +88,8 @@ label {
   orphans: 2;
   widows: 2;
 }
+
+/* Keep address parts together; wrap only between them */
+.nobr {
+  white-space: nowrap;
+}

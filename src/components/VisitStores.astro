@@ -11,7 +11,7 @@ import '../styles/visit-stores.css';
       {stores.map((s) => (
         <div class="vs__store">
           <h2>{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</h2>
-          <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener">{s.street}, {s.locality}</a></p>
+          <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener"><span class="nobr">{s.street},</span> <span class="nobr">{s.locality}</span></a></p>
           <p class="vs__label">Store hours</p>
           <table>{s.hours.map(([d, h]) => <tr><td>{d}</td><td>{h}</td></tr>)}</table>
           <a class="vs__btn" href={s.phoneHref}>{s.phone}</a>
