@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Uber Eats">
+  <rect width="48" height="48" rx="10" fill="#000"/>
+  <text x="24" y="21" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="500" fill="#fff">Uber</text>
+  <text x="24" y="36" text-anchor="middle" font-family="Helvetica Neue, Arial, sans-serif" font-size="13" font-weight="700" fill="#06C167">Eats</text>
+</svg>
