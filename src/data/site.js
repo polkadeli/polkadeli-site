@@ -31,8 +31,7 @@ export const stores = [
 ];
 
 export const nav = [
-  { href: '/deli-menu', label: 'Deli Menu' },
-  { href: '/deli-menu#platters', label: 'Platters' },
+  { href: '/deli-menu', label: 'Our Menu' },
   { href: '/shop', label: 'Shop' },
   { href: '/#about', label: 'About' },
   { href: '/find-us', label: 'Visit us' },
