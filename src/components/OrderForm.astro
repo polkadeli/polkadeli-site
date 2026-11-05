@@ -7,6 +7,7 @@ import '../styles/order-form.css';
 import { langOf, href, tr, ui } from '../i18n.js';
 const lang = langOf(Astro.url);
 const t = ui[lang];
+const ss = stores[0]; // Silver Spring
 
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const groups = [
@@ -35,10 +36,10 @@ const types = [
 ---
 <section class="of" id="order" aria-labelledby="order-title">
   <h2 class="of__title" id="order-title">{t.orderOnline}</h2>
-  <p class="of__intro">{t.orderIntro}</p>
+  <p class="of__intro"><b>{t.pickupOnly}</b> {t.orderIntro}</p>
 
   <form class="of__form" name="order" method="POST" action={href('/thanks', lang) + '?order=1'} data-netlify="true" netlify-honeypot="company"
-    data-tax-md={t.taxMd} data-tax-later={t.taxLater}>
+    >
     <input type="hidden" name="form-name" value="order" />
     <p class="of__trap"><label>{t.leaveEmpty} <input name="company" tabindex="-1" autocomplete="off" /></label></p>
     <textarea name="order-summary" class="of__summary-field" hidden></textarea>
@@ -79,11 +80,9 @@ const types = [
       <aside class="of__side">
         <div class="of__box">
           <h3>{t.pickup}</h3>
-          <label class="of__field">{t.store}
-            <select name="store" required>
-              {stores.map((s) => <option value={s.city}>{s.city}, {s.locality.split(', ')[1].split(' ')[0]} · {s.street}</option>)}
-            </select>
-          </label>
+          <!-- Online orders are for pickup at Silver Spring only (Vienna doesn't take online orders) -->
+          <input type="hidden" name="store" value={ss.city} />
+          <p class="of__store"><b>{ss.city}, MD</b><br />{ss.street}, {ss.locality}</p>
           <div class="of__two">
             <label class="of__field">{t.date}<input name="pickup-date" type="date" min={today} required /></label>
             <label class="of__field">{t.time}<input name="pickup-time" type="time" required /></label>
@@ -137,13 +136,11 @@ const types = [
       lines.append(li);
     });
     const sub = items.reduce((t, x) => t + x.qty * x.price, 0);
-    // Maryland sales tax for the Silver Spring store. Vienna's rate isn't set yet, so tax is added at pickup there.
-    const md = form.querySelector('[name="store"]').value === 'Silver Spring';
-    const tax = md ? Math.round(sub * TAX_MD * 100) / 100 : 0;
+    // Maryland sales tax (all online orders are picked up in Silver Spring, MD).
+    const tax = Math.round(sub * TAX_MD * 100) / 100;
     const total = sub + tax;
     form.querySelector('[data-sub]').textContent = money(sub);
-    form.querySelector('[data-taxlabel]').textContent = md ? form.dataset.taxMd : form.dataset.taxLater;
-    form.querySelector('[data-tax]').textContent = md ? money(tax) : '—';
+    form.querySelector('[data-tax]').textContent = money(tax);
     totalEl.textContent = money(total);
     empty.hidden = items.length > 0;
     rows.forEach((r) => r.classList.toggle('is-picked', (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0));
@@ -185,10 +182,7 @@ const types = [
     const { items, total } = render();
     if (!items.length) { e.preventDefault(); error.hidden = false; error.scrollIntoView({ block: 'center' }); return; }
     form.querySelector('[name="order-summary"]').value = items.map((x) => `${x.qty} x ${x.name} — ${money(x.qty * x.price)}`).join('\n');
-    const md = form.querySelector('[name="store"]').value === 'Silver Spring';
-    form.querySelector('[name="order-total"]').value = md
-      ? `${money(total)} (incl. ${form.querySelector('[data-tax]').textContent} MD tax)`
-      : `${money(total)} + sales tax at pickup`;
+    form.querySelector('[name="order-total"]').value = `${money(total)} (incl. ${form.querySelector('[data-tax]').textContent} MD tax)`;
     // Send only the readable summary, not every quantity box, so the store's email stays short.
     form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = true; });
     addEventListener('pageshow', () => form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = false; }), { once: true });

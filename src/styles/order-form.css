@@ -451,3 +451,15 @@
     grid-template-columns: 9.5em minmax(0, 1fr) auto 48px;
   }
 }
+
+/* Fixed pickup store (Silver Spring only) */
+.of__box .of__store {
+  margin: 2px 0 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.of__store b {
+  color: #1f1f1f;
+}
