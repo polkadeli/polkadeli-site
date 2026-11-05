@@ -562,3 +562,73 @@
     padding: 44px 0 52px;
   }
 }
+
+/* "Order for pickup" button at the right end of the red tab bar */
+.mp-tabs .mp-wrap {
+  align-items: center;
+}
+
+.mp-tabs a.mp-order {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  margin: 0 0 0 auto;
+  padding: 0 18px;
+  font-weight: 700;
+  color: var(--color-red);
+  white-space: nowrap;
+  background: #fff;
+  border: 0;
+  border-radius: var(--radius-pill);
+}
+
+.mp-tabs a.mp-order:hover,
+.mp-tabs a.mp-order:focus-visible {
+  color: var(--color-red);
+  background: #ffe9e9;
+}
+
+/* Order page: the form on its own */
+.order-page .of {
+  padding-top: 48px;
+}
+
+@media (max-width: 900px) {
+  .mp-tabs a.mp-order {
+    margin-left: 12px;
+  }
+}
+
+.mp-order-bar {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mp-tabs a.mp-order {
+    display: none;
+  }
+
+  .mp a.mp-order-bar {
+    position: fixed;
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    z-index: 30;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    font-family: var(--font-ui);
+    font-weight: 700;
+    font-size: 17px;
+    color: #fff;
+    text-decoration: none;
+    background: var(--color-red);
+    border-radius: var(--radius-pill);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .mp {
+    padding-bottom: 80px;
+  }
+}

@@ -188,5 +188,9 @@ const types = [
     form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = true; });
     addEventListener('pageshow', () => form.querySelectorAll('.of__qty, .of__filling').forEach((el) => { el.disabled = false; }), { once: true });
   });
+  // /order?type=platters opens the form on Platter order
+  if (new URLSearchParams(location.search).get('type') === 'platters') {
+    form.querySelector('input[data-type="platters"]').checked = true;
+  }
   setType();
 </script>

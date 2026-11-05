@@ -3,7 +3,6 @@
 import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
-import OrderForm from '../../components/OrderForm.astro';
 import { business, stores } from '../../data/site.js';
 import { pierogi, sandwiches, entrees, platters } from '../../data/menu.js';
 import '../../styles/menu-page.css';
@@ -18,7 +17,6 @@ const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread 
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', tr(lang, 'Sandwiches')], ['entrees', tr(lang, 'Entrees')],
   ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading)]),
-  ['order', t.orderOnline],
 ];
 ---
 <Base title={t.menuTitle} description={t.menuDesc}>
@@ -28,6 +26,7 @@ const tabs = [
     <nav class="mp-tabs" aria-label={t.menuSections}>
       <div class="mp-wrap">
         {tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
+        <a class="mp-order" href={href('/order', lang)}>{t.orderPickup}</a>
       </div>
     </nav>
 
@@ -76,7 +75,7 @@ const tabs = [
       <section class="mp-group" id="platters">
         <div class="mp-group__head">
           <h2 class="mp-group__title">{t.platters}</h2>
-          <p class="mp-email">{t.orderAhead} <a href="#order">{t.orderFormLink}</a> <span class="nobr">({t.pickupSS})</span></p>
+          <p class="mp-email">{t.orderAhead} <a href={href('/order', lang) + '?type=platters'}>{t.orderFormLink}</a> <span class="nobr">({t.pickupSS})</span></p>
         </div>
         <div class="mp-grid">
           {platterGrid.map((g) => (
@@ -96,16 +95,15 @@ const tabs = [
         </div>
       </section>
 
-      <div class="doodle-divider mp-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-2.svg" alt="" /><span></span></div>
-
-      <OrderForm />
     </div>
+    <!-- Phone: order button stays at the bottom of the screen -->
+    <a class="mp-order-bar" href={href('/order', lang)}>{t.orderPickup}</a>
   </div>
 </Base>
 
 <script>
   // Highlight the tab for the section in view.
-  const tabs = [...document.querySelectorAll('.mp-tabs a')];
+  const tabs = [...document.querySelectorAll('.mp-tabs a:not(.mp-order)')];
   const secs = tabs.map((a) => document.querySelector(a.getAttribute('href')));
   const setOn = (k) => tabs.forEach((a, i) => a.classList.toggle('is-on', i === k));
   let lock = 0;
