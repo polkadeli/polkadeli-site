@@ -474,13 +474,28 @@
   color: var(--color-red);
 }
 
-@media (max-width: 900px) {
-  .lang-switch {
-    margin-left: auto;
-    margin-right: 0;
-  }
+/* Phone: the switch lives in the hamburger menu instead of the header bar */
+.lang-switch--drawer {
+  margin: 22px 0 0;
+  font-size: 16px;
+}
 
-  .lang-switch + .phone-menu {
-    margin-left: 0;
+.lang-switch--drawer a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lang-switch--drawer a[aria-current] {
+  color: var(--color-white);
+}
+
+@media (min-width: 901px) {
+  .lang-switch--drawer {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header__bar > .lang-switch {
+    display: none;
   }
 }

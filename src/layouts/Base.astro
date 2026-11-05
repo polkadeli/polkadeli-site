@@ -85,6 +85,10 @@ const jsonLd = stores.map((s) => ({
     <ul class="drawer__links">
       {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
+    <div class="lang-switch lang-switch--drawer" role="group" aria-label={t.language}>
+      <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+      <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
+    </div>
     <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">{t.orderUber}</a>
     <div class="drawer__social"><SocialIcons size={26} /></div>
   </div>
