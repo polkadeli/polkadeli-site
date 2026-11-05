@@ -71,18 +71,6 @@ const jsonLd = stores.map((s) => ({
 
   <footer class="site-footer">
     <div class="site-footer__inner">
-      <form class="signup" name="newsletter" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company">
-        <h2 class="signup__title">Join our mailing list to receive special offers</h2>
-        <div>
-          <p class="signup__trap"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
-          <div class="signup__bar">
-            <label><span class="visually-hidden">Name</span><input name="name" type="text" required autocomplete="name" placeholder="Name" /></label>
-            <label><span class="visually-hidden">Email address</span><input name="email" type="email" required autocomplete="email" placeholder="Email Address" /></label>
-            <button type="submit">Subscribe Now</button>
-          </div>
-          <p class="signup__privacy">We'll only email you news and offers, and we'll never sell your information. Unsubscribe anytime. <a href="/#privacy" data-privacy>Privacy policy</a></p>
-        </div>
-      </form>
       <div class="footer-columns">
         {stores.map((s) => (
           <div class="footer-column">
