@@ -81,6 +81,21 @@ const offers = [
 
 
 
+  <section class="section">
+    <div class="wrap">
+      <div class="showcase">
+        {offers.map((o) => (
+          <article class="show">
+            <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
+            <h3>{o.title}</h3>
+            <p class="show__items">{o.ticks.map((t, k) => <span>{t}{k < o.ticks.length - 1 ? ',' : ''}</span>)}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-1.svg" alt="" /><span></span></div>
   <section class="section section--dark">
     <div class="wrap">
       <div class="head">
@@ -97,21 +112,6 @@ const offers = [
         ))}
       </div>
       <a class="btn" href="/deli-menu">Full Menu</a>
-    </div>
-  </section>
-
-  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-1.svg" alt="" /><span></span></div>
-  <section class="section">
-    <div class="wrap">
-      <div class="showcase">
-        {offers.map((o) => (
-          <article class="show">
-            <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
-            <h3>{o.title}</h3>
-            <p class="show__items">{o.ticks.map((t, k) => <span>{t}{k < o.ticks.length - 1 ? ',' : ''}</span>)}</p>
-          </article>
-        ))}
-      </div>
     </div>
   </section>
 
