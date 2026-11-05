@@ -1151,3 +1151,14 @@ main p {
   transform-origin: 28% 72%;
   filter: brightness(1.08);
 }
+
+/* Dividers sit a little lower, with breathing room after a dark section */
+.doodle-divider {
+  padding-top: 56px;
+}
+
+@media (max-width: 900px) {
+  .doodle-divider {
+    padding-top: 36px;
+  }
+}
