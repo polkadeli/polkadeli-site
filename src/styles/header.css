@@ -403,3 +403,25 @@
     right: 72px;
   }
 }
+
+/* Phone dropdown: the two stores side by side */
+.phone-menu__list:not([hidden]) {
+  display: flex;
+  min-width: 0;
+  width: max-content;
+}
+
+.phone-menu__list li + li a {
+  border-top: 0;
+  border-left: 1px solid #e6e6e6;
+}
+
+@media (max-width: 900px) {
+  .phone-menu__list a {
+    padding: 10px 12px;
+  }
+
+  .phone-menu__num {
+    font-size: 16px;
+  }
+}
