@@ -690,7 +690,8 @@
   top: 100%;
   left: 8px;
   z-index: 30;
-  min-width: 170px;
+  display: flex; /* About us | Contact side by side on one line */
+  width: max-content;
   margin: 0;
   padding: 6px;
   list-style: none;
@@ -726,16 +727,17 @@
   border: 0;
 }
 
-.site-nav__links .nav-drop__list li + li a {
-  border-top: 1px solid #eee;
+.site-nav__links .nav-drop__list li + li {
+  border-left: 1px solid #e3e3e3;
 }
 
 .site-nav__links .nav-drop__list a,
 .is-solid .site-nav__links .nav-drop__list a {
-  padding: 12px 14px;
+  padding: 8px 18px;
   font-size: 16px;
   color: var(--color-ink);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .site-nav__links .nav-drop__list a:hover,
