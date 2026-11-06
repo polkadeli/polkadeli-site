@@ -89,11 +89,11 @@ html[lang='pl'] .hero--b h1 {
   filter: invert(1);
 }
 
-/* Top right: a pierogi gently floating (flipped so the crimped edge faces out) */
+/* Middle: a pierogi gently floating (flipped so the crimped edge faces out) */
 .dd--float {
-  top: 22%;
-  right: 6%;
-  width: 170px;
+  top: 52%;
+  left: 41%;
+  width: 160px;
   animation-delay: 0.3s;
 }
 
@@ -103,10 +103,10 @@ html[lang='pl'] .hero--b h1 {
   animation: dd-float 5s ease-in-out 1.2s infinite;
 }
 
-/* Middle: the fork waves its pierogi, with little motion lines */
+/* Top right: the fork wiggles its pierogi, with little motion lines */
 .dd--fork {
-  top: 50%;
-  left: 40%;
+  top: 19%;
+  right: 5%;
   width: 230px;
   animation-delay: 0.55s;
 }
@@ -115,7 +115,7 @@ html[lang='pl'] .hero--b h1 {
   position: relative;
   display: block;
   rotate: -38deg;
-  transform-origin: 92% 12%; /* the end of the handle */
+  transform-origin: 50% 50%; /* wiggles around its middle */
   animation: dd-wave 3.2s ease-in-out 1.4s infinite;
 }
 
@@ -182,10 +182,10 @@ html[lang='pl'] .hero--b h1 {
 
 @keyframes dd-wave {
   0%, 55%, 100% { transform: rotate(0); }
-  10% { transform: rotate(-14deg); }
-  22% { transform: rotate(9deg); }
-  34% { transform: rotate(-6deg); }
-  44% { transform: rotate(2deg); }
+  10% { transform: rotate(-8deg); }
+  22% { transform: rotate(6deg); }
+  34% { transform: rotate(-4deg); }
+  44% { transform: rotate(1.5deg); }
 }
 
 @keyframes dd-whoosh {
@@ -243,10 +243,10 @@ html[lang='pl'] .hero--b h1 {
     max-width: 560px;
   }
 
-  .dd--fork {
+  .dd--float {
     top: 30%;
     left: auto;
-    right: 30%;
+    right: 32%;
   }
 
   .dd--squish {

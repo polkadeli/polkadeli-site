@@ -528,28 +528,11 @@
   }
 }
 
-/* Platters: its own full-width warm band with white cards, set apart from the Deli Menu */
+/* Platters: same look as the Deli Menu (white page, light grey rounded cards that end with their content) */
 #platters {
   position: relative;
-  isolation: isolate;
   margin-top: 72px;
   padding: 40px 0 72px;
-}
-
-#platters::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  z-index: -1;
-  width: 100vw;
-  background: #f1ebe3;
-  transform: translateX(-50%);
-}
-
-#platters .mp-cat {
-  background: #fff;
 }
 
 .mp-divider {
@@ -560,7 +543,7 @@
 @media (max-width: 900px) {
   #platters {
     margin-top: 48px;
-    padding: 44px 0 52px;
+    padding: 32px 0 52px;
   }
 }
 
@@ -707,7 +690,7 @@
   opacity: 1;
 }
 
-/* Platters page: the warm band starts right under the tabs */
+/* Platters page: content starts right under the tabs */
 .mp--platters #platters {
   margin-top: 0;
 }
@@ -728,7 +711,7 @@
   text-decoration: underline;
 }
 
-/* Platters page: keep the order button above the warm band */
+/* Platters page: keep the order button above the content */
 .mp--platters .mp-orderdock {
   position: relative;
   z-index: 2;

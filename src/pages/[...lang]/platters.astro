@@ -8,9 +8,9 @@ import '../../styles/menu-page.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
-// Platters as a 2x2 grid so each row lines up: Cold Cuts | Party Trays, then Cake | Bread.
+// Two columns like the Deli Menu: Cold Cuts over Cake, Party Trays over Bread.
 const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
-const platterGrid = ['Cold Cut Platters', 'Party Trays', 'Cake Platter', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
+const platterCols = [['Cold Cut Platters', 'Cake Platter'], ['Party Trays', 'Bread Tray']].map((col) => col.map((h) => byHeading[h]).filter(Boolean));
 const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
 const tabs = [
   ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading)]),
@@ -36,19 +36,23 @@ const tabs = [
           <p class="mp-email">{t.pickupSS}</p>
         </div>
         <div class="mp-grid">
-          {platterGrid.map((g) => (
-            <section class="mp-cat" id={slug(g.heading)}>
-              <h3>{tr(lang, g.heading)}{g.serves && <span class="mp-badge mp-badge--line">{tr(lang, g.serves)}</span>}</h3>
-              <ul class="mp-items">
-                {g.items.map((item) => (
-                  <li>
-                    <p class="mp-item"><span>{tr(lang, item.name)}</span><b>{item.price}</b></p>
-                    {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
-                    {item.list && <ul class="mp-list">{item.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
-                  </li>
-                ))}
-              </ul>
-            </section>
+          {platterCols.map((col) => (
+            <div class="mp-col">
+              {col.map((g) => (
+                <section class="mp-cat" id={slug(g.heading)}>
+                  <h3>{tr(lang, g.heading)}{g.serves && <span class="mp-badge mp-badge--line">{tr(lang, g.serves)}</span>}</h3>
+                  <ul class="mp-items">
+                    {g.items.map((item) => (
+                      <li>
+                        <p class="mp-item"><span>{tr(lang, item.name)}</span><b>{item.price}</b></p>
+                        {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
+                        {item.list && <ul class="mp-list">{item.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
           ))}
         </div>
       </section>
