@@ -553,3 +553,35 @@ html[lang='pl'] .hero--b h1 {
     display: none;
   }
 }
+
+/* Phones: headline and signup box sit higher, name and email stacked, parcel line on one line */
+@media (max-width: 900px) {
+  .hb-foot {
+    padding-bottom: 104px;
+  }
+
+  .hb-foot .hero-signup__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .strip {
+    padding: 11px 10px;
+    font-size: min(16px, 3.3vw);
+    white-space: nowrap;
+  }
+
+  html[lang='pl'] .strip {
+    font-size: min(16px, 3.4vw);
+  }
+}
+
+/* Home on phones: the phone icon sits at the right edge, so its number box opens leftwards and stays on screen */
+@media (max-width: 900px) {
+  body:has(.hero--b) .phone-menu__list {
+    right: 0;
+  }
+
+  body:has(.hero--b) .phone-menu__list::before {
+    right: 16px;
+  }
+}

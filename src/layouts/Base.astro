@@ -132,7 +132,7 @@ const ogImage = new URL(image, Astro.site).href;
   <div class="drawer" id="drawer" hidden>
     <button class="drawer__close" type="button" aria-label={t.closeMenu}>×</button>
     <ul class="drawer__links">
-      {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a>{n.children.length > 0 && <ul class="drawer__sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>}</li>)}
+      {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
     {features.polish && <div class="lang-switch lang-switch--drawer" role="group" aria-label={t.language}>
       <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>

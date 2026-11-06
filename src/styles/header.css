@@ -796,3 +796,11 @@
   color: var(--color-white);
   text-decoration: none;
 }
+
+/* Phones: phone icon 20% bigger */
+@media (max-width: 900px) {
+  .phone-menu__btn svg {
+    width: 26px;
+    height: 26px;
+  }
+}
