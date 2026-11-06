@@ -455,7 +455,7 @@ html[lang='pl'] .hero--b h1 {
 .dd--garlic {
   top: 42%;
   left: 64%;
-  width: 78px;
+  width: 88px;
   animation-delay: 1s;
 }
 
@@ -550,6 +550,38 @@ html[lang='pl'] .hero--b h1 {
 
 @media (max-width: 900px) {
   .dd--carrot {
+    display: none;
+  }
+}
+
+/* Top left, above the headline: an open pea pod that bobs gently */
+.dd--peas {
+  top: 14%;
+  left: 34%;
+  width: 84px;
+  animation-delay: 1.6s;
+}
+
+.dd--peas img {
+  rotate: -8deg;
+  transform-origin: 50% 50%;
+  animation: dd-peas 4.4s ease-in-out 2.6s infinite;
+}
+
+@keyframes dd-peas {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-7px) rotate(5deg); }
+}
+
+@media (max-width: 1100px) {
+  .dd--peas {
+    top: 70%;
+    left: 82%;
+  }
+}
+
+@media (max-width: 900px) {
+  .dd--peas {
     display: none;
   }
 }
