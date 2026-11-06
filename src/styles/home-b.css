@@ -291,8 +291,8 @@ html[lang='pl'] .hero--b h1 {
 
   /* Addresses side by side, smaller */
   .hb-foot .hero__stores {
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    grid-template-columns: max-content max-content;
+    gap: 22px;
     line-height: 1.45;
   }
 
@@ -307,13 +307,17 @@ html[lang='pl'] .hero--b h1 {
   }
 
   .hb-foot .hero-store__addr {
-    font-size: 15px;
+    font-size: 14px;
+  }
+
+  /* No zip codes on phones; each address line stays on one line */
+  .hb-foot .hb-zip {
+    display: none;
   }
 
   /* Each address line wraps evenly ("Silver Spring, / MD 20904"), never one word alone */
   .hb-foot .hb-line {
-    white-space: normal;
-    text-wrap: balance;
+    white-space: nowrap;
   }
 
   .hb-foot .hero-store__phone {
