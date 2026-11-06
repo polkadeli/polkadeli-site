@@ -669,3 +669,89 @@
     font-size: 15px;
   }
 }
+
+/* Visit us dropdown: About us and Contact. Opens on hover or keyboard focus. */
+.nav-drop {
+  position: relative;
+}
+
+.nav-drop > a {
+  display: flex !important;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-drop__caret {
+  transition: transform 0.2s;
+}
+
+.nav-drop__list {
+  position: absolute;
+  top: 100%;
+  left: 8px;
+  z-index: 30;
+  min-width: 170px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--color-white);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+}
+
+/* invisible bridge so the list stays open while the pointer moves down to it */
+.nav-drop__list::before {
+  content: '';
+  position: absolute;
+  inset: -14px 0 auto;
+  height: 14px;
+}
+
+.nav-drop:hover .nav-drop__list,
+.nav-drop:focus-within .nav-drop__list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(10px);
+}
+
+.nav-drop:hover .nav-drop__caret,
+.nav-drop:focus-within .nav-drop__caret {
+  transform: rotate(180deg);
+}
+
+.site-nav__links .nav-drop__list li {
+  border: 0;
+}
+
+.site-nav__links .nav-drop__list li + li a {
+  border-top: 1px solid #eee;
+}
+
+.site-nav__links .nav-drop__list a,
+.is-solid .site-nav__links .nav-drop__list a {
+  padding: 12px 14px;
+  font-size: 16px;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.site-nav__links .nav-drop__list a:hover,
+.site-nav__links .nav-drop__list a:focus-visible {
+  color: var(--color-red);
+  text-decoration: none;
+}
+
+/* Phone menu: About us and Contact sit indented under Visit us */
+.drawer__sub {
+  margin: 0;
+  padding: 0 0 0 18px;
+  list-style: none;
+}
+
+.drawer__sub a {
+  font-size: var(--text-md, 17px);
+  color: rgba(255, 255, 255, 0.85);
+}

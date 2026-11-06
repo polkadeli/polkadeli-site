@@ -4,7 +4,7 @@ import { business, stores } from '../data/site.js';
 import { langOf, href } from '../i18n.js';
 const lang = langOf(Astro.url);
 const effective = lang === 'pl' ? '6 listopada 2026' : 'November 6, 2026';
-const contact = href('/find-us#contact-title', lang);
+const contact = href('/find-us#contact', lang);
 ---
 {lang === 'pl' ? (
 <article class="legal" lang="pl">

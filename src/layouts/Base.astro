@@ -19,7 +19,8 @@ const {
   image = '/images/og-image.jpg', // picture shown when the page is shared (Facebook, iMessage, etc.)
 } = Astro.props;
 const path = Astro.url.pathname.replace(/^\/pl(?=\/|$)/, '').replace(/\/$/, '') || '/';
-const links = nav.filter((n) => features.shop || n.href !== '/shop').map((n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href }));
+const link = (n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href, children: (n.children ?? []).map(link) });
+const links = nav.filter((n) => features.shop || n.href !== '/shop').map(link);
 // Links to this same page in English and in Polish (EN | PL switch)
 const sw = { en: switchHref(Astro.url, 'en'), pl: switchHref(Astro.url, 'pl') };
 // Search engines: one listing per store, with hours, so Google can show them in Maps and search
@@ -92,7 +93,12 @@ const ogImage = new URL(image, Astro.site).href;
       </a>
       <nav class="site-nav" aria-label="Main">
         <ul class="site-nav__links">
-          {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
+          {links.map((n) => n.children.length ? (
+            <li class="nav-drop">
+              <a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}<svg class="nav-drop__caret" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" /></svg></a>
+              <ul class="nav-drop__list">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+            </li>
+          ) : <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
         </ul>
       </nav>
       {features.polish && <div class="lang-switch" role="group" aria-label={t.language}>
@@ -126,7 +132,7 @@ const ogImage = new URL(image, Astro.site).href;
   <div class="drawer" id="drawer" hidden>
     <button class="drawer__close" type="button" aria-label={t.closeMenu}>×</button>
     <ul class="drawer__links">
-      {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
+      {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a>{n.children.length > 0 && <ul class="drawer__sub">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>}</li>)}
     </ul>
     {features.polish && <div class="lang-switch lang-switch--drawer" role="group" aria-label={t.language}>
       <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
@@ -155,7 +161,7 @@ const ogImage = new URL(image, Astro.site).href;
         ))}
         <div class="footer-column">
           <h2>{t.contactUs}</h2>
-          <p><a href={href('/find-us#contact-title', lang)}>{t.sendMessage}</a></p>
+          <p><a href={href('/find-us#contact', lang)}>{t.sendMessage}</a></p>
           <div class="footer-social"><SocialIcons size={24} /></div>
         </div>
       </div>
