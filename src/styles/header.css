@@ -475,13 +475,27 @@
 }
 
 /* Phone: the switch lives in the hamburger menu instead of the header bar */
+/* Phone menu: EN | PL at the top left, level with the close (×) button */
 .lang-switch--drawer {
-  margin: 22px 0 0;
+  position: absolute;
+  top: 14px;
+  left: var(--space-6);
+  display: flex;
+  align-items: center;
+  height: 44px;
+  margin: 0;
   font-size: 16px;
 }
 
 .lang-switch--drawer a {
   color: rgba(255, 255, 255, 0.7);
+}
+
+/* Start EN flush with the menu text */
+.lang-switch--drawer a:first-child {
+  width: auto;
+  padding-right: 0.5em;
+  text-align: left;
 }
 
 .lang-switch--drawer a[aria-current] {
