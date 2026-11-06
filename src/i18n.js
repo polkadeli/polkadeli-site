@@ -323,7 +323,7 @@ const pl = {
     Kielbasa: 'Kiełbasy', 'Deli Meats and Cheese': 'Wędliny i sery', 'Blintzes, Noodles': 'Naleśniki, makarony',
     'Marinated Goods': 'Przetwory', Cheeses: 'Sery', 'Hand-made Pierogi': 'Ręcznie lepione pierogi', 'Sweets, Baked Goods and more': 'Słodycze, wypieki i wiele więcej', 'Blintzes and Dumplings': 'Naleśniki i kluski', 'Pickles and Sauerkraut': 'Ogórki i kapusta kiszona', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Półmiski',
     // Menu
-    Entrees: 'Dania główne', Fresh: 'Biała', Smoked: 'Wędzona', Ham: 'Szynka', Turkey: 'Indyk', Fried: 'Smażone',
+    Entrees: 'Dania główne', Fresh: 'Biała', Smoked: 'Wędzona', Ham: 'Szynka', Turkey: 'Indyk', Fried: 'Smażone', 'Side of potato salad': 'Sałatka jarzynowa',
     '12 pieces': '12 sztuk', '6 pieces': '6 sztuk',
     'Potato & Cheese': 'Ruskie (ziemniaki i ser)', 'Meat & Kraut': 'Z mięsem i kapustą', 'Kraut & Mushroom': 'Z kapustą i grzybami', 'Mix Pierogi': 'Pierogi mieszane',
     'Served with onions and sour cream': 'Podawane z cebulką i śmietaną',

@@ -867,7 +867,7 @@
 
 /* Leave-out ticks sit under the choice ticks */
 .of__choices.of__remove {
-  grid-row: 4;
+  grid-row: 5;
 }
 
 /* Paid extras (fried pierogi) sit under the filling ticks */
