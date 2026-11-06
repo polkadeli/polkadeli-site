@@ -50,7 +50,7 @@ const tabs = [
                   <ul class="mp-items">
                     {g.items.map((item) => (
                       <li>
-                        <p class="mp-item"><span>{tr(lang, item.name)}</span><b>{item.price}</b></p>
+                        <p class="mp-item"><span>{tr(lang, item.menuName ?? item.name)}</span><b>{item.price}</b></p>
                         {item.desc && <p class="mp-desc"><CommaList text={tr(lang, item.desc)} /></p>}
                         {item.list && <ul class="mp-list">{item.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
                       </li>
