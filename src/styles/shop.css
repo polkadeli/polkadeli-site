@@ -264,3 +264,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Thin photo strip across the top, like the menu pages */
+.shop-strip img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 50%;
+}
+
+@media (max-width: 900px) {
+  .shop-strip img {
+    height: 96px;
+  }
+}
