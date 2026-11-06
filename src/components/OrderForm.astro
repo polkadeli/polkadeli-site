@@ -4,7 +4,7 @@
 // customer to Clover's secure payment page. Paid orders are emailed to the store through
 // Netlify Forms (form "pickup-order"); in test mode (no Clover keys) the page emails it itself.
 import { stores } from '../data/site.js';
-import { orderItems, fillings, pierogiNote, platterHeadings } from '../data/orderItems.js';
+import { orderItems, pierogiNote, platterHeadings } from '../data/orderItems.js';
 import '../styles/order-form.css';
 import { langOf, href, tr, ui } from '../i18n.js';
 import CommaList from './CommaList.astro';
@@ -54,11 +54,11 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
                 {it.list && <ul class="of__list">{it.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
                 <span class="of__price">{it.price}</span>
                 <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`${t.quantityOf} ${it.label}`} />
-                {it.filling && (
-                  <select class="of__filling" name={`filling-${it.key}`} aria-label={`${t.fillingFor} ${it.label}`}>
-                    <option value="" selected disabled>{t.chooseFilling}</option>
-                    {fillings.map((f) => <option value={f}>{tr(lang, f)}</option>)}
-                  </select>
+                {it.choices && (
+                  <fieldset class="of__choices">
+                    <legend>{it.group === 'pierogi' ? t.chooseFilling : t.chooseOne}</legend>
+                    {it.choices.map((c) => <label class="of__choice"><input type="radio" name={`filling-${it.key}`} value={c} />{tr(lang, c)}</label>)}
+                  </fieldset>
                 )}
               </div>
             ))}
@@ -117,7 +117,7 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
   const collect = () => rows
     .map((r) => {
       const qty = parseInt(r.querySelector('.of__qty').value, 10) || 0;
-      const filling = r.querySelector('.of__filling')?.value;
+      const filling = r.querySelector('.of__choices input:checked')?.value;
       return { key: r.dataset.key, filling, qty, name: r.dataset.name + (filling ? ` (${filling})` : ''), price: parseFloat(r.dataset.price) };
     })
     .filter((x) => x.qty > 0);
@@ -147,10 +147,10 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
     return { items, total };
   };
 
-  // A filling must be chosen for any pierogi being ordered.
+  // A choice (pierogi filling, fresh or smoked) must be picked for any item being ordered.
   const syncFillings = () => rows.forEach((r) => {
-    const sel = r.querySelector('.of__filling');
-    if (sel) sel.required = (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0;
+    const on = (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0;
+    r.querySelectorAll('.of__choices input').forEach((x) => { x.required = on; });
   });
   // Deli and platter orders are separate: show one set of items at a time.
   const pad = (n) => String(n).padStart(2, '0');

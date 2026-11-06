@@ -24,7 +24,7 @@ export const sandwiches = {
 export const entrees = [
   { name: 'Sweet Cheese Crepes', price: '$10.99', desc: '3 crepes served with fruit jam and sour cream' },
   { name: 'Stuffed Cabbage & Roasted Potatoes', price: '$11.99', desc: 'Topped with tomato sauce' },
-  { name: 'Kielbasa w/ Rye Bread & Potato Salad', note: '(fresh or smoked)', price: '$11.99', desc: 'Kraut, grilled onions, mustard, horseradish sauce' },
+  { name: 'Kielbasa w/ Rye Bread & Potato Salad', note: '(fresh or smoked)', choices: ['Fresh', 'Smoked'], price: '$11.99', desc: 'Kraut, grilled onions, mustard, horseradish sauce' },
   { name: 'Kielbasa & 4 Pierogi', price: '$14.99', desc: 'Kraut, grilled onions, mustard, horseradish sauce' },
   { name: 'Polish Food Sampler', price: '$14.99', desc: 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce' },
   { name: 'Pork Schnitzel & Potato Dumplings', price: '$14.99', desc: 'Sauerkraut, horseradish sauce' },

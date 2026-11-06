@@ -739,3 +739,92 @@
     grid-column: 2 / -1;
   }
 }
+
+/* Names stay bold when the item is ticked */
+.of__row.is-picked .of__name {
+  font-weight: 700;
+}
+
+/* ---------- Choices (pierogi filling, fresh or smoked): tick marks shown once the item is ticked ---------- */
+.of__choices {
+  grid-column: 2 / -1;
+  grid-row: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  min-width: 0;
+  margin: 10px 0 2px;
+  padding: 0;
+  border: 0;
+}
+
+.of__row:not(.is-picked) .of__choices {
+  display: none;
+}
+
+.of__choices legend {
+  float: left;
+  font-family: var(--font-ui);
+  width: 100%;
+  margin-bottom: 2px;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5e5e5e;
+}
+
+.of__choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Round radio buttons drawn as square tick boxes, to match the item tick boxes */
+.of__choice input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: grid;
+  place-content: center;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  background: #fff;
+  border: 1.5px solid #767676;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.of__choice input:checked {
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.of__choice input:checked::after {
+  content: '';
+  width: 5px;
+  height: 10px;
+  margin-top: -2px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.of__choice input:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+/* Still no choice made when trying to pay: show it in red */
+.of__row.is-picked .of__choices:has(input:required:invalid) legend {
+  color: var(--color-red);
+}
+
+/* Menu items get more room, the pick-up and payment box is narrower */
+@media (min-width: 901px) {
+  .of__cols {
+    grid-template-columns: minmax(0, 1fr) 330px;
+    gap: 40px;
+  }
+}

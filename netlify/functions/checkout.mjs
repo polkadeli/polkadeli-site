@@ -8,7 +8,7 @@
 // Without the private token, the function runs in TEST MODE: no payment; the order page emails
 // the order to the store (Netlify Forms, marked TEST) and shows the thank-you page.
 import { getStore } from '@netlify/blobs';
-import { orderItems, fillings, cents, TAX_MD } from '../../src/data/orderItems.js';
+import { orderItems, cents, TAX_MD } from '../../src/data/orderItems.js';
 import { formatOrder } from '../lib/order-email.mjs';
 
 const byKey = Object.fromEntries(orderItems.map((i) => [i.key, i]));
@@ -36,8 +36,9 @@ export default async (req, context) => {
     const qty = Math.floor(Number(it.qty));
     if (!item || item.type !== type || !(qty >= 1 && qty <= 50)) return json({ error: 'items' }, 400);
     let name = item.name;
-    if (item.filling) {
-      if (!fillings.includes(it.filling)) return json({ error: 'filling' }, 400);
+    // Pierogi filling, or fresh/smoked kielbasa: must be one of the item's choices
+    if (item.choices) {
+      if (!item.choices.includes(it.filling)) return json({ error: 'filling' }, 400);
       name += ` (${it.filling})`;
     }
     lines.push({ name, qty, price: cents(item.price) });
