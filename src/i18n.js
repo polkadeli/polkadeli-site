@@ -201,10 +201,10 @@ export const ui = {
     aboutAlt: 'Maria i Joanna w sklepie',
     menuTitle: 'Menu deli: pierogi, kiełbasa i polskie dania · Polka Deli',
     menuDesc: 'Ręcznie lepione pierogi, grillowana kiełbasa, kanapki, polskie dania i zupy z Polka Deli. Zamów online z odbiorem w Silver Spring, MD.',
-    plattersTitle: 'Półmiski i tace na przyjęcia · Polka Deli',
-    plattersDesc: 'Półmiski wędlin, tace na przyjęcia, zestawy ciast i półmiski pieczywa z Polka Deli. Zamów dzień wcześniej z odbiorem w Silver Spring.',
+    plattersTitle: 'Półmiski i tace bankietowe · Polka Deli',
+    plattersDesc: 'Półmiski wędlin, tace bankietowe, zestawy ciast i półmiski pieczywa z Polka Deli. Zamów dzień wcześniej z odbiorem w Silver Spring.',
     orderPlatters: 'Zamów półmiski z odbiorem',
-    seePlatters: 'Półmiski i tace na przyjęcia',
+    seePlatters: 'Półmiski i tace bankietowe',
     menuAlt: 'Drukowane menu Polka Deli: Menu, zawsze świeże',
     callToOrder: 'Zamów telefonicznie',
     menuSections: 'Sekcje menu',
@@ -288,7 +288,7 @@ const pl = {
     // Home page cards
     'Kielbasa and Deli': 'Kiełbasy i wędliny', 'Polish Groceries': 'Polskie produkty spożywcze',
     Sandwiches: 'Kanapki', 'Hearty Entrees': 'Sycące dania', Soups: 'Zupy',
-    'Cold Cut Platters': 'Półmiski wędlin', 'Party Trays': 'Tace na przyjęcia', 'Cake Platters': 'Zestawy ciast', Breads: 'Pieczywo', 'Bread Trays': 'Półmiski pieczywa', 'Deli Meats & Cheeses': 'Wędliny i sery',
+    'Cold Cut Platters': 'Półmiski wędlin', 'Party Trays': 'Tace bankietowe', 'Cake Platters': 'Zestawy ciast', Breads: 'Pieczywo', 'Bread Trays': 'Półmiski pieczywa', 'Deli Meats & Cheeses': 'Wędliny i sery',
     Kielbasa: 'Kiełbasy', 'Deli Meats and Cheese': 'Wędliny i sery', 'Blintzes, Noodles': 'Naleśniki, makarony',
     'Marinated Goods': 'Przetwory', Cheeses: 'Sery', 'Hand-made Pierogi': 'Ręcznie lepione pierogi', 'Sweets, Baked Goods and more': 'Słodycze, wypieki i wiele więcej', 'Blintzes and Dumplings': 'Naleśniki i kluski', 'Pickles and Sauerkraut': 'Ogórki i kapusta kiszona', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Półmiski',
     // Menu
@@ -325,6 +325,8 @@ const pl = {
     '(Frozen)': '(mrożone)', '(Assorted flavors)': '(różne smaki)',
   },
   groups: {
+    // Box headings on the Platters page (Polish)
+    platterHeadings: { 'Cold Cut Platters': 'Wędliny', 'Party Trays': 'Tace bankietowe', 'Cake Platter': 'Ciasta', 'Bread Tray': 'Pieczywo' },
     Kielbasa: {
       Wedding: 'Weselna', Traditional: 'Tradycyjna', Hunters: 'Myśliwska', Original: 'Oryginalna', Juniper: 'Jałowcowa',
       Cherrywood: 'Wędzona drewnem wiśniowym', 'Kabanosy Mini': 'Kabanosy mini', 'Spicy Kabanosy': 'Kabanosy ostre',

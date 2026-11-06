@@ -19,7 +19,7 @@ const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
 const platterCols = [['Cold Cut Platters', 'Cake Platter'], ['Party Trays', 'Bread Tray']].map((col) => col.map((h) => byHeading[h]).filter(Boolean));
 const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
 const tabs = [
-  ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading)]),
+  ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading, 'platterHeadings')]),
 ];
 ---
 <Base title={t.plattersTitle} description={t.plattersDesc}>
@@ -46,7 +46,7 @@ const tabs = [
             <div class="mp-col">
               {col.map((g) => (
                 <section class="mp-cat" id={slug(g.heading)}>
-                  <h3>{tr(lang, g.heading)}{g.serves && <span class="mp-badge mp-badge--line">{tr(lang, g.serves)}</span>}</h3>
+                  <h3>{tr(lang, g.heading, 'platterHeadings')}{g.serves && <span class="mp-badge mp-badge--line">{tr(lang, g.serves)}</span>}</h3>
                   <ul class="mp-items">
                     {g.items.map((item) => (
                       <li>
