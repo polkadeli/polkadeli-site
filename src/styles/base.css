@@ -150,6 +150,28 @@ label {
   width: 110px;
   height: 80px;
   object-fit: contain;
+  transform-origin: 50% 70%;
+  animation: doodle-wiggle 3.6s ease-in-out 1s infinite;
+}
+
+/* Divider pierogi wiggle now and then, faster on hover */
+.doodle-divider img:hover {
+  animation-duration: 0.9s;
+  animation-delay: 0s;
+}
+
+@keyframes doodle-wiggle {
+  0%, 50%, 100% { transform: rotate(0); }
+  10% { transform: rotate(-8deg); }
+  20% { transform: rotate(7deg); }
+  30% { transform: rotate(-4deg); }
+  40% { transform: rotate(2deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle-divider img {
+    animation: none;
+  }
 }
 
 @media (max-width: 900px) {
