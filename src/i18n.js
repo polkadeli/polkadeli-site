@@ -273,7 +273,7 @@ const pl = {
     // Days
     'Mon–Fri': 'Pon–Pt', Saturday: 'Sobota', Sunday: 'Niedziela',
     // Home page cards
-    'Kielbasa and Deli': 'Kiełbasy i wędliny', Groceries: 'Produkty spożywcze',
+    'Kielbasa and Deli': 'Kiełbasy i wędliny', 'Polish Groceries': 'Polskie produkty spożywcze',
     Sandwiches: 'Kanapki', 'Hearty Entrees': 'Sycące dania', Soups: 'Zupy',
     'Cold Cut Platters': 'Półmiski wędlin', 'Party Trays': 'Tace na przyjęcia', 'Cake Platters': 'Patery ciast', Breads: 'Pieczywo',
     Kielbasa: 'Kiełbasy', 'Deli Meats and Cheese': 'Wędliny i sery', 'Blintzes, Noodles': 'Naleśniki, makarony',
