@@ -89,8 +89,18 @@ const shown = groups.filter((g) => g.type === type);
           <!-- Online orders are for pickup at Silver Spring only (Vienna doesn't take online orders) -->
           <input type="hidden" name="store" value={ss.city} />
           <p class="of__store"><span class="of__nowrap">{ss.street},</span><br /><span class="of__nowrap">{ss.locality}</span></p>
-          <div class="of__two">
-            <label class="of__field">{t.date}<input name="pickup-date" type="date" min={today} required /></label>
+          <!-- Pick-up day: big Today / Tomorrow buttons, then the next two weeks as small day buttons (filled in by the script below) -->
+          <div class="of__field of__date" role="group" aria-label={t.date} data-locale={lang === 'pl' ? 'pl-PL' : 'en-US'}>
+            {t.date}
+            <div class="of__quick">
+              <button type="button" class="of__day of__day--big" data-offset="0">{t.today}<small></small></button>
+              <button type="button" class="of__day of__day--big" data-offset="1">{t.tomorrow}<small></small></button>
+            </div>
+            <p class="of__more">{t.moreDates}</p>
+            <div class="of__days"></div>
+            <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" />
+          </div>
+          <div class="of__timewrap">
             <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
           </div>
 
@@ -209,6 +219,45 @@ const shown = groups.filter((g) => g.type === type);
     }
   };
   dateInput.addEventListener('change', fillTimes);
+  // Day buttons: Today, Tomorrow and the next two weeks. Closed days and days before the earliest pick-up are greyed out.
+  const datePick = form.querySelector('.of__date');
+  const dayGrid = datePick.querySelector('.of__days');
+  const locale = datePick.dataset.locale;
+  const storeNow = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  const dayAt = (n) => { const d = storeNow(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
+  const lastTimeToday = () => { const n = storeNow(); const span = hours[n.getDay()]; return span ? (n.getHours() * 60 + n.getMinutes() + 30) <= span[1] - 30 : false; };
+  const usable = (d, n) => hours[d.getDay()] && isoDay(d) >= dateInput.min && (n > 0 || lastTimeToday());
+  const markDays = () => datePick.querySelectorAll('.of__day').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.iso === dateInput.value)));
+  const buildDays = () => {
+    dayGrid.replaceChildren();
+    for (let n = 0; n < 14; n++) {
+      const d = dayAt(n);
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'of__day'; b.dataset.iso = isoDay(d);
+      const wd = d.toLocaleDateString(locale, { weekday: 'short' }).replace('.', '');
+      b.innerHTML = `<span>${wd.charAt(0).toUpperCase() + wd.slice(1)}</span><b>${d.getDate()}</b>`;
+      b.setAttribute('aria-label', d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' }));
+      b.disabled = !usable(d, n);
+      dayGrid.append(b);
+    }
+    datePick.querySelectorAll('.of__day--big').forEach((b) => {
+      const n = +b.dataset.offset, d = dayAt(n);
+      b.dataset.iso = isoDay(d);
+      const sm = d.toLocaleDateString(locale, { weekday: 'short', month: 'short', day: 'numeric' }).replace(/\./g, '');
+      b.querySelector('small').textContent = sm.charAt(0).toUpperCase() + sm.slice(1);
+      b.disabled = !usable(d, n);
+    });
+    if (dateInput.value && ![...datePick.querySelectorAll('.of__day')].some((b) => b.dataset.iso === dateInput.value && !b.disabled)) dateInput.value = '';
+    markDays();
+  };
+  datePick.addEventListener('click', (e) => {
+    const b = e.target.closest('.of__day');
+    if (!b || b.disabled) return;
+    dateInput.value = b.dataset.iso;
+    markDays();
+    dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+    timeSel.focus();
+  });
   const setType = () => {
     const type = form.querySelector('[name="order-type"]').dataset.type;
     form.querySelectorAll('.of__group').forEach((g) => {
@@ -221,6 +270,7 @@ const shown = groups.filter((g) => g.type === type);
     if (type === 'platters') min.setDate(min.getDate() + 1);
     dateInput.min = isoDay(min);
     if (dateInput.value && dateInput.value < dateInput.min) dateInput.value = '';
+    buildDays();
     fillTimes();
     syncFillings();
     render();
