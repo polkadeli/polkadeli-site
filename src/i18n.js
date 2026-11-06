@@ -163,7 +163,7 @@ export const ui = {
     // Visit us
     visitTitle: 'Store Hours & Directions · Polka Deli',
     visitDesc: 'Polka Deli store hours and directions: Silver Spring, MD (13438 New Hampshire Ave) and Vienna, VA (431 Maple Ave W).',
-    visitUs: 'Visit us',
+    visitUs: 'About us',
     visitAlt: 'Kielbasa, cold cuts, cheese and bread on a wooden market stall',
     storeHours: 'Store hours',
     contactTitle: 'Suggestions? Contact us',
@@ -296,7 +296,7 @@ export const ui = {
     shopCats: 'Kategorie produktów',
     visitTitle: 'Godziny otwarcia i dojazd · Polka Deli',
     visitDesc: 'Godziny otwarcia i dojazd do Polka Deli: Silver Spring, MD (13438 New Hampshire Ave) i Vienna, VA (431 Maple Ave W).',
-    visitUs: 'Odwiedź nas',
+    visitUs: 'O nas',
     visitAlt: 'Kiełbasy, wędliny, sery i chleb na drewnianym straganie',
     storeHours: 'Godziny otwarcia',
     contactTitle: 'Masz sugestie? Napisz do nas',
