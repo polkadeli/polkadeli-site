@@ -33,7 +33,7 @@ const shown = groups.filter((g) => g.type === type);
 <section class="of" id="order" aria-labelledby="order-title">
   <h1 class="of__title" id="order-title">{type === 'platters' ? t.orderPlattersOnline : t.orderOnline}</h1>
   <p class="of__notice">{t.pickupOnly}</p>
-  <p class="of__intro">{type === 'platters' ? t.orderIntroPlatters : t.orderIntroDeli}</p>
+  <p class="of__intro">{(type === 'platters' ? t.orderIntroPlatters : t.orderIntroDeli).split('pick-up').map((part, i) => i === 0 ? part : [<span style="white-space: nowrap">pick-up</span>, part])}</p>
 
   <p class="of__error of__payfail" role="alert" hidden>{t.payFailed}</p>
   <!-- Declares the "pickup-order" Netlify form so the store gets an email for each order. -->
