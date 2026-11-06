@@ -5,7 +5,7 @@ export const pierogi = {
     ['12 pieces', '$14.99'],
     ['6 pieces', '$7.99'],
   ],
-  fillings: ['Potato & Cheese', 'Meat & Kraut', 'Kraut & Mushroom', 'Mix Pierogi'],
+  fillings: ['Potato & Cheese', 'Meat & Kraut', 'Kraut & Mushroom', 'Mix of all three'],
   servedWith: 'Served with onions and sour cream',
   // Optional extras ticked on the order page; the price is added to each order of pierogi
   extras: [{ name: 'Fried', price: '$1.00' }],

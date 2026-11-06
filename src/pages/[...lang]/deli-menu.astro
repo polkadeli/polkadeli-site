@@ -13,8 +13,8 @@ const t = ui[lang];
 // Online ordering on: buttons go to the order page. Off (soft launch): they call the Silver Spring store.
 const orderHref = features.onlineOrdering ? href('/order', lang) : stores[0].phoneHref;
 const orderLabel = features.onlineOrdering ? t.orderPickup : `${t.callToOrder} ${stores[0].phone}`;
-// The menu lists the three single fillings; "Mix Pierogi" stays an option on the order form.
-const menuFillings = pierogi.fillings.filter((f) => f !== 'Mix Pierogi');
+// The menu lists the three single fillings; "Mix of all three" stays an option on the order form.
+const menuFillings = pierogi.fillings.filter((f) => f !== 'Mix of all three');
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', tr(lang, 'Sandwiches')], ['entrees', tr(lang, 'Entrees')],
 ];
