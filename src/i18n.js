@@ -331,7 +331,7 @@ const pl = {
     // Menu
     Entrees: 'Dania główne', Fresh: 'Biała', Smoked: 'Wędzona', Ham: 'Szynka', Turkey: 'Indyk', Fried: 'Smażone', 'Side of potato salad': 'Sałatka jarzynowa',
     '12 pieces': '12 sztuk', '6 pieces': '6 sztuk',
-    'Potato & Cheese': 'Ruskie (ziemniaki i ser)', 'Meat & Kraut': 'Z mięsem i kapustą', 'Kraut & Mushroom': 'Z kapustą i grzybami', 'Mix of all three': 'Mieszane (wszystkie trzy rodzaje)',
+    'Potato & Cheese': 'Ruskie (ziemniaki i ser)', 'Meat': 'Z mięsem', 'Kraut & Mushroom': 'Z kapustą i grzybami', 'Mix of all three': 'Mieszane (wszystkie trzy rodzaje)',
     'Served with onions and sour cream': 'Podawane z cebulką i śmietaną',
     'Smoked Kielbasa': 'Kiełbasa wędzona', 'Sub roll, kraut, grilled onions, mustard, horseradish sauce': 'Bułka, kapusta, smażona cebulka, musztarda, sos chrzanowy',
     'Sub roll, bacon, lettuce, tomato': 'Bułka, bekon, sałata, pomidor',
