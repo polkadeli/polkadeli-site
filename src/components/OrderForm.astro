@@ -29,7 +29,6 @@ const today = new Date().toISOString().slice(0, 10);
 // Each order page shows one kind: /order = deli, /order/platters = platters.
 const { type = 'deli' } = Astro.props;
 const shown = groups.filter((g) => g.type === type);
-const other = type === 'platters' ? { href: href('/order', lang), label: t.switchToDeli } : { href: href('/order/platters', lang), label: t.switchToPlatters };
 ---
 <section class="of" id="order" aria-labelledby="order-title">
   <h1 class="of__title" id="order-title">{type === 'platters' ? t.orderPlattersOnline : t.orderOnline}</h1>
@@ -85,7 +84,6 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
       </div>
 
       <aside class="of__side">
-        <p class="of__switch"><a href={other.href}>{other.label} →</a></p>
         <div class="of__box">
           <h3>{t.pickup}</h3>
           <!-- Online orders are for pickup at Silver Spring only (Vienna doesn't take online orders) -->
