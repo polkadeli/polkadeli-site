@@ -127,7 +127,7 @@ export const ui = {
     shopTitle: 'Polish Groceries · Polka Deli',
     shopDesc: 'Polish groceries at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.',
     shopH1: 'Polish Groceries',
-    shopIntro: "If you don't see a product listed below please ask, we often add products, and can also custom order if a product is available.",
+    shopIntro: 'The list below is general and not a complete list of the products available at our stores.',
     shopCats: 'Grocery categories',
     // Visit us
     visitTitle: 'Visit Us · Polka Deli',
@@ -240,7 +240,7 @@ export const ui = {
     shopTitle: 'Polskie produkty · Polka Deli',
     shopDesc: 'Polskie produkty w Polka Deli: kiełbasy, sery, wędliny, mrożone pierogi i naleśniki, przetwory, słodycze i wypieki.',
     shopH1: 'Polskie produkty',
-    shopIntro: 'Jeśli nie widzisz produktu na liście, zapytaj nas. Często dodajemy nowe produkty i możemy też sprowadzić produkt na zamówienie, jeśli jest dostępny.',
+    shopIntro: 'Poniższa lista jest ogólna i nie obejmuje wszystkich produktów dostępnych w naszych sklepach.',
     shopCats: 'Kategorie produktów',
     visitTitle: 'Odwiedź nas · Polka Deli',
     visitDesc: 'Godziny otwarcia i dojazd do Polka Deli: Silver Spring, MD (13438 New Hampshire Ave) i Vienna, VA (431 Maple Ave W).',
