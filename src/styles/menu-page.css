@@ -753,3 +753,8 @@
 .mp-item > span {
   text-wrap: balance;
 }
+
+/* Descriptions wrap into even lines ("…4 pierogi, kraut, / grilled onions, mustard…") */
+.mp-desc {
+  text-wrap: balance;
+}

@@ -3,6 +3,7 @@
 import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
+import CommaList from '../../components/CommaList.astro';
 import { pierogi, sandwiches, entrees } from '../../data/menu.js';
 import '../../styles/menu-page.css';
 const lang = langOf(Astro.url);
@@ -46,7 +47,7 @@ const tabs = [
               <h3>{tr(lang, 'Sandwiches')}</h3>
               <ul class="mp-items">
                 {sandwiches.items.map((item) => (
-                  <li><p class="mp-item"><span>{tr(lang, item.name)}</span><b>{sandwiches.price}</b></p><p class="mp-desc">{tr(lang, item.desc)}</p></li>
+                  <li><p class="mp-item"><span>{tr(lang, item.name)}</span><b>{sandwiches.price}</b></p><p class="mp-desc"><CommaList text={tr(lang, item.desc)} /></p></li>
                 ))}
               </ul>
               <p class="mp-note">{tr(lang, sandwiches.side[0])}{'\u00a0'}<b>{sandwiches.side[1]}</b></p>
@@ -59,7 +60,7 @@ const tabs = [
                 {entrees.map((item) => (
                   <li>
                     <p class="mp-item"><span>{tr(lang, item.name)}{item.note && <em> {tr(lang, item.note)}</em>}</span><b>{item.price}</b></p>
-                    {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
+                    {item.desc && <p class="mp-desc"><CommaList text={tr(lang, item.desc)} /></p>}
                   </li>
                 ))}
               </ul>

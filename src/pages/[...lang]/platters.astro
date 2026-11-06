@@ -3,6 +3,7 @@
 import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
+import CommaList from '../../components/CommaList.astro';
 import { platters } from '../../data/menu.js';
 import '../../styles/menu-page.css';
 const lang = langOf(Astro.url);
@@ -45,7 +46,7 @@ const tabs = [
                     {g.items.map((item) => (
                       <li>
                         <p class="mp-item"><span>{tr(lang, item.name)}</span><b>{item.price}</b></p>
-                        {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
+                        {item.desc && <p class="mp-desc"><CommaList text={tr(lang, item.desc)} /></p>}
                         {item.list && <ul class="mp-list">{item.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
                       </li>
                     ))}

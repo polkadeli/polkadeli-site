@@ -1,0 +1,7 @@
+---
+// A comma-separated description ("Kraut, grilled onions, mustard") where lines only break between items.
+// Text without commas (a sentence) wraps normally.
+const { text = '' } = Astro.props;
+const parts = text.split(', ');
+---
+{parts.length < 2 ? text : parts.map((p, i) => <span class="mp-nowrap">{p}{i < parts.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}
