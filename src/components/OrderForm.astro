@@ -55,6 +55,7 @@ const types = [
             {g.note && <p class="of__note">{g.note}</p>}
             {g.items.map((it) => (
               <div class="of__row" data-key={it.key} data-name={it.name} data-price={it.price.replace('$', '')}>
+                <input class="of__check" type="checkbox" aria-label={`${t.addItem} ${it.label}`} />
                 <label class="of__name" for={`q-${it.key}`}>{it.label}{it.serves && <span class="of__serves"> · {it.serves}</span>}</label>
                 <span class="of__price">{it.price}</span>
                 <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`${t.quantityOf} ${it.label}`} />
@@ -140,7 +141,11 @@ const types = [
     form.querySelector('[data-tax]').textContent = money(tax);
     totalEl.textContent = money(total);
     empty.hidden = items.length > 0;
-    rows.forEach((r) => r.classList.toggle('is-picked', (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0));
+    rows.forEach((r) => {
+      const on = (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0;
+      r.classList.toggle('is-picked', on);
+      r.querySelector('.of__check').checked = on;
+    });
     if (items.length) error.hidden = true;
     return { items, total };
   };
@@ -170,7 +175,15 @@ const types = [
     render();
   };
   form.querySelectorAll('[name="order-type"]').forEach((r) => r.addEventListener('change', setType));
-  form.addEventListener('input', () => { syncFillings(); render(); });
+  form.addEventListener('input', (e) => {
+    // Tick box: ticking adds 1 of the item, unticking removes it
+    if (e.target.matches('.of__check')) {
+      const q = e.target.closest('.of__row').querySelector('.of__qty');
+      q.value = e.target.checked ? Math.max(1, parseInt(q.value, 10) || 0) : 0;
+    }
+    syncFillings();
+    render();
+  });
   form.addEventListener('change', syncFillings);
   const field = (n) => form.querySelector(`[name="${n}"]`).value.trim();
   form.addEventListener('submit', async (e) => {
