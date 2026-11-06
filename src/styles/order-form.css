@@ -876,7 +876,7 @@
   grid-row: 4;
 }
 
-/* Leave-out ticks look different from the add ticks: red heading, red outline, red X when ticked,
+/* Leave-out ticks look different from the add ticks: red heading, white circles, dark gray X when ticked,
    and the ingredient is crossed out, so it's clear these take something away */
 .of__choices.of__remove legend,
 .of__choices.of__extra legend {
@@ -892,7 +892,7 @@
 }
 
 .of__remove .of__choice input:checked {
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 1.5l7 7M8.5 1.5l-7 7' stroke='%23c82023' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 8px 8px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 1.5l7 7M8.5 1.5l-7 7' stroke='%23444444' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 8px 8px;
   border-color: #c4c4c4;
 }
 
