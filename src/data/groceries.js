@@ -3,14 +3,14 @@
 
 export const columns = [
   [
-    { title: 'Kielbasa', items: ['Wedding', 'Traditional', 'Hunters', 'Original', 'Juniper', 'Cherrywood', 'Kabanosy', 'Kabanosy Mini', 'Kabanosy, spicy', 'Fresh kielbasa', 'Cracow dry Kielbasa', 'Zywiecka Kielbasa', 'Ring Kielbasa', 'Homemade'] },
+    { title: 'Kielbasa', items: ['Wedding', 'Traditional', 'Hunters', 'Original', 'Juniper', 'Cherrywood', 'Kabanosy', 'Fresh kielbasa', 'Cracow dry Kielbasa', 'Zywiecka Kielbasa', 'Ring Kielbasa', 'Homemade'] },
     { title: 'Cheese', items: ['Morski', 'Podlaski', 'Lubelski', 'Krolewicz', 'Gouda', 'Rycki Edam', 'Provolone', 'Krolewski', 'Krolewski smoked', 'Pepper Jack', 'Radamer Hard'] },
   ],
   [
     { title: 'Deli Meats', items: ['Kiszka', 'Chicken Wieners', 'Veal Wieners', 'Pork Wieners', 'Pork/Veal Wieners', 'Tyrolian Ham', 'Gypsy Ham', 'Traditional Ham', 'Polish Ham', 'Mortadella', 'Pork Butt', 'Stuffed Bacon', 'Canadian Bacon', 'Cold Smoked Pork Loin', 'Homemade Pork Loin', 'Smoked Liver Sausage', 'Liver Sausage', 'Homemade Pate', 'Country Headcheese', 'Pork Blood Tongue', 'Pork Tongue', 'Chicken Headcheese', 'Danish Bacon', 'Spyrka', 'Smoked Turkey', 'Picante salami', 'Hungarian Salami', 'Old Forest Salami', 'Hunter Bacon', 'Smoked Ribs', 'Hot Smoked Mackerel', 'Meatloaf', 'Bacon Roll'] },
   ],
   [
-    { title: 'Pierogi', tag: '(Frozen)', items: ['Meat', 'Sauerkraut', 'Sauerkraut & Mushroom', 'Sauerkraut, Potato & Bacon', 'Beef', 'Potato & Cheese', 'Potato & Cheddar', 'Potato & Sauerkraut', 'Potato & Mushroom', 'Potato', 'Sweet Cheese', 'Fruit', 'Mushroom', 'Silesian Dumplings (Kluski Slaskie)', 'Potato Dumplings (Kopytka)', 'Potato Pyzy', 'Meat Pyzy'] },
+    { title: 'Pierogi', tag: '(Frozen)', items: ['Meat', 'Sauerkraut', 'Sauerkraut & Mushroom', 'Sauerkraut & Potato with Bacon', 'Beef', 'Potato & Cheese', 'Potato & Cheddar', 'Potato & Sauerkraut', 'Potato & Mushroom', 'Potato', 'Sweet Cheese', 'Fruit', 'Mushroom', 'Silesian Dumplings (Kluski Slaskie)', 'Potato Dumplings (Kopytka)', 'Potato Pyzy', 'Meat Pyzy'] },
     { title: 'Blintzes', tag: '(Frozen)', items: ['Peach', 'Apple', 'Cherry Cheese', 'Strawberry Cheese', 'Sweet cheese'] },
     { title: 'Marinated Goods', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', 'Cucumbers in Brine', 'Sweet Red Pepper', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets w/ horseradish'] },
   ],

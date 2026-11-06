@@ -213,3 +213,36 @@
   margin-left: -16px;
   padding-left: 14px;
 }
+
+/* Products as a plain comma-separated list under each title (no card, no columns).
+   Each product stays on one line; lines break only between products. */
+.aisle__list {
+  columns: auto;
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.aisle__list li {
+  display: inline;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.aisle__list li:not(:last-child)::after {
+  content: ',';
+}
+
+.aisle__list li + li::before {
+  content: ' ';
+  white-space: normal;
+}
+
+@media (max-width: 900px) {
+  .aisle__list {
+    padding: 0;
+  }
+}

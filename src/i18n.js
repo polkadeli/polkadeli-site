@@ -312,7 +312,7 @@ const pl = {
   groups: {
     Kielbasa: {
       Wedding: 'Weselna', Traditional: 'Tradycyjna', Hunters: 'Myśliwska', Original: 'Oryginalna', Juniper: 'Jałowcowa',
-      Cherrywood: 'Wędzona drewnem wiśniowym', 'Kabanosy Mini': 'Kabanosy mini', 'Kabanosy, spicy': 'Kabanosy ostre',
+      Cherrywood: 'Wędzona drewnem wiśniowym', 'Kabanosy Mini': 'Kabanosy mini', 'Spicy Kabanosy': 'Kabanosy ostre',
       'Fresh kielbasa': 'Biała kiełbasa', 'Cracow dry Kielbasa': 'Krakowska sucha', 'Zywiecka Kielbasa': 'Żywiecka',
       'Ring Kielbasa': 'Kiełbasa w pętach', Homemade: 'Domowa',
     },
@@ -331,7 +331,7 @@ const pl = {
     },
     Pierogi: {
       Meat: 'Z mięsem', Sauerkraut: 'Z kapustą', 'Sauerkraut & Mushroom': 'Z kapustą i grzybami',
-      'Sauerkraut, Potato & Bacon': 'Z kapustą, ziemniakami i boczkiem', Beef: 'Z wołowiną', 'Potato & Cheese': 'Ruskie',
+      'Sauerkraut & Potato with Bacon': 'Z kapustą, ziemniakami i boczkiem', Beef: 'Z wołowiną', 'Potato & Cheese': 'Ruskie',
       'Potato & Cheddar': 'Z ziemniakami i cheddarem', 'Potato & Sauerkraut': 'Z ziemniakami i kapustą',
       'Potato & Mushroom': 'Z ziemniakami i grzybami', Potato: 'Z ziemniakami', 'Sweet Cheese': 'Z serem na słodko',
       Fruit: 'Z owocami', Mushroom: 'Z grzybami', 'Silesian Dumplings (Kluski Slaskie)': 'Kluski śląskie',
