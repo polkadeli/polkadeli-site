@@ -79,7 +79,7 @@ export const ui = {
     exploreMenu: 'Explore full menu',
     // About
     aboutHello: ['Hello!', " We're glad you're here!"],
-    aboutClose: 'Stop by and say hello!',
+    aboutClose: 'We look forward to welcoming you!',
     aboutWho: ['We are Maria and Joanna, Polish natives,', " friends, and we're pretty good cooks."],
     aboutText: 'It all started with our love of Poland, cooking and Polish food. We wanted one place where you could find everything that reminded us of home: Polish goods and groceries, and the homemade dishes we grew up with, cooked to order.',
     aboutAlt: 'Maria and Joanna in the store',
