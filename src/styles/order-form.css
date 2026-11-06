@@ -918,3 +918,44 @@
 .of__choices legend {
   margin-bottom: -4px;
 }
+
+/* Item tick boxes drawn by hand, like the choice ticks, so the browser's focus ring
+   doesn't make them look smaller when clicked */
+.of .of__check {
+  -webkit-appearance: none;
+  appearance: none;
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 1.5px solid #767676;
+  border-radius: 3px;
+}
+
+.of .of__check:checked {
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.of .of__check:checked::after {
+  content: '';
+  width: 6px;
+  height: 11px;
+  margin-top: -2px;
+  border: solid #fff;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.of .of__check:focus,
+.of .of__choice input:focus {
+  outline: none;
+}
+
+.of .of__check:focus-visible,
+.of .of__choice input:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
