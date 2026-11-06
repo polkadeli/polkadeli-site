@@ -479,10 +479,9 @@ main p {
     text-wrap: balance;
   }
 
+  /* Phones: just the photo and title on each food card */
   .show__items {
-    margin: 0 4px;
-    font-size: 13px;
-    line-height: 1.5;
+    display: none;
   }
 }
 
