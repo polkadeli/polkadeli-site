@@ -327,7 +327,8 @@ const pl = {
       'Pork Tongue': 'Ozorki wieprzowe', 'Chicken Headcheese': 'Salceson drobiowy', 'Danish Bacon': 'Boczek duński',
       'Smoked Turkey': 'Indyk wędzony', 'Picante salami': 'Salami pikantne', 'Hungarian Salami': 'Salami węgierskie',
       'Old Forest Salami': 'Salami staropolskie', 'Hunter Bacon': 'Boczek myśliwski', 'Smoked Ribs': 'Żeberka wędzone',
-      'Hot Smoked Mackerel': 'Makrela wędzona na gorąco', Meatloaf: 'Pieczeń rzymska', 'Bacon Roll': 'Boczek zwijany',
+      'Hot Smoked Mackerel': 'Makrela wędzona na gorąco', Wieners: 'Parówki', 'Smoked Pork Loin': 'Schab wędzony',
+      Headcheese: 'Salceson', Salami: 'Salami', 'Smoked Mackerel': 'Makrela wędzona', Meatloaf: 'Pieczeń rzymska', 'Bacon Roll': 'Boczek zwijany',
     },
     Pierogi: {
       Meat: 'Z mięsem', Sauerkraut: 'Z kapustą', 'Sauerkraut & Mushroom': 'Z kapustą i grzybami',
