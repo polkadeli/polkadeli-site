@@ -13,7 +13,6 @@ const t = ui[lang];
 
 const slides = [
   { src: '/images/slide-pierogi.jpg', alt: 'Pierogi being made on a floured wooden board' },
-  { src: '/images/slide-kielbasa.jpg', alt: 'Grilled kielbasa with cabbage and potatoes' },
   { src: '/images/slide-bread.jpg', alt: 'Fresh bread with wheat' },
   { src: '/images/slide-makowiec.jpg', alt: 'Poppy seed roll' },
   { src: '/images/slide-market.jpg', alt: 'Polish market stall with sausages and baked goods' },
@@ -115,6 +114,11 @@ const offers = [
 
 <script>
   const slides = [...document.querySelectorAll('.hero__slide')];
+  // Random order on every visit (the first photo stays first so the page loads fast)
+  for (let k = slides.length - 1; k > 1; k--) {
+    const j = 1 + Math.floor(Math.random() * k);
+    [slides[k], slides[j]] = [slides[j], slides[k]];
+  }
   let i = 0;
   let timer;
   const show = (n) => {
