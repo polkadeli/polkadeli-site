@@ -10,8 +10,8 @@ export const columns = [
     { title: 'Deli Meats', items: ['Kiszka', 'Wieners', 'Polish Ham', 'Tyrolian Ham', 'Mortadella', 'Stuffed Bacon', 'Smoked Pork Loin', 'Liver Sausage', 'Headcheese', 'Salami', 'Smoked Ribs', 'Smoked Mackerel'] },
   ],
   [
-    { title: 'Pierogi', tag: '(Frozen)', items: ['Meat', 'Sauerkraut & Mushroom', 'Potato & Cheese', 'Sweet Cheese', 'Fruit', 'Potato Dumplings (Kopytka)', 'Silesian Dumplings (Kluski Slaskie)'] },
-    { title: 'Blintzes', tag: '(Frozen)', items: ['Apple', 'Cherry Cheese', 'Strawberry Cheese', 'Sweet cheese'] },
+    { title: 'Pierogi', items: ['Meat', 'Sauerkraut & Mushroom', 'Potato & Cheese', 'Sweet Cheese', 'Fruit', 'Potato Dumplings (Kopytka)', 'Silesian Dumplings (Kluski Slaskie)'] },
+    { title: 'Blintzes', items: ['Apple', 'Cherry Cheese', 'Strawberry Cheese', 'Sweet cheese'] },
     { title: 'Marinated Goods', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets w/ horseradish'] },
   ],
   [
