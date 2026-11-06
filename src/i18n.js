@@ -277,7 +277,7 @@ const pl = {
     Sandwiches: 'Kanapki', 'Hearty Entrees': 'Sycące dania', Soups: 'Zupy',
     'Cold Cut Platters': 'Półmiski wędlin', 'Party Trays': 'Tace na przyjęcia', 'Cake Platters': 'Patery ciast', Breads: 'Pieczywo',
     Kielbasa: 'Kiełbasy', 'Deli Meats and Cheese': 'Wędliny i sery', 'Blintzes, Noodles': 'Naleśniki, makarony',
-    'Marinated Goods': 'Przetwory', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Półmiski',
+    'Marinated Goods': 'Przetwory', Cheeses: 'Sery', 'Blintzes and Dumplings': 'Naleśniki i kluski', 'Pickles and Sauerkraut': 'Ogórki kiszone i kapusta', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Półmiski',
     // Menu
     Entrees: 'Dania główne',
     '12 pieces': '12 sztuk', '6 pieces': '6 sztuk',
