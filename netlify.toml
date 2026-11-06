@@ -2,6 +2,12 @@
   command = "npm run build"
   publish = "dist"
 
+# Secret keys live in Netlify (Project configuration > Environment variables), never in this repo:
+#   CLOVER_PRIVATE_TOKEN   Clover Ecommerce private token (Hosted Checkout payments)
+#   CLOVER_WEBHOOK_SECRET  Clover Hosted Checkout webhook signing secret (confirms paid orders)
+#   CLOVER_API_TOKEN       Clover REST API token (prints paid orders on the Station)
+# After changing one, redeploy so the site picks it up.
+
 [build.environment]
   NODE_VERSION = "22.23.4"   # Astro needs 22.23.4 or newer
 
