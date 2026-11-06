@@ -317,7 +317,7 @@ const pl = {
     'Mixed Platter': 'Półmisek mieszany', 'Variety of kielbasa, cheese and cold cuts': 'Różne kiełbasy, sery i wędliny',
     'Bread Tray': 'Półmisek pieczywa', 'Assortment of breads': 'Asortyment pieczywa',
     'Polish Feast': 'Polska uczta', '3 Pork Schnitzels': '3 sznycle wieprzowe', '3 Stuffed Cabbages': '3 gołąbki',
-    '6 Grilled Kielbasas with Kraut and Onion': '6 grillowanych kiełbas z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
+    '6 Grilled Kielbasas with Kraut and Onion': '6 kiełbas z grilla z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
     '1 lb Salad': '1 funt sałatki', 'Grilled Kielbasa & Pierogi': 'Kiełbasa z grilla i pierogi', '24 Pierogi (potato & cheese)': '24 pierogi ruskie',
     'Cake Platter': 'Ciasta', 'Polish Cake Platter': 'Zestaw polskich ciast', 'Assortment of Polish baked goods': 'Asortyment ciast',
     // Shop categories and notes
