@@ -1236,3 +1236,10 @@
   .of__row .of__choices.of__extra { grid-row: 5; }
   .of__row .of__choices.of__remove { grid-row: 6; }
 }
+
+/* Phones: "Leave out" circles are smaller than the tick boxes, so pull that list up to match */
+@media (max-width: 600px) {
+  .of__remove legend {
+    margin-bottom: 1px;
+  }
+}
