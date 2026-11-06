@@ -57,7 +57,8 @@ export const ui = {
     privacyPolicy: 'Privacy Policy',
     closePrivacy: 'Close privacy policy',
     // Home
-    tagline: 'Authentic Polish food, prepared daily',
+    tagline: 'Authentic Polish food, made fresh daily',
+    taglineSub: 'Plus beloved Polish and European groceries.',
     welcome: 'Welcome to Polka Deli',
     joinList: 'Join our mailing list to receive special offers',
     name: 'Name',
@@ -176,6 +177,7 @@ export const ui = {
     privacyPolicy: 'Polityka prywatności',
     closePrivacy: 'Zamknij politykę prywatności',
     tagline: 'Autentyczne polskie jedzenie, przygotowywane codziennie',
+    taglineSub: 'Oraz ulubione produkty polskie i europejskie.',
     welcome: 'Witamy w Polka Deli',
     joinList: 'Zapisz się do naszego newslettera, aby otrzymywać oferty specjalne',
     name: 'Imię i nazwisko',

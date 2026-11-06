@@ -63,6 +63,7 @@ const offers = [
 
     <div class="hb-head">
       <h1 data-solid-at>{t.tagline.split(', ').map((part, i, all) => <span class="hb-h1line">{part}{i < all.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</h1>
+      <p class="hb-sub">{t.taglineSub}</p>
     </div>
 
     <div class="hb-foot">

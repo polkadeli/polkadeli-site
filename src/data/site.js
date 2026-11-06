@@ -1,7 +1,7 @@
 // Business details used across the site. Edit here, and every page updates.
 export const business = {
   name: 'Polka Deli',
-  tagline: 'Authentic Polish food, prepared daily',
+  tagline: 'Authentic Polish food, made fresh daily',
   email: 'polkadelistore@gmail.com',
   privacyEmail: 'info@polkadelimd.com',
   facebook: 'https://www.facebook.com/PolkaDeliMD/',
