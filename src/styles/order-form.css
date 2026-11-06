@@ -900,8 +900,12 @@
   content: none;
 }
 
+.of__remove .of__choice {
+  color: #6b6b6b;
+}
+
 .of__remove .of__choice:has(input:checked) {
-  color: #8a8a8a;
+  color: #9a9a9a;
   text-decoration: line-through;
 }
 
