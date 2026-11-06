@@ -733,8 +733,12 @@
   z-index: 2;
 }
 
-/* Deli Menu: space between the platters link and the footer */
+/* Deli Menu: platters link sits under the Entrees card; space before the footer */
 .mp-see {
+  margin-top: 28px !important;
+}
+
+#deli {
   padding-bottom: 72px;
 }
 
@@ -742,5 +746,11 @@
 @media (min-width: 901px) {
   .mp--platters .mp-group__head {
     padding-right: 300px;
+  }
+}
+
+@media (min-width: 901px) {
+  .mp-see {
+    text-align: right;
   }
 }
