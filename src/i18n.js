@@ -9,7 +9,8 @@ export const langs = ['en', 'pl'];
 export const langOf = (url) => (url.pathname === '/pl' || url.pathname.startsWith('/pl/') ? 'pl' : 'en');
 
 // getStaticPaths for pages in src/pages/[...lang]/: one English and one Polish copy.
-export const langPaths = () => [{ params: { lang: undefined } }, { params: { lang: 'pl' } }];
+import { features } from './data/features.js';
+export const langPaths = () => (features.polish ? [{ params: { lang: undefined } }, { params: { lang: 'pl' } }] : [{ params: { lang: undefined } }]);
 
 // Address of a page in a language: href('/shop', 'pl') → '/pl/shop', href('/#about', 'pl') → '/pl/#about'.
 export const href = (path, lang) => {
@@ -80,6 +81,7 @@ export const ui = {
     orderPlatters: 'Order platters for pick-up',
     seePlatters: 'Party platters and trays',
     menuAlt: 'Polka Deli printed menu: Menu, always fresh',
+    callToOrder: 'Call to order',
     menuSections: 'Menu sections',
     deliMenu: 'Deli Menu',
     pickOne: 'Pick one:',
@@ -197,6 +199,7 @@ export const ui = {
     orderPlatters: 'Zamów półmiski z odbiorem',
     seePlatters: 'Półmiski i tace na przyjęcia',
     menuAlt: 'Drukowane menu Polka Deli: Menu, zawsze świeże',
+    callToOrder: 'Zamów telefonicznie',
     menuSections: 'Sekcje menu',
     deliMenu: 'Menu deli',
     pickOne: 'Do wyboru:',

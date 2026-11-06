@@ -1,5 +1,6 @@
 ---
 import { business, stores, nav } from '../data/site.js';
+import { features } from '../data/features.js';
 import { langOf, href, switchHref, hours, tr, ui } from '../i18n.js';
 import SocialIcons from '../components/SocialIcons.astro';
 import PrivacyPolicy from '../components/PrivacyPolicy.astro';
@@ -18,7 +19,7 @@ const {
   image = '/images/og-image.jpg', // picture shown when the page is shared (Facebook, iMessage, etc.)
 } = Astro.props;
 const path = Astro.url.pathname.replace(/^\/pl(?=\/|$)/, '').replace(/\/$/, '') || '/';
-const links = nav.map((n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href }));
+const links = nav.filter((n) => features.shop || n.href !== '/shop').map((n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href }));
 // Links to this same page in English and in Polish (EN | PL switch)
 const sw = { en: switchHref(Astro.url, 'en'), pl: switchHref(Astro.url, 'pl') };
 // Search engines: one listing per store, with hours, so Google can show them in Maps and search
@@ -65,9 +66,9 @@ const ogImage = new URL(image, Astro.site).href;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet" />
   {!noindex && <link rel="canonical" href={canonical} />}
-  <link rel="alternate" hreflang="en" href={new URL(sw.en, Astro.site)} />
-  <link rel="alternate" hreflang="pl" href={new URL(sw.pl, Astro.site)} />
-  <link rel="alternate" hreflang="x-default" href={new URL(sw.en, Astro.site)} />
+  {features.polish && <link rel="alternate" hreflang="en" href={new URL(sw.en, Astro.site)} />}
+  {features.polish && <link rel="alternate" hreflang="pl" href={new URL(sw.pl, Astro.site)} />}
+  {features.polish && <link rel="alternate" hreflang="x-default" href={new URL(sw.en, Astro.site)} />}
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Polka Deli" />
   <meta property="og:title" content={title} />
@@ -94,10 +95,10 @@ const ogImage = new URL(image, Astro.site).href;
           {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
         </ul>
       </nav>
-      <div class="lang-switch" role="group" aria-label={t.language}>
+      {features.polish && <div class="lang-switch" role="group" aria-label={t.language}>
         <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
         <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
-      </div>
+      </div>}
       <div class="phone-menu">
         <button type="button" class="phone-menu__btn social-link" aria-label={t.callStore} aria-expanded="false" aria-controls="phone-list">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
@@ -113,7 +114,7 @@ const ogImage = new URL(image, Astro.site).href;
       <div class="order-menu">
         <button type="button" class="header-order order-menu__btn" aria-expanded="false" aria-controls="order-list">{t.orderNow}</button>
         <ul class="order-menu__list" id="order-list" hidden>
-          <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>
+          {features.onlineOrdering && <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>}
           <li><a class="order-menu__uber" href={business.uberEats} target="_blank" rel="noopener"><img src="/images/uber-eats-wide.png" alt="" width="127" height="56" /><span><b>{t.deliveryTitle}</b><small>{t.deliveryHint}</small></span></a></li>
         </ul>
       </div>
@@ -127,13 +128,13 @@ const ogImage = new URL(image, Astro.site).href;
     <ul class="drawer__links">
       {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
-    <div class="lang-switch lang-switch--drawer" role="group" aria-label={t.language}>
+    {features.polish && <div class="lang-switch lang-switch--drawer" role="group" aria-label={t.language}>
       <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
       <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
-    </div>
+    </div>}
     <p class="drawer__label">{t.orderNow}</p>
     <ul class="order-menu__list order-menu__list--drawer">
-          <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>
+          {features.onlineOrdering && <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>}
           <li><a class="order-menu__uber" href={business.uberEats} target="_blank" rel="noopener"><img src="/images/uber-eats-wide.png" alt="" width="120" height="53" /><span><b>{t.deliveryTitle}</b><small>{t.deliveryHint}</small></span></a></li>
     </ul>
     <div class="drawer__social"><SocialIcons size={26} /></div>

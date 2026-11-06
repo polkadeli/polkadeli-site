@@ -1,7 +1,8 @@
 ---
 // Shop ("Polish Groceries"): store-aisle layout. Products come from src/data/groceries.js.
 import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
-export const getStaticPaths = langPaths;
+import { features } from '../../data/features.js';
+export const getStaticPaths = () => (features.shop ? langPaths() : []);
 import Base from '../../layouts/Base.astro';
 import { columns } from '../../data/groceries.js';
 import '../../styles/shop.css';

@@ -2,7 +2,8 @@
 // Online order page (pickup at Silver Spring). Linked from the Our Menu page.
 // When Clover Online Ordering is ready, the "Order for pickup" buttons can point there instead.
 import { langOf, langPaths, ui } from '../../i18n.js';
-export const getStaticPaths = langPaths;
+import { features } from '../../data/features.js';
+export const getStaticPaths = () => (features.onlineOrdering ? langPaths() : []);
 import Base from '../../layouts/Base.astro';
 import OrderForm from '../../components/OrderForm.astro';
 import '../../styles/menu-page.css';
