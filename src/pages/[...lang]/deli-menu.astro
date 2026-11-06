@@ -1,6 +1,6 @@
 ---
 // Deli Menu (pierogi, sandwiches, entrees). Platters have their own page (platters.astro). All items and prices come from src/data/menu.js.
-import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+import { langOf, langPaths, href, tr, trItem, ui } from '../../i18n.js';
 import { features } from '../../data/features.js';
 import { stores } from '../../data/site.js';
 export const getStaticPaths = langPaths;
@@ -43,7 +43,7 @@ const tabs = [
               <ul class="mp-items">
                 <li>
                   <p class="mp-item"><span>{[...pierogi.prices].reverse().map(([size]) => tr(lang, size)).join(' / ')}</span><b>{[...pierogi.prices].reverse().map(([, price]) => price).join(' / ')}</b></p>
-                  <p class="mp-desc mp-fillings">{menuFillings.map((f, i) => <span class="mp-nowrap">{i === menuFillings.length - 1 ? `${lang === 'pl' ? 'lub' : 'or'} ` : ''}{tr(lang, f)}{i < menuFillings.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</p>
+                  <p class="mp-desc mp-fillings">{menuFillings.map((f, i) => <span class="mp-nowrap">{i === menuFillings.length - 1 ? `${lang === 'pl' ? 'lub' : 'or'} ` : ''}{trItem(lang, f, i)}{i < menuFillings.length - (lang === 'pl' ? 2 : 1) ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</p>
                 </li>
               </ul>
               <p class="mp-note">{tr(lang, pierogi.servedWith)}</p>

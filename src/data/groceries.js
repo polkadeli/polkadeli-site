@@ -4,7 +4,7 @@
 export const columns = [
   [
     { title: 'Kielbasa', items: ['Wedding', 'Traditional', 'Hunters', 'Juniper', 'Kabanosy', 'Fresh Kielbasa', 'Cracow Dry Kielbasa', 'Homemade'] },
-    { title: 'Cheese', items: ['Morski', 'Podlaski', 'Lubelski', 'Gouda', 'Rycki Edam', 'Krolewski', 'Krolewski smoked'] },
+    { title: 'Cheese', items: ['Morski', 'Podlaski', 'Lubelski', 'Gouda', 'Rycki Edam', 'Krolewski', 'Krolewski Smoked'] },
   ],
   [
     { title: 'Deli Meats', items: ['Kiszka', 'Wieners', 'Polish Ham', 'Tyrolian Ham', 'Mortadella', 'Stuffed Bacon', 'Smoked Pork Loin', 'Liver Sausage', 'Headcheese', 'Salami', 'Smoked Ribs', 'Smoked Mackerel'] },
@@ -12,7 +12,7 @@ export const columns = [
   [
     { title: 'Pierogi', items: ['Meat', 'Sauerkraut & Mushroom', 'Potato & Cheese', 'Sweet Cheese', 'Fruit', 'Potato Dumplings (Kopytka)', 'Silesian Dumplings (Kluski Slaskie)'] },
     { title: 'Blintzes', items: ['Apple', 'Cherry Cheese', 'Strawberry Cheese', 'Sweet Cheese'] },
-    { title: 'Marinated Goods', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets w/ horseradish'] },
+    { title: 'Marinated Goods', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets with Horseradish'] },
   ],
   [
     { title: 'Sweets', items: ['Ptasie Mleczko', 'Prince Polo', 'Jaffa Cakes', 'Krowki', 'Wedel Chocolate', 'Torcik Wedlowski'] },

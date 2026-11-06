@@ -55,7 +55,7 @@ const types = [
             {g.note && <p class="of__note">{g.note}</p>}
             {g.items.map((it) => (
               <div class="of__row" data-key={it.key} data-name={it.name} data-price={it.price.replace('$', '')}>
-                <input class="of__check" type="checkbox" aria-label={`${t.addItem} ${it.label}`} />
+                <input class="of__check" type="checkbox" aria-label={`${t.addCheck} ${it.label}`} />
                 <label class="of__name" for={`q-${it.key}`}>{it.label.replace(/ (\S+) & (\S+)$/, ' $1\u00a0&\u00a0$2')}{it.serves && <span class="of__serves"> · {it.serves}</span>}</label>
                 <span class="of__price">{it.price}</span>
                 <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`${t.quantityOf} ${it.label}`} />
