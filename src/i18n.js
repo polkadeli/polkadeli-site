@@ -182,7 +182,7 @@ export const ui = {
     emailAddress: 'Adres e-mail',
     privacyLink: 'Polityka prywatności',
     subscribe: 'Zapisz się',
-    shipping: 'W naszych sklepach można nadać paczkę za granicę',
+    shipping: 'W naszych sklepach nadasz paczki do Polski i za granicę',
     exploreMenu: 'Zobacz całe menu',
     aboutHello: 'Dzień dobry! Cieszymy się, że tu jesteś!',
     aboutWho: ['Jesteśmy Maria i Joanna, rodowite Polki, przyjaciółki,', ' i całkiem niezłe kucharki.'],
