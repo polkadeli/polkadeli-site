@@ -1293,3 +1293,132 @@
     font-size: 16px;
   }
 }
+
+/* Phones and tablets: intro line centered under the red band, same size as it */
+@media (max-width: 900px) {
+  .of p.of__intro {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .of p.of__intro {
+    font-size: 16px;
+  }
+}
+
+/* Platters: pick-up day from a calendar that pops up */
+.of__cal {
+  position: relative;
+  margin-top: 6px;
+}
+
+.of__field .of__calbtn {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+  color: #767676;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24'%3E%3Crect x='3' y='5' width='18' height='16' fill='none' stroke='%231f1f1f' stroke-width='1.6'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4' stroke='%231f1f1f' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border: 1px solid #bdbdbd;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.of__field .of__calbtn.is-set {
+  color: var(--color-ink, #1f1f1f);
+}
+
+.of__calbtn:focus-visible,
+.of__calbtn[aria-expanded="true"] {
+  outline: 2px solid var(--color-red);
+  outline-offset: -1px;
+  border-color: var(--color-red);
+}
+
+.of__calpop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 14px;
+  font-weight: 400;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
+}
+
+.of__calhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.of__calhead b {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.of__calnav {
+  width: 34px;
+  height: 34px;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-ink, #1f1f1f);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.of__calnav:disabled {
+  color: #d0d0d0;
+  cursor: default;
+}
+
+.of__calgrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.of__calgrid i {
+  padding-bottom: 4px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  color: #767676;
+  text-transform: uppercase;
+}
+
+.of__calday {
+  aspect-ratio: 1;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-ink, #1f1f1f);
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.of__calday:not(:disabled):hover {
+  border-color: var(--color-red);
+}
+
+.of__calday:disabled {
+  font-weight: 400;
+  color: #c8c8c8;
+  cursor: default;
+}
+
+.of__calday[aria-pressed="true"] {
+  color: #fff;
+  background: var(--color-red);
+}

@@ -89,15 +89,21 @@ const shown = groups.filter((g) => g.type === type);
           <!-- Online orders are for pickup at Silver Spring only (Vienna doesn't take online orders) -->
           <input type="hidden" name="store" value={ss.city} />
           <p class="of__store"><span class="of__nowrap">{ss.street},</span><br /><span class="of__nowrap">{ss.locality}</span></p>
-          <!-- Pick-up day: big Today / Tomorrow buttons, then the next two weeks as small day buttons (filled in by the script below) -->
+          <!-- Pick-up day: deli = Today / Tomorrow buttons; platters = calendar pop-up (filled in by the script below) -->
           <div class="of__field of__date" role="group" aria-label={t.date} data-locale={lang === 'pl' ? 'pl-PL' : 'en-US'}>
             {t.date}
-            <div class="of__quick">
-              <button type="button" class="of__day of__day--big" data-offset="0">{t.today}<small></small></button>
-              <button type="button" class="of__day of__day--big" data-offset="1">{t.tomorrow}<small></small></button>
-            </div>
-            <!-- Deli orders: today or tomorrow only. Platters: any of the next two weeks, from a list. -->
-            {type === 'platters' && <select class="of__daysel" aria-label={t.moreDates}><option value="">{t.moreDates}</option></select>}
+            {/* Platters: tomorrow or later, from a calendar that pops up. Deli: today or tomorrow only. */}
+            {type === 'platters' ? (
+              <div class="of__cal">
+                <button type="button" class="of__calbtn" aria-haspopup="dialog" aria-expanded="false" data-empty={t.pickDay}>{t.pickDay}</button>
+                <div class="of__calpop" role="dialog" aria-label={t.date} hidden></div>
+              </div>
+            ) : (
+              <div class="of__quick">
+                <button type="button" class="of__day of__day--big" data-offset="0">{t.today}<small></small></button>
+                <button type="button" class="of__day of__day--big" data-offset="1">{t.tomorrow}<small></small></button>
+              </div>
+            )}
             <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" />
           </div>
           <div class="of__timewrap">
@@ -223,45 +229,82 @@ const shown = groups.filter((g) => g.type === type);
   setInterval(() => { if (dateInput.value === isoDay(new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })))) fillTimes(); }, 60000);
   // Day buttons: Today, Tomorrow and the next two weeks. Closed days and days before the earliest pick-up are greyed out.
   const datePick = form.querySelector('.of__date');
-  const daySel = datePick.querySelector('.of__daysel');
+  const calBtn = datePick.querySelector('.of__calbtn');
+  const calPop = datePick.querySelector('.of__calpop');
   const locale = datePick.dataset.locale;
   const storeNow = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
   const dayAt = (n) => { const d = storeNow(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
   const lastTimeToday = () => { const n = storeNow(); const span = hours[n.getDay()]; return span ? (n.getHours() * 60 + n.getMinutes() + 30) <= span[1] - 30 : false; };
   const usable = (d, n) => hours[d.getDay()] && isoDay(d) >= dateInput.min && (n > 0 || lastTimeToday());
+  const cap = (x) => x.charAt(0).toUpperCase() + x.slice(1);
+  // Platters calendar: tomorrow up to 60 days ahead, closed days greyed out
+  const CAL_DAYS = 60;
+  const calOk = new Set();
+  let calMonth = null;
+  const drawCal = () => {
+    if (!calPop) return;
+    const first = new Date(calMonth.getFullYear(), calMonth.getMonth(), 1, 12);
+    const start = dayAt(0); const end = dayAt(CAL_DAYS);
+    const canPrev = first > new Date(start.getFullYear(), start.getMonth(), 1, 12);
+    const canNext = new Date(first.getFullYear(), first.getMonth() + 1, 1, 12) <= end;
+    const wd = [...Array(7)].map((_, i) => new Date(2024, 0, 7 + ((i + (locale === 'pl-PL' ? 1 : 0)) % 7)).toLocaleDateString(locale, { weekday: 'short' }).replace(/\./g, '').slice(0, 2));
+    const lead = (first.getDay() - (locale === 'pl-PL' ? 1 : 0) + 7) % 7;
+    const days = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+    let cells = '<span></span>'.repeat(lead);
+    for (let i = 1; i <= days; i++) {
+      const iso = isoDay(new Date(first.getFullYear(), first.getMonth(), i, 12));
+      const on = calOk.has(iso);
+      cells += `<button type="button" class="of__calday" data-iso="${iso}"${on ? '' : ' disabled'} aria-pressed="${iso === dateInput.value}">${i}</button>`;
+    }
+    calPop.innerHTML = `<div class="of__calhead"><button type="button" class="of__calnav" data-m="-1"${canPrev ? '' : ' disabled'} aria-label="‹">‹</button><b>${cap(first.toLocaleDateString(locale, { month: 'long', year: 'numeric' }))}</b><button type="button" class="of__calnav" data-m="1"${canNext ? '' : ' disabled'} aria-label="›">›</button></div><div class="of__calgrid">${wd.map((w) => `<i>${w}</i>`).join('')}${cells}</div>`;
+  };
+  const calLabel = () => {
+    if (!calBtn) return;
+    calBtn.textContent = dateInput.value ? cap(new Date(dateInput.value + 'T12:00').toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' })) : calBtn.dataset.empty;
+    calBtn.classList.toggle('is-set', !!dateInput.value);
+  };
+  const openCal = (open) => {
+    if (!calPop) return;
+    calPop.hidden = !open;
+    calBtn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      const sel = dateInput.value ? new Date(dateInput.value + 'T12:00') : dayAt([...Array(CAL_DAYS)].findIndex((_, n) => calOk.has(isoDay(dayAt(n)))));
+      calMonth = new Date(sel.getFullYear(), sel.getMonth(), 1, 12);
+      drawCal();
+    }
+  };
   const markDays = () => {
     datePick.querySelectorAll('.of__day').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.iso === dateInput.value)));
-    if (daySel) daySel.value = [...daySel.options].some((o) => o.value && o.value === dateInput.value) ? dateInput.value : '';
+    calLabel();
   };
   const buildDays = () => {
-    // Platters: the next two weeks after tomorrow, open days only, in a drop-down list
-    const later = [];
-    if (daySel) {
-      daySel.querySelectorAll('option[value]:not([value=""])').forEach((o) => o.remove());
-      for (let n = 2; n < 16; n++) {
-        const d = dayAt(n);
-        if (!usable(d, n)) continue;
-        const label = d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
-        daySel.append(new Option(label.charAt(0).toUpperCase() + label.slice(1), isoDay(d)));
-        later.push(isoDay(d));
-      }
-    }
+    calOk.clear();
+    if (calBtn) for (let n = 0; n <= CAL_DAYS; n++) { const d = dayAt(n); if (usable(d, n)) calOk.add(isoDay(d)); }
     datePick.querySelectorAll('.of__day--big').forEach((b) => {
       const n = +b.dataset.offset, d = dayAt(n);
       b.dataset.iso = isoDay(d);
       const sm = d.toLocaleDateString(locale, { month: 'short', day: 'numeric' }).replace(/\./g, '');
-      b.querySelector('small').textContent = sm.charAt(0).toUpperCase() + sm.slice(1);
+      b.querySelector('small').textContent = cap(sm);
       b.disabled = !usable(d, n);
     });
-    if (dateInput.value && !later.includes(dateInput.value) && ![...datePick.querySelectorAll('.of__day')].some((b) => b.dataset.iso === dateInput.value && !b.disabled)) dateInput.value = '';
+    if (dateInput.value && !calOk.has(dateInput.value) && ![...datePick.querySelectorAll('.of__day')].some((b) => b.dataset.iso === dateInput.value && !b.disabled)) dateInput.value = '';
     markDays();
   };
-  daySel?.addEventListener('change', () => {
-    if (!daySel.value) return;
-    dateInput.value = daySel.value;
+  calBtn?.addEventListener('click', (e) => { e.stopPropagation(); openCal(calPop.hidden); });
+  calPop?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const nav = e.target.closest('.of__calnav');
+    if (nav && !nav.disabled) { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + Number(nav.dataset.m), 1, 12); drawCal(); return; }
+    const day = e.target.closest('.of__calday');
+    if (!day || day.disabled) return;
+    dateInput.value = day.dataset.iso;
     markDays();
+    openCal(false);
     dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+    timeSel.focus();
   });
+  document.addEventListener('click', () => openCal(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && calPop && !calPop.hidden) { openCal(false); calBtn.focus(); } });
   datePick.addEventListener('click', (e) => {
     const b = e.target.closest('.of__day');
     if (!b || b.disabled) return;
