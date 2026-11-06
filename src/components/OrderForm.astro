@@ -20,15 +20,15 @@ const groups = [
   { title: t.platters, type: 'platters', items: pick('platters') },
 ];
 const today = new Date().toISOString().slice(0, 10);
-const types = [
-  { value: 'deli', label: t.deliOrder, hint: t.deliHint },
-  { value: 'platters', label: t.platterOrder, hint: t.platterHint },
-];
+// Each order page shows one kind: /order = deli, /order/platters = platters.
+const { type = 'deli' } = Astro.props;
+const shown = groups.filter((g) => g.type === type);
+const other = type === 'platters' ? { href: href('/order', lang), label: t.switchToDeli } : { href: href('/order/platters', lang), label: t.switchToPlatters };
 ---
 <section class="of" id="order" aria-labelledby="order-title">
-  <h1 class="of__title" id="order-title">{t.orderOnline}</h1>
+  <h1 class="of__title" id="order-title">{type === 'platters' ? t.orderPlattersOnline : t.orderOnline}</h1>
   <p class="of__notice">{t.pickupOnly}</p>
-  <p class="of__intro">{t.orderIntro}</p>
+  <p class="of__intro">{type === 'platters' ? t.orderIntroPlatters : t.orderIntroDeli} <a class="of__switch" href={other.href}>{other.label} →</a></p>
 
   <p class="of__error of__payfail" role="alert" hidden>{t.payFailed}</p>
   <!-- Declares the "pickup-order" Netlify form so the store gets an email for each order. -->
@@ -38,18 +38,11 @@ const types = [
   </form>
   <form class="of__form" data-lang={lang}>
 
-    <div class="of__types" role="radiogroup" aria-label={t.orderType}>
-      {types.map((t, i) => (
-        <label class="of__type">
-          <input type="radio" name="order-type" value={t.value} data-type={t.value} checked={i === 0} />
-          <span class="of__type-box"><b>{t.label}</b><small>{t.hint}</small></span>
-        </label>
-      ))}
-    </div>
+    <input type="hidden" name="order-type" value={type} data-type={type} />
 
     <div class="of__cols">
       <div class="of__items">
-        {groups.map((g) => (
+        {shown.map((g) => (
           <fieldset class="of__group" data-type={g.type}>
             <legend>{g.title}</legend>
             {g.note && <p class="of__note">{g.note}</p>}
@@ -160,7 +153,7 @@ const types = [
   const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const dateInput = form.querySelector('[name="pickup-date"]');
   const setType = () => {
-    const type = form.querySelector('[name="order-type"]:checked').dataset.type;
+    const type = form.querySelector('[name="order-type"]').dataset.type;
     form.querySelectorAll('.of__group').forEach((g) => {
       const on = g.dataset.type === type;
       g.hidden = !on;
@@ -174,7 +167,6 @@ const types = [
     syncFillings();
     render();
   };
-  form.querySelectorAll('[name="order-type"]').forEach((r) => r.addEventListener('change', setType));
   form.addEventListener('input', (e) => {
     // Tick box: ticking adds 1 of the item, unticking removes it
     if (e.target.matches('.of__check')) {
@@ -195,7 +187,7 @@ const types = [
     payErr.hidden = true;
     sendBtn.disabled = true;
     sendBtn.textContent = sendBtn.dataset.busy;
-    const type = form.querySelector('[name="order-type"]:checked').value;
+    const type = form.querySelector('[name="order-type"]').value;
     const order = {
       lang: form.dataset.lang, type, date: field('pickup-date'), time: field('pickup-time'),
       name: field('name'), phone: field('phone'), email: field('email'), notes: field('notes'),
@@ -226,10 +218,6 @@ const types = [
   // Coming back with the browser's Back button from Clover: make the button usable again.
   const sendLabel = sendBtn.textContent;
   addEventListener('pageshow', () => { sendBtn.disabled = false; sendBtn.textContent = sendLabel; });
-  // /order?type=platters opens the form on Platter order
-  if (new URLSearchParams(location.search).get('type') === 'platters') {
-    form.querySelector('input[data-type="platters"]').checked = true;
-  }
   // Back from Clover after a failed payment
   if (new URLSearchParams(location.search).get('payment') === 'failed') document.querySelector('.of__payfail').hidden = false;
   setType();

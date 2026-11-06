@@ -11,7 +11,7 @@ import '../../styles/menu-page.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
 // Online ordering on: buttons go to the order page. Off (soft launch): they call the Silver Spring store.
-const orderHref = features.onlineOrdering ? href('/order', lang) + '?type=platters' : stores[0].phoneHref;
+const orderHref = features.onlineOrdering ? href('/order/platters', lang) : stores[0].phoneHref;
 const orderLabel = features.onlineOrdering ? t.orderPlatters : `${t.callToOrder} ${stores[0].phone}`;
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 // Two columns like the Deli Menu: Cold Cuts over Cake, Party Trays over Bread.

@@ -90,7 +90,7 @@ export default async (req, context) => {
           taxRates: [{ name: 'MD sales tax', rate: Math.round(TAX_MD * 1e7) }],
         })),
       },
-      redirectUrls: { success: `${thanks}?order=paid`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order?payment=failed` },
+      redirectUrls: { success: `${thanks}?order=paid`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order${type === 'platters' ? '/platters' : ''}?payment=failed` },
     }),
   });
   if (!res.ok) {

@@ -543,3 +543,9 @@
   /* Filling choice sits under the name, lined up with it */
   .of__row:has(.of__filling) .of__filling { grid-column: 2 / -1; grid-row: 2; }
 }
+
+/* Link from the deli order page to the platter one and back */
+.of__switch {
+  white-space: nowrap;
+  color: var(--color-red);
+}

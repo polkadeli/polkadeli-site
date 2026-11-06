@@ -2,7 +2,7 @@
 // Add a new page's path here when it is created.
 import { features } from '../data/features.js';
 const site = 'https://www.polkadelimd.com';
-const pages = ['/', '/deli-menu/', '/platters/', '/find-us/', features.shop && '/shop/', features.onlineOrdering && '/order/'].filter(Boolean);
+const pages = ['/', '/deli-menu/', '/platters/', '/find-us/', features.shop && '/shop/', features.onlineOrdering && '/order/', features.onlineOrdering && '/order/platters/'].filter(Boolean);
 
 export function GET() {
   const urls = pages.flatMap((p) => {

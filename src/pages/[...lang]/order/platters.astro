@@ -1,0 +1,19 @@
+---
+// Platter order page (pick-up at Silver Spring, a day ahead). Linked from the Platters page.
+// When Clover Online Ordering is ready, the "Order for pickup" buttons can point there instead.
+import { langOf, langPaths, ui } from '../../../i18n.js';
+import { features } from '../../../data/features.js';
+export const getStaticPaths = () => (features.onlineOrdering ? langPaths() : []);
+import Base from '../../../layouts/Base.astro';
+import OrderForm from '../../../components/OrderForm.astro';
+import '../../../styles/menu-page.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+---
+<Base title={t.plattersOrderTitle} description={t.plattersOrderDesc}>
+  <div class="mp order-page">
+    <div class="mp-wrap">
+      <OrderForm type="platters" />
+    </div>
+  </div>
+</Base>
