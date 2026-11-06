@@ -1146,3 +1146,14 @@
     grid-row: 2;
   }
 }
+
+/* Phones: tick lists sit closer together */
+@media (max-width: 600px) {
+  .of__choices {
+    gap: 4px;
+  }
+
+  .of__choices legend {
+    margin-bottom: 6px;
+  }
+}
