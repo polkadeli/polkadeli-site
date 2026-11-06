@@ -26,7 +26,6 @@ export const columns = [
       'Gingerbread in chocolate',
     ] },
     { title: 'Baked Goods', items: ['Chrusciki', 'Paczki', 'Sweet Bun', 'Napoleon', 'Apple Cherry Cake', 'Apple Cake', 'Poppyseed Roll', 'Poppyseed Cheesecake'] },
-    { title: 'Other', items: ['Fresh Yeast', 'White Borshch in box', { name: 'Instant Soups', note: '(Assorted flavors)' }, { name: 'Instant Pudding', note: '(Assorted flavors)' }] },
   ],
 ];
 
