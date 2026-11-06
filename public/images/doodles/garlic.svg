@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Garlic bulb doodle, drawn to match the pierogi doodles (dark lines, turned white on the hero) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 142" fill="none" stroke="#231f20" stroke-linecap="round" stroke-linejoin="round">
+  <!-- papery tip -->
+  <path stroke-width="5" d="M54 9 C 56.5 19, 56 27, 51.5 36.5" />
+  <path stroke-width="5" d="M66.5 8.5 C 64 19, 64.5 27, 69 36.5" />
+  <path stroke-width="5" d="M54 9 Q 60 5 66.5 8.5" />
+  <!-- bulb -->
+  <path stroke-width="5.5" d="M51.5 36.5 C 29.5 46, 12 66, 14 92.5 C 16 112.5, 33.5 124, 50 126 Q 60 127.5 70.5 126 C 86.5 124, 104.5 112.5, 106 92.5 C 108 66, 90.5 46, 69 36.5" />
+  <!-- cloves -->
+  <path stroke-width="4.5" d="M60.5 40 C 50 60, 49.5 100, 57.5 123.5" />
+  <path stroke-width="4.5" d="M60.5 40 C 72 62, 74 100, 64.5 123.5" />
+  <path stroke-width="4.5" d="M52.5 42 C 34.5 61, 30 99, 43.5 121" />
+  <path stroke-width="4.5" d="M68.5 42 C 86.5 61, 90.5 99, 77.5 121" />
+  <!-- little roots -->
+  <path stroke-width="4" d="M50.5 128.5 L 46.5 135.5" />
+  <path stroke-width="4" d="M57 129.5 L 56 137" />
+  <path stroke-width="4" d="M63.5 129.5 L 64.5 137" />
+  <path stroke-width="4" d="M70 128.5 L 74 135.5" />
+</svg>

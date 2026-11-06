@@ -450,3 +450,106 @@ html[lang='pl'] .hero--b h1 {
     margin-left: auto;
   }
 }
+
+/* Right of the middle: a garlic bulb that wobbles and bounces now and then */
+.dd--garlic {
+  top: 42%;
+  left: 64%;
+  width: 78px;
+  animation-delay: 1s;
+}
+
+.dd--garlic img {
+  rotate: 12deg;
+  transform-origin: 50% 92%;
+  animation: dd-garlic 4.8s ease-in-out 2s infinite;
+}
+
+@keyframes dd-garlic {
+  0%, 55%, 100% { transform: translateY(0) rotate(0); }
+  62% { transform: translateY(-12px) rotate(-8deg); }
+  70% { transform: translateY(0) rotate(6deg); }
+  78% { transform: translateY(-4px) rotate(-3deg); }
+  86% { transform: translateY(0) rotate(1deg); }
+}
+
+@media (max-width: 1100px) {
+  .dd--garlic {
+    top: 42%;
+    left: 62%;
+  }
+}
+
+@media (max-width: 900px) {
+  .dd--garlic {
+    display: none;
+  }
+}
+
+/* Left of the middle: a mushroom slice that rocks side to side */
+.dd--mush {
+  top: 59%;
+  left: 27%;
+  width: 62px;
+  animation-delay: 1.2s;
+}
+
+.dd--mush img {
+  rotate: -14deg;
+  transform-origin: 50% 90%;
+  animation: dd-rock 4s ease-in-out 2.2s infinite;
+}
+
+@keyframes dd-rock {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(10deg); }
+  50% { transform: rotate(-3deg) translateY(-6px); }
+  75% { transform: rotate(-10deg); }
+}
+
+@media (max-width: 1100px) {
+  .dd--mush {
+    top: 43%;
+    left: 45%;
+    width: 56px;
+  }
+}
+
+@media (max-width: 900px) {
+  .dd--mush {
+    display: none;
+  }
+}
+
+/* Top, between the headline and the fork: a carrot whose leaves sway */
+.dd--carrot {
+  top: 16%;
+  left: 67%;
+  width: 46px;
+  animation-delay: 1.4s;
+}
+
+.dd--carrot img {
+  rotate: 40deg;
+  transform-origin: 50% 20%;
+  animation: dd-sway 3.8s ease-in-out 2.4s infinite;
+}
+
+@keyframes dd-sway {
+  0%, 100% { transform: rotate(0); }
+  30% { transform: rotate(-9deg); }
+  60% { transform: rotate(7deg); }
+}
+
+@media (max-width: 1100px) {
+  .dd--carrot {
+    top: 14%;
+    left: 63%;
+  }
+}
+
+@media (max-width: 900px) {
+  .dd--carrot {
+    display: none;
+  }
+}
