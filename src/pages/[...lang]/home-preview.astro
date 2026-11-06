@@ -5,7 +5,7 @@ export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
 import AboutUs from '../../components/AboutUs.astro';
 import { business, stores } from '../../data/site.js';
-import { pierogi, sandwiches, entrees } from '../../data/menu.js';
+import { pierogi } from '../../data/menu.js';
 import '../../styles/home.css';
 import '../../styles/home-b.css';
 const lang = langOf(Astro.url);
@@ -17,18 +17,6 @@ const slides = [
   { src: '/images/slide-bread.jpg', alt: 'Fresh bread with wheat' },
   { src: '/images/slide-makowiec.jpg', alt: 'Poppy seed roll' },
   { src: '/images/slide-market.jpg', alt: 'Polish market stall with sausages and baked goods' },
-];
-
-const sampler = entrees.find((e) => e.name === 'Polish Food Sampler');
-const kielbasaSandwich = sandwiches.items.find((s) => s.name === 'Smoked Kielbasa');
-const dishes = [
-  {
-    img: '/images/media/pierogi.jpg',
-    name: 'Pierogi',
-    desc: `${pierogi.fillings.filter((f) => f !== 'Mix Pierogi').map((f) => tr(lang, f)).join(', ')}. ${tr(lang, pierogi.servedWith)}`,
-  },
-  { img: '/images/slide-kielbasa.jpg', name: tr(lang, sampler.name), desc: tr(lang, sampler.desc) },
-  { img: '/images/media/kielbasa.jpg', name: tr(lang, kielbasaSandwich.name), desc: tr(lang, kielbasaSandwich.desc) },
 ];
 
 const offers = [
@@ -44,6 +32,10 @@ const offers = [
     img: '/images/media/jars.jpg', title: 'Groceries', href: '/shop', button: 'Shop',
     text: "If you don't see a product listed below please ask, we add products daily.",
     ticks: ['Pierogi', 'Kielbasa', 'Deli Meats and Cheese', 'Blintzes, Noodles', 'Marinated Goods', 'Sweets and Baked Goods'],
+  },
+  {
+    img: '/images/media/pierogi.jpg', title: 'Pierogi', href: '/deli-menu',
+    ticks: pierogi.fillings.filter((f) => f !== 'Mix Pierogi'),
   },
 ];
 ---
@@ -107,21 +99,6 @@ const offers = [
             <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
             <h3>{tr(lang, o.title)}</h3>
             <p class="show__items">{o.ticks.map((x, k) => <span>{tr(lang, x)}{k < o.ticks.length - 1 ? ',' : ''}</span>)}</p>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-1.svg" alt="" /><span></span></div>
-  <section class="section">
-    <div class="wrap">
-      <div class="dishes">
-        {dishes.map((d) => (
-          <article class="dish">
-            <div class="dish__ph"><img src={d.img} alt="" loading="lazy" /></div>
-            <h3>{d.name}</h3>
-            <p>{d.desc}</p>
           </article>
         ))}
       </div>

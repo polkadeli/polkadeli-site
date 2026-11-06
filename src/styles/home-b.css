@@ -341,30 +341,53 @@ html[lang='pl'] .hero--b h1 {
     padding: 9px 10px;
   }
 
-  /* Small doodles up top, away from the text */
-  .dd--float {
-    top: calc(var(--header-height, 72px) + 14px);
-    right: 22px;
-    width: 64px;
+  /* Only the fork doodle on phones */
+  .dd--float,
+  .dd--squish {
+    display: none;
   }
 
   .dd--fork {
-    top: calc(var(--header-height, 72px) + 4px);
-    left: 30px;
-    right: auto;
-    width: 92px;
-  }
-
-  .dd--squish {
-    top: calc(var(--header-height, 72px) + 30px);
-    bottom: auto;
-    left: 46%;
-    right: auto;
-    width: 56px;
+    top: calc(var(--header-height, 84px) + 6px);
+    left: auto;
+    right: 30px;
+    width: 96px;
   }
 
   .strip {
     padding: 10px 14px;
     font-size: 13px;
+  }
+}
+
+/* Phone header on this mockup: bigger logo in the middle, phone on the left, menu on the right */
+@media (max-width: 900px) {
+  body:has(.hero--b) {
+    --header-height: 84px;
+  }
+
+  body:has(.hero--b) .site-header__bar {
+    position: relative;
+    height: var(--header-height);
+  }
+
+  body:has(.hero--b) .site-header__logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  body:has(.hero--b) .site-header__logo img {
+    height: 60px;
+  }
+
+  body:has(.hero--b) .phone-menu {
+    order: -1;
+    margin: 0 auto 0 -8px;
+  }
+
+  body:has(.hero--b) .menu-button {
+    margin-left: auto;
   }
 }

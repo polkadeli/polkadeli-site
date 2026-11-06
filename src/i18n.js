@@ -178,7 +178,7 @@ export const ui = {
     tagline: 'Autentyczne polskie produkty i jedzenie przygotowywane codziennie',
     welcome: 'Witamy w Polka Deli',
     joinList: 'Zapisz się do naszego newslettera, aby otrzymywać oferty specjalne',
-    name: 'Imię',
+    name: 'Imię i nazwisko',
     emailAddress: 'Adres e-mail',
     privacyLink: 'Polityka prywatności',
     subscribe: 'Zapisz się',
