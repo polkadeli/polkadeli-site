@@ -7,7 +7,7 @@ export const columns = [
     { title: 'Cheese', items: ['Morski', 'Podlaski', 'Lubelski', 'Gouda', 'Rycki Edam', 'Krolewski', 'Krolewski Smoked'] },
   ],
   [
-    { title: 'Deli Meats', items: ['Kiszka', 'Wieners', 'Polish Ham', 'Tyrolian Ham', 'Mortadella', 'Stuffed Bacon', 'Smoked Pork Loin', 'Liver Sausage', 'Headcheese', 'Salami', 'Smoked Ribs', 'Smoked Mackerel'] },
+    { title: 'Deli Meats', items: ['Kiszka', 'Wieners', 'Polish Ham', 'Tyrolian Ham', 'Mortadella', 'Stuffed Bacon', 'Smoked Pork Loin', 'Liver Sausage', 'Headcheese', 'Salami', 'Smoked Ribs'] },
   ],
   [
     { title: 'Pierogi', items: ['Meat', 'Sauerkraut & Mushroom', 'Potato & Cheese', 'Sweet Cheese', 'Fruit', 'Potato Dumplings (Kopytka)', 'Silesian Dumplings (Kluski Slaskie)'] },
