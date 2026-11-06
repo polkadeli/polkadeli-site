@@ -282,7 +282,7 @@
 
 @media (max-width: 900px) {
   .of__row {
-    grid-template-columns: 1fr auto 48px;
+    grid-template-columns: 1fr auto 56px;
   }
 
   .of__qty {
@@ -300,7 +300,7 @@
 }
 
 .of__row {
-  grid-template-columns: 1fr auto 48px;
+  grid-template-columns: 1fr auto 56px;
   column-gap: 24px;
 }
 
@@ -403,7 +403,7 @@
 }
 
 .of__row:has(.of__filling) {
-  grid-template-columns: max-content minmax(0, 1fr) auto 48px;
+  grid-template-columns: max-content minmax(0, 1fr) auto 56px;
 }
 
 .of__row:has(.of__filling) .of__name {
@@ -430,7 +430,7 @@
 
 @media (max-width: 600px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: minmax(0, 1fr) auto 48px;
+    grid-template-columns: minmax(0, 1fr) auto 56px;
   }
 
   .of__row:has(.of__filling) .of__name {
@@ -453,7 +453,7 @@
 
 @media (min-width: 601px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: 9.5em minmax(0, 1fr) auto 48px;
+    grid-template-columns: 9.5em minmax(0, 1fr) auto 56px;
   }
 }
 
@@ -512,7 +512,7 @@
 }
 
 .of__row {
-  grid-template-columns: 20px minmax(0, 1fr) auto 48px;
+  grid-template-columns: 20px minmax(0, 1fr) auto 56px;
   column-gap: 14px;
 }
 
@@ -527,7 +527,7 @@
 
 @media (min-width: 601px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: 20px 9.5em minmax(0, 1fr) auto 48px;
+    grid-template-columns: 20px 9.5em minmax(0, 1fr) auto 56px;
   }
 
   .of__row:has(.of__filling) .of__filling { grid-column: 3; grid-row: 1; }
@@ -537,7 +537,7 @@
 
 @media (max-width: 600px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: 20px minmax(0, 1fr) auto 48px;
+    grid-template-columns: 20px minmax(0, 1fr) auto 56px;
   }
 
   /* Filling choice sits under the name, lined up with it */
@@ -684,7 +684,7 @@
 
   .of__row,
   .of__row:has(.of__filling) {
-    grid-template-columns: 20px minmax(0, 1fr) auto 44px;
+    grid-template-columns: 20px minmax(0, 1fr) auto 56px;
     column-gap: 10px;
   }
 
@@ -1059,4 +1059,59 @@
   border: 0;
   opacity: 0;
   pointer-events: none;
+}
+
+/* Quantity is a pick list (no keyboard on phones): same box as before, with a small arrow */
+.of__row .of__qty {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 56px;
+  height: 42px;
+  padding: 0 18px 0 8px;
+  border-radius: 0;
+  text-align: center;
+  text-align-last: center;
+  color: inherit;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231f1f1f' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 7px center;
+  cursor: pointer;
+}
+
+/* Phones: more room under the small red headings, and every tick list in one column */
+@media (max-width: 600px) {
+  .of__choices {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .of__choices legend {
+    margin-bottom: 0;
+  }
+
+  .of__choices.of__remove {
+    margin-top: 20px;
+  }
+}
+
+/* Phones: description sits right under the name; price and quantity box stay beside both */
+@media (max-width: 600px) {
+  .of__row:has(.of__desc, .of__list) .of__price,
+  .of__row:has(.of__desc, .of__list) .of__qty {
+    grid-row: 1 / span 2;
+  }
+
+  .of__row:has(.of__desc, .of__list) .of__desc,
+  .of__row:has(.of__desc, .of__list) .of__list {
+    grid-column: 2 / 4;
+    margin-top: 2px;
+  }
+}
+
+/* Phones: prices 2px smaller */
+@media (max-width: 600px) {
+  .of__row .of__price,
+  .of__row:has(.of__filling) .of__price {
+    font-size: 16px;
+  }
 }

@@ -57,7 +57,7 @@ const shown = groups.filter((g) => g.type === type);
                 {it.desc && <p class="of__desc"><CommaList text={tr(lang, it.desc)} /></p>}
                 {it.list && <ul class="of__list">{it.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
                 <span class="of__price">{it.price}</span>
-                <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`${t.quantityOf} ${it.label}`} />
+                <select class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} aria-label={`${t.quantityOf} ${it.label}`}>{Array.from({ length: 51 }, (_, n) => <option value={n}>{n}</option>)}</select>
                 {it.choices && (
                   <fieldset class="of__choices">
                     <legend>{it.group === 'pierogi' || it.choiceLabel === 'filling' ? t.chooseFilling : t.chooseOne}</legend>
