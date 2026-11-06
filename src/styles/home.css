@@ -58,6 +58,13 @@ main p {
   text-align: center;
 }
 
+/* Main call to action: same size as the big order buttons on the menu pages */
+.center-cta .btn {
+  height: 48px;
+  padding: 0 26px;
+  font-size: 17px;
+}
+
 /* ---------- Hero: carousel with headline, stores and signup ---------- */
 
 .hero {

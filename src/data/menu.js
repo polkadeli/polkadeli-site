@@ -35,7 +35,7 @@ export const entrees = [
 export const platters = [
   {
     heading: 'Cold Cut Platters',
-    serves: 'Serve 15–18',
+    serves: 'Serves 15–18',
     items: [
       { name: 'Kielbasa Platter', price: '$54.99', desc: 'Variety of smoked kielbasa' },
       { name: 'Cheese Platter', price: '$54.99', desc: 'Variety of cheese' },
@@ -48,7 +48,7 @@ export const platters = [
   },
   {
     heading: 'Party Trays',
-    serves: 'Serve 6',
+    serves: 'Serves 6',
     items: [
       { name: 'Polish Feast', price: '$84.99', list: ['3 Pork Schnitzels', '3 Stuffed Cabbages', '6 Grilled Kielbasas with Kraut and Onion', '12 Pierogi (potato & cheese)', '1 lb Salad'] },
       { name: 'Grilled Kielbasa & Pierogi', price: '$69.99', list: ['6 Grilled Kielbasas with Kraut and Onion', '24 Pierogi (potato & cheese)', '1 lb Salad'] },

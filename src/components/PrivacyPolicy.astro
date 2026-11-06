@@ -3,20 +3,20 @@
 import { business, stores } from '../data/site.js';
 import { langOf, href } from '../i18n.js';
 const lang = langOf(Astro.url);
-const effective = lang === 'pl' ? '5 listopada 2026' : 'November 5, 2026';
+const effective = lang === 'pl' ? '6 listopada 2026' : 'November 6, 2026';
 const contact = href('/find-us#contact-title', lang);
 ---
 {lang === 'pl' ? (
 <article class="legal" lang="pl">
   <p class="legal__date">Obowiązuje od {effective}</p>
 
-  <p>Polka Deli („my”) prowadzi tę stronę, polkadelimd.com, dla naszych sklepów w Silver Spring, MD i Vienna, VA. Zbieramy tylko to, czego potrzebujemy, aby Ci odpowiedzieć, wysyłać zamówione przez Ciebie wiadomości z delikatesów i (w przyszłości) realizować Twoje zamówienia. Nigdy nie sprzedajemy Twoich danych.</p>
+  <p>Polka Deli („my”) prowadzi tę stronę, polkadelimd.com, dla naszych sklepów w Silver Spring, MD i Vienna, VA. Zbieramy tylko to, czego potrzebujemy, aby Ci odpowiedzieć, realizować Twoje zamówienia i wysyłać zamówione przez Ciebie wiadomości z delikatesów. Nigdy nie sprzedajemy Twoich danych.</p>
 
   <h2>Jakie dane zbieramy</h2>
   <ul>
     <li><strong>Newsletter.</strong> Twoje imię i adres e-mail, gdy zapiszesz się do newslettera.</li>
     <li><strong>Formularz kontaktowy.</strong> Twoje imię, adres e-mail i wiadomość, gdy do nas piszesz.</li>
-    <li><strong>Zamówienia online</strong> (gdy otworzymy sklep internetowy). Twoje imię i nazwisko, dane kontaktowe, dane dostawy lub odbioru oraz historię zamówień. Płatności obsługuje nasz dostawca sklepu; nigdy nie widzimy ani nie przechowujemy pełnego numeru Twojej karty.</li>
+    <li><strong>Zamówienia online.</strong> Twoje imię i nazwisko, numer telefonu, adres e-mail, godzinę odbioru i zamówione produkty. Płatności obsługuje Clover; nigdy nie widzimy ani nie przechowujemy pełnego numeru Twojej karty.</li>
     <li><strong>Podstawowe dane techniczne.</strong> Jak każda strona internetowa, nasz dostawca hostingu automatycznie otrzymuje standardowe informacje, takie jak adres IP i rodzaj przeglądarki, aby strona mogła się wczytać i była bezpieczna.</li>
   </ul>
 
@@ -24,18 +24,17 @@ const contact = href('/find-us#contact-title', lang);
   <ul>
     <li>Aby wysyłać Ci newsletter: wiadomości i oferty, takie jak promocje, kupony i godziny otwarcia w święta. Wysyłamy tylko kilka e-maili w roku.</li>
     <li>Aby odpowiadać na Twoje pytania i pomagać przy zamówieniach.</li>
-    <li>Aby przyjmować, przygotowywać i dostarczać zamówienia online oraz wysyłać potwierdzenia i informacje o zamówieniu.</li>
+    <li>Aby przygotowywać zamówienia z odbiorem oraz wysyłać potwierdzenia i informacje o zamówieniu.</li>
     <li>Aby strona działała sprawnie, bezpiecznie i bez spamu.</li>
   </ul>
 
   <h2>Kto nam pomaga</h2>
   <p>Do prowadzenia strony korzystamy z kilku zaufanych usług. Przetwarzają one Twoje dane wyłącznie po to, aby świadczyć nam swoje usługi:</p>
   <ul>
-    <li><strong>Netlify</strong> utrzymuje tę stronę i odbiera wiadomości z formularza kontaktowego.</li>
-    <li><strong>Nasz serwis newslettera</strong> (obecnie Kit) przechowuje listę adresów i wysyła nasze e-maile.</li>
-    <li><strong>Clover</strong> obsługuje płatności za zamówienia online z odbiorem na swojej bezpiecznej stronie; nigdy nie widzimy pełnego numeru Twojej karty.</li>
-    <li><strong>Shopify</strong> będzie obsługiwać nasz sklep internetowy i płatności, gdy go otworzymy.</li>
-    <li><strong>Google</strong> dostarcza mapy na stronie Odwiedź nas i czcionki tej strony, a <strong>Uber Eats</strong> obsługuje zamówienia składane w swojej aplikacji. Gdy z nich korzystasz, obowiązują ich własne polityki prywatności.</li>
+    <li><strong>Netlify</strong> utrzymuje tę stronę i odbiera wiadomości, zapisy do newslettera i dane zamówień.</li>
+    <li><strong>Nasz serwis newslettera</strong> przechowuje listę adresów i wysyła nasze e-maile.</li>
+    <li><strong>Clover</strong> obsługuje płatności za zamówienia online z odbiorem na swojej bezpiecznej stronie i przekazuje zamówienia do sklepu; nigdy nie widzimy pełnego numeru Twojej karty.</li>
+    <li><strong>Google</strong> dostarcza czcionki tej strony i mapy, które otwierają nasze adresy, a <strong>Uber Eats</strong> obsługuje zamówienia składane w swojej aplikacji. Gdy z nich korzystasz, obowiązują ich własne polityki prywatności.</li>
     <li>Linki do <strong>Facebooka i Instagrama</strong> prowadzą do tych serwisów, które mają własne polityki prywatności.</li>
   </ul>
   <p>Nie sprzedajemy, nie wynajmujemy ani nie wymieniamy Twoich danych osobowych i nie udostępniamy ich nikomu do celów marketingowych.</p>
@@ -64,13 +63,13 @@ const contact = href('/find-us#contact-title', lang);
 <article class="legal">
   <p class="legal__date">Effective {effective}</p>
 
-  <p>Polka Deli ("we", "us") runs this website, polkadelimd.com, for our stores in Silver Spring, MD and Vienna, VA. We keep things simple: we only collect what we need to answer you, send you deli news you asked for, and (in the future) fill your orders. We never sell your information.</p>
+  <p>Polka Deli ("we", "us") runs this website, polkadelimd.com, for our stores in Silver Spring, MD and Vienna, VA. We keep things simple: we only collect what we need to answer you, fill your orders, and send you deli news you asked for. We never sell your information.</p>
 
   <h2>What we collect</h2>
   <ul>
     <li><strong>Mailing list.</strong> Your name and email address when you join our mailing list.</li>
     <li><strong>Contact form.</strong> Your name, email address and message when you write to us.</li>
-    <li><strong>Online orders</strong> (when our online store opens). Your name, contact details, delivery or pick-up details and order history. Payments are handled by our store provider; we never see or store your full card number.</li>
+    <li><strong>Online orders.</strong> Your name, phone number, email address, pick-up time and what you ordered. Payments are handled by Clover; we never see or store your full card number.</li>
     <li><strong>Basic technical data.</strong> Like every website, our hosting provider automatically receives standard information such as your IP address and browser type so the site can load and stay secure.</li>
   </ul>
 
@@ -78,18 +77,17 @@ const contact = href('/find-us#contact-title', lang);
   <ul>
     <li>To send you our newsletter: exclusive news and offers, such as specials, coupons and holiday hours. We send only a handful of emails a year.</li>
     <li>To reply to your questions and help with your orders.</li>
-    <li>To process, prepare and deliver online orders, and to send receipts and order updates.</li>
+    <li>To prepare your pick-up orders and send receipts and order updates.</li>
     <li>To keep the website running, secure and free of spam.</li>
   </ul>
 
   <h2>Who helps us</h2>
   <p>We use a few trusted services to run the site. They handle your information only to provide their service to us:</p>
   <ul>
-    <li><strong>Netlify</strong> hosts this website and receives contact form messages.</li>
-    <li><strong>Our email newsletter service</strong> (currently Kit) stores the mailing list and sends our emails.</li>
-    <li><strong>Clover</strong> processes payments for online pick-up orders on its secure page; we never see your full card number.</li>
-    <li><strong>Shopify</strong> will run our online store and payments once it opens.</li>
-    <li><strong>Google</strong> provides the maps on our Visit us page and the fonts on this site, and <strong>Uber Eats</strong> handles orders placed through its app. When you use those, their own privacy policies apply.</li>
+    <li><strong>Netlify</strong> hosts this website and receives contact messages, mailing list sign-ups and order details.</li>
+    <li><strong>Our email newsletter service</strong> stores the mailing list and sends our emails.</li>
+    <li><strong>Clover</strong> processes payments for online pick-up orders on its secure page and sends the orders to our store; we never see your full card number.</li>
+    <li><strong>Google</strong> provides the fonts on this site and the maps our address links open, and <strong>Uber Eats</strong> handles orders placed through its app. When you use those, their own privacy policies apply.</li>
     <li><strong>Facebook and Instagram</strong> links take you to those sites, which have their own privacy policies.</li>
   </ul>
   <p>We don't sell, rent or trade your personal information, and we don't share it with anyone for their own marketing.</p>
