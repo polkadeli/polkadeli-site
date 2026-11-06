@@ -914,3 +914,8 @@
   align-self: start;
   margin-bottom: -18px;
 }
+
+/* Tick boxes sit closer to their heading */
+.of__choices legend {
+  margin-bottom: -4px;
+}
