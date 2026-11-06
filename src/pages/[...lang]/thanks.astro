@@ -18,6 +18,8 @@ const t = ui[lang];
       const kind = new URLSearchParams(location.search).get('order');
       const msg = kind && document.querySelector(`[data-order="${kind}"]`);
       if (msg) {
+        // Order placed: forget the saved order form
+        try { sessionStorage.removeItem('polkadeli-order-deli'); sessionStorage.removeItem('polkadeli-order-platters'); } catch {}
         document.querySelector('[data-default]').hidden = true;
         msg.hidden = false;
       }

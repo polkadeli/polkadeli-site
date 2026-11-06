@@ -909,7 +909,7 @@
 }
 
 /* Ticked item with no description (pierogi): the quantity box no longer pushes the choices down */
-.of__row.is-picked:not(:has(.of__desc, .of__list)) .of__qty {
+.of__row.is-picked:not(:has(.of__desc, .of__list)):has(.of__choices) .of__qty {
   align-self: start;
   margin-bottom: -18px;
 }

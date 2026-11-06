@@ -237,6 +237,36 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
     render();
   });
   form.addEventListener('change', syncFillings);
+
+  // Keep the order while it's being filled in, so switching EN/PL (or reloading) doesn't lose it.
+  // Saved in this browser tab only; cleared once the order is placed (thank-you page).
+  const SAVE = `polkadeli-order-${form.querySelector('[name="order-type"]').value}`;
+  const FIELDS = ['name', 'phone', 'email', 'notes', 'pickup-date', 'pickup-time'];
+  const save = () => {
+    const state = { fields: {}, rows: {} };
+    FIELDS.forEach((n) => { state.fields[n] = form.querySelector(`[name="${n}"]`).value; });
+    rows.forEach((r) => {
+      const qty = parseInt(r.querySelector('.of__qty').value, 10) || 0;
+      const ticks = [...r.querySelectorAll('.of__choices')].map((f) => [...f.querySelectorAll('input:checked')].map((i) => i.value));
+      if (qty || ticks.some((t) => t.length)) state.rows[r.dataset.key] = { qty, ticks };
+    });
+    try { sessionStorage.setItem(SAVE, JSON.stringify(state)); } catch {}
+  };
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem(SAVE) || 'null'); } catch {}
+  if (saved) {
+    rows.forEach((r) => {
+      const s = saved.rows?.[r.dataset.key];
+      if (!s) return;
+      r.querySelector('.of__qty').value = Math.min(50, Math.max(0, s.qty | 0));
+      r.querySelectorAll('.of__choices').forEach((f, i) => {
+        f.querySelectorAll('input').forEach((x) => { x.checked = (s.ticks?.[i] || []).includes(x.value); });
+      });
+    });
+    FIELDS.forEach((n) => { if (n !== 'pickup-time' && saved.fields?.[n]) form.querySelector(`[name="${n}"]`).value = saved.fields[n]; });
+  }
+  form.addEventListener('input', save);
+  form.addEventListener('change', save);
   const field = (n) => form.querySelector(`[name="${n}"]`).value.trim();
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -281,4 +311,7 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
   // Back from Clover after a failed payment
   if (new URLSearchParams(location.search).get('payment') === 'failed') document.querySelector('.of__payfail').hidden = false;
   setType();
+  // The time list is built from the date, so put the saved time back once it exists
+  if (saved?.fields?.['pickup-time'] && [...timeSel.options].some((o) => o.value === saved.fields['pickup-time'])) timeSel.value = saved.fields['pickup-time'];
+  render();
 </script>
