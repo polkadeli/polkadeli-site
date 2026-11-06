@@ -96,8 +96,9 @@ const shown = groups.filter((g) => g.type === type);
               <button type="button" class="of__day of__day--big" data-offset="0">{t.today}<small></small></button>
               <button type="button" class="of__day of__day--big" data-offset="1">{t.tomorrow}<small></small></button>
             </div>
-            <p class="of__more">{t.moreDates}</p>
-            <div class="of__days"></div>
+            {type === 'platters' && <p class="of__more">{t.moreDates}</p>}
+            <!-- Deli orders: today or tomorrow only. Platters: any of the next two weeks. -->
+            <div class="of__days" hidden={type !== 'platters'}></div>
             <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" />
           </div>
           <div class="of__timewrap">
@@ -232,7 +233,7 @@ const shown = groups.filter((g) => g.type === type);
   const markDays = () => datePick.querySelectorAll('.of__day').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.iso === dateInput.value)));
   const buildDays = () => {
     dayGrid.replaceChildren();
-    for (let n = 0; n < 14; n++) {
+    for (let n = 0; n < (dayGrid.hidden ? 0 : 14); n++) {
       const d = dayAt(n);
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'of__day'; b.dataset.iso = isoDay(d);

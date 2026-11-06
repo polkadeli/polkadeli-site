@@ -59,7 +59,7 @@ export default async (req, context) => {
   const date = clean(body.date, 10);
   const time = clean(body.time, 5);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) return json({ error: 'pickup' }, 400);
-  if (date < storeDay(type === 'platters' ? 1 : 0) || date > storeDay(60)) return json({ error: 'pickup' }, 400);
+  if (date < storeDay(type === 'platters' ? 1 : 0) || date > storeDay(type === 'platters' ? 60 : 1)) return json({ error: 'pickup' }, 400); // deli: today or tomorrow only
   // Same-day pick-up must be at least 30 minutes after the order is placed (store time).
   if (date === storeDay(0)) {
     const [h, m] = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/New_York', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date()).split(':').map(Number);
