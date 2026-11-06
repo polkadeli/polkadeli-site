@@ -4,7 +4,7 @@
 const money = (c) => `$${(c / 100).toFixed(2)}`;
 
 export const formatOrder = (o) => [
-  `${o.type === 'platters' ? 'PLATTER ORDER' : 'DELI ORDER'}: pickup ${o.date} at ${o.time}, Silver Spring`,
+  `${o.type === 'platters' ? 'PLATTER ORDER' : 'DELI ORDER'}: pick-up ${o.date} at ${o.time}, Silver Spring`,
   `${o.customer.name}, ${o.customer.phone}, ${o.customer.email}`,
   '',
   ...o.lines.map((l) => `${l.qty} x ${l.name}: ${money(l.qty * l.price)}`),

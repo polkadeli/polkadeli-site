@@ -69,7 +69,7 @@ export default async (req, context) => {
 
   const host = process.env.CLOVER_ENV === 'sandbox' ? 'https://apisandbox.dev.clover.com' : 'https://api.clover.com';
   const [firstName, ...rest] = customer.name.split(/\s+/);
-  const pickupNote = `Pickup ${date} ${time}, ${customer.name}, ${customer.phone}${notes ? `. Note: ${notes}` : ''}`;
+  const pickupNote = `Pick-up ${date} ${time}, ${customer.name}, ${customer.phone}${notes ? `. Note: ${notes}` : ''}`;
   const res = await fetch(`${host}/invoicingcheckoutservice/v1/checkouts`, {
     method: 'POST',
     headers: {
