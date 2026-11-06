@@ -738,8 +738,9 @@
   padding-bottom: 72px;
 }
 
-/* Platters page: note goes under the heading so the order button has the heading row to itself */
-.mp--platters .mp-group__head {
-  flex-direction: column;
-  align-items: flex-start;
+/* Platters page: keep the heading note clear of the order button on the right */
+@media (min-width: 901px) {
+  .mp--platters .mp-group__head {
+    padding-right: 300px;
+  }
 }
