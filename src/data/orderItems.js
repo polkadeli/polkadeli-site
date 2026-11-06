@@ -9,10 +9,12 @@ export const cents = (price) => Math.round(parseFloat(String(price).replace('$',
 // group: 'pierogi' | 'sandwiches' | 'entrees' | 'platters'; type: 'deli' | 'platters'
 export const orderItems = [
   ...pierogi.prices.map(([size, price]) => ({ key: `pierogi-${slug(size)}`, group: 'pierogi', type: 'deli', name: `Pierogi, ${size}`, size, price, filling: true })),
-  ...sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, group: 'sandwiches', type: 'deli', name: i.name, price: sandwiches.price })),
-  ...entrees.map((i) => ({ key: `entree-${slug(i.name)}`, group: 'entrees', type: 'deli', name: `${i.name}${i.note ? ` ${i.note}` : ''}`, base: i.name, note: i.note, price: i.price })),
-  ...platters.flatMap((g) => g.items.map((i) => ({ key: `platter-${slug(i.name)}`, group: 'platters', type: 'platters', name: i.name, price: i.price, serves: g.serves }))),
+  ...sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, group: 'sandwiches', type: 'deli', name: i.name, price: sandwiches.price, desc: i.desc })),
+  ...entrees.map((i) => ({ key: `entree-${slug(i.name)}`, group: 'entrees', type: 'deli', name: `${i.name}${i.note ? ` ${i.note}` : ''}`, base: i.name, note: i.note, price: i.price, desc: i.desc })),
+  ...platters.flatMap((g) => g.items.map((i) => ({ key: `platter-${slug(i.name)}`, group: 'platters', type: 'platters', name: i.name, price: i.price, serves: g.serves, heading: g.heading, desc: i.desc, list: i.list }))),
 ];
 
 export const fillings = pierogi.fillings;
+export const pierogiNote = pierogi.servedWith;
+export const platterHeadings = platters.map((g) => ({ heading: g.heading, serves: g.serves }));
 export const TAX_MD = 0.06; // Maryland sales tax; all online orders are picked up in Silver Spring, MD

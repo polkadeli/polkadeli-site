@@ -71,3 +71,10 @@
     display: none;
   }
 }
+
+/* Closing line: the welcome */
+.au__text p.au__close {
+  margin-top: 16px;
+  font-weight: 700;
+  color: #1f1f1f;
+}

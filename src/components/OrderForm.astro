@@ -4,9 +4,10 @@
 // customer to Clover's secure payment page. Paid orders are emailed to the store through
 // Netlify Forms (form "pickup-order"); in test mode (no Clover keys) the page emails it itself.
 import { stores } from '../data/site.js';
-import { orderItems, fillings } from '../data/orderItems.js';
+import { orderItems, fillings, pierogiNote, platterHeadings } from '../data/orderItems.js';
 import '../styles/order-form.css';
 import { langOf, href, tr, ui } from '../i18n.js';
+import CommaList from './CommaList.astro';
 const lang = langOf(Astro.url);
 const t = ui[lang];
 const ss = stores[0]; // Silver Spring
@@ -14,10 +15,10 @@ const ss = stores[0]; // Silver Spring
 const label = (i) => i.group === 'pierogi' ? `Pierogi, ${tr(lang, i.size)}` : i.group === 'entrees' ? `${tr(lang, i.base)}${i.note ? ` ${tr(lang, i.note)}` : ''}` : tr(lang, i.name);
 const pick = (group) => orderItems.filter((i) => i.group === group).map((i) => ({ ...i, label: label(i), serves: i.serves && tr(lang, i.serves) }));
 const groups = [
-  { title: 'Pierogi', type: 'deli', items: pick('pierogi') },
+  { title: 'Pierogi', type: 'deli', items: pick('pierogi'), note: tr(lang, pierogiNote) },
   { title: tr(lang, 'Sandwiches'), type: 'deli', items: pick('sandwiches') },
   { title: tr(lang, 'Entrees'), type: 'deli', items: pick('entrees') },
-  { title: t.platters, type: 'platters', items: pick('platters') },
+  ...platterHeadings.map((h) => ({ title: tr(lang, h.heading, 'platterHeadings'), serves: h.serves && tr(lang, h.serves), type: 'platters', items: pick('platters').filter((i) => i.heading === h.heading) })),
 ];
 const today = new Date().toISOString().slice(0, 10);
 // Each order page shows one kind: /order = deli, /order/platters = platters.
@@ -43,13 +44,14 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
     <div class="of__cols">
       <div class="of__items">
         {shown.map((g) => (
-          <fieldset class="of__group" data-type={g.type}>
-            <legend>{g.title}</legend>
-            {g.note && <p class="of__note">{g.note}</p>}
+          <section class="of__group" data-type={g.type}>
+            <h3 class="of__heading">{g.title}{g.serves && <span class="mp-badge mp-badge--line">{g.serves}</span>}</h3>
             {g.items.map((it) => (
               <div class="of__row" data-key={it.key} data-name={it.name} data-price={it.price.replace('$', '')}>
                 <input class="of__check" type="checkbox" aria-label={`${t.addCheck} ${it.label}`} />
-                <label class="of__name" for={`q-${it.key}`}>{it.label.replace(/ (\S+) & (\S+)$/, ' $1\u00a0&\u00a0$2')}{it.serves && <span class="of__serves"> · {it.serves}</span>}</label>
+                <label class="of__name" for={`q-${it.key}`}>{it.label.replace(/ (\S+) & (\S+)$/, ' $1\u00a0&\u00a0$2')}</label>
+                {it.desc && <p class="of__desc"><CommaList text={tr(lang, it.desc)} /></p>}
+                {it.list && <ul class="of__list">{it.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
                 <span class="of__price">{it.price}</span>
                 <input class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} type="number" min="0" max="50" value="0" inputmode="numeric" aria-label={`${t.quantityOf} ${it.label}`} />
                 {it.filling && (
@@ -60,7 +62,8 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
                 )}
               </div>
             ))}
-          </fieldset>
+            {g.note && <p class="of__note">{g.note}</p>}
+          </section>
         ))}
       </div>
 
