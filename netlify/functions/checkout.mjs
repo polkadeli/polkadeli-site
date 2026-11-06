@@ -114,7 +114,9 @@ export default async (req, context) => {
     // Pass Clover's status and message to the page so the failure can be read without Netlify logs.
     const detail = (await res.text().catch(() => '')).slice(0, 300);
     console.error('Clover checkout failed', res.status, detail);
-    return json({ error: 'payment', clover: res.status, detail }, 502);
+    // Shape of the saved token (never the token itself): Clover ecommerce tokens are 36-character UUIDs.
+    const tokenShape = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token) ? 'uuid' : `${token.length} chars, not a uuid`;
+    return json({ error: 'payment', clover: res.status, detail, tokenShape }, 502);
   }
   const session = await res.json();
 
