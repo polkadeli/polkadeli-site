@@ -237,8 +237,7 @@ const shown = groups.filter((g) => g.type === type);
       const d = dayAt(n);
       const b = document.createElement('button');
       b.type = 'button'; b.className = 'of__day'; b.dataset.iso = isoDay(d);
-      const wd = d.toLocaleDateString(locale, { weekday: 'short' }).replace('.', '');
-      b.innerHTML = `<span>${wd.charAt(0).toUpperCase() + wd.slice(1)}</span><b>${d.getDate()}</b>`;
+      b.innerHTML = `<b>${d.getDate()}</b>`;
       b.setAttribute('aria-label', d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' }));
       b.disabled = !usable(d, n);
       dayGrid.append(b);
@@ -246,7 +245,7 @@ const shown = groups.filter((g) => g.type === type);
     datePick.querySelectorAll('.of__day--big').forEach((b) => {
       const n = +b.dataset.offset, d = dayAt(n);
       b.dataset.iso = isoDay(d);
-      const sm = d.toLocaleDateString(locale, { weekday: 'short', month: 'short', day: 'numeric' }).replace(/\./g, '');
+      const sm = d.toLocaleDateString(locale, { month: 'short', day: 'numeric' }).replace(/\./g, '');
       b.querySelector('small').textContent = sm.charAt(0).toUpperCase() + sm.slice(1);
       b.disabled = !usable(d, n);
     });
