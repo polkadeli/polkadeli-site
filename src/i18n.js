@@ -315,9 +315,9 @@ const pl = {
     'Soup of the Day': 'Zupa dnia', 'One of four in rotation: sour rye, borscht, split pea or pickle soup': 'Jedna z czterech, na zmianę: żurek, barszcz, grochówka lub ogórkowa',
     // Platters
     'Serves 15–18': '15–18 osób', 'Serves 6': '6 osób', 'Serves 8–10': '8–10 osób',
-    'Kielbasa Platter': 'Półmisek kiełbas', 'Variety of smoked kielbasa': 'Różne kiełbasy wędzone',
-    'Cheese Platter': 'Półmisek serów', 'Variety of cheese': 'Różne sery',
-    'Mixed Platter': 'Półmisek mieszany', 'Variety of kielbasa, cheese and cold cuts': 'Różne kiełbasy, sery i wędliny',
+    'Kielbasa Platter': 'Półmisek kiełbas', 'Variety of smoked kielbasa': 'Wybór kiełbas wędzonych',
+    'Cheese Platter': 'Półmisek serów', 'Variety of cheese': 'Wybór serów',
+    'Mixed Platter': 'Półmisek mieszany', 'Variety of kielbasa, cheese and cold cuts': 'Kiełbasy, sery i wędliny',
     'Bread Tray': 'Taca pieczywa',
     'Polish Feast': 'Polska uczta', '3 pork schnitzels': '3 kotlety schabowe', '3 stuffed cabbages': '3 gołąbki',
     '6 grilled kielbasas with kraut and onion': '6 kiełbas z grilla z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
