@@ -754,3 +754,41 @@
     text-align: right;
   }
 }
+
+/* Pierogi: sizes as normal price rows, fillings as a small labelled two-column list */
+.mp-fillings {
+  margin-top: 18px;
+}
+
+.mp-fillings__label {
+  margin-bottom: 8px !important;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: var(--color-red-heading);
+}
+
+.mp-fillings ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mp-fillings li {
+  font-size: 16.5px;
+  white-space: nowrap;
+}
+
+.mp-fillings + .mp-note {
+  margin-top: 16px !important;
+}
+
+@media (max-width: 600px) {
+  .mp-fillings ul {
+    grid-template-columns: 1fr;
+  }
+}
