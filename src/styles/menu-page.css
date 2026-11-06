@@ -668,7 +668,7 @@
   display: inline-flex;
   align-items: center;
   height: 48px;
-  margin: 18px 0 0;
+  margin: 63px 0 0; /* centred on the page heading */
   padding: 0 26px;
   font-family: var(--font-ui);
   font-weight: 700;
@@ -736,4 +736,10 @@
 /* Deli Menu: space between the platters link and the footer */
 .mp-see {
   padding-bottom: 72px;
+}
+
+/* Platters page: note goes under the heading so the order button has the heading row to itself */
+.mp--platters .mp-group__head {
+  flex-direction: column;
+  align-items: flex-start;
 }
