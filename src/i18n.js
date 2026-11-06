@@ -208,7 +208,7 @@ export const ui = {
     orderTitle: 'Zamów z odbiorem · Polka Deli',
     orderDesc: 'Zamów online pierogi, kanapki, dania i półmiski z odbiorem w Polka Deli w Silver Spring, MD.',
     pickupOnly: 'Zamówienia online można odebrać tylko w naszym sklepie w Silver Spring.',
-    pickupSS: '24 godziny wcześniej, odbiór tylko w\u00a0Silver\u00a0Spring',
+    pickupSS: 'Zamów dzień wcześniej. Odbiór tylko w\u00a0Silver\u00a0Spring.',
     orderIntro: 'Wybierz produkty i godzinę odbioru, a potem zapłać online. Półmiski trzeba zamówić 24 godziny wcześniej.',
     orderType: 'Rodzaj zamówienia',
     deliOrder: 'Zamówienie z deli',
