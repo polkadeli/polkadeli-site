@@ -1271,3 +1271,23 @@
   font-weight: 400;
   color: var(--color-ink, #1f1f1f);
 }
+
+/* "Online orders are for pick-up…" in a red band, edge to edge */
+.of .of__notice {
+  margin: 14px calc(50% - 50vw) 16px;
+  padding: 12px max(20px, calc(50vw - 50%));
+  font-size: 18px;
+  line-height: 1.35;
+  color: #fff;
+  text-align: center;
+  text-wrap: balance;
+  background: var(--color-red);
+  border-left: 0;
+}
+
+@media (max-width: 600px) {
+  .of .of__notice {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}
