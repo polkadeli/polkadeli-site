@@ -13,10 +13,10 @@
 }
 
 .vs__title {
-  margin: 0 0 48px;
+  margin: 0 0 30px;
   font-family: var(--font-heading);
   font-weight: 500;
-  font-size: 56px;
+  font-size: 40px; /* same as the Deli Menu title */
   line-height: 1.12;
 }
 
@@ -47,8 +47,9 @@
   margin: 0 0 6px;
   font-family: var(--font-heading);
   font-weight: 500;
-  font-size: 32px;
+  font-size: 30px; /* same as Deli Menu section headings */
   line-height: 1.15;
+  color: var(--color-red-heading);
 }
 
 .vs__addr {
@@ -117,7 +118,7 @@
 
   .vs__title {
     margin-bottom: 28px;
-    font-size: 38px;
+    font-size: 32px;
   }
 
   .vs__grid {
