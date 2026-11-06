@@ -585,3 +585,10 @@ html[lang='pl'] .hero--b h1 {
     right: 16px;
   }
 }
+
+/* Home on phones: number box opens a little lower, clear of the logo */
+@media (max-width: 900px) {
+  body:has(.hero--b) .site-header:not(.is-solid) .phone-menu__list {
+    top: calc(100% + 34px);
+  }
+}

@@ -804,3 +804,15 @@
     height: 26px;
   }
 }
+
+/* Phones: store numbers stacked */
+@media (max-width: 900px) {
+  .phone-menu__list:not([hidden]) {
+    flex-direction: column;
+  }
+
+  .phone-menu__list li + li a {
+    border-left: 0;
+    border-top: 1px solid #e6e6e6;
+  }
+}
