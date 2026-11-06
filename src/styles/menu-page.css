@@ -338,9 +338,9 @@
   margin: 0 auto;
   width: 100%;
   max-width: none;
-  height: 230px;
+  height: 150px;
   object-fit: cover;
-  object-position: center 83%;
+  object-position: center 62%;
   border-radius: 0;
 }
 
@@ -351,7 +351,7 @@
   }
 
   .mp-title--photo img {
-    height: 130px;
+    height: 96px;
   }
 }
 
