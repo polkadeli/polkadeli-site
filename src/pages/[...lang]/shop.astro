@@ -1,5 +1,5 @@
 ---
-// Shop ("Polish Groceries"): store-aisle layout. Products come from src/data/groceries.js.
+// Shop ("Polish Groceries"): categories in two columns. Products come from src/data/groceries.js.
 import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
 import { features } from '../../data/features.js';
 export const getStaticPaths = () => (features.shop ? langPaths() : []);
@@ -25,6 +25,12 @@ const photoFor = {
 const photo = (t) => photoFor[t] ?? '/images/media/groceries.jpg';
 const name = (i) => (typeof i === 'string' ? i : i.name);
 const note = (i) => (typeof i === 'string' ? '' : i.note);
+// Polish lists: only the first product starts with a capital, except brand names
+const plBrands = new Set(['Rycki Edam', 'Królewski', 'Królewski wędzony', 'Ptasie Mleczko', 'Prince Polo', 'Delicje', 'Torcik Wedlowski']);
+const label = (i, g, k) => {
+  const s = tr(lang, name(i), g.title);
+  return lang === 'pl' && k > 0 && !plBrands.has(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+};
 ---
 <Base title={t.shopTitle} description={t.shopDesc}>
   <div class="shop">
@@ -34,17 +40,13 @@ const note = (i) => (typeof i === 'string' ? '' : i.note);
     </header>
 
     <div class="shop__body">
-      <nav class="shop__side" aria-label={t.shopCats}>
-        {groups.map((g) => <a href={`#${slug(g.title)}`}>{tr(lang, g.title)}</a>)}
-      </nav>
-
-      <div>
+      <div class="shop__aisles">
         {groups.map((g) => (
           <section class="aisle" id={slug(g.title)} aria-labelledby={`h-${slug(g.title)}`}>
             <div class="aisle__body">
               <h2 class="aisle__title" id={`h-${slug(g.title)}`}><img class="aisle__dot" src={photo(g.title)} alt="" loading="lazy" />{tr(lang, g.title)}{g.tag && <span> {tr(lang, g.tag)}</span>}</h2>
               <ul class="aisle__list">
-                {g.items.map((i) => <li>{tr(lang, name(i), g.title)}{note(i) && <em> {tr(lang, note(i), g.title)}</em>}</li>)}
+                {g.items.map((i, k) => <li>{label(i, g, k)}{note(i) && <em> {tr(lang, note(i), g.title)}</em>}</li>)}
               </ul>
             </div>
           </section>
@@ -54,19 +56,3 @@ const note = (i) => (typeof i === 'string' ? '' : i.note);
   </div>
 </Base>
 
-<script>
-  // Highlight the category in view.
-  const links = [...document.querySelectorAll('.shop__side a')];
-  const secs = links.map((a) => document.querySelector(a.getAttribute('href')));
-  let lock = 0;
-  const setOn = (k) => links.forEach((a, i) => a.classList.toggle('is-on', i === k));
-  const onScroll = () => {
-    if (Date.now() < lock) return;
-    let k = 0;
-    secs.forEach((s, i) => { if (s.getBoundingClientRect().top < 200) k = i; });
-    setOn(k);
-  };
-  links.forEach((a, i) => a.addEventListener('click', () => { setOn(i); lock = Date.now() + 900; }));
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-</script>

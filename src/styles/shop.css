@@ -246,3 +246,21 @@
     padding: 0;
   }
 }
+
+/* No category list on the side: the categories sit in two columns */
+.shop__body {
+  display: block;
+}
+
+.shop__aisles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 56px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .shop__aisles {
+    grid-template-columns: 1fr;
+  }
+}
