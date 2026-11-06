@@ -44,8 +44,14 @@ export default async (req, context) => {
     // Ingredients to leave out: only ones the menu allows
     const remove = Array.isArray(it.remove) ? [...new Set(it.remove)] : [];
     if (remove.some((x) => !(item.removable || []).includes(x))) return json({ error: 'items' }, 400);
+    // Paid extras (fried pierogi): only ones the menu offers, each adds its price
+    const extras = Array.isArray(it.extras) ? [...new Set(it.extras)] : [];
+    const offered = item.extras || [];
+    if (extras.some((x) => !offered.some((o) => o.name === x))) return json({ error: 'items' }, 400);
+    let price = cents(item.price);
+    for (const x of extras) { price += cents(offered.find((o) => o.name === x).price); name += ` (${x.toLowerCase()})`; }
     if (remove.length) name += ` (without: ${remove.join(', ')})`;
-    lines.push({ name, qty, price: cents(item.price) });
+    lines.push({ name, qty, price });
   }
   if (!lines.length) return json({ error: 'items' }, 400);
 

@@ -546,9 +546,10 @@
 
 /* Link to the other order page, under the last card (like "Party platters and trays →" on the menu) */
 .of p.of__switch {
-  margin: 28px 0 0;
+  margin: 0 0 14px;
   font-family: var(--font-heading);
-  font-size: 22px;
+  font-size: 20px;
+  line-height: 1.3;
   text-align: right;
 }
 
@@ -563,8 +564,7 @@
 
 @media (max-width: 900px) {
   .of p.of__switch {
-    margin: 4px 0 24px;
-    font-size: 20px;
+    margin: 4px 0 14px;
     text-align: left;
   }
 }
@@ -867,5 +867,10 @@
 
 /* Leave-out ticks sit under the choice ticks */
 .of__choices.of__remove {
+  grid-row: 4;
+}
+
+/* Paid extras (fried pierogi) sit under the filling ticks */
+.of__choices.of__extra {
   grid-row: 4;
 }

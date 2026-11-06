@@ -7,6 +7,8 @@ export const pierogi = {
   ],
   fillings: ['Potato & Cheese', 'Meat & Kraut', 'Kraut & Mushroom', 'Mix Pierogi'],
   servedWith: 'Served with onions and sour cream',
+  // Optional extras ticked on the order page; the price is added to each order of pierogi
+  extras: [{ name: 'Fried', price: '$1.00' }],
 };
 
 export const sandwiches = {
@@ -16,7 +18,7 @@ export const sandwiches = {
     { name: 'BLT', desc: 'Sub roll, bacon, lettuce, tomato', removable: ['Lettuce', 'Tomato'] },
     { name: 'Kielbasa Reuben', desc: 'Rye bread, cheese, kraut, Russian dressing', removable: ['Cheese', 'Kraut', 'Russian dressing'] },
     { name: 'Pork Schnitzel', desc: 'Sub roll, lettuce, tomato, horseradish sauce', removable: ['Lettuce', 'Tomato', 'Horseradish sauce'] },
-    { name: 'Ham or Turkey & Cheese', desc: 'Sub roll, lettuce, tomato, mayo, mustard', removable: ['Lettuce', 'Tomato', 'Mayo', 'Mustard'] },
+    { name: 'Ham or Turkey & Cheese', choices: ['Ham', 'Turkey'], desc: 'Sub roll, lettuce, tomato, mayo, mustard', removable: ['Lettuce', 'Tomato', 'Mayo', 'Mustard'] },
   ],
   side: ['Add a side of Polish potato salad', '$1'],
 };
