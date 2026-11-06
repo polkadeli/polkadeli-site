@@ -878,8 +878,7 @@
 
 /* Leave-out ticks look different from the add ticks: red heading, white circles, dark gray X when ticked,
    and the ingredient is crossed out, so it's clear these take something away */
-.of__choices.of__remove legend,
-.of__choices.of__extra legend {
+.of .of__choices legend {
   color: var(--color-red);
 }
 
