@@ -143,7 +143,7 @@ const ogImage = new URL(image, Astro.site).href;
       {stores.map((st) => (
         <div class="drawer__store">
           <p class="drawer__label">{st.city}, {st.locality.split(', ')[1].split(' ')[0]}</p>
-          <a class="drawer__addr" href={st.maps} target="_blank" rel="noopener">{st.street},<br />{st.locality}</a>
+          <a class="drawer__addr" href={st.maps} target="_blank" rel="noopener">{st.street}</a>
           <a class="drawer__phone" href={st.phoneHref}>{st.phone}</a>
         </div>
       ))}

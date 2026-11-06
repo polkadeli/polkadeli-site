@@ -450,13 +450,37 @@ html[lang='pl'] .hero--b h1 {
     height: 50px;
   }
 
-  body:has(.hero--b) .phone-menu {
+  /* Menu button on the left (the menu slides in from the left), phone on the right */
+  body:has(.hero--b) .menu-button {
     order: -1;
-    margin: 0 auto 0 -8px;
+    margin: 0 auto 0 0;
   }
 
-  body:has(.hero--b) .menu-button {
-    margin-left: auto;
+  body:has(.hero--b) .phone-menu {
+    margin: 0 -8px 0 auto;
+  }
+
+  /* Home on phones: Order now button under the logo (hidden once you scroll and the bar shrinks) */
+  body:has(.hero--b) .order-menu {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 128px;
+    transform: translateX(-50%);
+  }
+
+  body:has(.hero--b) .order-menu .header-order {
+    display: inline-flex;
+  }
+
+  body:has(.hero--b) .site-header.is-solid .order-menu {
+    display: none;
+  }
+
+  body:has(.hero--b) .order-menu > .order-menu__list {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
   }
 }
 

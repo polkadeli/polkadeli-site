@@ -761,7 +761,7 @@
 /* Phone menu: both stores with address and phone */
 .drawer__store .drawer__label {
   margin: 24px 0 4px;
-  color: var(--color-red-soft, #f2a7a7);
+  color: rgb(226, 28, 33); /* same red as the footer headings */
 }
 
 .drawer__addr {
