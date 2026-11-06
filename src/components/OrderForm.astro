@@ -96,9 +96,8 @@ const shown = groups.filter((g) => g.type === type);
               <button type="button" class="of__day of__day--big" data-offset="0">{t.today}<small></small></button>
               <button type="button" class="of__day of__day--big" data-offset="1">{t.tomorrow}<small></small></button>
             </div>
-            {type === 'platters' && <p class="of__more">{t.moreDates}</p>}
-            <!-- Deli orders: today or tomorrow only. Platters: any of the next two weeks. -->
-            <div class="of__days" hidden={type !== 'platters'}></div>
+            <!-- Deli orders: today or tomorrow only. Platters: any of the next two weeks, from a list. -->
+            {type === 'platters' && <select class="of__daysel" aria-label={t.moreDates}><option value="">{t.moreDates}</option></select>}
             <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" />
           </div>
           <div class="of__timewrap">
@@ -224,23 +223,28 @@ const shown = groups.filter((g) => g.type === type);
   setInterval(() => { if (dateInput.value === isoDay(new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })))) fillTimes(); }, 60000);
   // Day buttons: Today, Tomorrow and the next two weeks. Closed days and days before the earliest pick-up are greyed out.
   const datePick = form.querySelector('.of__date');
-  const dayGrid = datePick.querySelector('.of__days');
+  const daySel = datePick.querySelector('.of__daysel');
   const locale = datePick.dataset.locale;
   const storeNow = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
   const dayAt = (n) => { const d = storeNow(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
   const lastTimeToday = () => { const n = storeNow(); const span = hours[n.getDay()]; return span ? (n.getHours() * 60 + n.getMinutes() + 30) <= span[1] - 30 : false; };
   const usable = (d, n) => hours[d.getDay()] && isoDay(d) >= dateInput.min && (n > 0 || lastTimeToday());
-  const markDays = () => datePick.querySelectorAll('.of__day').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.iso === dateInput.value)));
+  const markDays = () => {
+    datePick.querySelectorAll('.of__day').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.iso === dateInput.value)));
+    if (daySel) daySel.value = [...daySel.options].some((o) => o.value && o.value === dateInput.value) ? dateInput.value : '';
+  };
   const buildDays = () => {
-    dayGrid.replaceChildren();
-    for (let n = 0; n < (dayGrid.hidden ? 0 : 14); n++) {
-      const d = dayAt(n);
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'of__day'; b.dataset.iso = isoDay(d);
-      b.innerHTML = `<b>${d.getDate()}</b>`;
-      b.setAttribute('aria-label', d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' }));
-      b.disabled = !usable(d, n);
-      dayGrid.append(b);
+    // Platters: the next two weeks after tomorrow, open days only, in a drop-down list
+    const later = [];
+    if (daySel) {
+      daySel.querySelectorAll('option[value]:not([value=""])').forEach((o) => o.remove());
+      for (let n = 2; n < 16; n++) {
+        const d = dayAt(n);
+        if (!usable(d, n)) continue;
+        const label = d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
+        daySel.append(new Option(label.charAt(0).toUpperCase() + label.slice(1), isoDay(d)));
+        later.push(isoDay(d));
+      }
     }
     datePick.querySelectorAll('.of__day--big').forEach((b) => {
       const n = +b.dataset.offset, d = dayAt(n);
@@ -249,9 +253,15 @@ const shown = groups.filter((g) => g.type === type);
       b.querySelector('small').textContent = sm.charAt(0).toUpperCase() + sm.slice(1);
       b.disabled = !usable(d, n);
     });
-    if (dateInput.value && ![...datePick.querySelectorAll('.of__day')].some((b) => b.dataset.iso === dateInput.value && !b.disabled)) dateInput.value = '';
+    if (dateInput.value && !later.includes(dateInput.value) && ![...datePick.querySelectorAll('.of__day')].some((b) => b.dataset.iso === dateInput.value && !b.disabled)) dateInput.value = '';
     markDays();
   };
+  daySel?.addEventListener('change', () => {
+    if (!daySel.value) return;
+    dateInput.value = daySel.value;
+    markDays();
+    dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+  });
   datePick.addEventListener('click', (e) => {
     const b = e.target.closest('.of__day');
     if (!b || b.disabled) return;
