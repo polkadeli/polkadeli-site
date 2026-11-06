@@ -363,7 +363,7 @@ const pl = {
       'Strawberry Cheese': 'Z serem i truskawkami', 'Sweet Cheese': 'Z serem na słodko',
     },
     'Marinated Goods': {
-      Pickles: 'Ogórki kiszone i konserwowe', Sauerkraut: 'Kapusta kiszona', 'Red Cabbage': 'Kapusta czerwona',
+      Pickles: 'Ogórki kiszone', Sauerkraut: 'Kapusta kiszona', 'Red Cabbage': 'Kapusta czerwona',
       'Cucumbers in Brine': 'Ogórki kiszone', 'Sweet Red Pepper': 'Słodka czerwona papryka', "Hunter's Stew (Bigos)": 'Bigos',
       Horseradish: 'Chrzan', 'Beets with Horseradish': 'Ćwikła z chrzanem',
     },
