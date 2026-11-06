@@ -21,6 +21,10 @@ const slides = [
 
 const offers = [
   {
+    img: '/images/media/pierogi.jpg', title: 'Pierogi', href: '/deli-menu',
+    ticks: pierogi.fillings.filter((f) => f !== 'Mix Pierogi'),
+  },
+  {
     img: '/images/media/kielbasa.jpg', title: 'Deli Meats and Cheeses', href: '/deli-menu',
     ticks: ['Pierogi', 'Sandwiches', 'Hearty Entrees', 'Soups'],
   },
@@ -32,10 +36,6 @@ const offers = [
     img: '/images/media/jars.jpg', title: 'Groceries', href: '/shop', button: 'Shop',
     text: "If you don't see a product listed below please ask, we add products daily.",
     ticks: ['Pierogi', 'Kielbasa', 'Deli Meats and Cheese', 'Blintzes, Noodles', 'Marinated Goods', 'Sweets and Baked Goods'],
-  },
-  {
-    img: '/images/media/pierogi.jpg', title: 'Pierogi', href: '/deli-menu',
-    ticks: pierogi.fillings.filter((f) => f !== 'Mix Pierogi'),
   },
 ];
 ---
