@@ -57,7 +57,7 @@ const shown = groups.filter((g) => g.type === type);
                 {it.desc && <p class="of__desc"><CommaList text={tr(lang, it.desc)} /></p>}
                 {it.list && <ul class="of__list">{it.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
                 <span class="of__price">{it.price}</span>
-                <select class="of__qty" id={`q-${it.key}`} name={`qty-${it.key}`} aria-label={`${t.quantityOf} ${it.label}`}>{Array.from({ length: 51 }, (_, n) => <option value={n}>{n}</option>)}</select>
+                <div class="of__qty" role="group" aria-label={`${t.quantityOf} ${it.label}`}><button type="button" class="of__step" data-step="-1" aria-label={lang === 'pl' ? 'Mniej' : 'One less'}>−</button><input class="of__num" id={`q-${it.key}`} name={`qty-${it.key}`} value="0" readonly inputmode="none" tabindex="-1" aria-live="polite" aria-label={`${t.quantityOf} ${it.label}`} /><button type="button" class="of__step" data-step="1" aria-label={lang === 'pl' ? 'Więcej' : 'One more'}>+</button></div>
                 {it.choices && (
                   <fieldset class="of__choices">
                     <legend>{it.group === 'pierogi' || it.choiceLabel === 'filling' ? t.chooseFilling : t.chooseOne}</legend>
@@ -145,7 +145,7 @@ const shown = groups.filter((g) => g.type === type);
 
   const collect = () => rows
     .map((r) => {
-      const qty = parseInt(r.querySelector('.of__qty').value, 10) || 0;
+      const qty = parseInt(r.querySelector('.of__num').value, 10) || 0;
       const pick = r.querySelector('.of__choices:not(.of__remove):not(.of__extra) input:checked');
       const filling = pick?.value;
       const extra = [...r.querySelectorAll('.of__extra input:checked')];
@@ -176,7 +176,7 @@ const shown = groups.filter((g) => g.type === type);
     totalEl.textContent = money(total);
     empty.hidden = items.length > 0;
     rows.forEach((r) => {
-      const on = (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0;
+      const on = (parseInt(r.querySelector('.of__num').value, 10) || 0) > 0;
       r.classList.toggle('is-picked', on);
       r.querySelector('.of__check').checked = on;
     });
@@ -186,7 +186,7 @@ const shown = groups.filter((g) => g.type === type);
 
   // A choice (pierogi filling, fresh or smoked) must be picked for any item being ordered.
   const syncFillings = () => rows.forEach((r) => {
-    const on = (parseInt(r.querySelector('.of__qty').value, 10) || 0) > 0;
+    const on = (parseInt(r.querySelector('.of__num').value, 10) || 0) > 0;
     r.querySelectorAll('.of__choices:not(.of__remove):not(.of__extra) input').forEach((x) => { x.required = on; });
   });
   // Deli and platter orders are separate: show one set of items at a time.
@@ -265,7 +265,7 @@ const shown = groups.filter((g) => g.type === type);
     form.querySelectorAll('.of__group').forEach((g) => {
       const on = g.dataset.type === type;
       g.hidden = !on;
-      if (!on) g.querySelectorAll('.of__qty').forEach((q) => { q.value = 0; });
+      if (!on) g.querySelectorAll('.of__num').forEach((q) => { q.value = 0; });
     });
     // Platters need 24 hours notice, so the earliest pickup date is tomorrow.
     const min = new Date();
@@ -280,13 +280,21 @@ const shown = groups.filter((g) => g.type === type);
   form.addEventListener('input', (e) => {
     // Tick box: ticking adds 1 of the item, unticking removes it
     if (e.target.matches('.of__check')) {
-      const q = e.target.closest('.of__row').querySelector('.of__qty');
+      const q = e.target.closest('.of__row').querySelector('.of__num');
       q.value = e.target.checked ? Math.max(1, parseInt(q.value, 10) || 0) : 0;
     }
     syncFillings();
     render();
   });
   form.addEventListener('change', syncFillings);
+  // Quantity: tap − or + (no keyboard on phones)
+  form.addEventListener('click', (e) => {
+    const b = e.target.closest('.of__step');
+    if (!b) return;
+    const q = b.parentElement.querySelector('.of__num');
+    q.value = Math.min(50, Math.max(0, (parseInt(q.value, 10) || 0) + Number(b.dataset.step)));
+    q.dispatchEvent(new Event('input', { bubbles: true }));
+  });
 
   // Keep the order while it's being filled in, so switching EN/PL (or reloading) doesn't lose it.
   // Saved in this browser tab only; cleared once the order is placed (thank-you page).
@@ -296,7 +304,7 @@ const shown = groups.filter((g) => g.type === type);
     const state = { fields: {}, rows: {} };
     FIELDS.forEach((n) => { state.fields[n] = form.querySelector(`[name="${n}"]`).value; });
     rows.forEach((r) => {
-      const qty = parseInt(r.querySelector('.of__qty').value, 10) || 0;
+      const qty = parseInt(r.querySelector('.of__num').value, 10) || 0;
       const ticks = [...r.querySelectorAll('.of__choices')].map((f) => [...f.querySelectorAll('input:checked')].map((i) => i.value));
       if (qty || ticks.some((t) => t.length)) state.rows[r.dataset.key] = { qty, ticks };
     });
@@ -308,7 +316,7 @@ const shown = groups.filter((g) => g.type === type);
     rows.forEach((r) => {
       const s = saved.rows?.[r.dataset.key];
       if (!s) return;
-      r.querySelector('.of__qty').value = Math.min(50, Math.max(0, s.qty | 0));
+      r.querySelector('.of__num').value = Math.min(50, Math.max(0, s.qty | 0));
       r.querySelectorAll('.of__choices').forEach((f, i) => {
         f.querySelectorAll('input').forEach((x) => { x.checked = (s.ticks?.[i] || []).includes(x.value); });
       });

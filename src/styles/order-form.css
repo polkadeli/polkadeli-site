@@ -282,7 +282,7 @@
 
 @media (max-width: 900px) {
   .of__row {
-    grid-template-columns: 1fr auto 56px;
+    grid-template-columns: 1fr auto auto;
   }
 
   .of__qty {
@@ -300,7 +300,7 @@
 }
 
 .of__row {
-  grid-template-columns: 1fr auto 56px;
+  grid-template-columns: 1fr auto auto;
   column-gap: 24px;
 }
 
@@ -403,7 +403,7 @@
 }
 
 .of__row:has(.of__filling) {
-  grid-template-columns: max-content minmax(0, 1fr) auto 56px;
+  grid-template-columns: max-content minmax(0, 1fr) auto auto;
 }
 
 .of__row:has(.of__filling) .of__name {
@@ -430,7 +430,7 @@
 
 @media (max-width: 600px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: minmax(0, 1fr) auto 56px;
+    grid-template-columns: minmax(0, 1fr) auto auto;
   }
 
   .of__row:has(.of__filling) .of__name {
@@ -453,7 +453,7 @@
 
 @media (min-width: 601px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: 9.5em minmax(0, 1fr) auto 56px;
+    grid-template-columns: 9.5em minmax(0, 1fr) auto auto;
   }
 }
 
@@ -512,7 +512,7 @@
 }
 
 .of__row {
-  grid-template-columns: 20px minmax(0, 1fr) auto 56px;
+  grid-template-columns: 20px minmax(0, 1fr) auto auto;
   column-gap: 14px;
 }
 
@@ -527,7 +527,7 @@
 
 @media (min-width: 601px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: 20px 9.5em minmax(0, 1fr) auto 56px;
+    grid-template-columns: 20px 9.5em minmax(0, 1fr) auto auto;
   }
 
   .of__row:has(.of__filling) .of__filling { grid-column: 3; grid-row: 1; }
@@ -537,7 +537,7 @@
 
 @media (max-width: 600px) {
   .of__row:has(.of__filling) {
-    grid-template-columns: 20px minmax(0, 1fr) auto 56px;
+    grid-template-columns: 20px minmax(0, 1fr) auto auto;
   }
 
   /* Filling choice sits under the name, lined up with it */
@@ -684,7 +684,7 @@
 
   .of__row,
   .of__row:has(.of__filling) {
-    grid-template-columns: 20px minmax(0, 1fr) auto 56px;
+    grid-template-columns: 20px minmax(0, 1fr) auto auto;
     column-gap: 10px;
   }
 
@@ -1061,21 +1061,6 @@
   pointer-events: none;
 }
 
-/* Quantity is a pick list (no keyboard on phones): same box as before, with a small arrow */
-.of__row .of__qty {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 56px;
-  height: 42px;
-  padding: 0 18px 0 8px;
-  border-radius: 0;
-  text-align: center;
-  text-align-last: center;
-  color: inherit;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231f1f1f' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 7px center;
-  cursor: pointer;
-}
-
 /* Phones: more room under the small red headings, and every tick list in one column */
 @media (max-width: 600px) {
   .of__choices {
@@ -1116,37 +1101,6 @@
   }
 }
 
-/* Phones: price on top at the right, quantity box right under it */
-@media (max-width: 600px) {
-  .of__row,
-  .of__row:has(.of__filling) {
-    grid-template-columns: 20px minmax(0, 1fr) minmax(56px, auto);
-  }
-
-  .of__row .of__price,
-  .of__row:has(.of__filling) .of__price,
-  .of__row:has(.of__desc, .of__list) .of__price {
-    grid-column: 3;
-    grid-row: 1;
-    justify-self: end;
-  }
-
-  .of__row .of__qty,
-  .of__row:has(.of__filling) .of__qty,
-  .of__row:has(.of__desc, .of__list) .of__qty {
-    grid-column: 3;
-    grid-row: 2;
-    justify-self: end;
-    margin-top: 6px;
-  }
-
-  .of__row:has(.of__desc, .of__list) .of__desc,
-  .of__row:has(.of__desc, .of__list) .of__list {
-    grid-column: 2;
-    grid-row: 2;
-  }
-}
-
 /* Phones: tick lists sit closer together */
 @media (max-width: 600px) {
   .of__choices {
@@ -1156,4 +1110,129 @@
   .of__choices legend {
     margin-bottom: 6px;
   }
+}
+
+/* Quantity: − number + (no keyboard on phones) */
+.of__row .of__qty {
+  display: inline-flex;
+  align-items: stretch;
+  width: auto;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  border: 1px solid #bdbdbd;
+  justify-self: end;
+  align-self: start;
+}
+
+.of__step {
+  width: 30px;
+  padding: 0;
+  font: inherit;
+  font-size: 20px;
+  line-height: 1;
+  color: #1f1f1f;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.of__row:not(.is-picked) .of__step[data-step="-1"] {
+  color: #c4c4c4;
+}
+
+.of__num {
+  width: 24px;
+  padding: 0;
+  font: inherit;
+  font-size: 16px;
+  text-align: center;
+  color: inherit;
+  background: none;
+  border: 0;
+  outline: none;
+  pointer-events: none;
+}
+
+.of__step:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: -2px;
+}
+
+/* Phones: name with the − 1 + box beside it, description, then the red price */
+@media (max-width: 600px) {
+  .of__row,
+  .of__row:has(.of__filling),
+  .of__row:has(.of__desc, .of__list) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+  }
+
+  .of__row .of__check {
+    display: none;
+  }
+
+  .of__row .of__name,
+  .of__row:has(.of__desc, .of__list) .of__name {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .of__row .of__qty,
+  .of__row:has(.of__filling) .of__qty,
+  .of__row:has(.of__desc, .of__list) .of__qty,
+  .of__row.is-picked:not(:has(.of__desc, .of__list)):has(.of__choices) .of__qty {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    margin: -5px 0 0;
+    height: 30px;
+  }
+
+  .of__step {
+    width: 28px;
+    font-size: 18px;
+  }
+
+  .of__num {
+    width: 20px;
+    font-size: 15px;
+  }
+
+  .of__row:has(.of__desc, .of__list) .of__desc,
+  .of__row:has(.of__desc, .of__list) .of__list {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 2px;
+  }
+
+  .of__row .of__price,
+  .of__row:has(.of__filling) .of__price,
+  .of__row:has(.of__desc, .of__list) .of__price {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: start;
+    margin: 4px 0 0;
+  }
+
+  .of__row .of__choices {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Phones: descriptions 1px smaller so they fit on fewer lines */
+@media (max-width: 600px) {
+  .of__row .of__desc,
+  .of__row .of__list {
+    font-size: 15px;
+  }
+}
+
+/* Phones: choice lists go under the price */
+@media (max-width: 600px) {
+  .of__row .of__choices { grid-row: 4; }
+  .of__row .of__choices.of__extra { grid-row: 5; }
+  .of__row .of__choices.of__remove { grid-row: 6; }
 }
