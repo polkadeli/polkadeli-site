@@ -15,20 +15,38 @@ const {
   description = t.siteDesc,
   overlay = false, // true: header sits transparent over a full-screen photo (home page)
   noindex = false, // true: keep mockup/preview pages out of search engines
+  image = '/images/og-image.jpg', // picture shown when the page is shared (Facebook, iMessage, etc.)
 } = Astro.props;
 const path = Astro.url.pathname.replace(/^\/pl(?=\/|$)/, '').replace(/\/$/, '') || '/';
 const links = nav.map((n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href }));
 // Links to this same page in English and in Polish (EN | PL switch)
 const sw = { en: switchHref(Astro.url, 'en'), pl: switchHref(Astro.url, 'pl') };
+// Search engines: one listing per store, with hours, so Google can show them in Maps and search
+const days = { 'Mon–Fri': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], Saturday: ['Saturday'], Sunday: ['Sunday'] };
+const to24h = (x) => x.replace(/(\d{1,2}):(\d{2}) (am|pm)/, (_, h, m, ap) => `${String((+h % 12) + (ap === 'pm' ? 12 : 0)).padStart(2, '0')}:${m}`);
+const site = 'https://www.polkadelimd.com';
 const jsonLd = stores.map((s) => ({
   '@context': 'https://schema.org',
   '@type': 'GroceryStore',
+  '@id': `${site}/#${s.city.toLowerCase().replace(/ /g, '-')}`,
   name: `Polka Deli ${s.city}`,
-  url: 'https://www.polkadelimd.com',
+  description: t.siteDesc,
+  url: `${site}/find-us/`,
+  image: `${site}/images/og-image.jpg`,
+  logo: `${site}/apple-touch-icon.png`,
   telephone: s.phone,
+  priceRange: '$$',
+  hasMap: s.maps,
   address: { '@type': 'PostalAddress', streetAddress: s.street, addressLocality: s.locality.split(',')[0], addressRegion: s.locality.split(', ')[1].split(' ')[0], postalCode: s.locality.split(' ').pop(), addressCountry: 'US' },
+  openingHoursSpecification: s.hours.map(([d, h]) => {
+    const [opens, closes] = h.split(' – ').map(to24h);
+    return { '@type': 'OpeningHoursSpecification', dayOfWeek: days[d], opens, closes };
+  }),
   sameAs: [business.facebook, business.instagram],
 }));
+// This page's address (canonical) and the share-card details
+const canonical = new URL(sw[lang], Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
 ---
 <!doctype html>
 <html lang={lang} translate="no">
@@ -46,8 +64,21 @@ const jsonLd = stores.map((s) => ({
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet" />
+  {!noindex && <link rel="canonical" href={canonical} />}
   <link rel="alternate" hreflang="en" href={new URL(sw.en, Astro.site)} />
   <link rel="alternate" hreflang="pl" href={new URL(sw.pl, Astro.site)} />
+  <link rel="alternate" hreflang="x-default" href={new URL(sw.en, Astro.site)} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Polka Deli" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content={lang === 'pl' ? 'pl_PL' : 'en_US'} />
+  <meta property="og:locale:alternate" content={lang === 'pl' ? 'en_US' : 'pl_PL'} />
+  <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
