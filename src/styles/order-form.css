@@ -1422,3 +1422,14 @@
   color: #fff;
   background: var(--color-red);
 }
+
+/* Phones and tablets: page title centered and closer to the photo banner */
+@media (max-width: 900px) {
+  .of {
+    padding-top: 22px;
+  }
+
+  .of .of__title {
+    text-align: center;
+  }
+}

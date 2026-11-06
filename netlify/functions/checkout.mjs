@@ -87,12 +87,12 @@ export default async (req, context) => {
   const host = process.env.CLOVER_ENV === 'sandbox' ? 'https://apisandbox.dev.clover.com' : 'https://api.clover.com';
   const [firstName, ...rest] = customer.name.split(/\s+/);
   const pickupNote = `Pick-up ${date} ${time}, ${customer.name}, ${customer.phone}${notes ? `. Note: ${notes}` : ''}`;
-  const res = await fetch(`${host}/invoicingcheckoutservice/v1/checkouts`, {
+  const createCheckout = (bearer) => fetch(`${host}/invoicingcheckoutservice/v1/checkouts`, {
     method: 'POST',
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${bearer}`,
       'X-Clover-Merchant-Id': merchant,
     },
     body: JSON.stringify({
@@ -110,6 +110,13 @@ export default async (req, context) => {
       redirectUrls: { success: `${thanks}?order=paid`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order${type === 'platters' ? '/platters' : ''}?payment=failed` },
     }),
   });
+  let res = await createCheckout(token);
+  // If the ecommerce token is refused, try the merchant API token (the key that worked before).
+  const apiToken = (process.env.CLOVER_API_TOKEN || '').trim();
+  if (res.status === 401 && apiToken && apiToken !== token) {
+    console.warn('Clover refused CLOVER_PRIVATE_TOKEN; retrying with CLOVER_API_TOKEN');
+    res = await createCheckout(apiToken);
+  }
   if (!res.ok) {
     // Pass Clover's status and message to the page so the failure can be read without Netlify logs.
     const detail = (await res.text().catch(() => '')).slice(0, 300);
