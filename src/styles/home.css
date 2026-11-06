@@ -469,8 +469,12 @@ main p {
     gap: 10px;
   }
 
+  /* Phones: no card outline, just photo and title */
   .show {
-    padding: 8px 8px 14px;
+    padding: 0 0 10px;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
   }
 
   .show h3 {

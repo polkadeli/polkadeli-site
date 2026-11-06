@@ -328,8 +328,9 @@ html[lang='pl'] .hero--b h1 {
     padding-bottom: 70px;
   }
 
-  /* Addresses side by side, smaller, centered under the mailing list */
+  /* Phones: no addresses on the home page (they're in the menu) */
   .hb-foot .hero__stores {
+    display: none !important;
     order: 2;
     justify-content: center;
     grid-template-columns: max-content max-content;

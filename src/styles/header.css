@@ -757,3 +757,28 @@
   font-size: var(--text-md, 17px);
   color: rgba(255, 255, 255, 0.85);
 }
+
+/* Phone menu: both stores with address and phone */
+.drawer__store .drawer__label {
+  margin: 24px 0 4px;
+  color: var(--color-red-soft, #f2a7a7);
+}
+
+.drawer__addr {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+}
+
+.drawer__phone {
+  display: inline-block;
+  margin-top: 4px;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-white);
+  text-decoration: none;
+}
