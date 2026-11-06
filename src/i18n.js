@@ -57,7 +57,7 @@ export const ui = {
     privacyPolicy: 'Privacy Policy',
     closePrivacy: 'Close privacy policy',
     // Home
-    tagline: 'Authentic Polish groceries and food prepared daily',
+    tagline: 'Authentic Polish food, prepared daily',
     welcome: 'Welcome to Polka Deli',
     joinList: 'Join our mailing list to receive special offers',
     name: 'Name',
@@ -175,7 +175,7 @@ export const ui = {
     privacy: 'Prywatność',
     privacyPolicy: 'Polityka prywatności',
     closePrivacy: 'Zamknij politykę prywatności',
-    tagline: 'Autentyczne polskie produkty i jedzenie przygotowywane codziennie',
+    tagline: 'Autentyczne polskie jedzenie, przygotowywane codziennie',
     welcome: 'Witamy w Polka Deli',
     joinList: 'Zapisz się do naszego newslettera, aby otrzymywać oferty specjalne',
     name: 'Imię i nazwisko',
@@ -277,7 +277,7 @@ const pl = {
     Sandwiches: 'Kanapki', 'Hearty Entrees': 'Sycące dania', Soups: 'Zupy',
     'Cold Cut Platters': 'Półmiski wędlin', 'Party Trays': 'Tace na przyjęcia', 'Cake Platters': 'Patery ciast', Breads: 'Pieczywo',
     Kielbasa: 'Kiełbasy', 'Deli Meats and Cheese': 'Wędliny i sery', 'Blintzes, Noodles': 'Naleśniki, makarony',
-    'Marinated Goods': 'Przetwory', Cheeses: 'Sery', 'and more': 'i wiele więcej', 'Blintzes and Dumplings': 'Naleśniki i kluski', 'Pickles and Sauerkraut': 'Ogórki kiszone i kapusta', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Półmiski',
+    'Marinated Goods': 'Przetwory', Cheeses: 'Sery', 'Hand-made Pierogi': 'Ręcznie lepione pierogi', 'and more': 'i wiele więcej', 'Blintzes and Dumplings': 'Naleśniki i kluski', 'Pickles and Sauerkraut': 'Ogórki kiszone i kapusta', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Półmiski',
     // Menu
     Entrees: 'Dania główne',
     '12 pieces': '12 sztuk', '6 pieces': '6 sztuk',

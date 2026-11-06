@@ -21,7 +21,7 @@ const slides = [
 
 const offers = [
   {
-    img: '/images/media/pierogi.jpg', title: 'Pierogi', href: '/deli-menu',
+    img: '/images/media/pierogi.jpg', title: 'Hand-made Pierogi', href: '/deli-menu',
     ticks: pierogi.fillings.filter((f) => f !== 'Mix Pierogi'),
   },
   {
@@ -62,7 +62,7 @@ const offers = [
     </div>
 
     <div class="hb-head">
-      <h1 data-solid-at>{t.tagline}</h1>
+      <h1 data-solid-at>{t.tagline.split(', ').map((part, i, all) => <span class="hb-h1line">{part}{i < all.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</h1>
     </div>
 
     <div class="hb-foot">

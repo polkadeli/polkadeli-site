@@ -33,6 +33,22 @@
   text-wrap: balance;
 }
 
+/* Break the headline after the comma ("Authentic Polish food, / prepared daily").
+   Polish is longer, so on phones it wraps normally. */
+.hb-h1line {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  html[lang='en'] .hero--b h1 {
+    font-size: min(8.2vw, 40px);
+  }
+
+  html[lang='pl'] .hb-h1line {
+    white-space: normal;
+  }
+}
+
 html[lang='pl'] .hero--b h1 {
   max-width: 24ch;
   font-size: clamp(40px, 4.6vw, 68px);
