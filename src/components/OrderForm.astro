@@ -78,7 +78,7 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
           <h3>{t.pickup}</h3>
           <!-- Online orders are for pickup at Silver Spring only (Vienna doesn't take online orders) -->
           <input type="hidden" name="store" value={ss.city} />
-          <p class="of__store"><b>{ss.city}, MD</b><br />{ss.street}, {ss.locality}</p>
+          <p class="of__store"><span class="of__nowrap">{ss.street},</span><br /><span class="of__nowrap">{ss.locality}</span></p>
           <div class="of__two">
             <label class="of__field">{t.date}<input name="pickup-date" type="date" min={today} required /></label>
             <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
