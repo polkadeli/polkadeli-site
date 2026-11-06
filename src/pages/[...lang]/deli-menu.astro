@@ -1,22 +1,14 @@
 ---
-// Deli Menu and Platters on one page. All items and prices come from src/data/menu.js.
+// Deli Menu (pierogi, sandwiches, entrees). Platters have their own page (platters.astro). All items and prices come from src/data/menu.js.
 import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
-import { business, stores } from '../../data/site.js';
-import { pierogi, sandwiches, entrees, platters } from '../../data/menu.js';
+import { pierogi, sandwiches, entrees } from '../../data/menu.js';
 import '../../styles/menu-page.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
-const ss = stores[0];
-const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
-// Platters as a 2x2 grid so each row lines up: Cold Cuts | Party Trays, then Cake | Bread.
-const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
-const platterGrid = ['Cold Cut Platters', 'Party Trays', 'Cake Platter', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
-const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', tr(lang, 'Sandwiches')], ['entrees', tr(lang, 'Entrees')],
-  ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading)]),
 ];
 ---
 <Base title={t.menuTitle} description={t.menuDesc}>
@@ -72,30 +64,9 @@ const tabs = [
             </section>
           </div>
         </div>
+        <p class="mp-see"><a href={href('/platters', lang)}>{t.seePlatters} →</a></p>
       </section>
 
-      <section class="mp-group" id="platters">
-        <div class="mp-group__head">
-          <h2 class="mp-group__title">{t.platters}</h2>
-          <p class="mp-email">{t.orderAhead} <a href={href('/order', lang) + '?type=platters'}>{t.orderFormLink}</a> <span>({t.pickupSS})</span></p>
-        </div>
-        <div class="mp-grid">
-          {platterGrid.map((g) => (
-            <section class="mp-cat" id={slug(g.heading)}>
-              <h3>{tr(lang, g.heading)}{g.serves && <span class="mp-badge mp-badge--line">{tr(lang, g.serves)}</span>}</h3>
-              <ul class="mp-items">
-                {g.items.map((item) => (
-                  <li>
-                    <p class="mp-item"><span>{tr(lang, item.name)}</span><b>{item.price}</b></p>
-                    {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
-                    {item.list && <ul class="mp-list">{item.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ))}
-        </div>
-      </section>
 
     </div>
     <!-- Phone: order button stays at the bottom of the screen -->

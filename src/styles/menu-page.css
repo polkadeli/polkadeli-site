@@ -705,3 +705,35 @@
   visibility: visible;
   opacity: 1;
 }
+
+/* Platters page: the warm band starts right under the tabs */
+.mp--platters #platters {
+  margin-top: 0;
+}
+
+/* Deli Menu: link to the Platters page */
+.mp-see {
+  margin-top: 40px !important;
+  font-family: var(--font-heading);
+  font-size: 22px;
+}
+
+.mp-see a {
+  color: var(--color-red) !important;
+  text-decoration: none;
+}
+
+.mp-see a:hover {
+  text-decoration: underline;
+}
+
+/* Platters page: keep the order button above the warm band */
+.mp--platters .mp-orderdock {
+  position: relative;
+  z-index: 2;
+}
+
+/* Deli Menu: space between the platters link and the footer */
+.mp-see {
+  padding-bottom: 72px;
+}

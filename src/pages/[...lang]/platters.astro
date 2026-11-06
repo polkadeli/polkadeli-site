@@ -1,0 +1,88 @@
+---
+// Platters page (cold cut platters, party trays, cake platters, bread). Deli Menu is deli-menu.astro. All items and prices come from src/data/menu.js.
+import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import { platters } from '../../data/menu.js';
+import '../../styles/menu-page.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
+// Platters as a 2x2 grid so each row lines up: Cold Cuts | Party Trays, then Cake | Bread.
+const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
+const platterGrid = ['Cold Cut Platters', 'Party Trays', 'Cake Platter', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
+const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
+const tabs = [
+  ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading)]),
+];
+---
+<Base title={t.plattersTitle} description={t.plattersDesc}>
+  <div class="mp mp--platters">
+    <h1 class="mp-title mp-title--photo"><img src="/images/media/printed-menu-2.jpg" alt={t.menuAlt} /></h1>
+
+    <nav class="mp-tabs" aria-label={t.menuSections}>
+      <div class="mp-wrap">
+        <div class="mp-tabs__links">{tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</div>
+        <a class="mp-order mp-order--bar" href={href('/order', lang) + '?type=platters'} tabindex="-1">{t.orderPlatters}</a>
+      </div>
+    </nav>
+    <!-- Desktop: big order button just under the red bar. Once it scrolls away, a smaller one appears in the red bar. -->
+    <div class="mp-orderdock"><div class="mp-wrap"><a class="mp-order" href={href('/order', lang) + '?type=platters'}>{t.orderPlatters}</a></div></div>
+
+    <div class="mp-wrap">
+      <section class="mp-group" id="platters">
+        <div class="mp-group__head">
+          <h2 class="mp-group__title">{t.platters}</h2>
+          <p class="mp-email">{t.orderAhead} <a href={href('/order', lang) + '?type=platters'}>{t.orderFormLink}</a> <span>({t.pickupSS})</span></p>
+        </div>
+        <div class="mp-grid">
+          {platterGrid.map((g) => (
+            <section class="mp-cat" id={slug(g.heading)}>
+              <h3>{tr(lang, g.heading)}{g.serves && <span class="mp-badge mp-badge--line">{tr(lang, g.serves)}</span>}</h3>
+              <ul class="mp-items">
+                {g.items.map((item) => (
+                  <li>
+                    <p class="mp-item"><span>{tr(lang, item.name)}</span><b>{item.price}</b></p>
+                    {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
+                    {item.list && <ul class="mp-list">{item.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))}
+        </div>
+      </section>
+
+    </div>
+    <!-- Phone: order button stays at the bottom of the screen -->
+    <a class="mp-order-bar" href={href('/order', lang) + '?type=platters'}>{t.orderPlatters}</a>
+  </div>
+</Base>
+
+<script>
+  // Show the small order button in the red bar once the big one has scrolled out of view.
+  const big = document.querySelector('.mp-orderdock .mp-order');
+  const bar = document.querySelector('.mp-tabs');
+  new IntersectionObserver(([e]) => {
+    const show = !e.isIntersecting && e.boundingClientRect.top < 200;
+    bar.classList.toggle('show-order', show);
+    bar.querySelector('.mp-order--bar').tabIndex = show ? 0 : -1;
+  }, { rootMargin: '-140px 0px 0px 0px' }).observe(big);
+
+  // Highlight the tab for the section in view.
+  const tabs = [...document.querySelectorAll('.mp-tabs a:not(.mp-order)')];
+  const secs = tabs.map((a) => document.querySelector(a.getAttribute('href')));
+  const setOn = (k) => tabs.forEach((a, i) => a.classList.toggle('is-on', i === k));
+  let lock = 0;
+  const onScroll = () => {
+    if (Date.now() < lock) return;
+    // The section nearest the top wins; side-by-side sections (same top) go to the first one.
+    let k = 0, best = -Infinity;
+    secs.forEach((s, i) => { const t = Math.round(s.getBoundingClientRect().top); if (t < 220 && t > best) { best = t; k = i; } });
+    setOn(k);
+  };
+  // A clicked tab stays underlined while the page scrolls to it.
+  tabs.forEach((a, i) => a.addEventListener('click', () => { setOn(i); lock = Date.now() + 900; }));
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
