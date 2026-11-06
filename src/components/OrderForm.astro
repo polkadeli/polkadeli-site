@@ -104,7 +104,7 @@ const shown = groups.filter((g) => g.type === type);
                 <button type="button" class="of__day of__day--big" data-offset="1">{t.tomorrow}<small></small></button>
               </div>
             )}
-            <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" />
+            <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" inputmode="none" />
           </div>
           <div class="of__timewrap">
             <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
@@ -381,6 +381,8 @@ const shown = groups.filter((g) => g.type === type);
   const field = (n) => form.querySelector(`[name="${n}"]`).value.trim();
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    // Close the phone keyboard before paying (it would otherwise pop up while we hand over to Clover)
+    if (document.activeElement && document.activeElement !== sendBtn) document.activeElement.blur();
     syncFillings();
     // Re-check the time list right before paying: a time less than 30 minutes away drops off, and the form asks for a new one.
     fillTimes();
