@@ -453,8 +453,8 @@ html[lang='pl'] .hero--b h1 {
 
 /* Right of the middle: a garlic bulb that wobbles and bounces now and then */
 .dd--garlic {
-  top: 42%;
-  left: 64%;
+  top: 50%;
+  left: 68%;
   width: 88px;
   animation-delay: 1s;
 }
@@ -517,39 +517,6 @@ html[lang='pl'] .hero--b h1 {
 
 @media (max-width: 900px) {
   .dd--mush {
-    display: none;
-  }
-}
-
-/* Top, between the headline and the fork: a carrot whose leaves sway */
-.dd--carrot {
-  top: 16%;
-  left: 67%;
-  width: 46px;
-  animation-delay: 1.4s;
-}
-
-.dd--carrot img {
-  rotate: 40deg;
-  transform-origin: 50% 20%;
-  animation: dd-sway 3.8s ease-in-out 2.4s infinite;
-}
-
-@keyframes dd-sway {
-  0%, 100% { transform: rotate(0); }
-  30% { transform: rotate(-9deg); }
-  60% { transform: rotate(7deg); }
-}
-
-@media (max-width: 1100px) {
-  .dd--carrot {
-    top: 14%;
-    left: 63%;
-  }
-}
-
-@media (max-width: 900px) {
-  .dd--carrot {
     display: none;
   }
 }
