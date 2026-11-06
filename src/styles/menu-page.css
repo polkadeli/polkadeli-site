@@ -64,7 +64,7 @@
 }
 
 .mp-group {
-  padding-top: 64px;
+  padding-top: 40px;
   scroll-margin-top: calc(var(--header-height) + 50px);
 }
 
@@ -532,7 +532,7 @@
   position: relative;
   isolation: isolate;
   margin-top: 72px;
-  padding: 64px 0 72px;
+  padding: 40px 0 72px;
 }
 
 #platters::before {
@@ -668,7 +668,7 @@
   display: inline-flex;
   align-items: center;
   height: 48px;
-  margin: 63px 0 0; /* centred on the page heading */
+  margin: 39px 0 0; /* centred on the page heading */
   padding: 0 26px;
   font-family: var(--font-ui);
   font-weight: 700;
