@@ -44,7 +44,7 @@ export const platters = [
   },
   {
     heading: 'Bread Tray',
-    items: [{ name: 'Bread Tray', price: '$29.99' }],
+    items: [{ name: 'Bread Tray', price: '$29.99', desc: 'Assortment of breads' }],
   },
   {
     heading: 'Party Trays',
