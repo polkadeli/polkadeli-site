@@ -20,7 +20,7 @@
   color: #fff;
 }
 
-/* ---------- Left: heading, phone, social ---------- */
+/* ---------- Left: heading, text, social ---------- */
 
 .ct__info h2 {
   margin: 0 0 16px;
@@ -31,45 +31,8 @@
 }
 
 .ct__info p {
-  margin: 0 0 24px;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.ct__lines {
   margin: 0 0 28px;
-}
-
-.ct__lines div {
-  display: flex;
-  gap: 16px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.ct__lines dt,
-.ct__follow span {
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
   color: rgba(255, 255, 255, 0.85);
-}
-
-.ct__lines dt {
-  width: 70px;
-  line-height: 1.9;
-}
-
-.ct__lines dd {
-  margin: 0;
-}
-
-.ct__lines a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.ct__lines a:hover {
-  text-decoration: underline;
 }
 
 .ct__follow {
@@ -80,6 +43,10 @@
 
 .ct__follow span {
   margin-right: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .ct__follow .social-link {

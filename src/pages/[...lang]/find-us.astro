@@ -4,7 +4,6 @@ export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
 import VisitStores from '../../components/VisitStores.astro';
 import SocialIcons from '../../components/SocialIcons.astro';
-import { business, stores } from '../../data/site.js';
 import '../../styles/visit.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
@@ -17,9 +16,6 @@ const t = ui[lang];
       <div class="ct__info">
         <h2 id="contact-title">{t.contactTitle}</h2>
         <p>{t.contactText[0]} <span class="nobr">{t.contactText[1]}</span></p>
-        <dl class="ct__lines">
-          <div><dt>{t.phone}</dt><dd><a href={stores[0].phoneHref}>{stores[0].phone}</a></dd></div>
-        </dl>
         <div class="ct__follow">
           <span>{t.followUs}</span>
           <SocialIcons size={22} />

@@ -781,10 +781,10 @@
   }
 }
 
-/* Desktop: the whole menu fits on screen, so the section links aren't needed.
-   The red bar stays (it holds the small order button once you scroll). Phones keep the links. */
+/* Desktop: the whole menu fits on screen, so no red section bar (the header's Order now button stays).
+   Phones keep the bar with its section links. */
 @media (min-width: 901px) {
-  .mp-tabs__links {
-    visibility: hidden;
+  .mp-tabs {
+    display: none;
   }
 }
