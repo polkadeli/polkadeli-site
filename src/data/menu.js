@@ -48,10 +48,6 @@ export const platters = [
     ],
   },
   {
-    heading: 'Bread',
-    items: [{ name: 'Bread Tray', price: '$29.99' }],
-  },
-  {
     heading: 'Party Trays',
     serves: 'Serves 6',
     items: [
@@ -63,5 +59,9 @@ export const platters = [
     heading: 'Cake Platter',
     serves: 'Serves 8–10',
     items: [{ name: 'Polish Cake Platter', price: '$44.99', desc: 'Assortment of Polish baked goods' }],
+  },
+  {
+    heading: 'Bread',
+    items: [{ name: 'Bread Tray', price: '$29.99' }],
   },
 ];
