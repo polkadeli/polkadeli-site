@@ -6,6 +6,7 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { getStore } from '@netlify/blobs';
 import { sendOrderEmail } from '../lib/order-email.mjs';
+import { printOrder } from '../lib/clover-print.mjs';
 
 const ok = (msg = 'ok') => new Response(msg, { status: 200 });
 
@@ -40,6 +41,14 @@ export default async (req) => {
   const site = new URL(req.url).origin; // the address this request came to (staging or live)
   await sendOrderEmail(site, order, `PAID online (Clover payment ${event.id ?? event.Id ?? ''})`);
   await store.setJSON(sessionId, { ...order, status: 'paid', paidAt: new Date().toISOString() });
+
+  // Print the order on the Clover Station. A failure here never blocks the email above.
+  try {
+    const printed = await printOrder(order, event.id ?? event.Id);
+    console.log('Clover print:', JSON.stringify(printed));
+  } catch (e) {
+    console.error('Clover print failed:', e.message);
+  }
   return ok();
 };
 
