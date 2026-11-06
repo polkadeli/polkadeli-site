@@ -459,8 +459,9 @@
   }
 }
 
-/* Keep notes like "(fresh or smoked)" together */
+/* Notes like "(fresh or smoked)" sit on their own line under the item name */
 .mp-item em {
+  display: block;
   white-space: nowrap;
 }
 
@@ -763,4 +764,9 @@
 /* Italic note runs into the bold price; give the price a little room */
 .mp-note b {
   margin-left: 0.2em;
+}
+
+/* Item names that wrap split evenly, never leaving one word alone on a line */
+.mp-item > span {
+  text-wrap: balance;
 }
