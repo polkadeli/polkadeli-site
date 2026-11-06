@@ -78,7 +78,7 @@ export default async (req, context) => {
   const site = new URL(req.url).origin; // the address this request came to (staging or live)
   const thanks = `${site}${lang === 'pl' ? '/pl' : ''}/thanks`;
   const merchant = process.env.CLOVER_MERCHANT_ID || 'XESF2ZXD2SF94'; // Polka Deli's Clover merchant ID (not secret)
-  const token = process.env.CLOVER_PRIVATE_TOKEN;
+  const token = (process.env.CLOVER_PRIVATE_TOKEN || '').trim();
 
   // TEST MODE: no Clover keys yet. The page emails the order itself (marked not paid)
   // and shows the thank-you page.
@@ -111,8 +111,10 @@ export default async (req, context) => {
     }),
   });
   if (!res.ok) {
-    console.error('Clover checkout failed', res.status, await res.text().catch(() => ''));
-    return json({ error: 'payment' }, 502);
+    // Pass Clover's status and message to the page so the failure can be read without Netlify logs.
+    const detail = (await res.text().catch(() => '')).slice(0, 300);
+    console.error('Clover checkout failed', res.status, detail);
+    return json({ error: 'payment', clover: res.status, detail }, 502);
   }
   const session = await res.json();
 
