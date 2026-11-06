@@ -828,3 +828,35 @@
     gap: 40px;
   }
 }
+
+/* Space between the pay button and the note under it */
+.of p.of__paynote {
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+/* Pick-up time list: own arrow, like the other fields */
+.of__field select[name="pickup-time"] {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 36px;
+  border-radius: 0;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231f1f1f' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;
+  cursor: pointer;
+}
+
+/* Date a little narrower, so the time list has room for "11:20 am" */
+.of__two {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.of__two .of__field input,
+.of__two .of__field select {
+  min-width: 0;
+  padding-left: 10px;
+}
+
+.of__field select[name="pickup-time"] {
+  padding-right: 28px;
+  background-position: right 10px center;
+}

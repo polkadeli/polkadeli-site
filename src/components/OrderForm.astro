@@ -11,6 +11,11 @@ import CommaList from './CommaList.astro';
 const lang = langOf(Astro.url);
 const t = ui[lang];
 const ss = stores[0]; // Silver Spring
+// Silver Spring opening hours as minutes, Sunday = 0 … Saturday = 6, for the pick-up time list.
+const toMin = (s) => { const [, h, m, ap] = s.match(/(\d{1,2}):(\d{2}) (am|pm)/); return ((+h % 12) + (ap === 'pm' ? 12 : 0)) * 60 + +m; };
+const dayNums = { 'Mon–Fri': [1, 2, 3, 4, 5], Saturday: [6], Sunday: [0] };
+const openHours = Array(7).fill(null);
+ss.hours.forEach(([days, span]) => { const [a, b] = span.split(' – '); (dayNums[days] || []).forEach((d) => { openHours[d] = [toMin(a), toMin(b)]; }); });
 
 const label = (i) => i.group === 'pierogi' ? `Pierogi, ${tr(lang, i.size)}` : i.group === 'entrees' ? `${tr(lang, i.base)}${i.note ? ` ${tr(lang, i.note)}` : ''}` : tr(lang, i.name);
 const pick = (group) => orderItems.filter((i) => i.group === group).map((i) => ({ ...i, label: label(i), serves: i.serves && tr(lang, i.serves) }));
@@ -76,7 +81,7 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
           <p class="of__store"><b>{ss.city}, MD</b><br />{ss.street}, {ss.locality}</p>
           <div class="of__two">
             <label class="of__field">{t.date}<input name="pickup-date" type="date" min={today} required /></label>
-            <label class="of__field">{t.time}<input name="pickup-time" type="time" required /></label>
+            <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
           </div>
 
           <h3>{t.yourDetails}</h3>
@@ -156,6 +161,33 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
   const pad = (n) => String(n).padStart(2, '0');
   const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const dateInput = form.querySelector('[name="pickup-date"]');
+  // Pick-up times: every 10 minutes while the store is open, last one 30 minutes before closing.
+  // Today: only times at least 30 minutes from now (store time).
+  const timeSel = form.querySelector('[name="pickup-time"]');
+  const hours = JSON.parse(timeSel.dataset.hours);
+  const label = (m) => {
+    const h = Math.floor(m / 60), mm = String(m % 60).padStart(2, '0');
+    return timeSel.dataset.lang === 'pl' ? `${h}:${mm}` : `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`;
+  };
+  const fillTimes = () => {
+    const keep = timeSel.value;
+    const opt = (v, text, dis) => { const o = new Option(text, v); if (dis) { o.disabled = true; o.selected = true; } return o; };
+    timeSel.replaceChildren();
+    if (!dateInput.value) { timeSel.append(opt('', timeSel.dataset.pickdate, true)); return; }
+    const [y, mo, d] = dateInput.value.split('-').map(Number);
+    const span = hours[new Date(y, mo - 1, d).getDay()];
+    let start = span ? span[0] : 0;
+    const end = span ? span[1] - 30 : -1;
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    if (dateInput.value === isoDay(now)) start = Math.max(start, Math.ceil((now.getHours() * 60 + now.getMinutes() + 30) / 10) * 10);
+    if (start > end) { timeSel.append(opt('', timeSel.dataset.none, true)); return; }
+    timeSel.append(opt('', timeSel.dataset.pick, true));
+    for (let m = start; m <= end; m += 10) {
+      const v = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+      timeSel.append(new Option(label(m), v, false, v === keep));
+    }
+  };
+  dateInput.addEventListener('change', fillTimes);
   const setType = () => {
     const type = form.querySelector('[name="order-type"]').dataset.type;
     form.querySelectorAll('.of__group').forEach((g) => {
@@ -168,6 +200,7 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
     if (type === 'platters') min.setDate(min.getDate() + 1);
     dateInput.min = isoDay(min);
     if (dateInput.value && dateInput.value < dateInput.min) dateInput.value = '';
+    fillTimes();
     syncFillings();
     render();
   };
