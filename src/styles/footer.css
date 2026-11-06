@@ -40,7 +40,7 @@
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-white);
+  color: var(--color-red-bright); /* logo red, a touch brighter so it reads on the dark footer */
 }
 
 .footer-column p {
