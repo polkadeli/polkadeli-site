@@ -44,10 +44,10 @@ const tabs = [
               <p class="mp-note">{tr(lang, pierogi.servedWith)}</p>
             </section>
             <section class="mp-cat" id="sandwiches">
-              <h3>{tr(lang, 'Sandwiches')} <span class="mp-badge">{sandwiches.price} {t.each}</span></h3>
+              <h3>{tr(lang, 'Sandwiches')}</h3>
               <ul class="mp-items">
                 {sandwiches.items.map((item) => (
-                  <li><p class="mp-item"><span>{tr(lang, item.name)}</span></p><p class="mp-desc">{tr(lang, item.desc)}</p></li>
+                  <li><p class="mp-item"><span>{tr(lang, item.name)}</span><b>{sandwiches.price}</b></p><p class="mp-desc">{tr(lang, item.desc)}</p></li>
                 ))}
               </ul>
               <p class="mp-note">{tr(lang, sandwiches.side[0])} <b>{sandwiches.side[1]}</b></p>
