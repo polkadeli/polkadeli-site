@@ -34,9 +34,8 @@ export const nav = [
   { href: '/deli-menu', label: 'Deli Menu' },
   { href: '/platters', label: 'Platters' },
   { href: '/shop', label: 'Shop' },
-  // Visit us opens a small dropdown with About us and Contact (both on the Visit us page)
-  { href: '/find-us', label: 'Visit us', children: [
-    { href: '/find-us#about', label: 'About us' },
+  // About us (the Visit us page) opens a small dropdown with Contact
+  { href: '/find-us', label: 'About us', children: [
     { href: '/find-us#contact', label: 'Contact' },
   ] },
 ];
