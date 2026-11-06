@@ -33,14 +33,11 @@ const tabs = [
             <section class="mp-cat" id="pierogi">
               <h3>Pierogi</h3>
               <ul class="mp-items">
-                {pierogi.prices.map(([size, price]) => (
-                  <li><p class="mp-item"><span>{tr(lang, size)}</span><b>{price}</b></p></li>
-                ))}
+                <li>
+                  <p class="mp-item"><span>{[...pierogi.prices].reverse().map(([size]) => tr(lang, size)).join(' / ')}</span><b>{[...pierogi.prices].reverse().map(([, price]) => price).join(' / ')}</b></p>
+                  <p class="mp-desc mp-fillings"><span class="mp-fillings__label">{t.fillings}:</span> {pierogi.fillings.map((f, i) => <span class="mp-nowrap">{tr(lang, f)}{i < pierogi.fillings.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</p>
+                </li>
               </ul>
-              <div class="mp-fillings">
-                <p class="mp-fillings__label">{t.fillings}</p>
-                <ul>{pierogi.fillings.map((f) => <li>{tr(lang, f)}</li>)}</ul>
-              </div>
               <p class="mp-note">{tr(lang, pierogi.servedWith)}</p>
             </section>
             <section class="mp-cat" id="sandwiches">
@@ -50,7 +47,7 @@ const tabs = [
                   <li><p class="mp-item"><span>{tr(lang, item.name)}</span><b>{sandwiches.price}</b></p><p class="mp-desc">{tr(lang, item.desc)}</p></li>
                 ))}
               </ul>
-              <p class="mp-note">{tr(lang, sandwiches.side[0])} <b>{sandwiches.side[1]}</b></p>
+              <p class="mp-note">{tr(lang, sandwiches.side[0])}{'\u00a0'}<b>{sandwiches.side[1]}</b></p>
             </section>
           </div>
           <div class="mp-col">
