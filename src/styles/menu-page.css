@@ -758,3 +758,25 @@
 .mp-desc {
   text-wrap: balance;
 }
+
+/* "Add a side of Polish potato salad   $1": price lines up with the prices above */
+.mp-note--price {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.mp-note--price b {
+  margin-left: 0;
+  font-style: normal;
+  font-size: 19px;
+  color: var(--color-red);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .mp-note--price b {
+    font-size: 18px;
+  }
+}

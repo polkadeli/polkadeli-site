@@ -50,7 +50,7 @@ const tabs = [
                   <li><p class="mp-item"><span>{tr(lang, item.name)}</span><b>{sandwiches.price}</b></p><p class="mp-desc"><CommaList text={tr(lang, item.desc)} /></p></li>
                 ))}
               </ul>
-              <p class="mp-note">{tr(lang, sandwiches.side[0])}{'\u00a0'}<b>{sandwiches.side[1]}</b></p>
+              <p class="mp-note mp-note--price"><span>{tr(lang, sandwiches.side[0])}</span> <b>{sandwiches.side[1]}</b></p>
             </section>
           </div>
           <div class="mp-col">
