@@ -274,7 +274,7 @@ html[lang='pl'] .hero--b h1 {
 
   .hb-head {
     align-items: flex-end;
-    padding-top: calc(var(--header-height, 72px) + 70px);
+    padding-top: calc(var(--header-height, 120px) + 60px);
     padding-bottom: 20px;
   }
 
@@ -348,7 +348,7 @@ html[lang='pl'] .hero--b h1 {
   }
 
   .dd--fork {
-    top: calc(var(--header-height, 84px) + 6px);
+    top: calc(var(--header-height, 120px) + 2px);
     left: auto;
     right: 30px;
     width: 96px;
@@ -365,7 +365,7 @@ html[lang='pl'] .hero--b h1 {
 /* Phone header on this mockup: bigger logo in the middle, phone on the left, menu on the right */
 @media (max-width: 900px) {
   body:has(.hero--b) {
-    --header-height: 84px;
+    --header-height: 120px;
   }
 
   body:has(.hero--b) .site-header__bar {
@@ -376,12 +376,27 @@ html[lang='pl'] .hero--b h1 {
   body:has(.hero--b) .site-header__logo {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 30px;
+    transform: translateX(-50%);
+    transition: top 0.3s ease;
   }
 
   body:has(.hero--b) .site-header__logo img {
-    height: 60px;
+    height: 84px;
+    transition: height 0.3s ease;
+  }
+
+  /* Once you scroll and the bar turns white, it shrinks back to a normal size */
+  body:has(.hero--b) .site-header.is-solid .site-header__bar {
+    height: 72px;
+  }
+
+  body:has(.hero--b) .site-header.is-solid .site-header__logo {
+    top: 11px;
+  }
+
+  body:has(.hero--b) .site-header.is-solid .site-header__logo img {
+    height: 50px;
   }
 
   body:has(.hero--b) .phone-menu {
