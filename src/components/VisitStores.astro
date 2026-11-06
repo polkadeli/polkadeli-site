@@ -7,6 +7,8 @@ const lang = langOf(Astro.url);
 const t = ui[lang];
 ---
 <section class="vs">
+  {/* Phones: the photo runs edge to edge under the header, like the Deli Menu page */}
+  <img class="vs__banner" src="/images/slide-market.jpg" alt={t.visitAlt} />
   <div class="vs__wrap">
     <h1 class="vs__title">{t.visitUs}</h1>
     <div class="vs__grid">
