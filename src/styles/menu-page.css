@@ -441,7 +441,7 @@
 }
 
 .mp-list li {
-  padding: 1px 0;
+  padding: 1px 0 1px 16px;
 }
 
 .mp-pick span {
@@ -793,5 +793,16 @@
 @media (min-width: 901px) {
   .mp-tabs {
     display: none;
+  }
+}
+
+/* Desktop: the last card in each column stretches, so side-by-side boxes end on the same line */
+@media (min-width: 901px) {
+  .mp-col > .mp-cat:last-child {
+    flex: 1;
+  }
+
+  .mp-see {
+    text-align: right;
   }
 }

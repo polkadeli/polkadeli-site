@@ -626,3 +626,46 @@
   display: block;
   margin-bottom: 8px;
 }
+
+/* Keep EN | PL, phone, social and Order now in the same spot in both languages:
+   the nav takes the free space (links centred in it) and the Order button has one width */
+@media (min-width: 901px) {
+  .site-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 16px;
+  }
+
+  .header-order:not(.header-order--drawer) {
+    min-width: 146px;
+    justify-content: center;
+  }
+}
+
+/* Small laptops: never squeeze the logo; tighten the menu links instead */
+.site-header__logo {
+  flex-shrink: 0;
+}
+
+@media (min-width: 901px) and (max-width: 1040px) {
+  .site-nav {
+    margin: 0 8px;
+  }
+
+  .site-nav__links a {
+    padding: 4px 12px;
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 980px) {
+  .site-header__logo img {
+    height: 50px;
+  }
+
+  .site-nav__links a {
+    padding: 4px 9px;
+    font-size: 15px;
+  }
+}
