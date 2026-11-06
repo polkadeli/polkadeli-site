@@ -1,4 +1,5 @@
 ---
+// Home: hero from KK's sketch (headline in the middle, stores bottom-left, mailing list bottom-right, animated doodles).
 import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
@@ -6,6 +7,7 @@ import AboutUs from '../../components/AboutUs.astro';
 import { business, stores } from '../../data/site.js';
 import { pierogi } from '../../data/menu.js';
 import '../../styles/home.css';
+import '../../styles/home-hero.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
 
@@ -38,24 +40,40 @@ const offers = [
 ];
 ---
 <Base overlay>
-  <section class="hero" data-hero aria-label={t.welcome}>
+  <section class="hero hero--b" data-hero aria-label={t.welcome}>
     <div class="hero__slides" aria-hidden="true">
       {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'hero__slide is-active' : 'hero__slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
     </div>
-    <div class="hero__copy"></div>
-    <div class="hero__foot">
-      <div class="hero__left">
-      <img class="doodle-badge" src="/images/doodles/onfork.svg" alt="" aria-hidden="true" />
+
+    <!-- Doodles: they pop in, then bob, squish and wave. Hover makes one wiggle, a tap makes it hop. -->
+    <div class="hb-doodles" aria-hidden="true">
+      <span class="dd dd--float"><img src="/images/doodles/pierogi-1.svg" alt="" /></span>
+      <span class="dd dd--fork">
+        <span class="dd__inner">
+          <img src="/images/doodles/onfork.svg" alt="" />
+          <svg class="dd__whoosh" viewBox="0 0 100 160" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+            <path d="M78 14 Q 50 80 78 146" />
+            <path d="M50 30 Q 26 80 50 130" />
+            <path d="M24 48 Q 6 80 24 112" />
+          </svg>
+        </span>
+      </span>
+      <span class="dd dd--squish"><img src="/images/doodles/pierogi-2.svg" alt="" /></span>
+    </div>
+
+    <div class="hb-head">
       <h1 data-solid-at>{t.tagline}</h1>
+    </div>
+
+    <div class="hb-foot">
       <div class="hero__stores">
         {stores.map((s) => (
           <div class="hero-store">
             <p class="hero-store__city">{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</p>
-            <a class="hero-store__addr" href={s.maps}><span class="nobr">{s.street}</span><br />{s.locality}</a>
+            <a class="hero-store__addr" href={s.maps}><span class="hb-line">{s.street}</span><span class="hb-line">{s.locality.replace(/ \d{5}$/, '')}<span class="hb-zip"> {s.locality.match(/\d{5}$/)?.[0]}</span></span></a>
             <a class="hero-store__phone" href={s.phoneHref}>{s.phone}</a>
           </div>
         ))}
-      </div>
       </div>
       <form class="hero-signup" name="newsletter" method="POST" action={href('/thanks', lang)} data-netlify="true" netlify-honeypot="company">
         <h2>{t.joinList}</h2>
@@ -107,4 +125,14 @@ const offers = [
   const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 6000); } };
   document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
   start();
+
+  // Doodles: a tap makes one hop (the hover wiggle is CSS only)
+  document.querySelectorAll('.dd').forEach((d) => {
+    d.addEventListener('pointerdown', () => {
+      d.classList.remove('is-hop');
+      void d.offsetWidth;
+      d.classList.add('is-hop');
+    });
+    d.addEventListener('animationend', (e) => { if (e.animationName === 'dd-hop') d.classList.remove('is-hop'); });
+  });
 </script>

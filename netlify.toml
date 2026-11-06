@@ -28,3 +28,14 @@
   from = "/about"
   to = "/#about"
   status = 301
+
+# The home page mockup became the real home page (2026-11-06)
+[[redirects]]
+  from = "/home-preview"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/pl/home-preview"
+  to = "/pl/"
+  status = 301
