@@ -1115,3 +1115,34 @@
     font-size: 16px;
   }
 }
+
+/* Phones: price on top at the right, quantity box right under it */
+@media (max-width: 600px) {
+  .of__row,
+  .of__row:has(.of__filling) {
+    grid-template-columns: 20px minmax(0, 1fr) minmax(56px, auto);
+  }
+
+  .of__row .of__price,
+  .of__row:has(.of__filling) .of__price,
+  .of__row:has(.of__desc, .of__list) .of__price {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .of__row .of__qty,
+  .of__row:has(.of__filling) .of__qty,
+  .of__row:has(.of__desc, .of__list) .of__qty {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
+    margin-top: 6px;
+  }
+
+  .of__row:has(.of__desc, .of__list) .of__desc,
+  .of__row:has(.of__desc, .of__list) .of__list {
+    grid-column: 2;
+    grid-row: 2;
+  }
+}
