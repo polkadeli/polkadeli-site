@@ -219,6 +219,8 @@ const shown = groups.filter((g) => g.type === type);
     }
   };
   dateInput.addEventListener('change', fillTimes);
+  // Keep today's times fresh while the page is open (every minute), so nothing under 30 minutes away can be picked.
+  setInterval(() => { if (dateInput.value === isoDay(new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })))) fillTimes(); }, 60000);
   // Day buttons: Today, Tomorrow and the next two weeks. Closed days and days before the earliest pick-up are greyed out.
   const datePick = form.querySelector('.of__date');
   const dayGrid = datePick.querySelector('.of__days');
@@ -319,6 +321,8 @@ const shown = groups.filter((g) => g.type === type);
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     syncFillings();
+    // Re-check the time list right before paying: a time less than 30 minutes away drops off, and the form asks for a new one.
+    fillTimes();
     if (!form.reportValidity()) return;
     const { items, total } = render();
     if (!items.length) { error.hidden = false; error.scrollIntoView({ block: 'center' }); return; }
