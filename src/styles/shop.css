@@ -244,6 +244,14 @@
 @media (max-width: 900px) {
   .aisle__list {
     padding: 0;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  /* Phones: smaller intro with tighter lines */
+  .shop__head p {
+    font-size: 15px;
+    line-height: 1.45;
   }
 }
 
