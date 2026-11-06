@@ -544,10 +544,29 @@
   .of__row:has(.of__filling) .of__filling { grid-column: 2 / -1; grid-row: 2; }
 }
 
-/* Link from the deli order page to the platter one and back */
-.of__switch {
-  white-space: nowrap;
+/* Link to the other order page, under the last card (like "Party platters and trays →" on the menu) */
+.of p.of__switch {
+  margin: 28px 0 0;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  text-align: right;
+}
+
+.of__switch a {
   color: var(--color-red);
+  text-decoration: none;
+}
+
+.of__switch a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .of p.of__switch {
+    margin: 4px 0 24px;
+    font-size: 20px;
+    text-align: left;
+  }
 }
 
 /* ---------- Order sections laid out like the menu cards ---------- */
