@@ -904,3 +904,9 @@
   color: #8a8a8a;
   text-decoration: line-through;
 }
+
+/* Ticked item with no description (pierogi): the quantity box no longer pushes the choices down */
+.of__row.is-picked:not(:has(.of__desc, .of__list)) .of__qty {
+  align-self: start;
+  margin-bottom: -18px;
+}
