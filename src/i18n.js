@@ -34,10 +34,13 @@ export const tr = (lang, s, group) => {
   return (group && pl.groups[group]?.[s]) ?? pl.words[s] ?? s;
 };
 
-// One item of a comma list. Polish lists don't capitalise every item: "Sery, naleśniki i kluski, …".
+// One item of a comma list. Lists are sentence case: Polish "Sery, naleśniki i kluski, …".
+// English lists are sentence case too: "Deli meats & cheeses, sandwiches, hearty entrees, soups".
+const keepCaps = new Set(['Polish', 'European', 'Reuben', 'BLT']);
 export const trItem = (lang, s, i) => {
   const t = tr(lang, s);
-  return lang === 'pl' && i > 0 ? t.charAt(0).toLowerCase() + t.slice(1) : t;
+  if (lang === 'pl') return i > 0 ? t.charAt(0).toLowerCase() + t.slice(1) : t;
+  return t.split(' ').map((w, j) => (keepCaps.has(w) || (i === 0 && j === 0) ? w : w.toLowerCase())).join(' ');
 };
 
 export const ui = {
@@ -69,11 +72,11 @@ export const ui = {
     welcome: 'Welcome to Polka Deli',
     joinList: 'Join our mailing list to receive special offers',
     name: 'Name',
-    emailAddress: 'Email Address',
+    emailAddress: 'Email address',
     privacyLink: 'Privacy policy',
-    subscribe: 'Subscribe Now',
+    subscribe: 'Subscribe now',
     shipping: 'International parcel shipping service available at our stores',
-    exploreMenu: 'Explore Full Menu',
+    exploreMenu: 'Explore full menu',
     // About
     aboutHello: "Hello! We're glad you're here!",
     aboutWho: ["We are Maria and Joanna, Polish natives, friends,", " and we're pretty good cooks."],
@@ -316,9 +319,9 @@ const pl = {
     'Cheese Platter': 'Półmisek serów', 'Variety of cheese': 'Różne sery',
     'Mixed Platter': 'Półmisek mieszany', 'Variety of kielbasa, cheese and cold cuts': 'Różne kiełbasy, sery i wędliny',
     'Bread Tray': 'Taca pieczywa',
-    'Polish Feast': 'Polska uczta', '3 Pork Schnitzels': '3 sznycle wieprzowe', '3 Stuffed Cabbages': '3 gołąbki',
-    '6 Grilled Kielbasas with Kraut and Onion': '6 kiełbas z grilla z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
-    '1 lb Salad': '1 funt sałatki', 'Grilled Kielbasa & Pierogi': 'Kiełbasa z grilla i pierogi', '24 Pierogi (potato & cheese)': '24 pierogi ruskie',
+    'Polish Feast': 'Polska uczta', '3 pork schnitzels': '3 sznycle wieprzowe', '3 stuffed cabbages': '3 gołąbki',
+    '6 grilled kielbasas with kraut and onion': '6 kiełbas z grilla z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
+    '1 lb salad': '1 funt sałatki', 'Grilled Kielbasa & Pierogi': 'Kiełbasa z grilla i pierogi', '24 Pierogi (potato & cheese)': '24 pierogi ruskie',
     'Cake Platter': 'Ciasta', 'Polish Cake Platter': 'Zestaw polskich ciast', 'Assortment of Polish baked goods': 'Asortyment ciast',
     // Shop categories and notes
     Cheese: 'Sery', 'Deli Meats': 'Wędliny', Blintzes: 'Naleśniki', Sweets: 'Słodycze', 'Baked Goods': 'Wypieki', Other: 'Inne',

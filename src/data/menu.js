@@ -50,8 +50,8 @@ export const platters = [
     heading: 'Party Trays',
     serves: 'Serves 6',
     items: [
-      { name: 'Polish Feast', price: '$84.99', list: ['3 Pork Schnitzels', '3 Stuffed Cabbages', '6 Grilled Kielbasas with Kraut and Onion', '12 Pierogi (potato & cheese)', '1 lb Salad'] },
-      { name: 'Grilled Kielbasa & Pierogi', price: '$69.99', list: ['6 Grilled Kielbasas with Kraut and Onion', '24 Pierogi (potato & cheese)', '1 lb Salad'] },
+      { name: 'Polish Feast', price: '$84.99', list: ['3 pork schnitzels', '3 stuffed cabbages', '6 grilled kielbasas with kraut and onion', '12 Pierogi (potato & cheese)', '1 lb salad'] },
+      { name: 'Grilled Kielbasa & Pierogi', price: '$69.99', list: ['6 grilled kielbasas with kraut and onion', '24 Pierogi (potato & cheese)', '1 lb salad'] },
     ],
   },
   {
