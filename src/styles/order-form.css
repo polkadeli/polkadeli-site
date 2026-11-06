@@ -956,6 +956,12 @@
 
 .of .of__check:focus-visible,
 .of .of__choice input:focus-visible {
+  outline: none;
+}
+
+/* Outline only while using the keyboard (Safari also shows it after a mouse click) */
+.uses-keyboard .of .of__check:focus-visible,
+.uses-keyboard .of .of__choice input:focus-visible {
   outline: 2px solid var(--color-red);
   outline-offset: 2px;
 }

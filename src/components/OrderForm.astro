@@ -121,6 +121,9 @@ const other = type === 'platters' ? { href: href('/order', lang), label: t.switc
 
 <script>
   const form = document.querySelector('.of__form');
+  // Tick-box outlines show for keyboard users only, not after a mouse click or tap
+  document.addEventListener('keydown', (e) => { if (e.key === 'Tab' || e.key === ' ') document.documentElement.classList.add('uses-keyboard'); });
+  document.addEventListener('pointerdown', () => document.documentElement.classList.remove('uses-keyboard'));
   const rows = [...form.querySelectorAll('.of__row')];
   const lines = form.querySelector('.of__lines');
   const empty = form.querySelector('.of__empty');
