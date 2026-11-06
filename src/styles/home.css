@@ -329,6 +329,16 @@ main p {
   white-space: nowrap;
 }
 
+/* An item with its own comma ("Sweets and Baked Goods, and more") may break after that comma */
+.show__items span.show__multi {
+  white-space: normal;
+}
+
+.show__items .show__multi i {
+  font-style: normal;
+  white-space: nowrap;
+}
+
 .show__items span + span::before {
   content: ' ';
   white-space: normal;

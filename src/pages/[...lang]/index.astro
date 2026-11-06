@@ -35,7 +35,7 @@ const offers = [
   {
     img: '/images/media/jars.jpg', title: 'Polish Groceries', href: '/shop', button: 'Shop',
     text: "If you don't see a product listed below please ask, we add products daily.",
-    ticks: ['Cheeses', 'Blintzes and Dumplings', 'Pickles and Sauerkraut', 'Sweets and Baked Goods', 'and more'],
+    ticks: ['Cheeses', 'Blintzes and Dumplings', 'Pickles and Sauerkraut', 'Sweets and Baked Goods, and more'],
   },
 ];
 ---
@@ -98,7 +98,7 @@ const offers = [
           <article class="show">
             <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
             <h3>{tr(lang, o.title)}</h3>
-            <p class="show__items">{o.ticks.map((x, k) => <span>{tr(lang, x)}{k < o.ticks.length - 1 ? ',' : ''}</span>)}</p>
+            <p class="show__items">{o.ticks.map((x, k) => { const label = tr(lang, x) + (k < o.ticks.length - 1 ? ',' : ''); return label.slice(0, -1).includes(', ') ? <span class="show__multi">{label.split(', ').map((part, j, all) => <i>{part}{j < all.length - 1 ? ',' : ''}</i>).reduce((a, b) => [a, ' ', b])}</span> : <span>{label}</span>; })}</p>
           </article>
         ))}
       </div>
