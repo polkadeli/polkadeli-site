@@ -49,7 +49,7 @@ export const ui = {
     pickupTitle: 'Pick-up in Silver Spring',
     pickupHint: 'Order and pay online, pick up at the store',
     deliveryTitle: 'Delivery with Uber Eats',
-    deliveryHint: 'Processed with Uber Eats',
+    deliveryHint: 'Processed through Uber Eats',
     contactUs: 'Contact us',
     sendMessage: 'Send us a message',
     copy: 'Polka Deli · Polish Food & Market',
