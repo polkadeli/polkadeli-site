@@ -1,0 +1,106 @@
+---
+// Deli Menu (pierogi, sandwiches, entrees). Platters have their own page (platters.astro). All items and prices come from src/data/menu.js.
+import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import { pierogi, sandwiches, entrees } from '../../data/menu.js';
+import '../../styles/menu-page.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+const tabs = [
+  ['pierogi', 'Pierogi'], ['sandwiches', tr(lang, 'Sandwiches')], ['entrees', tr(lang, 'Entrees')],
+];
+---
+<Base title={t.menuTitle} description={t.menuDesc}>
+  <div class="mp">
+    <h1 class="mp-title mp-title--photo"><img src="/images/media/printed-menu-2.jpg" alt={t.menuAlt} /></h1>
+
+    <nav class="mp-tabs" aria-label={t.menuSections}>
+      <div class="mp-wrap">
+        <div class="mp-tabs__links">{tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</div>
+        <a class="mp-order mp-order--bar" href={href('/order', lang)} tabindex="-1">{t.orderPickup}</a>
+      </div>
+    </nav>
+    <!-- Desktop: big order button just under the red bar. Once it scrolls away, a smaller one appears in the red bar. -->
+    <div class="mp-orderdock"><div class="mp-wrap"><a class="mp-order" href={href('/order', lang)}>{t.orderPickup}</a></div></div>
+
+    <div class="mp-wrap">
+      <section class="mp-group" id="deli">
+        <h2 class="mp-group__title">{t.deliMenu}</h2>
+
+        <div class="mp-grid">
+          <div class="mp-col">
+            <section class="mp-cat" id="pierogi">
+              <h3>Pierogi</h3>
+              <ul class="mp-items">
+                {pierogi.prices.map(([size, price]) => (
+                  <li><p class="mp-item"><span>{tr(lang, size)}</span><b>{price}</b></p></li>
+                ))}
+              </ul>
+              <div class="mp-fillings">
+                <p class="mp-fillings__label">{t.fillings}</p>
+                <ul>{pierogi.fillings.map((f) => <li>{tr(lang, f)}</li>)}</ul>
+              </div>
+              <p class="mp-note">{tr(lang, pierogi.servedWith)}</p>
+            </section>
+            <section class="mp-cat" id="sandwiches">
+              <h3>{tr(lang, 'Sandwiches')}</h3>
+              <ul class="mp-items">
+                {sandwiches.items.map((item) => (
+                  <li><p class="mp-item"><span>{tr(lang, item.name)}</span><b>{sandwiches.price}</b></p><p class="mp-desc">{tr(lang, item.desc)}</p></li>
+                ))}
+              </ul>
+              <p class="mp-note">{tr(lang, sandwiches.side[0])} <b>{sandwiches.side[1]}</b></p>
+            </section>
+          </div>
+          <div class="mp-col">
+            <section class="mp-cat" id="entrees">
+              <h3>{tr(lang, 'Entrees')}</h3>
+              <ul class="mp-items">
+                {entrees.map((item) => (
+                  <li>
+                    <p class="mp-item"><span>{tr(lang, item.name)}{item.note && <em> {tr(lang, item.note)}</em>}</span><b>{item.price}</b></p>
+                    {item.desc && <p class="mp-desc">{tr(lang, item.desc)}</p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+            <p class="mp-see"><a href={href('/platters', lang)}>{t.seePlatters} →</a></p>
+          </div>
+        </div>
+      </section>
+
+
+    </div>
+    <!-- Phone: order button stays at the bottom of the screen -->
+    <a class="mp-order-bar" href={href('/order', lang)}>{t.orderPickup}</a>
+  </div>
+</Base>
+
+<script>
+  // Show the small order button in the red bar once the big one has scrolled out of view.
+  const big = document.querySelector('.mp-orderdock .mp-order');
+  const bar = document.querySelector('.mp-tabs');
+  new IntersectionObserver(([e]) => {
+    const show = !e.isIntersecting && e.boundingClientRect.top < 200;
+    bar.classList.toggle('show-order', show);
+    bar.querySelector('.mp-order--bar').tabIndex = show ? 0 : -1;
+  }, { rootMargin: '-140px 0px 0px 0px' }).observe(big);
+
+  // Highlight the tab for the section in view.
+  const tabs = [...document.querySelectorAll('.mp-tabs a:not(.mp-order)')];
+  const secs = tabs.map((a) => document.querySelector(a.getAttribute('href')));
+  const setOn = (k) => tabs.forEach((a, i) => a.classList.toggle('is-on', i === k));
+  let lock = 0;
+  const onScroll = () => {
+    if (Date.now() < lock) return;
+    // The section nearest the top wins; side-by-side sections (same top) go to the first one.
+    let k = 0, best = -Infinity;
+    secs.forEach((s, i) => { const t = Math.round(s.getBoundingClientRect().top); if (t < 220 && t > best) { best = t; k = i; } });
+    setOn(k);
+  };
+  // A clicked tab stays underlined while the page scrolls to it.
+  tabs.forEach((a, i) => a.addEventListener('click', () => { setOn(i); lock = Date.now() + 900; }));
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

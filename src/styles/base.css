@@ -59,3 +59,101 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+ * Typography rule: no orphans or widows.
+ * Headings are balanced across lines; paragraphs, list items and table text never end on a single word.
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+p,
+li,
+td,
+dd,
+blockquote,
+figcaption,
+label {
+  text-wrap: pretty;
+  orphans: 2;
+  widows: 2;
+}
+
+/* Keep address parts together; wrap only between them */
+.nobr {
+  white-space: nowrap;
+}
+
+/* All pill buttons match the menu bar button height (36px) */
+.btn,
+.vs__btn,
+.ct__send,
+.of__send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 18px;
+  line-height: 1;
+}
+
+.of__send {
+  display: flex;
+  width: 100%;
+}
+
+/* Labels use normal letter spacing everywhere */
+.ct__field,
+.of__field,
+.vs__label,
+.ct__lines dt,
+.ct__follow span,
+.hero-store__city,
+.footer-column h2,
+.phone-menu__city,
+.mp-badge--line {
+  letter-spacing: 0 !important;
+}
+
+/* "Store hours" labels in red */
+.vs__label {
+  color: var(--color-red) !important;
+}
+
+/* Pierogi doodle divider between sections (home and menu pages) */
+.doodle-divider {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.doodle-divider span {
+  flex: 1;
+  height: 1px;
+  background: #d9d9d9;
+}
+
+.doodle-divider img {
+  width: 110px;
+  height: 80px;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .doodle-divider {
+    padding: 0 20px;
+  }
+}

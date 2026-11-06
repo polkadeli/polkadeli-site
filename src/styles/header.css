@@ -1,97 +1,188 @@
-/* Header: sticky white nav on desktop, black square button and slide-in menu on phones. */
+/*
+ * Header: logo (links home), nav links with thin dividers, Facebook/Instagram, "Order now".
+ * Inner pages: see-through white bar that stays at the top.
+ * Home page (--overlay): transparent with white text over the photo, then the white bar
+ * once the photo has scrolled past. The bar never changes size.
+ */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: var(--color-white);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.site-header--overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+
+.site-header__bar {
+  display: flex;
+  align-items: center;
+  max-width: 1360px;
+  height: var(--header-height);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.site-header__bar > * {
+  align-self: center;
+}
+
+.site-header__logo {
+  display: block;
+  line-height: 0;
+}
+
+.site-header__logo img {
+  width: auto;
+  height: 62px;
+}
+
+.logo-color {
+  display: none;
 }
 
 .site-nav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-2);
-  height: var(--header-height);
+  margin: 0 auto;
 }
 
 .site-nav__links {
   display: flex;
-  margin: 0 var(--space-3) 0 0;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
 
-/* Thin vertical rules between links, as on the current site */
+/* Thin vertical rules between links */
 .site-nav__links li + li {
-  border-left: 1px solid var(--color-rule);
+  border-left: 1px solid rgba(255, 255, 255, 0.45);
 }
 
 .site-nav__links a {
   display: block;
-  padding: var(--space-1) 34px;
-  font-family: var(--font-nav);
-  font-weight: 300;
-  font-size: var(--text-base);
-  letter-spacing: 0.02em;
-  color: var(--color-grey);
+  padding: 4px 20px;
+  font-family: var(--font-ui);
+  font-size: 17px;
+  color: var(--color-white);
   text-decoration: none;
-  transition: color var(--ease-fast);
+  text-underline-offset: 6px;
 }
 
 .site-nav__links a:hover,
 .site-nav__links a:focus-visible {
-  color: var(--color-red-bright);
+  text-decoration: underline;
 }
 
 .site-nav__links a[aria-current='page'] {
-  color: var(--color-red);
+  text-decoration: underline;
+  text-decoration-color: var(--color-red);
+  text-decoration-thickness: 2px;
+}
+
+.site-header__social {
+  display: flex;
+  gap: 6px;
+  margin-right: 18px;
 }
 
 .social-link {
-  display: flex;
-  padding: 6px;
-  color: var(--color-ink);
-  transition: color var(--ease-fast);
-}
-
-.social-link:hover,
-.social-link:focus-visible {
-  color: var(--color-red-bright);
-}
-
-/* "Order with Uber Eats" pill, same grey as the homepage UberEats button */
-.header-order {
-  margin-left: var(--space-3);
-  padding: 6px 18px;
-  font-family: var(--font-nav);
-  font-size: var(--text-sm);
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
   color: var(--color-white);
+  transition: background var(--ease-fast), color var(--ease-fast);
+}
+
+.site-header .social-link:hover,
+.site-header .social-link:focus-visible {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* "Order now" (Uber Eats) */
+.header-order {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 22px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1;
   white-space: nowrap;
   text-decoration: none;
-  background: var(--color-grey);
+  color: var(--color-red);
+  background: var(--color-white);
   border-radius: var(--radius-pill);
-  transition: background var(--ease-fast);
+  transition: background var(--ease-fast), color var(--ease-fast);
 }
 
 .header-order:hover,
 .header-order:focus-visible {
+  background: #ffe9e9;
+}
+
+/* Solid state: see-through white bar, color logo, dark links */
+.site-header.is-solid {
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  box-shadow: 0 1px 0 #d9d9d9, 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.is-solid .logo-white {
+  display: none;
+}
+
+.is-solid .logo-color {
+  display: block;
+}
+
+.is-solid .site-nav__links li + li {
+  border-color: #d9d9d9;
+}
+
+.is-solid .site-nav__links a {
+  color: var(--color-ink);
+}
+
+.is-solid .site-nav__links a:hover,
+.is-solid .site-nav__links a:focus-visible {
+  color: var(--color-red);
+}
+
+.is-solid .social-link {
+  color: var(--color-ink);
+}
+
+.site-header.is-solid .social-link:hover,
+.site-header.is-solid .social-link:focus-visible {
+  color: var(--color-red);
+  background: #f4f4f4;
+}
+
+.is-solid .header-order {
+  color: var(--color-white);
+  background: var(--color-red);
+}
+
+.is-solid .header-order:hover,
+.is-solid .header-order:focus-visible {
   background: var(--color-red-dark);
 }
 
-.header-order--drawer {
-  display: inline-block;
-  margin: var(--space-5) 0 0;
-  padding: 10px 20px;
-  font-size: var(--text-base);
+.is-solid .menu-button span {
+  background: var(--color-ink);
 }
 
-/* Narrower desktops: tighten link spacing so everything fits on one line */
-@media (max-width: 1280px) {
-  .site-nav__links a {
-    padding: var(--space-1) 20px;
-  }
+.header-order--drawer {
+  margin-top: var(--space-5);
+  height: 46px;
+  font-size: var(--text-base);
 }
 
 /* Menu button: only shown on phones and tablets */
@@ -106,7 +197,7 @@
   z-index: 40;
   width: min(78vw, 320px);
   padding: 80px var(--space-6);
-  background: var(--color-black);
+  background: var(--color-dark);
   transform: translateX(-100%);
   transition: transform 0.25s ease;
   box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0);
@@ -126,26 +217,26 @@
 .drawer__links a {
   display: block;
   padding: 14px 0;
-  font-family: var(--font-nav);
+  font-family: var(--font-ui);
   font-size: var(--text-lg);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
   color: var(--color-white);
   text-decoration: none;
+  border-bottom: 1px solid var(--color-dark-line);
 }
 
 .drawer__links a[aria-current='page'] {
-  color: var(--color-red-bright);
+  color: var(--color-red-soft);
 }
 
 .drawer__social {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2);
   margin-top: var(--space-5);
 }
 
 .drawer__social .social-link {
   color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .drawer__close {
@@ -157,22 +248,36 @@
   font-size: 30px;
   line-height: 1;
   color: var(--color-white);
-  background: var(--color-black);
-  border: 1px solid #333;
+  background: none;
+  border: 1px solid var(--color-dark-line);
   cursor: pointer;
 }
 
-@media (max-width: 900px) {
-  .site-header {
-    position: fixed;
-    top: var(--space-3);
-    right: var(--space-3);
-    left: auto;
-    background: none;
-    box-shadow: none;
+@media (max-width: 1100px) {
+  .site-nav__links a {
+    padding: 4px 14px;
   }
 
-  .site-nav {
+  .site-header__social {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --header-height: 68px;
+  }
+
+  .site-header__bar {
+    padding: 0 20px;
+  }
+
+  .site-header__logo img {
+    height: 44px;
+  }
+
+  .site-nav,
+  .header-order:not(.header-order--drawer) {
     display: none;
   }
 
@@ -181,17 +286,343 @@
     gap: 5px;
     align-content: center;
     justify-items: center;
-    width: 48px;
-    height: 48px;
-    background: var(--color-black);
+    width: 44px;
+    height: 44px;
+    margin-left: auto;
+    background: none;
     border: 0;
     cursor: pointer;
   }
 
   .menu-button span {
     display: block;
-    width: 24px;
+    width: 26px;
     height: 2px;
     background: var(--color-white);
   }
+}
+
+/* Phone icon with a small dropdown of both stores' numbers */
+.phone-menu {
+  position: relative;
+  margin-right: 6px;
+}
+
+.phone-menu__btn {
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.phone-menu__list {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: -8px;
+  z-index: 30;
+  min-width: 230px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--color-white);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.phone-menu__list::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 22px;
+  width: 12px;
+  height: 12px;
+  background: var(--color-white);
+  transform: rotate(45deg);
+}
+
+.phone-menu__list a {
+  position: relative;
+  display: block;
+  padding: 10px 14px;
+  font-family: var(--font-ui);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.phone-menu__list li + li a {
+  border-top: 1px solid #e6e6e6;
+}
+
+.phone-menu__list a:hover,
+.phone-menu__list a:focus-visible {
+  background: #f4f4f4;
+}
+
+.phone-menu__city {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #5e5e5e;
+}
+
+.phone-menu__num {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-red);
+}
+
+.is-solid .phone-menu__btn {
+  color: var(--color-ink);
+}
+
+@media (max-width: 1100px) {
+  .site-header__social {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .phone-menu {
+    margin-left: auto;
+    margin-right: 4px;
+  }
+
+  .menu-button {
+    margin-left: 0;
+  }
+
+  .phone-menu__list {
+    right: -50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .phone-menu__list::before {
+    right: 72px;
+  }
+}
+
+/* Phone dropdown: the two stores side by side */
+.phone-menu__list:not([hidden]) {
+  display: flex;
+  min-width: 0;
+  width: max-content;
+}
+
+.phone-menu__list li + li a {
+  border-top: 0;
+  border-left: 1px solid #e6e6e6;
+}
+
+@media (max-width: 900px) {
+  .phone-menu__list a {
+    padding: 10px 12px;
+  }
+
+  .phone-menu__num {
+    font-size: 16px;
+  }
+}
+
+/* Slimmer Order button: same font size, less padding */
+.header-order:not(.header-order--drawer) {
+  height: 36px;
+  padding: 0 16px;
+}
+
+/* EN | PL language switch */
+.lang-switch {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
+
+.lang-switch a {
+  padding: 4px 6px;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+.lang-switch a + a {
+  border-left: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.lang-switch a:hover,
+.lang-switch a:focus-visible {
+  color: var(--color-white);
+}
+
+.lang-switch a[aria-current] {
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.is-solid .lang-switch a {
+  color: #6b6b6b;
+}
+
+.is-solid .lang-switch a + a {
+  border-color: #d9d9d9;
+}
+
+.is-solid .lang-switch a:hover,
+.is-solid .lang-switch a[aria-current] {
+  color: var(--color-red);
+}
+
+/* Phone: the switch lives in the hamburger menu instead of the header bar */
+.lang-switch--drawer {
+  margin: 22px 0 0;
+  font-size: 16px;
+}
+
+.lang-switch--drawer a {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lang-switch--drawer a[aria-current] {
+  color: var(--color-white);
+}
+
+@media (min-width: 901px) {
+  .lang-switch--drawer {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header__bar > .lang-switch {
+    display: none;
+  }
+}
+
+/* EN / PL keep the same width when bold, so nothing shifts when you switch */
+.lang-switch a {
+  display: inline-block;
+  width: 2.6em;
+  padding: 4px 0;
+  text-align: center;
+}
+
+/* "Order now" dropdown: pickup (our site) or delivery (Uber Eats) */
+.order-menu {
+  position: relative;
+}
+
+.order-menu__btn {
+  border: 0;
+  cursor: pointer;
+}
+
+.order-menu__btn::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  margin: -3px 0 0 9px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.order-menu__list {
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+}
+
+.order-menu > .order-menu__list {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 30;
+  width: max-content; /* only as wide as its content */
+  background: var(--color-white);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+}
+
+.order-menu__list a {
+  display: block;
+  padding: 12px 14px;
+  font-family: var(--font-ui);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.order-menu__list li + li a {
+  border-top: 1px solid #eee;
+}
+
+.order-menu__list a:hover,
+.order-menu__list a:focus-visible {
+  background: #fdf1f1;
+}
+
+.order-menu__list b {
+  display: block;
+  font-size: 16px;
+  color: var(--color-red);
+}
+
+.order-menu__list a.order-menu__uber {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.order-menu > .order-menu__list .order-menu__uber img {
+  order: 2; /* logo on the right */
+}
+
+.order-menu__uber img {
+  flex: none;
+  width: auto;
+  height: 56px;
+}
+
+.order-menu__list small {
+  display: block;
+  margin-top: 2px;
+  font-size: 13.5px;
+  color: #5e5e5e;
+}
+
+/* Phone menu (drawer) version */
+.drawer__label {
+  margin: 24px 0 8px;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.order-menu__list--drawer {
+  padding: 0;
+  background: var(--color-white);
+}
+
+@media (max-width: 900px) {
+  .order-menu {
+    display: none;
+  }
+}
+
+.order-menu__list small {
+  text-wrap: balance;
+}
+
+/* Phone menu: logo above the text so the words keep the full width */
+.order-menu__list--drawer a.order-menu__uber {
+  display: block;
+}
+
+.order-menu__list--drawer .order-menu__uber img {
+  width: 120px;
+  height: auto;
+  display: block;
+  margin-bottom: 8px;
 }

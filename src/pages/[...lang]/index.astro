@@ -1,0 +1,133 @@
+---
+import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import AboutUs from '../../components/AboutUs.astro';
+import { business, stores } from '../../data/site.js';
+import { pierogi, sandwiches, entrees } from '../../data/menu.js';
+import '../../styles/home.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+
+const slides = [
+  { src: '/images/slide-pierogi.jpg', alt: 'Pierogi being made on a floured wooden board' },
+  { src: '/images/slide-kielbasa.jpg', alt: 'Grilled kielbasa with cabbage and potatoes' },
+  { src: '/images/slide-bread.jpg', alt: 'Fresh bread with wheat' },
+  { src: '/images/slide-makowiec.jpg', alt: 'Poppy seed roll' },
+  { src: '/images/slide-market.jpg', alt: 'Polish market stall with sausages and baked goods' },
+];
+
+const sampler = entrees.find((e) => e.name === 'Polish Sampler');
+const kielbasaSandwich = sandwiches.items.find((s) => s.name === 'Smoked Kielbasa');
+const dishes = [
+  {
+    img: '/images/media/pierogi.jpg',
+    name: 'Pierogi',
+    desc: `${pierogi.fillings.filter((f) => f !== 'Mix Pierogi').map((f) => tr(lang, f)).join(', ')}. ${tr(lang, pierogi.servedWith)}`,
+  },
+  { img: '/images/slide-kielbasa.jpg', name: tr(lang, sampler.name), desc: tr(lang, sampler.desc) },
+  { img: '/images/media/kielbasa.jpg', name: tr(lang, kielbasaSandwich.name), desc: tr(lang, kielbasaSandwich.desc) },
+];
+
+const offers = [
+  {
+    img: '/images/media/kielbasa.jpg', title: 'Deli Meats and Cheeses', href: '/deli-menu',
+    ticks: ['Pierogi', 'Sandwiches', 'Hearty Entrees', 'Soups'],
+  },
+  {
+    img: '/images/media/platter.jpg', title: 'Platters', href: '/platters',
+    ticks: ['Cold Cut Platters', 'Party Trays', 'Cake Platters', 'Breads'],
+  },
+  {
+    img: '/images/media/jars.jpg', title: 'Groceries', href: '/shop', button: 'Shop',
+    text: "If you don't see a product listed below please ask, we add products daily.",
+    ticks: ['Pierogi', 'Kielbasa', 'Deli Meats and Cheese', 'Blintzes, Noodles', 'Marinated Goods', 'Sweets and Baked Goods'],
+  },
+];
+---
+<Base overlay>
+  <section class="hero" data-hero aria-label={t.welcome}>
+    <div class="hero__slides" aria-hidden="true">
+      {slides.map((s, i) => <img src={s.src} alt="" class={i === 0 ? 'hero__slide is-active' : 'hero__slide'} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />)}
+    </div>
+    <div class="hero__copy"></div>
+    <div class="hero__foot">
+      <div class="hero__left">
+      <img class="doodle-badge" src="/images/doodles/onfork.svg" alt="" aria-hidden="true" />
+      <h1 data-solid-at>{t.tagline}</h1>
+      <div class="hero__stores">
+        {stores.map((s) => (
+          <div class="hero-store">
+            <p class="hero-store__city">{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</p>
+            <a class="hero-store__addr" href={s.maps}><span class="nobr">{s.street}</span><br />{s.locality}</a>
+            <a class="hero-store__phone" href={s.phoneHref}>{s.phone}</a>
+          </div>
+        ))}
+      </div>
+      </div>
+      <form class="hero-signup" name="newsletter" method="POST" action={href('/thanks', lang)} data-netlify="true" netlify-honeypot="company">
+        <h2>{t.joinList}</h2>
+        <p class="signup__trap"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+        <div class="hero-signup__fields">
+          <label><span class="visually-hidden">{t.name}</span><input name="name" type="text" required autocomplete="name" placeholder={t.name} /></label>
+          <label><span class="visually-hidden">{t.emailAddress}</span><input name="email" type="email" required autocomplete="email" placeholder={t.emailAddress} /></label>
+        </div>
+        <div class="hero-signup__actions">
+          <p class="hero-signup__privacy"><a href={href('/#privacy', lang)} data-privacy>{t.privacyLink}</a></p>
+          <button type="submit" class="btn">{t.subscribe}</button>
+        </div>
+      </form>
+    </div>
+    <p class="strip">{t.shipping}</p>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="showcase">
+        {offers.map((o) => (
+          <article class="show">
+            <div class="show__ph"><img src={o.img} alt="" loading="lazy" /></div>
+            <h3>{tr(lang, o.title)}</h3>
+            <p class="show__items">{o.ticks.map((x, k) => <span>{tr(lang, x)}{k < o.ticks.length - 1 ? ',' : ''}</span>)}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-1.svg" alt="" /><span></span></div>
+  <section class="section">
+    <div class="wrap">
+      <div class="dishes">
+        {dishes.map((d) => (
+          <article class="dish">
+            <div class="dish__ph"><img src={d.img} alt="" loading="lazy" /></div>
+            <h3>{d.name}</h3>
+            <p>{d.desc}</p>
+          </article>
+        ))}
+      </div>
+      <p class="center-cta"><a class="btn" href={href('/deli-menu', lang)}>{t.exploreMenu}</a></p>
+    </div>
+  </section>
+
+  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-3.svg" alt="" /><span></span></div>
+  <section class="section">
+    <div class="wrap"><AboutUs /></div>
+  </section>
+</Base>
+
+<script>
+  const slides = [...document.querySelectorAll('.hero__slide')];
+  let i = 0;
+  let timer;
+  const show = (n) => {
+    slides[i].classList.remove('is-active');
+    i = (n + slides.length) % slides.length;
+    slides[i].classList.add('is-active');
+  };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const start = () => { if (!reduce) { clearInterval(timer); timer = setInterval(() => show(i + 1), 6000); } };
+  document.addEventListener('visibilitychange', () => (document.hidden ? clearInterval(timer) : start()));
+  start();
+</script>

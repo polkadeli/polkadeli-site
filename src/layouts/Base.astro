@@ -1,15 +1,24 @@
 ---
 import { business, stores, nav } from '../data/site.js';
+import { langOf, href, switchHref, hours, tr, ui } from '../i18n.js';
 import SocialIcons from '../components/SocialIcons.astro';
+import PrivacyPolicy from '../components/PrivacyPolicy.astro';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/header.css';
 import '../styles/footer.css';
+import '../styles/legal.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
 const {
-  title = 'Polka Deli · Polish Food & Market in Silver Spring, MD and Vienna, VA',
-  description = 'Authentic Polish groceries and food prepared daily. Kielbasa, deli meats, pierogi, cheese, sweets and party platters in Silver Spring, MD and Vienna, VA.',
+  title = t.siteTitle,
+  description = t.siteDesc,
+  overlay = false, // true: header sits transparent over a full-screen photo (home page)
 } = Astro.props;
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = Astro.url.pathname.replace(/^\/pl(?=\/|$)/, '').replace(/\/$/, '') || '/';
+const links = nav.map((n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href }));
+// Links to this same page in English and in Polish (EN | PL switch)
+const sw = { en: switchHref(Astro.url, 'en'), pl: switchHref(Astro.url, 'pl') };
 const jsonLd = stores.map((s) => ({
   '@context': 'https://schema.org',
   '@type': 'GroceryStore',
@@ -17,14 +26,16 @@ const jsonLd = stores.map((s) => ({
   url: 'https://www.polkadelimd.com',
   telephone: s.phone,
   address: { '@type': 'PostalAddress', streetAddress: s.street, addressLocality: s.locality.split(',')[0], addressRegion: s.locality.split(', ')[1].split(' ')[0], postalCode: s.locality.split(' ').pop(), addressCountry: 'US' },
-  sameAs: [business.facebook],
+  sameAs: [business.facebook, business.instagram],
 }));
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang} translate="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The site has its own EN | PL switch, so stop Chrome offering Google Translate -->
+  <meta name="google" content="notranslate" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
@@ -32,56 +43,102 @@ const jsonLd = stores.map((s) => ({
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="alternate" hreflang="en" href={new URL(sw.en, Astro.site)} />
+  <link rel="alternate" hreflang="pl" href={new URL(sw.pl, Astro.site)} />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <nav class="site-nav" aria-label="Main">
-      <ul class="site-nav__links">
-        {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
-      </ul>
-      <SocialIcons />
-      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
-    </nav>
-    <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-      <span></span><span></span><span></span>
-    </button>
+  <a class="skip-link" href="#main">{t.skip}</a>
+  <header class:list={['site-header', overlay ? 'site-header--overlay' : 'is-solid']}>
+    <div class="site-header__bar">
+      <a class="site-header__logo" href={href('/', lang)} aria-label={t.home}>
+        <img class="logo-white" src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
+        <img class="logo-color" src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul class="site-nav__links">
+          {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="lang-switch" role="group" aria-label={t.language}>
+        <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+        <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
+      </div>
+      <div class="phone-menu">
+        <button type="button" class="phone-menu__btn social-link" aria-label={t.callStore} aria-expanded="false" aria-controls="phone-list">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+        </button>
+        <ul class="phone-menu__list" id="phone-list" hidden>
+          {stores.map((s) => (
+            <li><a href={s.phoneHref}><span class="phone-menu__city">{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</span><span class="phone-menu__num">{s.phone}</span></a></li>
+          ))}
+        </ul>
+      </div>
+      <div class="site-header__social"><SocialIcons size={24} /></div>
+      <!-- Order now: choose pickup (our order page) or delivery (Uber Eats) -->
+      <div class="order-menu">
+        <button type="button" class="header-order order-menu__btn" aria-expanded="false" aria-controls="order-list">{t.orderNow}</button>
+        <ul class="order-menu__list" id="order-list" hidden>
+          <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>
+          <li><a class="order-menu__uber" href={business.uberEats} target="_blank" rel="noopener"><img src="/images/uber-eats-wide.png" alt="" width="127" height="56" /><span><b>{t.deliveryTitle}</b><small>{t.deliveryHint}</small></span></a></li>
+        </ul>
+      </div>
+      <button class="menu-button" type="button" aria-label={t.openMenu} aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
   <div class="drawer" id="drawer" hidden>
-    <button class="drawer__close" type="button" aria-label="Close menu">×</button>
+    <button class="drawer__close" type="button" aria-label={t.closeMenu}>×</button>
     <ul class="drawer__links">
-      {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+      {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
-    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
+    <div class="lang-switch lang-switch--drawer" role="group" aria-label={t.language}>
+      <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+      <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
+    </div>
+    <p class="drawer__label">{t.orderNow}</p>
+    <ul class="order-menu__list order-menu__list--drawer">
+          <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>
+          <li><a class="order-menu__uber" href={business.uberEats} target="_blank" rel="noopener"><img src="/images/uber-eats-wide.png" alt="" width="120" height="53" /><span><b>{t.deliveryTitle}</b><small>{t.deliveryHint}</small></span></a></li>
+    </ul>
     <div class="drawer__social"><SocialIcons size={26} /></div>
   </div>
 
   <main id="main"><slot /></main>
 
   <footer class="site-footer">
-    <div class="footer-brand">
-      <a href="/" aria-label="Polka Deli home"><img src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="240" height="81" /></a>
-    </div>
-    <div class="footer-columns">
-      {stores.map((s) => (
+    <div class="site-footer__inner">
+      <div class="footer-columns">
+        {stores.map((s) => (
+          <div class="footer-column">
+            <h2>{s.city}</h2>
+            <p><a href={s.maps}>{s.street},<br />{s.locality}</a></p>
+            <p><a href={s.phoneHref}>{s.phone}</a></p>
+            <dl class="footer-hours">{s.hours.map(([d, h]) => <div><dt>{tr(lang, d)}</dt><dd>{hours(lang, h)}</dd></div>)}</dl>
+          </div>
+        ))}
         <div class="footer-column">
-          <h2>{s.city}</h2>
-          <p><a href={s.maps}>{s.street}<br />{s.locality}</a></p>
-          <p><a href={s.phoneHref}>{s.phone}</a></p>
-          <ul class="footer-hours">{s.hours.map(([d, h]) => <li><span>{d}</span>{h}</li>)}</ul>
+          <h2>{t.contactUs}</h2>
+          <p><a href={href('/find-us#contact-title', lang)}>{t.sendMessage}</a></p>
+          <div class="footer-social"><SocialIcons size={24} /></div>
         </div>
-      ))}
-      <div class="footer-column">
-        <h2>Online</h2>
-        <p><a href={`mailto:${business.email}`}>{business.email}</a></p>
-        <p><a href={business.uberEats} target="_blank" rel="noopener">Order on Uber Eats</a></p>
-        <div class="footer-social"><SocialIcons size={26} /></div>
+      </div>
+      <div class="footer-copy">
+        <span>© {new Date().getFullYear()} {t.copy}</span>
+        <span><a href={href('/#privacy', lang)} data-privacy>{t.privacy}</a></span>
       </div>
     </div>
-    <p class="footer-copy">© {new Date().getFullYear()} Polka Deli · Polish Food &amp; Market · <a href="/privacy">Privacy</a></p>
   </footer>
+
+  <dialog class="privacy-dialog" id="privacy" aria-labelledby="privacy-title">
+    <div class="privacy-dialog__head">
+      <h2 id="privacy-title">{t.privacyPolicy}</h2>
+      <button type="button" class="privacy-dialog__close" aria-label={t.closePrivacy}>×</button>
+    </div>
+    <div class="privacy-dialog__body"><PrivacyPolicy /></div>
+  </dialog>
 
   <script>
     const burger = document.querySelector('.menu-button');
@@ -95,6 +152,43 @@ const jsonLd = stores.map((s) => ({
     burger.addEventListener('click', () => setOpen(true));
     close.addEventListener('click', () => setOpen(false));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !drawer.hidden) setOpen(false); });
+
+    // Privacy policy pop-up: any link with data-privacy opens it; /#privacy opens it on load.
+    const privacy = document.getElementById('privacy');
+    const openPrivacy = (e) => { e?.preventDefault(); if (!privacy.open) privacy.showModal(); };
+    document.querySelectorAll('[data-privacy]').forEach((a) => a.addEventListener('click', openPrivacy));
+    privacy.querySelector('.privacy-dialog__close').addEventListener('click', () => privacy.close());
+    privacy.addEventListener('click', (e) => { if (e.target === privacy) privacy.close(); });
+    privacy.addEventListener('close', () => { if (location.hash === '#privacy') history.replaceState(null, '', location.pathname); });
+    if (location.hash === '#privacy') openPrivacy();
+
+    // Phone dropdown in the header
+    const pBtn = document.querySelector('.phone-menu__btn');
+    const pList = document.getElementById('phone-list');
+    const setPhone = (open) => { pBtn.setAttribute('aria-expanded', String(open)); pList.hidden = !open; };
+    pBtn.addEventListener('click', (e) => { e.stopPropagation(); setPhone(pList.hidden); });
+    document.addEventListener('click', (e) => { if (!pList.hidden && !e.target.closest('.phone-menu')) setPhone(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pList.hidden) { setPhone(false); pBtn.focus(); } });
+
+    // Order now dropdown in the header
+    const oBtn = document.querySelector('.order-menu__btn');
+    const oList = document.getElementById('order-list');
+    const setOrder = (open) => { oBtn.setAttribute('aria-expanded', String(open)); oList.hidden = !open; };
+    oBtn.addEventListener('click', (e) => { e.stopPropagation(); setOrder(oList.hidden); });
+    document.addEventListener('click', (e) => { if (!oList.hidden && !e.target.closest('.order-menu')) setOrder(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !oList.hidden) { setOrder(false); oBtn.focus(); } });
+
+    // Overlay header: transparent over the home page photo, then a see-through white bar.
+    const header = document.querySelector('.site-header--overlay');
+    if (header) {
+      // Turns white when the bar reaches the element marked data-solid-at (the home headline).
+      const mark = document.querySelector('[data-solid-at]');
+      const point = () => (mark ? mark.getBoundingClientRect().top + scrollY - header.offsetHeight : 40);
+      const update = () => header.classList.toggle('is-solid', scrollY > point());
+      addEventListener('scroll', update, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
   </script>
 </body>
 </html>

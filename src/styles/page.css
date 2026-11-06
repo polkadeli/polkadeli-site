@@ -18,28 +18,6 @@
   max-width: var(--width-page);
 }
 
-.page-card__logo {
-  display: block;
-  max-width: 300px;
-  margin: 0 auto var(--space-3);
-}
-
-.page-card__logo img {
-  width: 100%;
-  height: auto;
-}
-
-/* "D e l i  M e n u": grey, light, very wide letter-spacing */
-.page-card__title {
-  margin: 0 0 var(--space-2);
-  font-family: var(--font-body);
-  font-size: 24px;
-  font-weight: 400;
-  letter-spacing: 0.4em;
-  text-align: center;
-  color: var(--color-grey);
-}
-
 /* One-line note under the title, e.g. how to order */
 .page-card__intro {
   margin: 0 0 var(--space-6);
@@ -60,12 +38,4 @@
     padding: var(--space-4) var(--space-4) var(--space-5);
   }
 
-  .page-card__logo {
-    max-width: 230px;
-  }
-
-  .page-card__title {
-    font-size: 20px;
-    letter-spacing: 0.3em;
-  }
 }
