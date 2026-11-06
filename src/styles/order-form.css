@@ -864,3 +864,8 @@
 .of__nowrap {
   white-space: nowrap;
 }
+
+/* Leave-out ticks sit under the choice ticks */
+.of__choices.of__remove {
+  grid-row: 4;
+}

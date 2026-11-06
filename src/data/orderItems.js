@@ -9,8 +9,8 @@ export const cents = (price) => Math.round(parseFloat(String(price).replace('$',
 // group: 'pierogi' | 'sandwiches' | 'entrees' | 'platters'; type: 'deli' | 'platters'
 export const orderItems = [
   ...pierogi.prices.map(([size, price]) => ({ key: `pierogi-${slug(size)}`, group: 'pierogi', type: 'deli', name: `Pierogi, ${size}`, size, price, choices: pierogi.fillings })),
-  ...sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, group: 'sandwiches', type: 'deli', name: i.name, price: sandwiches.price, desc: i.desc })),
-  ...entrees.map((i) => ({ key: `entree-${slug(i.name)}`, group: 'entrees', type: 'deli', name: i.choices ? i.name : `${i.name}${i.note ? ` ${i.note}` : ''}`, base: i.name, note: i.choices ? undefined : i.note, choices: i.choices, price: i.price, desc: i.desc })),
+  ...sandwiches.items.map((i) => ({ key: `sandwich-${slug(i.name)}`, group: 'sandwiches', type: 'deli', name: i.name, price: sandwiches.price, desc: i.desc, removable: i.removable })),
+  ...entrees.map((i) => ({ key: `entree-${slug(i.name)}`, group: 'entrees', type: 'deli', name: i.choices ? i.name : `${i.name}${i.note ? ` ${i.note}` : ''}`, base: i.name, note: i.choices ? undefined : i.note, choices: i.choices, price: i.price, desc: i.desc, removable: i.removable })),
   ...platters.flatMap((g) => g.items.map((i) => ({ key: `platter-${slug(i.name)}`, group: 'platters', type: 'platters', name: i.name, price: i.price, serves: g.serves, heading: g.heading, desc: i.desc, list: i.list }))),
 ];
 

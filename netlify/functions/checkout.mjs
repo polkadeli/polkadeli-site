@@ -41,6 +41,10 @@ export default async (req, context) => {
       if (!item.choices.includes(it.filling)) return json({ error: 'filling' }, 400);
       name += ` (${it.filling})`;
     }
+    // Ingredients to leave out: only ones the menu allows
+    const remove = Array.isArray(it.remove) ? [...new Set(it.remove)] : [];
+    if (remove.some((x) => !(item.removable || []).includes(x))) return json({ error: 'items' }, 400);
+    if (remove.length) name += ` (without: ${remove.join(', ')})`;
     lines.push({ name, qty, price: cents(item.price) });
   }
   if (!lines.length) return json({ error: 'items' }, 400);

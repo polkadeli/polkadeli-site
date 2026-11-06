@@ -124,6 +124,8 @@ export const ui = {
     fillingFor: 'Filling for',
     chooseFilling: 'Choose a filling',
     chooseOne: 'Choose one',
+    leaveOut: 'Leave out (optional)',
+    withoutShort: 'without:',
     pickDateFirst: 'Pick a date first',
     chooseTime: 'Choose a time',
     noTimesLeft: 'No times left, pick another day',
@@ -253,6 +255,8 @@ export const ui = {
     fillingFor: 'Farsz:',
     chooseFilling: 'Wybierz farsz',
     chooseOne: 'Wybierz',
+    leaveOut: 'Bez (opcjonalnie)',
+    withoutShort: 'bez:',
     pickDateFirst: 'Najpierw wybierz datę',
     chooseTime: 'Wybierz godzinę',
     noTimesLeft: 'Brak wolnych godzin, wybierz inny dzień',
@@ -350,6 +354,8 @@ const pl = {
     '(Frozen)': '(mrożone)', '(Assorted flavors)': '(różne smaki)',
   },
   groups: {
+    // Ingredients a customer can leave out on the order form
+    ingredients: { Kraut: 'Kapusta', 'Grilled onions': 'Smażona cebulka', Mustard: 'Musztarda', 'Horseradish sauce': 'Sos chrzanowy', Lettuce: 'Sałata', Tomato: 'Pomidor', Cheese: 'Ser', 'Russian dressing': 'Sos rosyjski', Mayo: 'Majonez', Sauerkraut: 'Kapusta kiszona', 'Fruit jam': 'Dżem', 'Sour cream': 'Śmietana', 'Tomato sauce': 'Sos pomidorowy' },
     // Box headings on the Platters page (Polish)
     platterHeadings: { 'Cold Cut Platters': 'Wędliny', 'Party Trays': 'Tace bankietowe', 'Cake Platter': 'Ciasta', Bread: 'Pieczywo' },
     Kielbasa: {
