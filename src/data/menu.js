@@ -28,7 +28,7 @@ export const entrees = [
   { name: 'Kielbasa & 4 Pierogi', price: '$14.99', desc: 'Kraut, grilled onions, mustard, horseradish sauce' },
   { name: 'Polish Food Sampler', price: '$14.99', desc: 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce' },
   { name: 'Schnitzel & Potato Dumplings', note: '(pork or chicken)', price: '$14.99', desc: 'Sauerkraut, horseradish sauce' },
-  { name: 'Soup of the Day', price: '$6.99' },
+  { name: 'Soup of the Day', price: '$6.99', desc: 'One of four in rotation: sour rye, borscht, split pea or pickle soup' },
 ];
 
 // Platters content (Platters page).

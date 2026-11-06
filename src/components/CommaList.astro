@@ -1,7 +1,10 @@
 ---
 // A comma-separated description ("Kraut, grilled onions, mustard") where lines only break between items.
-// Text without commas (a sentence) wraps normally.
+// Text without commas (a sentence) wraps normally. A lead-in before a colon ("One of four in rotation:") wraps normally too.
 const { text = '' } = Astro.props;
-const parts = text.split(', ');
+const colon = text.indexOf(': ');
+const lead = colon > -1 ? text.slice(0, colon + 1) + ' ' : '';
+const list = colon > -1 ? text.slice(colon + 2) : text;
+const parts = list.split(', ');
 ---
-{parts.length < 2 ? text : parts.map((p, i) => <span class="mp-nowrap">{p}{i < parts.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}
+{lead}{parts.length < 2 ? list : parts.map((p, i) => <span class="mp-nowrap">{p}{i < parts.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}

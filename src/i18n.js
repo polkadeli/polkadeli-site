@@ -298,7 +298,7 @@ const pl = {
     'Kielbasa & 4 Pierogi': 'Kiełbasa i 4 pierogi',
     'Polish Food Sampler': 'Polski zestaw degustacyjny', 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce': 'Kiełbasa biała i wędzona, 4 pierogi, kapusta, grillowana cebula, musztarda, sos chrzanowy',
     'Schnitzel & Potato Dumplings': 'Sznycel z kopytkami', '(pork or chicken)': '(wieprzowy lub z kurczaka)', 'Sauerkraut, horseradish sauce': 'Kiszona kapusta, sos chrzanowy',
-    'Soup of the Day': 'Zupa dnia',
+    'Soup of the Day': 'Zupa dnia', 'One of four in rotation: sour rye, borscht, split pea or pickle soup': 'Jedna z czterech, na zmianę: żurek, barszcz, grochówka lub ogórkowa',
     // Platters
     'Serve 15–18': '15–18 osób', 'Serve 6': '6 osób', 'Serves 8–10': '8–10 osób',
     'Kielbasa Platter': 'Półmisek kiełbas', 'Variety of smoked kielbasa': 'Różne kiełbasy wędzone',
