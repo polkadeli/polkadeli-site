@@ -30,8 +30,8 @@ export const entrees = [
   { name: 'Sweet Cheese Crepes', price: '$10.99', extras: saladSide, desc: '3 crepes served with fruit jam and sour cream', removable: ['Fruit jam', 'Sour cream'] },
   { name: 'Stuffed Cabbage & Roasted Potatoes', price: '$11.99', extras: saladSide, desc: 'Topped with tomato sauce', removable: ['Tomato sauce'] },
   { name: 'Kielbasa w/ Rye Bread & Potato Salad', extras: saladSide, note: '(fresh or smoked)', choices: ['Fresh', 'Smoked'], price: '$11.99', desc: 'Kraut, grilled onions, mustard, horseradish sauce', removable: ['Kraut', 'Grilled onions', 'Mustard', 'Horseradish sauce'] },
-  { name: 'Kielbasa & 4 Pierogi', price: '$14.99', extras: saladSide, desc: 'Kraut, grilled onions, mustard, horseradish sauce', removable: ['Kraut', 'Grilled onions', 'Mustard', 'Horseradish sauce'] },
-  { name: 'Polish Food Sampler', price: '$14.99', extras: saladSide, desc: 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce', removable: ['Kraut', 'Grilled onions', 'Mustard', 'Horseradish sauce'] },
+  { name: 'Kielbasa & 4 Pierogi', price: '$14.99', choices: pierogi.fillings, choiceLabel: 'filling', extras: saladSide, desc: 'Kraut, grilled onions, mustard, horseradish sauce', removable: ['Kraut', 'Grilled onions', 'Mustard', 'Horseradish sauce'] },
+  { name: 'Polish Food Sampler', price: '$14.99', choices: pierogi.fillings, choiceLabel: 'filling', extras: saladSide, desc: 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce', removable: ['Kraut', 'Grilled onions', 'Mustard', 'Horseradish sauce'] },
   { name: 'Pork Schnitzel & Potato Dumplings', price: '$14.99', extras: saladSide, desc: 'Sauerkraut, horseradish sauce', removable: ['Sauerkraut', 'Horseradish sauce'] },
   { name: 'Soup of the Day', price: '$6.99', extras: saladSide, desc: 'One of four in rotation: sour rye, borscht, split pea or pickle soup' },
 ];
