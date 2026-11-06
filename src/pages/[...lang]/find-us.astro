@@ -3,6 +3,7 @@ import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
 import VisitStores from '../../components/VisitStores.astro';
+import AboutUs from '../../components/AboutUs.astro';
 import SocialIcons from '../../components/SocialIcons.astro';
 import '../../styles/visit.css';
 const lang = langOf(Astro.url);
@@ -10,6 +11,9 @@ const t = ui[lang];
 ---
 <Base title={t.visitTitle} description={t.visitDesc}>
   <VisitStores />
+
+  <!-- About us (Maria and Joanna), under the store hours -->
+  <div class="visit-about"><AboutUs /></div>
 
   <div class="visit-rest">
     <section class="ct" aria-labelledby="contact-title">

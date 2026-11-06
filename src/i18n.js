@@ -12,7 +12,7 @@ export const langOf = (url) => (url.pathname === '/pl' || url.pathname.startsWit
 import { features } from './data/features.js';
 export const langPaths = () => (features.polish ? [{ params: { lang: undefined } }, { params: { lang: 'pl' } }] : [{ params: { lang: undefined } }]);
 
-// Address of a page in a language: href('/shop', 'pl') → '/pl/shop', href('/#about', 'pl') → '/pl/#about'.
+// Address of a page in a language: href('/shop', 'pl') → '/pl/shop', href('/find-us#about', 'pl') → '/pl/find-us#about'.
 export const href = (path, lang) => {
   if (lang !== 'pl') return path;
   return path === '/' ? '/pl/' : `/pl${path}`;
@@ -47,7 +47,7 @@ export const ui = {
   en: {
     siteTitle: 'Polka Deli · Polish Food & Market in Silver Spring, MD and Vienna, VA',
     siteDesc: 'Authentic Polish groceries and food prepared daily. Kielbasa, deli meats, pierogi, cheese, sweets and party platters in Silver Spring, MD and Vienna, VA.',
-    nav: { '/deli-menu': 'Deli Menu', '/platters': 'Platters', '/shop': 'Shop', '/#about': 'About', '/find-us': 'Visit us' },
+    nav: { '/deli-menu': 'Deli Menu', '/platters': 'Platters', '/shop': 'Shop', '/find-us#about': 'About', '/find-us': 'Visit us' },
     skip: 'Skip to content',
     home: 'Polka Deli home',
     callStore: 'Call a store',
@@ -183,7 +183,7 @@ export const ui = {
   pl: {
     siteTitle: 'Polka Deli · Polskie delikatesy w Silver Spring, MD i Vienna, VA',
     siteDesc: 'Autentyczne polskie produkty i jedzenie przygotowywane codziennie. Kiełbasy, wędliny, pierogi, sery, słodycze i półmiski na przyjęcia w Silver Spring, MD i Vienna, VA.',
-    nav: { '/deli-menu': 'Menu', '/platters': 'Półmiski', '/shop': 'Sklep', '/#about': 'O nas', '/find-us': 'Odwiedź nas' },
+    nav: { '/deli-menu': 'Menu', '/platters': 'Półmiski', '/shop': 'Sklep', '/find-us#about': 'O nas', '/find-us': 'Odwiedź nas' },
     skip: 'Przejdź do treści',
     home: 'Polka Deli, strona główna',
     callStore: 'Zadzwoń do sklepu',

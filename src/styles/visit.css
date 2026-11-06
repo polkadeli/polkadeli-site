@@ -154,3 +154,16 @@
     gap: 0;
   }
 }
+
+/* About us block under the store hours */
+.visit-about {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 40px;
+}
+
+@media (max-width: 900px) {
+  .visit-about {
+    padding: 56px 20px;
+  }
+}

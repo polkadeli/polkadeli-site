@@ -3,7 +3,6 @@
 import { langOf, langPaths, href, tr, trItem, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
-import AboutUs from '../../components/AboutUs.astro';
 import { business, stores } from '../../data/site.js';
 import { pierogi } from '../../data/menu.js';
 import '../../styles/home.css';
@@ -108,10 +107,6 @@ const offers = [
     </div>
   </section>
 
-  <div class="doodle-divider" aria-hidden="true"><span></span><img src="/images/doodles/pierogi-3.svg" alt="" /><span></span></div>
-  <section class="section">
-    <div class="wrap"><AboutUs /></div>
-  </section>
 </Base>
 
 <script>
