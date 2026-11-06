@@ -315,7 +315,7 @@ const pl = {
     'Kielbasa Platter': 'Półmisek kiełbas', 'Variety of smoked kielbasa': 'Różne kiełbasy wędzone',
     'Cheese Platter': 'Półmisek serów', 'Variety of cheese': 'Różne sery',
     'Mixed Platter': 'Półmisek mieszany', 'Variety of kielbasa, cheese and cold cuts': 'Różne kiełbasy, sery i wędliny',
-    'Bread Tray': 'Taca pieczywa', 'Assortment of breads': 'Taca pieczywa',
+    'Bread Tray': 'Taca pieczywa',
     'Polish Feast': 'Polska uczta', '3 Pork Schnitzels': '3 sznycle wieprzowe', '3 Stuffed Cabbages': '3 gołąbki',
     '6 Grilled Kielbasas with Kraut and Onion': '6 kiełbas z grilla z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
     '1 lb Salad': '1 funt sałatki', 'Grilled Kielbasa & Pierogi': 'Kiełbasa z grilla i pierogi', '24 Pierogi (potato & cheese)': '24 pierogi ruskie',
@@ -326,7 +326,7 @@ const pl = {
   },
   groups: {
     // Box headings on the Platters page (Polish)
-    platterHeadings: { 'Cold Cut Platters': 'Wędliny', 'Party Trays': 'Tace bankietowe', 'Cake Platter': 'Ciasta', 'Bread Tray': 'Pieczywo' },
+    platterHeadings: { 'Cold Cut Platters': 'Wędliny', 'Party Trays': 'Tace bankietowe', 'Cake Platter': 'Ciasta', Bread: 'Pieczywo' },
     Kielbasa: {
       Wedding: 'Weselna', Traditional: 'Tradycyjna', Hunters: 'Myśliwska', Original: 'Oryginalna', Juniper: 'Jałowcowa',
       Cherrywood: 'Wędzona drewnem wiśniowym', 'Kabanosy Mini': 'Kabanosy mini', 'Spicy Kabanosy': 'Kabanosy ostre',

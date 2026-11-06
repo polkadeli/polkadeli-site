@@ -16,8 +16,8 @@ const orderLabel = features.onlineOrdering ? t.orderPlatters : `${t.callToOrder}
 const slug = (s) => s.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 // Two columns like the Deli Menu: Cold Cuts over Cake, Party Trays over Bread.
 const byHeading = Object.fromEntries(platters.map((g) => [g.heading, g]));
-const platterCols = [['Cold Cut Platters', 'Cake Platter'], ['Party Trays', 'Bread Tray']].map((col) => col.map((h) => byHeading[h]).filter(Boolean));
-const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread Tray'].map((h) => byHeading[h]).filter(Boolean);
+const platterCols = [['Cold Cut Platters', 'Cake Platter'], ['Party Trays', 'Bread']].map((col) => col.map((h) => byHeading[h]).filter(Boolean));
+const platterTabs = ['Cold Cut Platters', 'Cake Platter', 'Party Trays', 'Bread'].map((h) => byHeading[h]).filter(Boolean);
 const tabs = [
   ...platterTabs.map((g) => [slug(g.heading), tr(lang, g.heading, 'platterHeadings')]),
 ];
