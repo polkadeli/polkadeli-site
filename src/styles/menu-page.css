@@ -780,3 +780,11 @@
     font-size: 18px;
   }
 }
+
+/* Desktop: the whole menu fits on screen, so the section links aren't needed.
+   The red bar stays (it holds the small order button once you scroll). Phones keep the links. */
+@media (min-width: 901px) {
+  .mp-tabs__links {
+    visibility: hidden;
+  }
+}
