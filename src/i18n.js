@@ -203,7 +203,7 @@ export const ui = {
     menuDesc: 'Ręcznie lepione pierogi, grillowana kiełbasa, kanapki, polskie dania i zupy z Polka Deli. Zamów online z odbiorem w Silver Spring, MD.',
     plattersTitle: 'Półmiski i tace bankietowe · Polka Deli',
     plattersDesc: 'Półmiski wędlin, tace bankietowe, zestawy ciast i półmiski pieczywa z Polka Deli. Zamów dzień wcześniej z odbiorem w Silver Spring.',
-    orderPlatters: 'Zamów półmiski z odbiorem',
+    orderPlatters: 'Zamów i odbierz w sklepie',
     seePlatters: 'Półmiski i tace bankietowe',
     menuAlt: 'Drukowane menu Polka Deli: Menu, zawsze świeże',
     callToOrder: 'Zamów telefonicznie',
