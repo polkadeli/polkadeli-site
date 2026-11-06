@@ -57,6 +57,6 @@ export const platters = [
   {
     heading: 'Cake Platter',
     serves: 'Serves 8–10',
-    items: [{ name: 'Polish Cake Platter', price: '$44.99', desc: 'Variety of Polish cakes and cheesecakes' }],
+    items: [{ name: 'Polish Cake Platter', price: '$44.99' }],
   },
 ];
