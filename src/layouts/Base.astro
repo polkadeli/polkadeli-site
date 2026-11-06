@@ -14,6 +14,7 @@ const {
   title = t.siteTitle,
   description = t.siteDesc,
   overlay = false, // true: header sits transparent over a full-screen photo (home page)
+  noindex = false, // true: keep mockup/preview pages out of search engines
 } = Astro.props;
 const path = Astro.url.pathname.replace(/^\/pl(?=\/|$)/, '').replace(/\/$/, '') || '/';
 const links = nav.map((n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href }));
@@ -38,6 +39,7 @@ const jsonLd = stores.map((s) => ({
   <meta name="google" content="notranslate" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

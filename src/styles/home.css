@@ -105,8 +105,8 @@ main p {
 
 .hero::after {
   bottom: auto;
-  height: 220px;
-  background: linear-gradient(180deg, rgba(10, 6, 4, 0.55), transparent);
+  height: 180px;
+  background: linear-gradient(180deg, rgba(10, 6, 4, 0.3), transparent);
 }
 
 /* Empty spacer that pushes the content to the bottom of the photo */

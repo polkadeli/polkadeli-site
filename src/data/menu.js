@@ -26,7 +26,7 @@ export const entrees = [
   { name: 'Stuffed Cabbage & Roasted Potatoes', price: '$11.99', desc: 'Topped with tomato sauce' },
   { name: 'Kielbasa w/ Rye Bread & Potato Salad', note: '(fresh or smoked)', price: '$11.99', desc: 'Kraut, grilled onions, mustard, horseradish sauce' },
   { name: 'Kielbasa & 4 Pierogi', price: '$14.99', desc: 'Kraut, grilled onions, mustard, horseradish sauce' },
-  { name: 'Polish Sampler', price: '$14.99', desc: 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce' },
+  { name: 'Polish Food Sampler', price: '$14.99', desc: 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce' },
   { name: 'Schnitzel & Potato Dumplings', note: '(pork or chicken)', price: '$14.99', desc: 'Sauerkraut, horseradish sauce' },
   { name: 'Soup of the Day', price: '$6.99' },
 ];

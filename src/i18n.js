@@ -294,7 +294,7 @@ const pl = {
     'Kielbasa w/ Rye Bread & Potato Salad': 'Kiełbasa z chlebem żytnim i sałatką ziemniaczaną', '(fresh or smoked)': '(biała lub wędzona)',
     'Kraut, grilled onions, mustard, horseradish sauce': 'Kapusta, grillowana cebula, musztarda, sos chrzanowy',
     'Kielbasa & 4 Pierogi': 'Kiełbasa i 4 pierogi',
-    'Polish Sampler': 'Polski zestaw', 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce': 'Kiełbasa biała i wędzona, 4 pierogi, kapusta, grillowana cebula, musztarda, sos chrzanowy',
+    'Polish Food Sampler': 'Polski zestaw degustacyjny', 'Fresh & smoked kielbasa, 4 pierogi, kraut, grilled onions, mustard, horseradish sauce': 'Kiełbasa biała i wędzona, 4 pierogi, kapusta, grillowana cebula, musztarda, sos chrzanowy',
     'Schnitzel & Potato Dumplings': 'Sznycel z kopytkami', '(pork or chicken)': '(wieprzowy lub z kurczaka)', 'Sauerkraut, horseradish sauce': 'Kiszona kapusta, sos chrzanowy',
     'Soup of the Day': 'Zupa dnia',
     // Platters

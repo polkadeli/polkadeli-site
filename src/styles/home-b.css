@@ -1,0 +1,370 @@
+/* MOCKUP (2026-11-06): home hero, layout B from KK's sketch.
+   Headline in the middle, stores bottom-left, mailing list bottom-right,
+   three doodles scattered over the photo that pop in and then move a little. */
+
+.hero--b {
+  display: flex;
+  flex-direction: column;
+}
+
+.hb-head,
+.hb-foot {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Headline sits in the middle of the free space */
+.hb-head {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  padding-top: var(--header-height, 96px);
+}
+
+.hero--b h1 {
+  max-width: 21ch;
+  margin: 0 0 6vh;
+  font-size: clamp(48px, 5.4vw, 80px);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+html[lang='pl'] .hero--b h1 {
+  max-width: 24ch;
+  font-size: clamp(40px, 4.6vw, 68px);
+}
+
+/* Lighter shading than the current home, so the photo isn't so dark at the top */
+.hero--b::before {
+  background: linear-gradient(90deg, rgba(15, 10, 8, 0.6), rgba(15, 10, 8, 0.22) 60%, rgba(15, 10, 8, 0.05)),
+    linear-gradient(0deg, rgba(15, 10, 8, 0.55), transparent 38%);
+}
+
+.hero--b::after {
+  height: 140px;
+  background: linear-gradient(180deg, rgba(10, 6, 4, 0.22), transparent);
+}
+
+.hb-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.hb-foot {
+  display: grid;
+  grid-template-columns: 1fr 580px;
+  gap: 40px;
+  align-items: end;
+  padding-bottom: 96px;
+}
+
+/* ---------- Doodles ---------- */
+
+.hb-doodles {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  max-width: 1440px;
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+.dd {
+  position: absolute;
+  display: block;
+  pointer-events: auto;
+  cursor: pointer;
+  color: #fff;
+  animation: dd-pop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.dd img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: invert(1);
+}
+
+/* Top right: a pierogi gently floating (flipped so the crimped edge faces out) */
+.dd--float {
+  top: 22%;
+  right: 6%;
+  width: 170px;
+  animation-delay: 0.3s;
+}
+
+.dd--float img {
+  scale: -1 1;
+  rotate: -8deg;
+  animation: dd-float 5s ease-in-out 1.2s infinite;
+}
+
+/* Middle: the fork waves its pierogi, with little motion lines */
+.dd--fork {
+  top: 50%;
+  left: 40%;
+  width: 230px;
+  animation-delay: 0.55s;
+}
+
+.dd__inner {
+  position: relative;
+  display: block;
+  rotate: -38deg;
+  transform-origin: 92% 12%; /* the end of the handle */
+  animation: dd-wave 3.2s ease-in-out 1.4s infinite;
+}
+
+.dd__whoosh {
+  position: absolute;
+  left: -24%;
+  top: -12%;
+  width: 26%;
+  height: auto;
+  overflow: visible;
+}
+
+.dd__whoosh path {
+  stroke-dasharray: 150;
+  stroke-dashoffset: 150;
+  opacity: 0;
+  animation: dd-whoosh 3.2s ease-out 1.4s infinite;
+}
+
+.dd__whoosh path:nth-child(2) { animation-delay: 1.47s; }
+.dd__whoosh path:nth-child(3) { animation-delay: 1.54s; }
+
+/* Bottom left: a pierogi that squishes like jelly now and then */
+.dd--squish {
+  bottom: 29%;
+  left: 4%;
+  width: 165px;
+  animation-delay: 0.8s;
+}
+
+.dd--squish img {
+  rotate: 28deg;
+  transform-origin: 50% 90%;
+  animation: dd-squish 4.4s ease-in-out 2s infinite;
+}
+
+/* Hover: a quick wiggle. Tap: a little hop with a spin. */
+.dd:hover img {
+  animation: dd-wiggle 0.5s ease-in-out infinite;
+}
+
+.dd--fork:hover .dd__inner {
+  animation: dd-wave 0.8s ease-in-out infinite;
+}
+
+.dd--fork:hover .dd__whoosh path {
+  animation-duration: 0.8s;
+  animation-delay: 0s;
+}
+
+.dd.is-hop {
+  animation: dd-hop 0.7s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+}
+
+@keyframes dd-pop {
+  0% { opacity: 0; transform: scale(0.2) rotate(-25deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes dd-float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-14px) rotate(5deg); }
+}
+
+@keyframes dd-wave {
+  0%, 55%, 100% { transform: rotate(0); }
+  10% { transform: rotate(-14deg); }
+  22% { transform: rotate(9deg); }
+  34% { transform: rotate(-6deg); }
+  44% { transform: rotate(2deg); }
+}
+
+@keyframes dd-whoosh {
+  0%, 4% { stroke-dashoffset: 150; opacity: 0; }
+  14% { stroke-dashoffset: 0; opacity: 0.95; }
+  34% { stroke-dashoffset: -150; opacity: 0; }
+  100% { stroke-dashoffset: -150; opacity: 0; }
+}
+
+@keyframes dd-squish {
+  0%, 60%, 100% { transform: scale(1, 1); }
+  66% { transform: scale(1.14, 0.84); }
+  72% { transform: scale(0.9, 1.12) translateY(-10px); }
+  80% { transform: scale(1.05, 0.95); }
+  88% { transform: scale(1, 1); }
+}
+
+@keyframes dd-wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-9deg); }
+  75% { transform: rotate(9deg); }
+}
+
+@keyframes dd-hop {
+  0% { transform: translateY(0) rotate(0); }
+  40% { transform: translateY(-46px) rotate(-200deg); }
+  70% { transform: translateY(0) rotate(-360deg); }
+  85% { transform: translateY(-8px) rotate(-360deg); }
+  100% { transform: translateY(0) rotate(-360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dd,
+  .dd img,
+  .dd__inner,
+  .dd__whoosh path {
+    animation: none !important;
+  }
+
+  .dd__whoosh path {
+    stroke-dashoffset: 0;
+    opacity: 0.9;
+  }
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1100px) {
+  .hb-foot {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .hb-foot .hero-signup {
+    max-width: 560px;
+  }
+
+  .dd--fork {
+    top: 30%;
+    left: auto;
+    right: 30%;
+  }
+
+  .dd--squish {
+    bottom: auto;
+    top: 52%;
+    left: auto;
+    right: 6%;
+  }
+}
+
+/* ---------- Phone: headline, both addresses and the form fit on one screen ---------- */
+
+@media (max-width: 900px) {
+  .hero--b {
+    height: 100vh;
+    height: 100svh;
+    min-height: 600px;
+  }
+
+  .hb-head,
+  .hb-foot {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .hb-head {
+    align-items: flex-end;
+    padding-top: calc(var(--header-height, 72px) + 70px);
+    padding-bottom: 20px;
+  }
+
+  .hero--b h1,
+  html[lang='pl'] .hero--b h1 {
+    margin: 0;
+    font-size: clamp(30px, 8.6vw, 38px);
+  }
+
+  .hb-foot {
+    gap: 16px;
+    padding-bottom: 70px;
+  }
+
+  /* Addresses side by side, smaller */
+  .hb-foot .hero__stores {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    line-height: 1.45;
+  }
+
+  .hb-foot .hero-store {
+    padding-left: 10px;
+    border-left-width: 2px;
+  }
+
+  .hb-foot .hero-store__city {
+    margin-bottom: 2px !important;
+    font-size: 11px;
+  }
+
+  .hb-foot .hero-store__addr {
+    font-size: 15px;
+  }
+
+  /* Each address line wraps evenly ("Silver Spring, / MD 20904"), never one word alone */
+  .hb-foot .hb-line {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .hb-foot .hero-store__phone {
+    margin-top: 4px;
+    font-size: 15px;
+  }
+
+  /* Compact form: name and email side by side */
+  .hb-foot .hero-signup {
+    padding: 14px 14px 12px;
+  }
+
+  .hb-foot .hero-signup h2 {
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+
+  .hb-foot .hero-signup__fields {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .hb-foot .hero-signup input {
+    padding: 9px 10px;
+  }
+
+  /* Small doodles up top, away from the text */
+  .dd--float {
+    top: calc(var(--header-height, 72px) + 14px);
+    right: 22px;
+    width: 64px;
+  }
+
+  .dd--fork {
+    top: calc(var(--header-height, 72px) + 4px);
+    left: 30px;
+    right: auto;
+    width: 92px;
+  }
+
+  .dd--squish {
+    top: calc(var(--header-height, 72px) + 30px);
+    bottom: auto;
+    left: 46%;
+    right: auto;
+    width: 56px;
+  }
+
+  .strip {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+}
