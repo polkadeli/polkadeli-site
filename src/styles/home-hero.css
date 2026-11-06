@@ -306,7 +306,8 @@ html[lang='pl'] .hero--b h1 {
 
   .hb-head {
     justify-content: flex-end;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     padding-top: calc(var(--header-height, 120px) + 60px);
     padding-bottom: 20px;
   }
@@ -327,8 +328,10 @@ html[lang='pl'] .hero--b h1 {
     padding-bottom: 70px;
   }
 
-  /* Addresses side by side, smaller */
+  /* Addresses side by side, smaller, centered under the mailing list */
   .hb-foot .hero__stores {
+    order: 2;
+    justify-content: center;
     grid-template-columns: max-content max-content;
     gap: 22px;
     line-height: 1.45;
@@ -348,9 +351,9 @@ html[lang='pl'] .hero--b h1 {
     font-size: 14px;
   }
 
-  /* No zip codes on phones; each address line stays on one line */
-  .hb-foot .hb-zip {
-    display: none;
+  /* Phones: no city, state or zip line (the city is already the small label on top) */
+  .hb-foot .hb-locality {
+    display: none !important;
   }
 
   /* Each address line wraps evenly ("Silver Spring, / MD 20904"), never one word alone */
@@ -370,7 +373,12 @@ html[lang='pl'] .hero--b h1 {
 
   .hb-foot .hero-signup h2 {
     margin-bottom: 10px;
-    font-size: 17px;
+    font-size: min(17px, 3.9vw); /* first line of the form stays on one line */
+    white-space: nowrap;
+  }
+
+  html[lang='pl'] .hb-foot .hero-signup h2 {
+    font-size: min(17px, 3.45vw); /* the Polish line is longer */
   }
 
   .hb-foot .hero-signup__fields {
