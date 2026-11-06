@@ -7,6 +7,8 @@ import { pierogi, sandwiches, entrees } from '../../data/menu.js';
 import '../../styles/menu-page.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
+// The menu lists the three single fillings; "Mix Pierogi" stays an option on the order form.
+const menuFillings = pierogi.fillings.filter((f) => f !== 'Mix Pierogi');
 const tabs = [
   ['pierogi', 'Pierogi'], ['sandwiches', tr(lang, 'Sandwiches')], ['entrees', tr(lang, 'Entrees')],
 ];
@@ -35,7 +37,7 @@ const tabs = [
               <ul class="mp-items">
                 <li>
                   <p class="mp-item"><span>{[...pierogi.prices].reverse().map(([size]) => tr(lang, size)).join(' / ')}</span><b>{[...pierogi.prices].reverse().map(([, price]) => price).join(' / ')}</b></p>
-                  <p class="mp-desc mp-fillings"><span class="mp-fillings__label">{t.fillings}:</span> {pierogi.fillings.map((f, i) => <span class="mp-nowrap">{tr(lang, f)}{i < pierogi.fillings.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</p>
+                  <p class="mp-desc mp-fillings">{menuFillings.map((f, i) => <span class="mp-nowrap">{i === menuFillings.length - 1 ? `${lang === 'pl' ? 'lub' : 'or'} ` : ''}{tr(lang, f)}{i < menuFillings.length - 1 ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</p>
                 </li>
               </ul>
               <p class="mp-note">{tr(lang, pierogi.servedWith)}</p>

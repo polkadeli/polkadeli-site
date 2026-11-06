@@ -755,12 +755,7 @@
   }
 }
 
-/* Pierogi: one row for both sizes, fillings as a comma list that only breaks between fillings */
-.mp-fillings__label {
-  font-weight: 700;
-  color: #222;
-}
-
+/* Pierogi: one row for both sizes, fillings as one list that only breaks between fillings */
 .mp-nowrap {
   white-space: nowrap;
 }
