@@ -318,7 +318,7 @@ const pl = {
     'Bread Tray': 'Półmisek pieczywa', 'Assortment of breads': 'Asortyment pieczywa',
     'Polish Feast': 'Polska uczta', '3 Pork Schnitzels': '3 sznycle wieprzowe', '3 Stuffed Cabbages': '3 gołąbki',
     '6 Grilled Kielbasas with Kraut and Onion': '6 grillowanych kiełbas z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
-    '1 lb Salad': '1 funt sałatki', 'Grilled Kielbasa & Pierogi': 'Grillowana kiełbasa i pierogi', '24 Pierogi (potato & cheese)': '24 pierogi ruskie',
+    '1 lb Salad': '1 funt sałatki', 'Grilled Kielbasa & Pierogi': 'Kiełbasa z grilla i pierogi', '24 Pierogi (potato & cheese)': '24 pierogi ruskie',
     'Cake Platter': 'Ciasta', 'Polish Cake Platter': 'Zestaw polskich ciast', 'Assortment of Polish baked goods': 'Asortyment ciast',
     // Shop categories and notes
     Cheese: 'Sery', 'Deli Meats': 'Wędliny', Blintzes: 'Naleśniki', Sweets: 'Słodycze', 'Baked Goods': 'Wypieki', Other: 'Inne',
