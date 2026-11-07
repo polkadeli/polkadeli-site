@@ -882,6 +882,11 @@
   color: var(--color-red);
 }
 
+/* "Customize (optional)" heading is grey, not red (KK 2026-11-07) */
+.of .of__remove legend {
+  color: #6b6b6b;
+}
+
 .of__remove .of__choice input {
   width: 15px;
   height: 15px;
