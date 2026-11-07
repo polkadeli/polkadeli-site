@@ -13,6 +13,16 @@ import { formatOrder } from '../lib/order-email.mjs';
 
 const byKey = Object.fromEntries(orderItems.map((i) => [i.key, i]));
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
+// Next order number: one running number that never resets, starting at #01 (KK 2026-11-07):
+// #01, #02 … #99, #100 …
+// Numbers are given when checkout starts, so an abandoned checkout skips a number.
+async function nextOrderNumber() {
+  const store = getStore('orders');
+  const last = await store.get('_order-number', { type: 'json' }).catch(() => null);
+  const n = (Number(last?.n) || 0) + 1;
+  await store.setJSON('_order-number', { n });
+  return String(n).padStart(2, '0');
+}
 const clean = (s, max = 200) => String(s ?? '').replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, max);
 
 // Today's date at the store (Eastern time), as YYYY-MM-DD.
@@ -84,9 +94,11 @@ export default async (req, context) => {
   // and shows the thank-you page.
   if (!merchant || !token) return json({ test: true, href: `${thanks}?order=test`, total: order.total });
 
+  try { order.number = await nextOrderNumber(); } catch (err) { console.error('Order number failed', err); }
+  const no = order.number ? `#${order.number} ` : '';
   const host = process.env.CLOVER_ENV === 'sandbox' ? 'https://apisandbox.dev.clover.com' : 'https://api.clover.com';
   const [firstName, ...rest] = customer.name.split(/\s+/);
-  const pickupNote = `Pick-up ${date} ${time}, ${customer.name}, ${customer.phone}${notes ? `. Note: ${notes}` : ''}`;
+  const pickupNote = `${no}Pick-up ${date} ${time}, ${customer.name}, ${customer.phone}${notes ? `. Note: ${notes}` : ''}`;
   const createCheckout = (bearer) => fetch(`${host}/invoicingcheckoutservice/v1/checkouts`, {
     method: 'POST',
     headers: {
@@ -111,7 +123,7 @@ export default async (req, context) => {
           ...(tax > 0 ? [{ name: `MD sales tax ${+(TAX_MD * 100).toFixed(2)}%`, price: tax, unitQty: 1 }] : []),
         ],
       },
-      redirectUrls: { success: `${thanks}?order=paid&date=${date}&time=${time}`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order${type === 'platters' ? '/platters' : ''}?payment=failed` },
+      redirectUrls: { success: `${thanks}?order=paid&date=${date}&time=${time}${order.number ? `&no=${order.number}` : ''}`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order${type === 'platters' ? '/platters' : ''}?payment=failed` },
     }),
   });
   let res = await createCheckout(token);

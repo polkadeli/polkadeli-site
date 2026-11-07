@@ -15,7 +15,7 @@ const money = (c) => `$${(c / 100).toFixed(2)}`;
 
 // The note printed on the ticket: who, when, and that it is already paid.
 export const ticketNote = (o) => [
-  `ONLINE ORDER - PAID, DO NOT CHARGE`,
+  `ONLINE ORDER${o.number ? ` #${o.number}` : ''} - PAID, DO NOT CHARGE`,
   `${o.type === 'platters' ? 'PLATTER' : 'DELI'} PICK-UP ${o.date} at ${o.time}`,
   `${o.customer.name}, ${o.customer.phone}`,
   ...o.lines.map((l) => `${l.qty} x ${l.name}`),
@@ -57,7 +57,7 @@ export async function printOrder(order, paymentId) {
     await api(`/orders/${orderId}`, { note });
   } else {
     // 2. No order found: create one with the items so the ticket still lists them.
-    const created = await api('/orders', { state: 'open', title: `ONLINE PAID - ${order.customer.name}`.slice(0, 127), note });
+    const created = await api('/orders', { state: 'open', title: `ONLINE PAID${order.number ? ` #${order.number}` : ''} - ${order.customer.name}`.slice(0, 127), note });
     orderId = created.id;
     const items = order.lines.flatMap((l) => Array.from({ length: l.qty }, () => ({ name: l.name.slice(0, 127), price: l.price })));
     if (order.tax) items.push({ name: 'MD tax 6% (paid online)', price: order.tax });

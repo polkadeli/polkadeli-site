@@ -26,6 +26,7 @@ const check = '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true
         <h1>{t.thanksPaidTitle}</h1>
         <p data-intro>{t.thanksPaidText}</p>
         <div class="ty__store">
+          <p class="ty__no" data-no hidden></p>
           <p class="ty__label" data-label>{t.pickupAt}</p>
           <p class="ty__city" data-when>{ss.city}, MD</p>
           <p class="ty__addr">{ss.street},<br />{ss.locality}</p>
@@ -60,6 +61,9 @@ const check = '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true
       // Pick-up day and time, passed in the address after payment (?date=2026-11-07&time=12:30)
       const q = new URLSearchParams(location.search);
       const d = q.get('date'); const tm = q.get('time');
+      const no = q.get('no');
+      const noEl = document.querySelector('[data-no]');
+      if (noEl && /^\d{1,7}$/.test(no || '')) { noEl.textContent = `${document.documentElement.lang === 'pl' ? 'Zamówienie' : 'Order'} #${no}`; noEl.hidden = false; }
       const when = document.querySelector('[data-when]');
       if (when && /^\d{4}-\d{2}-\d{2}$/.test(d || '') && /^\d{2}:\d{2}$/.test(tm || '')) {
         const pl = document.documentElement.lang === 'pl';

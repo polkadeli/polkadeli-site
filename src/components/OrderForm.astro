@@ -38,7 +38,7 @@ const shown = groups.filter((g) => g.type === type);
   <p class="of__error of__payfail" role="alert" hidden>{t.payFailed}</p>
   <!-- Declares the "pickup-order" Netlify form so the store gets an email for each order. -->
   <form name="pickup-order" data-netlify="true" netlify-honeypot="company" hidden>
-    <input name="status" /><input name="pickup" /><input name="order-type" /><input name="name" /><input name="phone" />
+    <input name="status" /><input name="order-number" /><input name="pickup" /><input name="order-type" /><input name="name" /><input name="phone" />
     <input name="email" /><textarea name="order"></textarea><input name="total" /><input name="company" />
   </form>
   <form class="of__form" data-lang={lang}>

@@ -4,7 +4,7 @@
 const money = (c) => `$${(c / 100).toFixed(2)}`;
 
 export const formatOrder = (o) => [
-  `${o.type === 'platters' ? 'PLATTER ORDER' : 'DELI ORDER'}: pick-up ${o.date} at ${o.time}, Silver Spring`,
+  `${o.type === 'platters' ? 'PLATTER ORDER' : 'DELI ORDER'}${o.number ? ` #${o.number}` : ''}: pick-up ${o.date} at ${o.time}, Silver Spring`,
   `${o.customer.name}, ${o.customer.phone}, ${o.customer.email}`,
   '',
   ...o.lines.map((l) => `${l.qty} x ${l.name}: ${money(l.qty * l.price)}`),
@@ -17,6 +17,7 @@ export async function sendOrderEmail(site, order, status) {
   const fields = {
     'form-name': 'pickup-order',
     status,
+    'order-number': order.number ? `#${order.number}` : '',
     pickup: `${order.date} ${order.time}`,
     'order-type': order.type === 'platters' ? 'Platter order' : 'Deli order',
     name: order.customer.name,

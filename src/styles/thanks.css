@@ -56,6 +56,13 @@
   color: var(--color-red);
 }
 
+.ty__no {
+  margin-bottom: 14px !important;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--color-ink);
+}
+
 .ty__city {
   margin-bottom: 4px !important;
   font-family: var(--font-heading);

@@ -35,7 +35,7 @@ export function customerEmail(order, site) {
     </tr>`;
   const items = order.lines.map((l) => row(`${l.qty}&nbsp;×&nbsp;${itemName(l.name)}`, money(l.qty * l.price))).join('');
 
-  const subject = `Your Polka Deli order for ${when.replace(' ', ' ')}`;
+  const subject = `Your Polka Deli order${order.number ? ` #${order.number}` : ''} for ${when.replace(' ', ' ')}`;
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light only"><title>${esc(subject)}</title>
@@ -56,6 +56,7 @@ export function customerEmail(order, site) {
   <tr><td style="padding:24px 32px 0;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;">
       <tr><td align="center" style="padding:20px 16px;">
+        ${order.number ? `<div style="margin-bottom:14px;font:700 15px/1.4 ${SANS};color:${INK};">Order #${order.number}</div>` : ''}
         <div style="font:700 13px/1.4 ${SANS};color:${RED};text-transform:uppercase;letter-spacing:0;">Pick-up</div>
         <div style="margin-top:6px;font:600 21px/1.35 ${SERIF};color:${RED_HEADING};">${esc(when).replace(/\u00a0at\u00a0/, '<br>')}</div>
         <div style="margin-top:10px;font:16px/1.5 ${SANS};color:#444;">${esc(ss.street)}<br>${esc(ss.locality).replace('Silver Spring', 'Silver&nbsp;Spring')}</div>
@@ -85,6 +86,7 @@ export function customerEmail(order, site) {
     `Thank you, ${order.customer.name.split(/\s+/)[0]}!`,
     'Your order is paid. We\'ll have it ready for pick-up at our Silver Spring store.',
     '',
+    order.number ? `Order #${order.number}` : '',
     `Pick-up: ${when.replace(' ', ' ')}`,
     `${ss.street}, ${ss.locality}`,
     `Directions: ${ss.maps}`,
