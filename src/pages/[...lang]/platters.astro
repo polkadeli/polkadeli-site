@@ -29,7 +29,7 @@ const tabs = [
     <nav class="mp-tabs" aria-label={t.menuSections}>
       <div class="mp-wrap">
         <div class="mp-tabs__links">{tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</div>
-        <a class="mp-order mp-order--bar" href={orderHref} tabindex="-1">{orderLabel}</a>
+        <a class="mp-order mp-order--bar" href={orderHref} tabindex="-1">{features.onlineOrdering ? t.orderNow : orderLabel}</a>
       </div>
     </nav>
     <!-- Desktop: big order button just under the red bar. Once it scrolls away, a smaller one appears in the red bar. -->
@@ -77,7 +77,7 @@ const tabs = [
   new IntersectionObserver(([e]) => {
     const show = !e.isIntersecting && e.boundingClientRect.top < 200;
     bar.classList.toggle('show-order', show);
-    bar.querySelector('.mp-order--bar').tabIndex = show ? 0 : -1;
+    bar.querySelector('.mp-order--bar').tabIndex = show || matchMedia('(max-width: 900px)').matches ? 0 : -1;
   }, { rootMargin: '-140px 0px 0px 0px' }).observe(big);
 
   // Highlight the tab for the section in view.

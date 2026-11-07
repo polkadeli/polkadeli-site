@@ -490,3 +490,9 @@ html[lang='pl'] .hero h1 {
   color: #a6a6a6;
   opacity: 1;
 }
+
+/* Mailing-list heading in the sans-serif body font, phones and desktop (KK 2026-11-07) */
+.hero-signup h2 {
+  font-family: var(--font-ui);
+  font-weight: 700;
+}

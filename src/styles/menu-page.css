@@ -708,3 +708,23 @@
   margin: 0;
   line-height: 1.3;
 }
+
+/* Phones: order button lives in the sticky red bar at the top, always visible (KK 2026-11-07) */
+@media (max-width: 900px) {
+  .mp-tabs a.mp-order--bar {
+    display: inline-flex;
+    visibility: visible;
+    opacity: 1;
+    height: 30px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .mp a.mp-order-bar {
+    display: none;
+  }
+
+  .mp {
+    padding-bottom: 0;
+  }
+}
