@@ -19,28 +19,40 @@ const validSignature = (header, raw, secret) => {
   return expected.length === given.length && timingSafeEqual(expected, given);
 };
 
+// Remember what happened to the last webhook call (no secrets, no customer data), so it can be
+// checked by opening /api/clover-webhook in a browser.
+const note = async (result) => {
+  try { await getStore('orders').setJSON('_last-webhook', { at: new Date().toISOString(), result }); } catch {}
+};
+
 export default async (req) => {
+  if (req.method === 'GET') {
+    const last = await getStore('orders').get('_last-webhook', { type: 'json' }).catch(() => null);
+    return new Response(JSON.stringify(last || { result: 'no webhook received yet' }), { headers: { 'content-type': 'application/json' } });
+  }
   if (req.method !== 'POST') return new Response('Method not allowed', { status: 405 });
   const raw = await req.text();
-  const secret = process.env.CLOVER_WEBHOOK_SECRET;
+  const secret = (process.env.CLOVER_WEBHOOK_SECRET || '').trim();
   if (!secret || !validSignature(req.headers.get('clover-signature'), raw, secret)) {
     console.warn('Clover webhook: bad or missing signature');
+    await note(!secret ? 'no secret saved in Netlify' : req.headers.get('clover-signature') ? 'signature did not match the saved secret' : 'no signature header');
     return new Response('Unauthorized', { status: 401 });
   }
   let event;
   try { event = JSON.parse(raw); } catch { return new Response('Bad request', { status: 400 }); }
   const status = String(event.status ?? event.Status ?? '').toUpperCase();
   const sessionId = event.data ?? event.Data;
-  if (status !== 'APPROVED' || !sessionId) return ok('ignored');
+  if (status !== 'APPROVED' || !sessionId) { await note(`ignored: status ${status || 'none'}`); return ok('ignored'); }
 
   const store = getStore('orders');
   const order = await store.get(sessionId, { type: 'json' });
-  if (!order) { console.warn('Clover webhook: no saved order for', sessionId); return ok('unknown'); }
+  if (!order) { console.warn('Clover webhook: no saved order for', sessionId); await note('no saved order for this checkout'); return ok('unknown'); }
   if (order.status === 'paid') return ok('already done');
 
   const site = new URL(req.url).origin; // the address this request came to (staging or live)
   await sendOrderEmail(site, order, `PAID online (Clover payment ${event.id ?? event.Id ?? ''})`);
   await store.setJSON(sessionId, { ...order, status: 'paid', paidAt: new Date().toISOString() });
+  await note('order emailed');
 
   // Print the order on the Clover Station. A failure here never blocks the email above.
   try {
