@@ -26,7 +26,7 @@
   margin: 0 0 14px;
   font-family: var(--font-heading);
   font-weight: 500;
-  font-size: 40px;
+  font-size: 32px;
   line-height: 1.15;
 }
 
@@ -120,7 +120,7 @@
   }
 
   .ty__msg h1 {
-    font-size: 32px;
+    font-size: 26px;
   }
 
   .ty__msg > p {
