@@ -532,3 +532,9 @@ html[lang='pl'] .hero h1 {
 .strip {
   text-wrap: balance;
 }
+
+/* Same light grey hint text in every browser (Chrome otherwise shows it darker than Safari) */
+.hero-signup input::placeholder {
+  color: #a6a6a6;
+  opacity: 1;
+}
