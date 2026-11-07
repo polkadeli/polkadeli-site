@@ -42,7 +42,7 @@ export function customerEmail(order, site) {
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Mulish:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body style="margin:0;padding:0;background:#f4f4f4;">
-<div style="display:none;max-height:0;overflow:hidden;">Paid and ready for pick-up in Silver Spring, ${esc(when)}.</div>
+<div style="display:none;max-height:0;overflow:hidden;">Paid and ready for pick-up in Silver&nbsp;Spring, ${esc(when)}.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;">
 <tr><td align="center" style="padding:24px 12px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;background:#ffffff;border-top:4px solid ${RED};">
@@ -51,14 +51,14 @@ export function customerEmail(order, site) {
   </td></tr>
   <tr><td align="center" style="padding:16px 32px 0;">
     <h1 style="margin:0;font:600 28px/1.25 ${SERIF};color:${INK};">Thank you, ${first}!</h1>
-    <p style="margin:12px 0 0;font:17px/1.55 ${SANS};color:#444;">Your order is paid. We'll have it ready for pick-up at our Silver Spring store.</p>
+    <p style="margin:12px 0 0;font:17px/1.55 ${SANS};color:#444;">Your order is paid. We'll have it ready for pick-up at our Silver&nbsp;Spring store.</p>
   </td></tr>
   <tr><td style="padding:24px 32px 0;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;">
       <tr><td align="center" style="padding:20px 16px;">
         <div style="font:700 13px/1.4 ${SANS};color:${RED};text-transform:uppercase;letter-spacing:0;">Pick-up</div>
         <div style="margin-top:6px;font:600 21px/1.35 ${SERIF};color:${RED_HEADING};">${esc(when).replace(/\u00a0at\u00a0/, '<br>')}</div>
-        <div style="margin-top:10px;font:16px/1.5 ${SANS};color:#444;">${esc(ss.street)}<br>${esc(ss.locality)}</div>
+        <div style="margin-top:10px;font:16px/1.5 ${SANS};color:#444;">${esc(ss.street)}<br>${esc(ss.locality).replace('Silver Spring', 'Silver&nbsp;Spring')}</div>
         <div style="margin-top:10px;font:700 16px/1.5 ${SANS};"><a href="${ss.maps}" style="color:${RED};">Get directions</a></div>
       </td></tr>
     </table>
