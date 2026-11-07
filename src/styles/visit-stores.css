@@ -266,3 +266,20 @@
 .vs__store table.vs__hours td:last-child {
   padding-left: 0;
 }
+
+/* Button right-aligned with the end of the times; slimmer button (KK 2026-11-07) */
+.vs__block {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.vs__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vs__phone-btn {
+  height: 28px;
+  padding: 0 10px;
+}
