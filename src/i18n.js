@@ -77,6 +77,7 @@ export const ui = {
     privacyLink: 'Privacy policy',
     subscribe: 'Subscribe now',
     shipping: 'International parcel shipping service available at our stores',
+    offersTitle: 'Come for the pierogi, stay for the\u00a0kielbasa',
     exploreMenu: 'Explore full menu',
     // About
     aboutHello: ['Hello!', " We're glad you're here!"],
@@ -225,6 +226,7 @@ export const ui = {
     privacyLink: 'Polityka prywatności',
     subscribe: 'Zapisz się',
     shipping: 'W naszych sklepach nadasz paczki do Polski i za granicę',
+    offersTitle: 'Przyjdź na pierogi, zostań na\u00a0kiełbasę',
     exploreMenu: 'Zobacz całe menu',
     aboutHello: ['Dzień dobry!', ' Cieszymy się, że tu jesteś!'],
     aboutClose: 'Serdecznie zapraszamy!',

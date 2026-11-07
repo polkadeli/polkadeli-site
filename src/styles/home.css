@@ -509,3 +509,21 @@ html[lang='pl'] .hero h1 {
     text-wrap: balance;
   }
 }
+
+/* Heading over the food cards (KK 2026-11-07) */
+.section-title {
+  margin: 0 0 48px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 40px;
+  line-height: 1.2;
+  text-align: center;
+  text-wrap: balance;
+}
+
+@media (max-width: 900px) {
+  .section-title {
+    margin-bottom: 32px;
+    font-size: 30px;
+  }
+}
