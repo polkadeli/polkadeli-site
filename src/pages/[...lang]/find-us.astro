@@ -1,5 +1,6 @@
 ---
-import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+// About us: Maria and Joanna's story on top, then a compact card per store (address, hours, call button). One section, no market photo (KK 2026-11-07).
+import { langOf, langPaths, ui } from '../../i18n.js';
 export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
 import VisitStores from '../../components/VisitStores.astro';
@@ -9,9 +10,11 @@ const lang = langOf(Astro.url);
 const t = ui[lang];
 ---
 <Base title={t.visitTitle} description={t.visitDesc}>
-  <VisitStores />
-
-  <!-- About us (Maria and Joanna), under the store hours -->
-  <div class="visit-about"><AboutUs /></div>
-
+  <section class="visit">
+    <div class="visit__wrap">
+      <h1 class="visually-hidden">{t.visitUs}</h1>
+      <AboutUs />
+      <VisitStores />
+    </div>
+  </section>
 </Base>

@@ -1,12 +1,21 @@
-/* About us block under the store hours */
-.visit-about {
+/* About us page: story and store cards share one grey section */
+.visit {
+  padding: 72px 0 80px;
+  background: #f4f4f4;
+}
+
+.visit__wrap {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 40px;
+  padding: 0 40px;
 }
 
 @media (max-width: 900px) {
-  .visit-about {
-    padding: 56px 20px;
+  .visit {
+    padding: 36px 0 56px;
+  }
+
+  .visit__wrap {
+    padding: 0 20px;
   }
 }
