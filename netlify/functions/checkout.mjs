@@ -59,9 +59,13 @@ export default async (req, context) => {
     const offered = item.extras || [];
     if (extras.some((x) => !offered.some((o) => o.name === x))) return json({ error: 'items' }, 400);
     let price = cents(item.price);
-    for (const x of extras) { price += cents(offered.find((o) => o.name === x).price); name += ` (${x.toLowerCase()})`; }
-    if (remove.length) name += ` (without: ${remove.join(', ')})`;
-    lines.push({ name, qty, price });
+    // title + details: for the customer's email (details shown grey and indented under the item).
+    // name: everything on one line, for Clover, the ticket and the store's email.
+    const title = name;
+    const details = [];
+    for (const x of extras) { price += cents(offered.find((o) => o.name === x).price); name += ` (${x.toLowerCase()})`; details.push(x.charAt(0).toUpperCase() + x.slice(1)); }
+    if (remove.length) { name += ` (without: ${remove.join(', ')})`; details.push(...remove.map((r) => `No ${r.replace(/^(?!Russian|Polish)./, (c) => c.toLowerCase())}`)); }
+    lines.push({ name, title, details, qty, price });
   }
   if (!lines.length) return json({ error: 'items' }, 400);
 

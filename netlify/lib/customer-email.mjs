@@ -29,7 +29,8 @@ export const pickupText = (date, time) => {
   return `${day}\u00a0at\u00a0${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')} ${h < 12 ? 'am' : 'pm'}`;
 };
 
-export function customerEmail(order, site) {
+// payment (optional): { id, card, last4 } from Clover, shown small under the total.
+export function customerEmail(order, site, payment = {}) {
   const first = esc(order.customer.name.split(/\s+/)[0]);
   const when = pickupText(order.date, order.time);
   const row = (left, right, style = '') => `
@@ -38,12 +39,20 @@ export function customerEmail(order, site) {
       <td align="right" style="padding:10px 0 10px 16px;border-bottom:1px solid #e5e5e5;font:16px/1.4 ${SANS};color:${INK};white-space:nowrap;${style}">${right}</td>
     </tr>`;
   // Items stand out (bold, larger); subtotal and tax are small and grey under a dark line.
-  const items = order.lines.map((l, i) => row(`${l.qty}&nbsp;×&nbsp;${itemName(l.name)}`, money(l.qty * l.price),
-    `font:700 15px/1.4 ${SANS};padding:12px 0;${i === order.lines.length - 1 && !order.notes ? `border-bottom:2px solid ${INK};` : ''}`)).join('');
+  const detailLines = (l) => (l.details || []).map((d) => `<div style="padding-left:22px;font:400 14px/1.5 ${SANS};color:${MUTED};">${esc(d)}</div>`).join('');
+  const items = order.lines.map((l, i) => row(`${l.qty}&nbsp;×&nbsp;${itemName(l.title || l.name)}${detailLines(l)}`, money(l.qty * l.price),
+    `font:700 15px/1.4 ${SANS};padding:12px 0;vertical-align:top;${i === order.lines.length - 1 && !order.notes ? `border-bottom:2px solid ${INK};` : ''}`)).join('');
   // The customer's note sits right under the items, above the dark line.
   const noteRow = order.notes ? `
     <tr><td colspan="2" style="padding:12px 0;border-bottom:2px solid ${INK};font:15px/1.5 ${SANS};color:${MUTED};"><strong style="color:${INK};">Your note:</strong> ${esc(order.notes)}</td></tr>` : '';
   const small = `font:14px/1.4 ${SANS};color:${MUTED};padding:6px 0;border-bottom:0;`;
+
+  // "Paid with Visa ending 0495" / "Payment ID WNJ5P2YSAHXZ8" (helps match the bank statement and find refunds)
+  const CARDS = { VISA: 'Visa', MC: 'Mastercard', MASTERCARD: 'Mastercard', AMEX: 'American Express', DISCOVER: 'Discover' };
+  const paidWith = [
+    payment.last4 ? `Paid with ${CARDS[String(payment.card).toUpperCase()] || 'card'} ending\u00a0${payment.last4}` : '',
+    payment.id ? `Payment ID\u00a0${payment.id}` : '',
+  ].filter(Boolean);
 
   const subject = `Your Polka Deli order${order.number ? ` #${order.number}` : ''} for ${when.replace(/\u00a0/g, ' ')}`;
   const html = `<!doctype html>
@@ -81,6 +90,7 @@ export function customerEmail(order, site) {
       ${row('Subtotal', money(order.subtotal), `${small}padding-top:12px;`)}
       ${row('MD sales tax 6%', money(order.tax), small)}
       ${row('Total paid', money(order.total), `font:700 16px/1.4 ${SANS};padding:8px 0 0;border-bottom:0;`)}
+      ${paidWith.length ? `<tr><td colspan="2" style="padding:6px 0 0;font:13px/1.5 ${SANS};color:${MUTED};">${paidWith.map(esc).join('<br>')}</td></tr>` : ''}
     </table>
   </td></tr>
   <tr><td align="center" style="padding:28px 32px 32px;">
@@ -100,12 +110,13 @@ export function customerEmail(order, site) {
     `${ss.street}, ${ss.locality}`,
     `Directions: ${ss.maps}`,
     '',
-    ...order.lines.map((l) => `${l.qty} x ${l.name}: ${money(l.qty * l.price)}`),
+    ...order.lines.flatMap((l) => [`${l.qty} x ${l.title || l.name}: ${money(l.qty * l.price)}`, ...(l.details || []).map((d) => `    ${d}`)]),
     order.notes ? `Your note: ${order.notes}` : '',
     '',
     `Subtotal: ${money(order.subtotal)}`,
     `MD sales tax 6%: ${money(order.tax)}`,
     `Total paid: ${money(order.total)}`,
+    ...paidWith.map((p) => p.replace(/\u00a0/g, ' ')),
     '',
     `Questions about your order? Call us at ${ss.phone}.`,
   ].join('\n');
@@ -115,10 +126,10 @@ export function customerEmail(order, site) {
 
 // Sends the confirmation through Resend (resend.com). Without RESEND_API_KEY it does nothing,
 // so orders keep working before the email service is set up.
-export async function sendCustomerEmail(order, site) {
+export async function sendCustomerEmail(order, site, payment) {
   const key = (process.env.RESEND_API_KEY || '').trim();
   if (!key) return 'skipped: no RESEND_API_KEY';
-  const { subject, html, text } = customerEmail(order, site);
+  const { subject, html, text } = customerEmail(order, site, payment);
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },

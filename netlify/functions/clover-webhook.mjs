@@ -7,6 +7,20 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 import { getStore } from '@netlify/blobs';
 import { sendOrderEmail } from '../lib/order-email.mjs';
 import { sendCustomerEmail } from '../lib/customer-email.mjs';
+
+// Card type and last 4 digits for the customer's email. Never blocks the email if Clover says no.
+async function paymentInfo(id) {
+  const token = (process.env.CLOVER_API_TOKEN || '').trim();
+  if (!id || !token) return { id };
+  try {
+    const merchant = process.env.CLOVER_MERCHANT_ID || 'XESF2ZXD2SF94';
+    const host = process.env.CLOVER_ENV === 'sandbox' ? 'https://apisandbox.dev.clover.com' : 'https://api.clover.com';
+    const res = await fetch(`${host}/v3/merchants/${merchant}/payments/${encodeURIComponent(id)}?expand=cardTransaction`, { headers: { authorization: `Bearer ${token}`, accept: 'application/json' } });
+    if (!res.ok) return { id };
+    const p = await res.json();
+    return { id, card: p.cardTransaction?.cardType, last4: p.cardTransaction?.last4 };
+  } catch { return { id }; }
+}
 import { printOrder } from '../lib/clover-print.mjs';
 
 const ok = (msg = 'ok') => new Response(msg, { status: 200 });
@@ -71,7 +85,8 @@ export default async (req) => {
 
   // The customer's own confirmation email (ours, instead of Clover's plain receipt).
   try {
-    const sent = await sendCustomerEmail(order, site);
+    const payment = await paymentInfo(pick('id'));
+    const sent = await sendCustomerEmail(order, site, payment);
     console.log('Customer email:', sent);
   } catch (e) {
     console.error('Customer email failed:', e.message);
