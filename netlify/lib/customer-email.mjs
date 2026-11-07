@@ -14,8 +14,12 @@ const SANS = "Mulish, 'Helvetica Neue', Helvetica, Arial, sans-serif";
 const money = (c) => `$${(c / 100).toFixed(2)}`;
 // Keep the last two words of a line together, so no word is left alone on a line.
 const noWidow = (s) => s.replace(/ (\S+)$/, '\u00a0$1');
-// Item names like "Pierogi (12), Potato & cheese": each comma part stays on one line.
-const itemName = (s) => s.split(', ').map((p) => `<span style="white-space:nowrap;">${esc(p)}</span>`).join(', ');
+// Item names like "Pierogi, 12 pieces (Potato & Cheese)".
+// The filling in brackets never splits; a long name may wrap, but never leaves one word alone.
+const itemName = (s) => {
+  const [base, fill] = s.split(/ (?=\([^)]*\)$)/);
+  return esc(noWidow(base)) + (fill ? ` <span style="white-space:nowrap;">${esc(fill)}</span>` : '');
+};
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[ch]);
 
 // "2026-11-07" + "12:30" -> "Saturday, November 7 at 12:30 pm"
@@ -35,10 +39,13 @@ export function customerEmail(order, site) {
     </tr>`;
   // Items stand out (bold, larger); subtotal and tax are small and grey under a dark line.
   const items = order.lines.map((l, i) => row(`${l.qty}&nbsp;×&nbsp;${itemName(l.name)}`, money(l.qty * l.price),
-    `font:700 17px/1.4 ${SANS};padding:12px 0;${i === order.lines.length - 1 ? `border-bottom:2px solid ${INK};` : ''}`)).join('');
+    `font:700 17px/1.4 ${SANS};padding:12px 0;${i === order.lines.length - 1 && !order.notes ? `border-bottom:2px solid ${INK};` : ''}`)).join('');
+  // The customer's note sits right under the items, above the dark line.
+  const noteRow = order.notes ? `
+    <tr><td colspan="2" style="padding:12px 0;border-bottom:2px solid ${INK};font:15px/1.5 ${SANS};color:${MUTED};"><strong style="color:${INK};">Your note:</strong> ${esc(order.notes)}</td></tr>` : '';
   const small = `font:14px/1.4 ${SANS};color:${MUTED};padding:6px 0;border-bottom:0;`;
 
-  const subject = `Your Polka Deli order${order.number ? ` #${order.number}` : ''} for ${when.replace(' ', ' ')}`;
+  const subject = `Your Polka Deli order${order.number ? ` #${order.number}` : ''} for ${when.replace(/\u00a0/g, ' ')}`;
   const html = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light only"><title>${esc(subject)}</title>
@@ -71,11 +78,11 @@ export function customerEmail(order, site) {
     <h2 style="margin:0 0 4px;font:600 20px/1.3 ${SERIF};color:${INK};">${order.type === 'platters' ? 'Your platter order' : 'Your order'}</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       ${items}
+      ${noteRow}
       ${row('Subtotal', money(order.subtotal), `${small}padding-top:12px;`)}
       ${row('MD sales tax 6%', money(order.tax), small)}
       ${row('Total paid', money(order.total), `font:700 16px/1.4 ${SANS};padding:8px 0 0;border-bottom:0;`)}
     </table>
-    ${order.notes ? `<p style="margin:20px 0 0;font:15px/1.5 ${SANS};color:${MUTED};"><strong style="color:${INK};">Your note:</strong> ${esc(order.notes)}</p>` : ''}
   </td></tr>
   <tr><td align="center" style="padding:28px 32px 32px;">
     <p style="margin:0;font:16px/1.55 ${SANS};color:#444;">Questions about your order?<br>Call us at <a href="${ss.phoneHref}" style="color:${INK};font-weight:700;">${ss.phone}</a></p>
@@ -90,15 +97,16 @@ export function customerEmail(order, site) {
     'Your order is paid. We\'ll have it ready for pick-up at our Silver Spring store.',
     '',
     order.number ? `Order #${order.number}` : '',
-    `Pick-up: ${when.replace(' ', ' ')}`,
+    `Pick-up: ${when.replace(/\u00a0/g, ' ')}`,
     `${ss.street}, ${ss.locality}`,
     `Directions: ${ss.maps}`,
     '',
     ...order.lines.map((l) => `${l.qty} x ${l.name}: ${money(l.qty * l.price)}`),
+    order.notes ? `Your note: ${order.notes}` : '',
+    '',
     `Subtotal: ${money(order.subtotal)}`,
     `MD sales tax 6%: ${money(order.tax)}`,
     `Total paid: ${money(order.total)}`,
-    order.notes ? `\nYour note: ${order.notes}` : '',
     '',
     `Questions about your order? Call us at ${ss.phone}.`,
   ].join('\n');
