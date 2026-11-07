@@ -7,6 +7,7 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 import { getStore } from '@netlify/blobs';
 import { sendOrderEmail } from '../lib/order-email.mjs';
 import { sendCustomerEmail } from '../lib/customer-email.mjs';
+import { sendStoreAlert, sendTestAlert } from '../lib/store-alert.mjs';
 
 // Card type and last 4 digits for the customer's email. Never blocks the email if Clover says no.
 async function paymentInfo(id) {
@@ -42,6 +43,7 @@ const note = async (result) => {
 
 export default async (req) => {
   if (req.method === 'GET') {
+    if (new URL(req.url).searchParams.has('test-alert')) return new Response(`Store alert: ${await sendTestAlert()}`);
     const last = await getStore('orders').get('_last-webhook', { type: 'json' }).catch(() => null);
     return new Response(JSON.stringify(last || { result: 'no webhook received yet' }), { headers: { 'content-type': 'application/json' } });
   }
@@ -82,6 +84,13 @@ export default async (req) => {
   await sendOrderEmail(site, order, `PAID online (Clover payment ${pick('id') ?? ''})`);
   await store.setJSON(sessionId, { ...order, status: 'paid', paidAt: new Date().toISOString() });
   await note('order emailed');
+
+  // Push notification to the store iPhone (ntfy app), so staff see new orders right away.
+  try {
+    console.log('Store alert:', await sendStoreAlert(order));
+  } catch (e) {
+    console.error('Store alert failed:', e.message);
+  }
 
   // The customer's own confirmation email (ours, instead of Clover's plain receipt).
   try {
