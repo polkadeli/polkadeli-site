@@ -21,7 +21,6 @@
 .hb-head {
   display: flex;
   flex: 1;
-  align-items: center;
   padding-top: var(--header-height, 96px);
 }
 
@@ -325,7 +324,6 @@ html[lang='pl'] .hero--b h1 {
 
   .hb-foot {
     gap: 16px;
-    padding-bottom: 70px;
   }
 
   /* Phones: no addresses on the home page (they're in the menu) */
@@ -368,24 +366,15 @@ html[lang='pl'] .hero--b h1 {
   }
 
   /* Compact form: name and email side by side */
-  .hb-foot .hero-signup {
-    padding: 14px 14px 12px;
-  }
 
   .hb-foot .hero-signup h2 {
-    margin-bottom: 10px;
     font-size: 17px; /* longer heading now wraps onto two even lines (KK 2026-11-07) */
     text-wrap: balance;
   }
 
   .hb-foot .hero-signup__fields {
-    grid-template-columns: 1fr 1fr;
     gap: 8px;
     margin-bottom: 8px;
-  }
-
-  .hb-foot .hero-signup input {
-    padding: 9px 10px;
   }
 
   /* Only the fork doodle on phones */
@@ -402,9 +391,6 @@ html[lang='pl'] .hero--b h1 {
   }
 
   .strip {
-    padding: 10px 14px;
-    font-size: 16px;
-    line-height: 1.35;
     text-wrap: balance;
   }
 }

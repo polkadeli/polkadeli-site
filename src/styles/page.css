@@ -19,15 +19,6 @@
 }
 
 /* One-line note under the title, e.g. how to order */
-.page-card__intro {
-  margin: 0 0 var(--space-6);
-  font-size: var(--text-lg);
-  text-align: center;
-}
-
-.page-card__intro a {
-  white-space: nowrap;
-}
 
 @media (max-width: 760px) {
   .page {

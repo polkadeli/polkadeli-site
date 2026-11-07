@@ -57,8 +57,6 @@
   }
 
   .visit .vs__store {
-    grid-template-columns: 1fr;
     gap: 10px;
-    padding: 20px 22px;
   }
 }

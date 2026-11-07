@@ -111,9 +111,6 @@
 }
 
 @media (max-width: 900px) {
-  .ty__banner {
-    height: 96px;
-  }
 
   .ty__wrap {
     padding: 36px 20px 64px;

@@ -32,47 +32,18 @@
 }
 
 .shop__body {
-  display: grid;
   grid-template-columns: 220px 1fr;
   gap: 48px;
   align-items: start;
 }
 
-.shop__side {
-  position: sticky;
-  top: calc(var(--header-height) + 24px);
-  display: grid;
-  border-left: 1px solid #d9d9d9;
-}
-
-.shop__side a {
-  margin-left: -1px;
-  padding: 4px 16px;
-  color: #5e5e5e;
-  text-decoration: none;
-  border-left: 2px solid transparent;
-}
-
-.shop__side a:hover {
-  color: #1f1f1f;
-}
-
-.shop__side a.is-on {
-  font-weight: 700;
-  color: var(--color-red);
-  border-color: var(--color-red);
-}
-
 .aisle {
-  margin-bottom: 36px;
   scroll-margin-top: calc(var(--header-height) + 24px);
 }
 
 .aisle__title {
-  padding-bottom: 8px;
   font-size: 26px !important;
   color: var(--color-red-heading);
-  border-bottom: 1px solid #1f1f1f;
 }
 
 .aisle__title span {
@@ -82,17 +53,13 @@
 }
 
 .aisle__list {
-  columns: 3;
   column-gap: 40px;
   margin: 6px 0 0;
-  padding: 0;
   list-style: none;
 }
 
 .aisle__list li {
   break-inside: avoid;
-  padding: 3px 0;
-  border-bottom: 1px solid #f0f0f0;
 }
 
 .aisle__list em {
@@ -118,10 +85,6 @@
     grid-template-columns: 1fr;
   }
 
-  .shop__side {
-    display: none;
-  }
-
   .aisle__title {
     font-size: 24px !important;
   }
@@ -132,31 +95,8 @@
 }
 
 /* Categories as soft warm-gray cards (same as the Our Menu page) */
-.aisle {
-  margin-bottom: 24px;
-  padding: 26px 32px 22px;
-  background: #f6f4f1;
-  border-radius: 14px;
-}
-
-.aisle__title {
-  border-bottom-color: #1f1f1f;
-}
-
-.aisle__list li {
-  border-bottom-color: #e6e2dc;
-}
-
-@media (max-width: 900px) {
-  .aisle {
-    padding: 20px 20px 16px;
-  }
-}
 
 /* Smaller product text */
-.aisle__list {
-  font-size: 15px;
-}
 
 /* Round photo beside each category title, no line under the title */
 .aisle__title {
@@ -182,20 +122,9 @@
   border-radius: 0;
 }
 
-.aisle__list {
-  margin-top: 12px;
-  padding: 18px 32px 20px;
-  background: #f6f4f1;
-  border-radius: 14px;
-}
-
 @media (max-width: 900px) {
   .aisle {
     padding: 0;
-  }
-
-  .aisle__list {
-    padding: 14px 20px 16px;
   }
 }
 
@@ -204,15 +133,7 @@
   border-bottom: 0;
 }
 
-.shop__side {
-  border-left: 0;
-}
-
 /* Category list text lines up with the page title; red marker sits just outside */
-.shop__side a {
-  margin-left: -16px;
-  padding-left: 14px;
-}
 
 /* Products as a plain comma-separated list under each title (no card, no columns).
    Each product stays on one line; lines break only between products. */

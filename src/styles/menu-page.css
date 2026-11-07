@@ -2,7 +2,6 @@
 
 .mp {
   font-family: var(--font-ui);
-  font-size: 17px;
   line-height: 1.55;
   color: #1f1f1f;
   background: #fff;
@@ -34,33 +33,22 @@
 .mp-tabs {
   position: sticky;
   z-index: 10;
-  background: #f4f4f4;
-  border-bottom: 1px solid #d9d9d9;
 }
 
 .mp-tabs .mp-wrap {
   display: flex;
-  overflow-x: auto;
   scrollbar-width: none;
 }
 
 .mp-tabs a {
   flex: none;
-  padding: 14px 18px;
   font-size: 15px;
-  color: #5e5e5e;
   text-decoration: none;
   border-bottom: 2px solid transparent;
 }
 
-.mp-tabs a:hover {
-  color: #1f1f1f;
-}
-
 .mp-tabs a.is-on {
   font-weight: 700;
-  color: var(--color-red);
-  border-color: var(--color-red);
 }
 
 .mp-group {
@@ -83,19 +71,15 @@
 .mp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 64px;
 }
 
 .mp-cat {
-  padding: 28px 0 34px;
-  border-top: 1px solid #1f1f1f;
   scroll-margin-top: calc(var(--header-height) + 60px);
 }
 
 .mp-cat h3 {
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 18px;
   font-size: 30px;
   color: var(--color-red-heading);
 }
@@ -112,7 +96,6 @@
 
 .mp-badge--line {
   font-weight: 600;
-  font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #5e5e5e;
@@ -131,7 +114,6 @@
 }
 
 .mp-items > li {
-  padding: 12px 0;
   border-bottom: 1px solid #e6e6e6;
 }
 
@@ -149,7 +131,6 @@
   align-items: baseline;
   gap: 16px;
   font-weight: 700;
-  font-size: 17px;
 }
 
 .mp-item em {
@@ -163,24 +144,12 @@
   white-space: nowrap;
 }
 
-.mp-desc {
-  margin-top: 2px !important;
-}
-
-.mp-desc,
-.mp-list,
-.mp-note {
-  font-size: 15px;
-  color: #5e5e5e;
-}
-
 .mp-list {
   margin: 6px 0 0;
 }
 
 .mp-list li {
   position: relative;
-  padding-left: 14px;
 }
 
 .mp-list li::before {
@@ -204,10 +173,6 @@
     padding: 0 20px;
   }
 
-  .mp-tabs a {
-    padding: 12px;
-  }
-
   .mp-group {
     padding-top: 44px;
   }
@@ -216,24 +181,9 @@
     font-size: 32px;
   }
 
-  .mp-grid {
-    grid-template-columns: 1fr;
-  }
-
   .mp-cat h3 {
     font-size: 26px;
   }
-}
-
-.mp-pick {
-  margin-top: 14px !important;
-  font-size: 15px;
-  color: #5e5e5e;
-}
-
-.mp-pick span {
-  font-weight: 700;
-  color: #1f1f1f;
 }
 
 .mp-tabs {
@@ -259,30 +209,9 @@
   color: #5e5e5e;
 }
 
-.mp-group__head,
-.mp-items--split .mp-item {
+.mp-group__head {
   justify-content: flex-start;
   gap: 8px 20px;
-}
-
-.mp-items--split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-
-.mp-items--split > li {
-  padding: 0 24px 0 0 !important;
-  border-bottom: 0;
-}
-
-.mp-items--split > li + li {
-  padding: 0 0 0 24px !important;
-  border-left: 1px solid #e6e6e6;
-}
-
-.mp-items--split .mp-item {
-  gap: 40px;
 }
 
 .mp-tabs a {
@@ -397,17 +326,10 @@
 }
 
 /* Pierogi divider before the order form (the menu column already has side padding) */
-.mp-divider {
-  padding: 64px 0 0;
-}
 
 /* ---------- Readability: bigger text, more air, stronger contrast ---------- */
 .mp {
   font-size: 18px;
-}
-
-.mp-cat {
-  padding: 36px 0 44px;
 }
 
 .mp-cat h3 {
@@ -429,7 +351,6 @@
 
 .mp-desc,
 .mp-list,
-.mp-pick,
 .mp-note {
   font-size: 16.5px;
   line-height: 1.55;
@@ -444,10 +365,6 @@
   padding: 1px 0 1px 16px;
 }
 
-.mp-pick span {
-  color: #1f1f1f;
-}
-
 .mp-badge--line {
   font-size: 13px;
 }
@@ -460,7 +377,6 @@
 
   .mp-desc,
   .mp-list,
-  .mp-pick,
   .mp-note {
     font-size: 16px;
   }
@@ -507,22 +423,6 @@
   .mp-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-
-  .mp-items--split > li {
-    padding-right: 14px !important;
-  }
-
-  .mp-items--split > li + li {
-    padding-left: 14px !important;
-  }
-
-  .mp-items--split .mp-item {
-    gap: 12px;
-  }
-
-  .mp-items--split .mp-item span {
-    white-space: nowrap;
-  }
 }
 
 @media (max-width: 900px) {
@@ -540,11 +440,6 @@
   position: relative;
   margin-top: 72px;
   padding: 40px 0 72px;
-}
-
-.mp-divider {
-  padding-top: 0;
-  margin-top: 56px;
 }
 
 @media (max-width: 900px) {
@@ -704,7 +599,6 @@
 
 /* Deli Menu: link to the Platters page */
 .mp-see {
-  margin-top: 40px !important;
   font-family: var(--font-heading);
   font-size: 22px;
 }
@@ -737,12 +631,6 @@
 @media (min-width: 901px) {
   .mp--platters .mp-group__head {
     padding-right: 300px;
-  }
-}
-
-@media (min-width: 901px) {
-  .mp-see {
-    text-align: right;
   }
 }
 

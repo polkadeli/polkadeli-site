@@ -115,8 +115,6 @@ label {
 /* Labels use normal letter spacing everywhere */
 .ct__field,
 .of__field,
-.vs__label,
-.ct__follow span,
 .hero-store__city,
 .footer-column h2,
 .phone-menu__city,
@@ -125,39 +123,10 @@ label {
 }
 
 /* "Store hours" labels in red */
-.vs__label {
-  color: var(--color-red) !important;
-}
 
 /* Pierogi doodle divider between sections (home and menu pages) */
-.doodle-divider {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-.doodle-divider span {
-  flex: 1;
-  height: 1px;
-  background: #d9d9d9;
-}
-
-.doodle-divider img {
-  width: 110px;
-  height: 80px;
-  object-fit: contain;
-  transform-origin: 50% 70%;
-  animation: doodle-wiggle 3.6s ease-in-out 1s infinite;
-}
 
 /* Divider pierogi wiggle now and then, faster on hover */
-.doodle-divider img:hover {
-  animation-duration: 0.9s;
-  animation-delay: 0s;
-}
 
 @keyframes doodle-wiggle {
   0%, 50%, 100% { transform: rotate(0); }
@@ -165,16 +134,4 @@ label {
   20% { transform: rotate(7deg); }
   30% { transform: rotate(-4deg); }
   40% { transform: rotate(2deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .doodle-divider img {
-    animation: none;
-  }
-}
-
-@media (max-width: 900px) {
-  .doodle-divider {
-    padding: 0 20px;
-  }
 }

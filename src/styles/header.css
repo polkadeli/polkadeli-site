@@ -179,12 +179,6 @@
   background: var(--color-ink);
 }
 
-.header-order--drawer {
-  margin-top: var(--space-5);
-  height: 46px;
-  font-size: var(--text-base);
-}
-
 /* Menu button: only shown on phones and tablets */
 .menu-button {
   display: none;
@@ -257,10 +251,6 @@
   .site-nav__links a {
     padding: 4px 14px;
   }
-
-  .site-header__social {
-    display: none;
-  }
 }
 
 @media (max-width: 900px) {
@@ -288,7 +278,6 @@
     justify-items: center;
     width: 44px;
     height: 44px;
-    margin-left: auto;
     background: none;
     border: 0;
     cursor: pointer;
@@ -348,10 +337,6 @@
   text-decoration: none;
 }
 
-.phone-menu__list li + li a {
-  border-top: 1px solid #e6e6e6;
-}
-
 .phone-menu__list a:hover,
 .phone-menu__list a:focus-visible {
   background: #f4f4f4;
@@ -386,7 +371,6 @@
 @media (max-width: 900px) {
   .phone-menu {
     margin-left: auto;
-    margin-right: 4px;
   }
 
   .menu-button {
@@ -442,7 +426,6 @@
 }
 
 .lang-switch a {
-  padding: 4px 6px;
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
 }
@@ -614,11 +597,6 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-.order-menu__list--drawer {
-  padding: 0;
-  background: var(--color-white);
-}
-
 @media (max-width: 900px) {
   .order-menu {
     display: none;
@@ -630,16 +608,6 @@
 }
 
 /* Phone menu: logo above the text so the words keep the full width */
-.order-menu__list--drawer a.order-menu__uber {
-  display: block;
-}
-
-.order-menu__list--drawer .order-menu__uber img {
-  width: 120px;
-  height: auto;
-  display: block;
-  margin-bottom: 8px;
-}
 
 /* Keep EN | PL, phone, social and Order now in the same spot in both languages:
    the nav takes the free space (links centred in it) and the Order button has one width */
@@ -761,16 +729,6 @@
 }
 
 /* Phone menu: About us and Contact sit indented under Visit us */
-.drawer__sub {
-  margin: 0;
-  padding: 0 0 0 18px;
-  list-style: none;
-}
-
-.drawer__sub a {
-  font-size: var(--text-md, 17px);
-  color: rgba(255, 255, 255, 0.85);
-}
 
 /* Phone menu: both stores with address and phone */
 .drawer__store .drawer__label {

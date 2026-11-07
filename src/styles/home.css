@@ -117,35 +117,6 @@ main p {
 }
 
 /* Empty spacer that pushes the content to the bottom of the photo */
-.hero__copy {
-  position: relative;
-  z-index: 2;
-  flex: 1;
-  width: 100%;
-  max-width: 1360px;
-  margin: 0 auto;
-}
-
-.hero__foot {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr 580px;
-  gap: 40px;
-  align-items: end;
-  width: 100%;
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 40px 96px;
-}
-
-.doodle-badge {
-  width: 200px;
-  height: auto;
-  margin-bottom: 18px;
-  filter: invert(1);
-  opacity: 0.92;
-}
 
 .hero h1 {
   max-width: 14ch;
@@ -302,8 +273,7 @@ main p {
   border-radius: 12px;
 }
 
-.show__ph,
-.dish__ph {
+.show__ph {
   overflow: hidden;
   border-radius: 8px;
 }
@@ -357,12 +327,6 @@ main p {
   margin-bottom: 40px;
 }
 
-.dish__ph img {
-  width: 100%;
-  aspect-ratio: 6 / 5;
-  object-fit: cover;
-}
-
 .dish p {
   margin: 0 6px 16px;
   font-size: 15px;
@@ -402,10 +366,6 @@ main p {
 /* ---------- Tablet ---------- */
 
 @media (max-width: 1100px) {
-  .hero__foot {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
 
   .hero-signup {
     max-width: 560px;
@@ -426,18 +386,6 @@ main p {
   .hero {
     height: auto;
     min-height: 0;
-  }
-
-  .hero__copy {
-    padding-top: calc(var(--header-height) + 160px);
-  }
-
-  .hero__foot {
-    padding: 0 20px 96px;
-  }
-
-  .doodle-badge {
-    width: 150px;
   }
 
   .hero h1 {
