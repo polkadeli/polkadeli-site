@@ -226,3 +226,13 @@
   padding: 1px 0;
   line-height: 1.35;
 }
+
+/* Day and time columns closer together (KK 2026-11-07) */
+.vs__store table.vs__hours {
+  width: auto;
+}
+
+.vs__store table.vs__hours td:last-child {
+  padding-left: 28px;
+  text-align: left;
+}
