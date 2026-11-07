@@ -183,6 +183,13 @@ export const ui = {
     thanksTest: 'Test order received. No payment was taken: online payment is not switched on yet.',
     backHome: 'Back to the homepage',
     backMenu: 'Back to the menu',
+    thanksPaidTitle: 'Your order is paid',
+    thanksPaidText: 'Thank you! Pick it up at our Silver Spring store at the time you chose. Your receipt is on its way by email.',
+    thanksMsgTitle: 'Message sent',
+    thanksOrderTitle: 'Order received',
+    pickupAt: 'Pick-up at',
+    directions: 'Get directions',
+    questions: 'Questions about your order? Call us at',
   },
   pl: {
     siteTitle: 'Polka Deli · Polskie delikatesy w Silver Spring, MD i Vienna, VA',
@@ -316,6 +323,13 @@ export const ui = {
     thanksTest: 'Zamówienie testowe przyjęte. Nie pobrano płatności: płatności online nie są jeszcze włączone.',
     backHome: 'Wróć na stronę główną',
     backMenu: 'Wróć do menu',
+    thanksPaidTitle: 'Zamówienie jest opłacone',
+    thanksPaidText: 'Dziękujemy! Odbierz je w naszym sklepie w Silver Spring o wybranej godzinie. Paragon wyślemy e-mailem.',
+    thanksMsgTitle: 'Wiadomość wysłana',
+    thanksOrderTitle: 'Zamówienie przyjęte',
+    pickupAt: 'Odbiór w sklepie',
+    directions: 'Jak dojechać',
+    questions: 'Pytania o zamówienie? Zadzwoń:',
   },
 };
 
