@@ -49,6 +49,7 @@ const label = (i, g, k) => {
               <ul class="aisle__list">
                 {g.items.map((i, k) => <li>{label(i, g, k)}{note(i) && <em> {tr(lang, note(i), g.title)}</em>}</li>)}
               </ul>
+              {g.quip && lang === 'en' && <p class="aisle__quip">{g.quip}</p>}
             </div>
           </section>
         ))}

@@ -1,4 +1,5 @@
 // Shop ("Groceries") list. Each category is a column block; `note` adds a grey sub-line.
+// `quip` adds a small playful line under the list (English pages only).
 // Add or remove items here and the Shop page updates.
 
 export const columns = [
@@ -12,7 +13,7 @@ export const columns = [
   [
     { title: 'Pierogi', items: ['Meat', 'Sauerkraut & Mushroom', 'Potato & Cheese', 'Sweet Cheese', 'Fruit', 'Potato Dumplings (Kopytka)', 'Silesian Dumplings (Kluski Slaskie)'] },
     { title: 'Blintzes', items: ['Apple', 'Cherry Cheese', 'Strawberry Cheese', 'Sweet Cheese'] },
-    { title: 'Marinated Goods', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets with Horseradish'] },
+    { title: 'Marinated Goods', quip: 'Our pickles? Kind of a big dill.', items: ['Pickles', 'Sauerkraut', 'Red Cabbage', "Hunter's Stew (Bigos)", 'Horseradish', 'Beets with Horseradish'] },
   ],
   [
     { title: 'Sweets', items: ['Ptasie Mleczko', 'Prince Polo', 'Jaffa Cakes', 'Krowki', 'Wedel Chocolate', 'Torcik Wedlowski'] },

@@ -208,3 +208,11 @@
     height: 96px;
   }
 }
+
+/* Small playful line under an aisle list, e.g. pickles */
+.aisle__quip {
+  margin: 10px 0 0;
+  font-size: 14px;
+  font-style: italic;
+  color: var(--color-red);
+}
