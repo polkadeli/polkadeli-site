@@ -39,7 +39,7 @@ const tabs = [
       <section class="mp-group" id="platters">
         <div class="mp-group__head">
           <h1 class="mp-group__title">{t.platters}</h1>
-          <p class="mp-email">{t.pickupSS}</p>
+          <p class="mp-email">{t.pickupSS.split(/(?<=\.) /).map((part) => <span class="mp-nowrap">{part}</span>).reduce((a, b) => [a, ' ', b])}</p>
         </div>
         <div class="mp-grid">
           {platterCols.map((col) => (
