@@ -132,18 +132,28 @@
   }
 }
 
-/* Privacy policy link under the Send button (KK 2026-11-07) */
-.ct__privacy {
-  margin: 16px 0 0;
-  font-family: var(--font-ui);
-  font-size: 14px;
+/* Privacy link on the left, Send on the right, on one line (KK 2026-11-07) */
+.ct__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
 
-.ct__privacy a {
+.ct__privacy {
+  font-family: var(--font-ui);
+  font-size: 14px;
   color: #6b6b6b;
 }
 
 .contact-dialog:focus,
 .contact-dialog:focus-visible {
   outline: none;
+}
+
+/* Second sentence of the intro starts on its own line on computers only */
+@media (max-width: 600px) {
+  .contact-dialog__text .br-desktop {
+    display: none;
+  }
 }
