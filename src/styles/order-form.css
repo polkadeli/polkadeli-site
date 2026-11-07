@@ -159,7 +159,7 @@
   letter-spacing: 0;
   color: #1f1f1f;
   background: #fff;
-  border: 1px solid #bdbdbd;
+  border: 1px solid transparent; /* white fields without outlines (KK 2026-11-07) */
   border-radius: 0;
 }
 
