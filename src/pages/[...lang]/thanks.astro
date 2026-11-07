@@ -73,7 +73,7 @@ const check = '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true
         // Box reads: PICK-UP / Saturday, November 7 / 12:30 pm / address (date and time on their own lines)
         when.replaceChildren(day.replace(/^./, (c) => c.toUpperCase()), document.createElement('br'), clock);
         document.querySelector('[data-label]').textContent = pl ? 'Odbiór' : 'Pick-up';
-        document.querySelector('[data-intro]').textContent = pl ? 'Dziękujemy! Paragon wyślemy e-mailem.' : 'Thank you! Your receipt is on its way by email.';
+        document.querySelector('[data-intro]').textContent = pl ? 'Zamówienie jest opłacone. Paragon wyślemy e-mailem.' : 'Your order is paid. Your receipt is on its way by email.';
       }
     </script>
   </section>
