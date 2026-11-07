@@ -24,10 +24,10 @@ const check = '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true
       {/* Paid online order (?order=paid) */}
       <div class="ty__msg" data-order="paid" hidden>
         <h1>{t.thanksPaidTitle}</h1>
-        <p>{t.thanksPaidText}</p>
+        <p data-intro>{t.thanksPaidText}</p>
         <div class="ty__store">
-          <p class="ty__label">{t.pickupAt}</p>
-          <p class="ty__city">{ss.city}, MD</p>
+          <p class="ty__label" data-label>{t.pickupAt}</p>
+          <p class="ty__city" data-when>{ss.city}, MD</p>
           <p class="ty__addr">{ss.street},<br />{ss.locality}</p>
           <a class="ty__link" href={ss.maps} target="_blank" rel="noopener">{t.directions}</a>
         </div>
@@ -56,6 +56,20 @@ const check = '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true
         try { sessionStorage.removeItem('polkadeli-order-deli'); sessionStorage.removeItem('polkadeli-order-platters'); } catch {}
         document.querySelector('[data-default]').hidden = true;
         msg.hidden = false;
+      }
+      // Pick-up day and time, passed in the address after payment (?date=2026-11-07&time=12:30)
+      const q = new URLSearchParams(location.search);
+      const d = q.get('date'); const tm = q.get('time');
+      const when = document.querySelector('[data-when]');
+      if (when && /^\d{4}-\d{2}-\d{2}$/.test(d || '') && /^\d{2}:\d{2}$/.test(tm || '')) {
+        const pl = document.documentElement.lang === 'pl';
+        const day = new Date(`${d}T12:00:00Z`).toLocaleDateString(pl ? 'pl-PL' : 'en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
+        const [h, m] = tm.split(':').map(Number);
+        const clock = pl ? tm : `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')}\u00a0${h < 12 ? 'am' : 'pm'}`;
+        // Box reads: PICK-UP / Saturday, November 7 / 12:30 pm / address (date and time on their own lines)
+        when.replaceChildren(day.replace(/^./, (c) => c.toUpperCase()), document.createElement('br'), clock);
+        document.querySelector('[data-label]').textContent = pl ? 'Odbiór' : 'Pick-up';
+        document.querySelector('[data-intro]').textContent = pl ? 'Dziękujemy! Paragon wyślemy e-mailem.' : 'Thank you! Your receipt is on its way by email.';
       }
     </script>
   </section>

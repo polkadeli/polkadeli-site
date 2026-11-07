@@ -111,7 +111,7 @@ export default async (req, context) => {
           ...(tax > 0 ? [{ name: `MD sales tax ${+(TAX_MD * 100).toFixed(2)}%`, price: tax, unitQty: 1 }] : []),
         ],
       },
-      redirectUrls: { success: `${thanks}?order=paid`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order${type === 'platters' ? '/platters' : ''}?payment=failed` },
+      redirectUrls: { success: `${thanks}?order=paid&date=${date}&time=${time}`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order${type === 'platters' ? '/platters' : ''}?payment=failed` },
     }),
   });
   let res = await createCheckout(token);
