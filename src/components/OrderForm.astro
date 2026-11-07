@@ -217,9 +217,12 @@ const shown = groups.filter((g) => g.type === type);
     const end = span ? span[1] - 60 : -1;
     const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
     if (dateInput.value === isoDay(now)) start = Math.max(start, Math.ceil((now.getHours() * 60 + now.getMinutes() + 30) / 15) * 15);
+    // Platters: pick-up on the hour only (KK 2026-11-07). Deli: every 15 minutes.
+    const hourly = form.querySelector('[name="order-type"]').value === 'platters';
+    if (hourly) start = Math.ceil(start / 60) * 60;
     if (start > end) { timeSel.append(opt('', timeSel.dataset.none, true)); return; }
     timeSel.append(opt('', timeSel.dataset.pick, true));
-    for (let m = start; m <= end; m += 15) {
+    for (let m = start; m <= end; m += hourly ? 60 : 15) {
       const v = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
       timeSel.append(new Option(label(m), v, false, v === keep));
     }
