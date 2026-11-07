@@ -1030,9 +1030,11 @@
 }
 
 .of__day--big {
-  min-height: 58px;
-  font-size: 18px;
+  min-height: 48px; /* a little lower (KK 2026-11-07) */
+  padding: 4px 2px;
+  font-size: 17px;
   font-weight: 700;
+  line-height: 1.2;
 }
 
 .of__day--big small {

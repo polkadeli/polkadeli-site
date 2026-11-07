@@ -560,6 +560,24 @@ html[lang='pl'] .hero--b h1 {
     grid-template-columns: 1fr;
   }
 
+  /* Mailing list box on phones: centred heading, "specials" ends the first line, slimmer fields, roomier box (KK 2026-11-07) */
+  .hb-foot .hero-signup {
+    padding: 20px 20px 16px;
+  }
+
+  .hb-foot .hero-signup h2 {
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .hb-foot .hero-signup h2 .signup-aside {
+    display: block;
+  }
+
+  .hb-foot .hero-signup input {
+    padding: 6px 12px;
+  }
+
   /* Two lines on phones: the question, then the answer (KK 2026-11-07) */
   .strip {
     padding: 11px 10px;

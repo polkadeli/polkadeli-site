@@ -79,7 +79,7 @@ const offers = [
         ))}
       </div>
       <form class="hero-signup" name="newsletter" method="POST" action={href('/thanks', lang)} data-netlify="true" netlify-honeypot="company">
-        <h2>{t.joinList}</h2>
+        <h2>{t.joinList.split(/ (?=\()/).map((part, i) => i ? <> <span class="signup-aside">{part}</span></> : part)}</h2>
         <p class="signup__trap"><label>Company <input name="company" tabindex="-1" autocomplete="off" /></label></p>
         <div class="hero-signup__fields">
           <label><span class="visually-hidden">{t.name}</span><input name="name" type="text" required autocomplete="name" placeholder={t.name} /></label>
