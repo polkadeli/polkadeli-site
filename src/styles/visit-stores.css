@@ -236,3 +236,33 @@
   padding-left: 28px;
   text-align: left;
 }
+
+/* Phone number back in a rounded button, smaller text; button lines up with the times column (KK 2026-11-07) */
+.vs__store {
+  --vs-day: 112px;
+}
+
+.vs__top {
+  display: grid;
+  grid-template-columns: var(--vs-day) auto;
+  gap: 0;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.vs__phone-btn {
+  height: 36px;
+  margin: 0;
+  padding: 0 16px;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.vs__store table.vs__hours td:first-child {
+  width: var(--vs-day);
+}
+
+.vs__store table.vs__hours td:last-child {
+  padding-left: 0;
+}
