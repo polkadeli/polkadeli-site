@@ -359,6 +359,7 @@
 
 .mp-desc {
   margin-top: 4px !important;
+  line-height: 1.35; /* tighter two-line descriptions (KK 2026-11-07) */
 }
 
 .mp-list li {
@@ -715,9 +716,11 @@
     display: inline-flex;
     visibility: visible;
     opacity: 1;
-    height: 30px;
-    padding: 0 14px;
-    font-size: 14px;
+    align-self: center;
+    height: 26px;
+    padding: 0 12px;
+    font-size: 13px;
+    line-height: 1;
   }
 
   .mp a.mp-order-bar {
