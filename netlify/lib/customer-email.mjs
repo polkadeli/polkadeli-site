@@ -39,7 +39,7 @@ export function customerEmail(order, site) {
     </tr>`;
   // Items stand out (bold, larger); subtotal and tax are small and grey under a dark line.
   const items = order.lines.map((l, i) => row(`${l.qty}&nbsp;×&nbsp;${itemName(l.name)}`, money(l.qty * l.price),
-    `font:700 17px/1.4 ${SANS};padding:12px 0;${i === order.lines.length - 1 && !order.notes ? `border-bottom:2px solid ${INK};` : ''}`)).join('');
+    `font:700 15px/1.4 ${SANS};padding:12px 0;${i === order.lines.length - 1 && !order.notes ? `border-bottom:2px solid ${INK};` : ''}`)).join('');
   // The customer's note sits right under the items, above the dark line.
   const noteRow = order.notes ? `
     <tr><td colspan="2" style="padding:12px 0;border-bottom:2px solid ${INK};font:15px/1.5 ${SANS};color:${MUTED};"><strong style="color:${INK};">Your note:</strong> ${esc(order.notes)}</td></tr>` : '';
@@ -75,7 +75,6 @@ export function customerEmail(order, site) {
     </table>
   </td></tr>
   <tr><td style="padding:28px 32px 0;">
-    <h2 style="margin:0 0 4px;font:600 20px/1.3 ${SERIF};color:${INK};">${order.type === 'platters' ? 'Your platter order' : 'Your order'}</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       ${items}
       ${noteRow}
