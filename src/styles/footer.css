@@ -67,6 +67,11 @@
   text-decoration: none;
 }
 
+.footer-copy__dot {
+  margin: 0 10px;
+}
+
+/* Easter egg: footer link that leads to the page-not-found joke (English only) */
 .footer-copy {
   display: flex;
   justify-content: space-between;

@@ -184,7 +184,7 @@ const ogImage = new URL(image, Astro.site).href;
       </div>
       <div class="footer-copy">
         <span>© {new Date().getFullYear()} {t.copy}</span>
-        <span><a href={href('/#privacy', lang)} data-privacy>{t.privacy}</a></span>
+        <span>{lang === 'en' && <><a href="/how-to-pronounce-chrzaszcz" rel="nofollow">How do you say chrząszcz?</a><span class="footer-copy__dot" aria-hidden="true">·</span></>}<a href={href('/#privacy', lang)} data-privacy>{t.privacy}</a></span>
       </div>
     </div>
   </footer>

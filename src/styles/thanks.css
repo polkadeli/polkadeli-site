@@ -127,3 +127,26 @@
     font-size: 16px;
   }
 }
+
+/* Page not found: red background, white message (KK 2026-11-07) */
+.ty--red {
+  display: grid;
+  align-items: center;
+  min-height: 60vh;
+  color: #fff;
+  background: var(--color-red);
+}
+
+.ty--red .ty__msg > p {
+  color: #fff;
+}
+
+.ty--red .ty__btn {
+  color: var(--color-red);
+  background: #fff;
+}
+
+.ty--red .ty__btn:hover,
+.ty--red .ty__btn:focus-visible {
+  background: #f4f4f4;
+}
