@@ -198,3 +198,25 @@
 .vs__top .vs__phone {
   margin: 0;
 }
+
+/* One column: city + phone, line, hours, line, address (KK 2026-11-07) */
+.vs__store,
+.visit .vs__store {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.vs__top {
+  margin-bottom: 6px;
+}
+
+.vs__store table.vs__hours td {
+  border-bottom: 0;
+}
+
+.vs__store .vs__addr {
+  margin: 4px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #e3e3e3;
+}

@@ -9,14 +9,9 @@ const t = ui[lang];
 <div class="vs">
   {stores.map((s) => (
     <div class="vs__store">
-      <div class="vs__main">
-        <div class="vs__top"><h2>{s.city}</h2><a class="vs__phone" href={s.phoneHref}>{s.phone}</a></div>
-        <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener">{s.street},<br />{s.locality}</a></p>
-      </div>
-      <div class="vs__hours">
-        <p class="vs__label">{t.storeHours}</p>
-        <table>{s.hours.map(([d, h]) => <tr><td>{tr(lang, d)}</td><td>{hours(lang, h)}</td></tr>)}</table>
-      </div>
+      <div class="vs__top"><h2>{s.city}</h2><a class="vs__phone" href={s.phoneHref}>{s.phone}</a></div>
+      <table class="vs__hours" aria-label={t.storeHours}>{s.hours.map(([d, h]) => <tr><td>{tr(lang, d)}</td><td>{hours(lang, h)}</td></tr>)}</table>
+      <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener">{s.street},<br />{s.locality}</a></p>
     </div>
   ))}
 </div>
