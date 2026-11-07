@@ -33,7 +33,10 @@ export function customerEmail(order, site) {
       <td style="padding:10px 0;border-bottom:1px solid #e5e5e5;font:16px/1.4 ${SANS};color:${INK};${style}">${left}</td>
       <td align="right" style="padding:10px 0 10px 16px;border-bottom:1px solid #e5e5e5;font:16px/1.4 ${SANS};color:${INK};white-space:nowrap;${style}">${right}</td>
     </tr>`;
-  const items = order.lines.map((l) => row(`${l.qty}&nbsp;×&nbsp;${itemName(l.name)}`, money(l.qty * l.price))).join('');
+  // Items stand out (bold, larger); subtotal and tax are small and grey under a dark line.
+  const items = order.lines.map((l, i) => row(`${l.qty}&nbsp;×&nbsp;${itemName(l.name)}`, money(l.qty * l.price),
+    `font:700 17px/1.4 ${SANS};padding:12px 0;${i === order.lines.length - 1 ? `border-bottom:2px solid ${INK};` : ''}`)).join('');
+  const small = `font:14px/1.4 ${SANS};color:${MUTED};padding:6px 0;border-bottom:0;`;
 
   const subject = `Your Polka Deli order${order.number ? ` #${order.number}` : ''} for ${when.replace(' ', ' ')}`;
   const html = `<!doctype html>
@@ -68,11 +71,11 @@ export function customerEmail(order, site) {
     <h2 style="margin:0 0 4px;font:600 20px/1.3 ${SERIF};color:${INK};">${order.type === 'platters' ? 'Your platter order' : 'Your order'}</h2>
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
       ${items}
-      ${row('Subtotal', money(order.subtotal), `color:${MUTED};`)}
-      ${row('MD sales tax 6%', money(order.tax), `color:${MUTED};`)}
-      ${row('<strong>Total paid</strong>', `<strong>${money(order.total)}</strong>`, 'border-bottom:0;')}
+      ${row('Subtotal', money(order.subtotal), `${small}padding-top:12px;`)}
+      ${row('MD sales tax 6%', money(order.tax), small)}
+      ${row('Total paid', money(order.total), `font:700 16px/1.4 ${SANS};padding:8px 0 0;border-bottom:0;`)}
     </table>
-    ${order.notes ? `<p style="margin:12px 0 0;font:15px/1.5 ${SANS};color:${MUTED};"><strong style="color:${INK};">Your note:</strong> ${esc(order.notes)}</p>` : ''}
+    ${order.notes ? `<p style="margin:20px 0 0;font:15px/1.5 ${SANS};color:${MUTED};"><strong style="color:${INK};">Your note:</strong> ${esc(order.notes)}</p>` : ''}
   </td></tr>
   <tr><td align="center" style="padding:28px 32px 32px;">
     <p style="margin:0;font:16px/1.55 ${SANS};color:#444;">Questions about your order?<br>Call us at <a href="${ss.phoneHref}" style="color:${INK};font-weight:700;">${ss.phone}</a></p>
