@@ -1,0 +1,60 @@
+---
+// Shop ("Polish Groceries"): categories in two columns. Products come from src/data/groceries.js.
+import { langOf, langPaths, href, tr, ui } from '../../i18n.js';
+import { features } from '../../data/features.js';
+export const getStaticPaths = () => (features.shop ? langPaths() : []);
+import Base from '../../layouts/Base.astro';
+import { columns } from '../../data/groceries.js';
+import '../../styles/shop.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+
+const groups = columns.flat();
+const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+// Round photo beside each aisle title (swap any of these as better photos come in).
+const photoFor = {
+  Kielbasa: '/images/shop/kabanosy.jpg',
+  Cheese: '/images/media/deli-table.jpg',
+  'Deli Meats': '/images/shop/cold-cuts.jpg',
+  Pierogi: '/images/media/pierogi-2.jpg',
+  Blintzes: '/images/media/paczki.jpg',
+  'Marinated Goods': '/images/media/jars.jpg',
+  Sweets: '/images/shop/sweets.jpg',
+  'Baked Goods': '/images/media/paczki.jpg',
+};
+const photo = (t) => photoFor[t] ?? '/images/media/groceries.jpg';
+const name = (i) => (typeof i === 'string' ? i : i.name);
+const note = (i) => (typeof i === 'string' ? '' : i.note);
+// Polish lists: only the first product starts with a capital, except brand names
+const plBrands = new Set(['Rycki Edam', 'Królewski', 'Królewski wędzony', 'Ptasie Mleczko', 'Prince Polo', 'Delicje', 'Torcik Wedlowski']);
+const label = (i, g, k) => {
+  const s = tr(lang, name(i), g.title);
+  return lang === 'pl' && k > 0 && !plBrands.has(s) ? s.charAt(0).toLowerCase() + s.slice(1) : s;
+};
+---
+<Base title={t.shopTitle} description={t.shopDesc}>
+  <div class="shop-strip"><img src="/images/media/jars.jpg" alt="" /></div>
+  <div class="shop">
+    <header class="shop__head">
+      <h1>{t.shopH1}</h1>
+      <p>{t.shopIntro}</p>
+    </header>
+
+    <div class="shop__body">
+      <div class="shop__aisles">
+        {groups.map((g) => (
+          <section class="aisle" id={slug(g.title)} aria-labelledby={`h-${slug(g.title)}`}>
+            <div class="aisle__body">
+              <h2 class="aisle__title" id={`h-${slug(g.title)}`}><img class="aisle__dot" src={photo(g.title)} alt="" loading="lazy" />{tr(lang, g.title)}{g.tag && <span> {tr(lang, g.tag)}</span>}</h2>
+              <ul class="aisle__list">
+                {g.items.map((i, k) => <li>{label(i, g, k)}{note(i) && <em> {tr(lang, note(i), g.title)}</em>}</li>)}
+              </ul>
+              {g.quip && lang === 'en' && <p class="aisle__quip">{g.quip}</p>}
+            </div>
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</Base>
+

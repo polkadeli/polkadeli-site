@@ -2,11 +2,41 @@
   command = "npm run build"
   publish = "dist"
 
+# Secret keys live in Netlify (Project configuration > Environment variables), never in this repo:
+#   CLOVER_PRIVATE_TOKEN   Clover Ecommerce private token (Hosted Checkout payments)
+#   CLOVER_WEBHOOK_SECRET  Clover Hosted Checkout webhook signing secret (confirms paid orders)
+#   CLOVER_API_TOKEN       Clover REST API token (prints paid orders on the Station)
+# After changing one, redeploy so the site picks it up.
+# Production branch in Netlify is redesign-home (since 2026-11-06), so polkadeli.netlify.app shows the new site.
+
 [build.environment]
-  NODE_VERSION = "22"
+  NODE_VERSION = "22.23.4"   # Astro needs 22.23.4 or newer
 
 # Old Wix addresses that change on the new site
 [[redirects]]
   from = "/copy-of-deli-menu"
   to = "/platters"
+  status = 301
+
+# The privacy policy is now a pop-up on the home page
+[[redirects]]
+  from = "/privacy"
+  to = "/#privacy"
+  status = 301
+
+# About is now a section on the home page
+[[redirects]]
+  from = "/about"
+  to = "/#about"
+  status = 301
+
+# The home page mockup became the real home page (2026-11-06)
+[[redirects]]
+  from = "/home-preview"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/pl/home-preview"
+  to = "/pl/"
   status = 301

@@ -1,0 +1,114 @@
+---
+// Deli Menu (pierogi, sandwiches, entrees). Platters have their own page (platters.astro). All items and prices come from src/data/menu.js.
+import { langOf, langPaths, href, tr, trItem, ui } from '../../i18n.js';
+import { features } from '../../data/features.js';
+import { stores } from '../../data/site.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import CommaList from '../../components/CommaList.astro';
+import { pierogi, sandwiches, entrees } from '../../data/menu.js';
+import '../../styles/menu-page.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+// Online ordering on: buttons go to the order page. Off (soft launch): they call the Silver Spring store.
+const orderHref = features.onlineOrdering ? href('/order', lang) : stores[0].phoneHref;
+const orderLabel = features.onlineOrdering ? t.orderPickup : `${t.callToOrder} ${stores[0].phone}`;
+// The menu lists the three single fillings; "Mix of all three" stays an option on the order form.
+const menuFillings = pierogi.fillings.filter((f) => f !== 'Mix of all three');
+const tabs = [
+  ['pierogi', 'Pierogi'], ['sandwiches', tr(lang, 'Sandwiches')], ['entrees', tr(lang, 'Entrees')],
+];
+---
+<Base title={t.menuTitle} description={t.menuDesc}>
+  <div class="mp">
+    <div class="mp-title mp-title--photo"><img src="/images/media/printed-menu-2.jpg" alt={t.menuAlt} /></div>
+
+    <nav class="mp-tabs" aria-label={t.menuSections}>
+      <div class="mp-wrap">
+        <div class="mp-tabs__links">{tabs.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}</div>
+        <a class="mp-order mp-order--bar" href={orderHref} tabindex="-1">{features.onlineOrdering ? t.orderNow : orderLabel}</a>
+      </div>
+    </nav>
+    <!-- Desktop: big order button just under the red bar. Once it scrolls away, a smaller one appears in the red bar. -->
+    <div class="mp-orderdock"><div class="mp-wrap"><a class="mp-order" href={orderHref}>{orderLabel}</a></div></div>
+
+    <div class="mp-wrap">
+      <section class="mp-group" id="deli">
+        <div class="mp-group__head">
+          <h1 class="mp-group__title">{t.deliMenu}</h1>
+          {t.menuTagline && <p class="mp-email">{t.menuTagline}</p>}
+        </div>
+
+        <div class="mp-grid">
+          <div class="mp-col">
+            <section class="mp-cat" id="pierogi">
+              <h3>Pierogi</h3>
+              <ul class="mp-items">
+                <li>
+                  <p class="mp-item"><span>{[...pierogi.prices].reverse().map(([size]) => tr(lang, size)).join(' / ')}</span><b>{[...pierogi.prices].reverse().map(([, price]) => price).join(' / ')}</b></p>
+                  <p class="mp-desc mp-fillings">{menuFillings.map((f, i) => <span class="mp-nowrap">{i === menuFillings.length - 1 ? `${lang === 'pl' ? 'lub' : 'or'} ` : ''}{trItem(lang, f, i)}{i < menuFillings.length - (lang === 'pl' ? 2 : 1) ? ',' : ''}</span>).reduce((a, b) => [a, ' ', b])}</p>
+                </li>
+              </ul>
+              <p class="mp-note">{tr(lang, pierogi.servedWith)}</p>
+            </section>
+            <section class="mp-cat" id="sandwiches">
+              <h3>{tr(lang, 'Sandwiches')}</h3>
+              <ul class="mp-items">
+                {sandwiches.items.map((item) => (
+                  <li><p class="mp-item"><span>{tr(lang, item.name)}</span><b>{sandwiches.price}</b></p><p class="mp-desc"><CommaList text={tr(lang, item.desc)} /></p></li>
+                ))}
+              </ul>
+              <p class="mp-note mp-note--price"><span>{tr(lang, sandwiches.side[0])}</span> <b>{sandwiches.side[1]}</b></p>
+            </section>
+          </div>
+          <div class="mp-col">
+            <section class="mp-cat" id="entrees">
+              <h3>{tr(lang, 'Entrees')}</h3>
+              <ul class="mp-items">
+                {entrees.map((item) => (
+                  <li>
+                    <p class="mp-item"><span>{tr(lang, item.name)}{item.note && <em> {tr(lang, item.note)}</em>}</span><b>{item.price}</b></p>
+                    {item.desc && <p class="mp-desc"><CommaList text={tr(lang, item.desc)} /></p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </div>
+        <p class="mp-see"><a href={href('/platters', lang)}>{t.seePlatters} →</a></p>
+      </section>
+
+
+    </div>
+    <!-- Phone: order button stays at the bottom of the screen -->
+    <a class="mp-order-bar" href={orderHref}>{orderLabel}</a>
+  </div>
+</Base>
+
+<script>
+  // Show the small order button in the red bar once the big one has scrolled out of view.
+  const big = document.querySelector('.mp-orderdock .mp-order');
+  const bar = document.querySelector('.mp-tabs');
+  new IntersectionObserver(([e]) => {
+    const show = !e.isIntersecting && e.boundingClientRect.top < 200;
+    bar.classList.toggle('show-order', show);
+    bar.querySelector('.mp-order--bar').tabIndex = show || matchMedia('(max-width: 900px)').matches ? 0 : -1;
+  }, { rootMargin: '-140px 0px 0px 0px' }).observe(big);
+
+  // Highlight the tab for the section in view.
+  const tabs = [...document.querySelectorAll('.mp-tabs a:not(.mp-order)')];
+  const secs = tabs.map((a) => document.querySelector(a.getAttribute('href')));
+  const setOn = (k) => tabs.forEach((a, i) => a.classList.toggle('is-on', i === k));
+  let lock = 0;
+  const onScroll = () => {
+    if (Date.now() < lock) return;
+    // The section nearest the top wins; side-by-side sections (same top) go to the first one.
+    let k = 0, best = -Infinity;
+    secs.forEach((s, i) => { const t = Math.round(s.getBoundingClientRect().top); if (t < 220 && t > best) { best = t; k = i; } });
+    setOn(k);
+  };
+  // A clicked tab stays underlined while the page scrolls to it.
+  tabs.forEach((a, i) => a.addEventListener('click', () => { setOn(i); lock = Date.now() + 900; }));
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>

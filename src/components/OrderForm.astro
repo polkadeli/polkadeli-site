@@ -1,0 +1,435 @@
+---
+// Online pickup order page. Items and prices come from src/data/menu.js (via orderItems.js).
+// On submit the page calls /api/checkout (netlify/functions/checkout.mjs), which sends the
+// customer to Clover's secure payment page. Paid orders are emailed to the store through
+// Netlify Forms (form "pickup-order"); in test mode (no Clover keys) the page emails it itself.
+import { stores } from '../data/site.js';
+import { orderItems, pierogiNote, platterHeadings } from '../data/orderItems.js';
+import '../styles/order-form.css';
+import { langOf, href, tr, ui } from '../i18n.js';
+import CommaList from './CommaList.astro';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+const ss = stores[0]; // Silver Spring
+// Silver Spring opening hours as minutes, Sunday = 0 … Saturday = 6, for the pick-up time list.
+const toMin = (s) => { const [, h, m, ap] = s.match(/(\d{1,2}):(\d{2}) (am|pm)/); return ((+h % 12) + (ap === 'pm' ? 12 : 0)) * 60 + +m; };
+const dayNums = { 'Mon–Fri': [1, 2, 3, 4, 5], Saturday: [6], Sunday: [0] };
+const openHours = Array(7).fill(null);
+ss.hours.forEach(([days, span]) => { const [a, b] = span.split(' – '); (dayNums[days] || []).forEach((d) => { openHours[d] = [toMin(a), toMin(b)]; }); });
+
+const label = (i) => i.group === 'pierogi' ? `Pierogi, ${tr(lang, i.size)}` : i.group === 'entrees' ? `${tr(lang, i.base)}${i.note ? ` ${tr(lang, i.note)}` : ''}` : tr(lang, i.name);
+const pick = (group) => orderItems.filter((i) => i.group === group).map((i) => ({ ...i, label: label(i), serves: i.serves && tr(lang, i.serves) }));
+const groups = [
+  { title: 'Pierogi', type: 'deli', items: pick('pierogi'), note: tr(lang, pierogiNote) },
+  { title: tr(lang, 'Sandwiches'), type: 'deli', items: pick('sandwiches') },
+  { title: tr(lang, 'Entrees'), type: 'deli', items: pick('entrees') },
+  ...platterHeadings.map((h) => ({ title: tr(lang, h.heading, 'platterHeadings'), serves: h.serves && tr(lang, h.serves), type: 'platters', items: pick('platters').filter((i) => i.heading === h.heading) })),
+];
+const today = new Date().toISOString().slice(0, 10);
+// Each order page shows one kind: /order = deli, /order/platters = platters.
+const { type = 'deli' } = Astro.props;
+const shown = groups.filter((g) => g.type === type);
+---
+<section class="of" id="order" aria-labelledby="order-title">
+  <h1 class="of__title" id="order-title">{type === 'platters' ? t.orderPlattersOnline : t.orderOnline}</h1>
+  <p class="of__notice">{t.pickupOnly}</p>
+  <p class="of__intro">{(type === 'platters' ? t.orderIntroPlatters : t.orderIntroDeli).split('pick-up').map((part, i) => i === 0 ? part : [<span style="white-space: nowrap">pick-up</span>, part])}</p>
+
+  <p class="of__error of__payfail" role="alert" hidden>{t.payFailed}</p>
+  <!-- Declares the "pickup-order" Netlify form so the store gets an email for each order. -->
+  <form name="pickup-order" data-netlify="true" netlify-honeypot="company" hidden>
+    <input name="status" /><input name="order-number" /><input name="pickup" /><input name="order-type" /><input name="name" /><input name="phone" />
+    <input name="email" /><textarea name="order"></textarea><input name="total" /><input name="company" />
+  </form>
+  <form class="of__form" data-lang={lang}>
+
+    <input type="hidden" name="order-type" value={type} data-type={type} />
+
+    <div class="of__cols">
+      <div class="of__items">
+        {shown.map((g) => (
+          <section class="of__group" data-type={g.type}>
+            <h3 class="of__heading">{g.title}{g.serves && <span class="mp-badge mp-badge--line">{g.serves}</span>}</h3>
+            {g.items.map((it) => (
+              <div class="of__row" data-key={it.key} data-without={t.withoutShort} data-name={it.label} data-price={it.price.replace('$', '')}>
+                <input class="of__check" type="checkbox" aria-label={`${t.addCheck} ${it.label}`} />
+                <label class="of__name" for={`q-${it.key}`}>{it.label.replace(/ (\S+) & (\S+)$/, ' $1\u00a0&\u00a0$2')}</label>
+                {it.desc && <p class="of__desc"><CommaList text={tr(lang, it.desc)} /></p>}
+                {it.list && <ul class="of__list">{it.list.map((l) => <li>{tr(lang, l)}</li>)}</ul>}
+                <span class="of__price">{it.price}</span>
+                <div class="of__qty" role="group" aria-label={`${t.quantityOf} ${it.label}`}><button type="button" class="of__step" data-step="-1" aria-label={lang === 'pl' ? 'Mniej' : 'One less'}>−</button><input class="of__num" id={`q-${it.key}`} name={`qty-${it.key}`} value="0" readonly inputmode="none" tabindex="-1" aria-live="polite" aria-label={`${t.quantityOf} ${it.label}`} /><button type="button" class="of__step" data-step="1" aria-label={lang === 'pl' ? 'Więcej' : 'One more'}>+</button></div>
+                {it.choices && (
+                  <fieldset class="of__choices">
+                    <legend>{it.group === 'pierogi' || it.choiceLabel === 'filling' ? t.chooseFilling : t.chooseOne}</legend>
+                    {it.choices.map((c) => <label class="of__choice"><input type="radio" name={`filling-${it.key}`} value={c} />{tr(lang, c)}</label>)}
+                  </fieldset>
+                )}
+                {it.extras && (
+                  <fieldset class="of__choices of__extra">
+                    <legend>{t.extrasLabel}</legend>
+                    {it.extras.map((x) => <label class="of__choice"><input type="checkbox" value={x.name} data-price={x.price.replace('$', '')} data-label={tr(lang, x.name).toLowerCase()} />{tr(lang, x.name)} (+{x.price})</label>)}
+                  </fieldset>
+                )}
+                {it.removable && (
+                  <fieldset class="of__choices of__remove">
+                    <legend>{t.leaveOut}</legend>
+                    {it.removable.map((x) => <label class="of__choice"><input type="checkbox" value={x} />{tr(lang, x, 'ingredients')}</label>)}
+                  </fieldset>
+                )}
+              </div>
+            ))}
+            {g.note && <p class="of__note">{g.note}</p>}
+          </section>
+        ))}
+      </div>
+
+      <aside class="of__side">
+        <div class="of__box">
+          <h3>{t.pickup}</h3>
+          <!-- Online orders are for pickup at Silver Spring only (Vienna doesn't take online orders) -->
+          <input type="hidden" name="store" value={ss.city} />
+          <p class="of__store"><span class="of__nowrap">{ss.street},</span><br /><span class="of__nowrap">{ss.locality}</span></p>
+          <!-- Pick-up day: deli = Today / Tomorrow buttons; platters = calendar pop-up (filled in by the script below) -->
+          <div class="of__field of__date" role="group" aria-label={t.date} data-locale={lang === 'pl' ? 'pl-PL' : 'en-US'}>
+            {t.date}
+            {/* Platters: tomorrow or later, from a calendar that pops up. Deli: today or tomorrow only. */}
+            {type === 'platters' ? (
+              <div class="of__cal">
+                <button type="button" class="of__calbtn" aria-haspopup="dialog" aria-expanded="false" data-empty={t.pickDay}>{t.pickDay}</button>
+                <div class="of__calpop" role="dialog" aria-label={t.date} hidden></div>
+              </div>
+            ) : (
+              <div class="of__quick">
+                <button type="button" class="of__day of__day--big" data-offset="0">{t.today}<small></small></button>
+                <button type="button" class="of__day of__day--big" data-offset="1">{t.tomorrow}<small></small></button>
+              </div>
+            )}
+            <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" inputmode="none" />
+          </div>
+          <div class="of__timewrap">
+            <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
+          </div>
+
+          <hr class="of__rule" />
+          <label class="of__field">{t.fullName}<input name="name" type="text" autocomplete="name" required /></label>
+          <label class="of__field">{t.phone}<input name="phone" type="tel" autocomplete="tel" required /></label>
+          <label class="of__field">{t.email}<input name="email" type="email" autocomplete="email" required /></label>
+          <label class="of__field">{t.notes}<textarea name="notes" rows="3" placeholder={t.notesHint}></textarea></label>
+
+          <div class="of__summary" aria-live="polite">
+            <p class="of__empty">{t.noItems}</p>
+            <ul class="of__lines"></ul>
+            <p class="of__sub"><span>{t.subtotal}</span><b data-sub>$0.00</b></p>
+            <p class="of__sub of__taxline"><span data-taxlabel>{t.taxMd}</span><b data-tax>$0.00</b></p>
+            <p class="of__total"><span>{t.estTotal}</span><b>$0.00</b></p>
+          </div>
+          <p class="of__error of__noitems" role="alert" hidden>{t.addItem}</p>
+          <p class="of__error of__payerr" role="alert" hidden>{t.payError}</p>
+          <button class="of__send" type="submit" data-busy={t.paying}>{t.payNext}</button>
+          <p class="of__paynote">{t.payNote}</p>
+        </div>
+      </aside>
+    </div>
+  </form>
+</section>
+
+<script>
+  const form = document.querySelector('.of__form');
+  // Tick-box outlines show for keyboard users only, not after a mouse click or tap
+  document.addEventListener('keydown', (e) => { if (e.key === 'Tab' || e.key === ' ') document.documentElement.classList.add('uses-keyboard'); });
+  document.addEventListener('pointerdown', () => document.documentElement.classList.remove('uses-keyboard'));
+  const rows = [...form.querySelectorAll('.of__row')];
+  const lines = form.querySelector('.of__lines');
+  const empty = form.querySelector('.of__empty');
+  const totalEl = form.querySelector('.of__total b');
+  const error = form.querySelector('.of__noitems');
+  const payErr = form.querySelector('.of__payerr');
+  const sendBtn = form.querySelector('.of__send');
+  const money = (n) => `$${n.toFixed(2)}`;
+  const TAX_MD = 0.06; // Maryland sales tax rate
+
+  const collect = () => rows
+    .map((r) => {
+      const qty = parseInt(r.querySelector('.of__num').value, 10) || 0;
+      const pick = r.querySelector('.of__choices:not(.of__remove):not(.of__extra) input:checked');
+      const filling = pick?.value;
+      const extra = [...r.querySelectorAll('.of__extra input:checked')];
+      const extras = extra.map((x) => x.value);
+      const extraPrice = extra.reduce((t, x) => t + parseFloat(x.dataset.price), 0);
+      const left = [...r.querySelectorAll('.of__remove input:checked')];
+      const remove = left.map((x) => x.value);
+      const leftNames = left.map((x) => x.parentElement.textContent.trim().toLowerCase());
+      const parts = [pick && pick.parentElement.textContent.trim(), ...extra.map((x) => x.dataset.label)].filter(Boolean);
+      return { key: r.dataset.key, filling, extras, remove, qty, name: r.dataset.name + (parts.length ? ` (${parts.join(', ')})` : '') + (remove.length ? ` (${r.dataset.without} ${leftNames.join(', ')})` : ''), price: parseFloat(r.dataset.price) + extraPrice };
+    })
+    .filter((x) => x.qty > 0);
+
+  const render = () => {
+    const items = collect();
+    lines.innerHTML = '';
+    items.forEach((x) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${x.qty} × ${x.name}</span><b>${money(x.qty * x.price)}</b>`;
+      lines.append(li);
+    });
+    const sub = items.reduce((t, x) => t + x.qty * x.price, 0);
+    // Maryland sales tax (all online orders are picked up in Silver Spring, MD).
+    const tax = Math.round(sub * TAX_MD * 100) / 100;
+    const total = sub + tax;
+    form.querySelector('[data-sub]').textContent = money(sub);
+    form.querySelector('[data-tax]').textContent = money(tax);
+    totalEl.textContent = money(total);
+    empty.hidden = items.length > 0;
+    rows.forEach((r) => {
+      const on = (parseInt(r.querySelector('.of__num').value, 10) || 0) > 0;
+      r.classList.toggle('is-picked', on);
+      r.querySelector('.of__check').checked = on;
+    });
+    if (items.length) error.hidden = true;
+    return { items, total };
+  };
+
+  // A choice (pierogi filling, fresh or smoked) must be picked for any item being ordered.
+  const syncFillings = () => rows.forEach((r) => {
+    const on = (parseInt(r.querySelector('.of__num').value, 10) || 0) > 0;
+    r.querySelectorAll('.of__choices:not(.of__remove):not(.of__extra) input').forEach((x) => { x.required = on; });
+  });
+  // Deli and platter orders are separate: show one set of items at a time.
+  const pad = (n) => String(n).padStart(2, '0');
+  const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const dateInput = form.querySelector('[name="pickup-date"]');
+  // Pick-up times: every 15 minutes, first one 30 minutes after opening, last one 1 hour before closing.
+  // Today: only times at least 30 minutes from now (store time).
+  const timeSel = form.querySelector('[name="pickup-time"]');
+  const hours = JSON.parse(timeSel.dataset.hours);
+  const label = (m) => {
+    const h = Math.floor(m / 60), mm = String(m % 60).padStart(2, '0');
+    return timeSel.dataset.lang === 'pl' ? `${h}:${mm}` : `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`;
+  };
+  const fillTimes = () => {
+    const keep = timeSel.value;
+    const opt = (v, text, dis) => { const o = new Option(text, v); if (dis) { o.disabled = true; o.selected = true; } return o; };
+    timeSel.replaceChildren();
+    if (!dateInput.value) { timeSel.append(opt('', timeSel.dataset.pickdate, true)); return; }
+    const [y, mo, d] = dateInput.value.split('-').map(Number);
+    const span = hours[new Date(y, mo - 1, d).getDay()];
+    let start = span ? span[0] + 30 : 0;
+    const end = span ? span[1] - 60 : -1;
+    const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+    if (dateInput.value === isoDay(now)) start = Math.max(start, Math.ceil((now.getHours() * 60 + now.getMinutes() + 30) / 15) * 15);
+    // Platters: pick-up on the hour only (KK 2026-11-07). Deli: every 15 minutes.
+    const hourly = form.querySelector('[name="order-type"]').value === 'platters';
+    if (hourly) start = Math.ceil(start / 60) * 60;
+    if (start > end) { timeSel.append(opt('', timeSel.dataset.none, true)); return; }
+    timeSel.append(opt('', timeSel.dataset.pick, true));
+    for (let m = start; m <= end; m += hourly ? 60 : 15) {
+      const v = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+      timeSel.append(new Option(label(m), v, false, v === keep));
+    }
+  };
+  dateInput.addEventListener('change', fillTimes);
+  // Keep today's times fresh while the page is open (every minute), so nothing under 30 minutes away can be picked.
+  setInterval(() => { if (dateInput.value === isoDay(new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' })))) fillTimes(); }, 60000);
+  // Day buttons: Today, Tomorrow and the next two weeks. Closed days and days before the earliest pick-up are greyed out.
+  const datePick = form.querySelector('.of__date');
+  const calBtn = datePick.querySelector('.of__calbtn');
+  const calPop = datePick.querySelector('.of__calpop');
+  const locale = datePick.dataset.locale;
+  const storeNow = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
+  const dayAt = (n) => { const d = storeNow(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
+  const lastTimeToday = () => { const n = storeNow(); const span = hours[n.getDay()]; return span ? (n.getHours() * 60 + n.getMinutes() + 30) <= span[1] - 60 : false; };
+  const usable = (d, n) => hours[d.getDay()] && isoDay(d) >= dateInput.min && (n > 0 || lastTimeToday());
+  const cap = (x) => x.charAt(0).toUpperCase() + x.slice(1);
+  // Platters calendar: tomorrow up to 60 days ahead, closed days greyed out
+  const CAL_DAYS = 60;
+  const calOk = new Set();
+  let calMonth = null;
+  const drawCal = () => {
+    if (!calPop) return;
+    const first = new Date(calMonth.getFullYear(), calMonth.getMonth(), 1, 12);
+    const start = dayAt(0); const end = dayAt(CAL_DAYS);
+    const canPrev = first > new Date(start.getFullYear(), start.getMonth(), 1, 12);
+    const canNext = new Date(first.getFullYear(), first.getMonth() + 1, 1, 12) <= end;
+    const wd = [...Array(7)].map((_, i) => new Date(2024, 0, 7 + ((i + (locale === 'pl-PL' ? 1 : 0)) % 7)).toLocaleDateString(locale, { weekday: 'short' }).replace(/\./g, '').slice(0, 2));
+    const lead = (first.getDay() - (locale === 'pl-PL' ? 1 : 0) + 7) % 7;
+    const days = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+    let cells = '<span></span>'.repeat(lead);
+    for (let i = 1; i <= days; i++) {
+      const iso = isoDay(new Date(first.getFullYear(), first.getMonth(), i, 12));
+      const on = calOk.has(iso);
+      cells += `<button type="button" class="of__calday" data-iso="${iso}"${on ? '' : ' disabled'} aria-pressed="${iso === dateInput.value}">${i}</button>`;
+    }
+    calPop.innerHTML = `<div class="of__calhead"><button type="button" class="of__calnav" data-m="-1"${canPrev ? '' : ' disabled'} aria-label="‹">‹</button><b>${cap(first.toLocaleDateString(locale, { month: 'long', year: 'numeric' }))}</b><button type="button" class="of__calnav" data-m="1"${canNext ? '' : ' disabled'} aria-label="›">›</button></div><div class="of__calgrid">${wd.map((w) => `<i>${w}</i>`).join('')}${cells}</div>`;
+  };
+  const calLabel = () => {
+    if (!calBtn) return;
+    calBtn.textContent = dateInput.value ? cap(new Date(dateInput.value + 'T12:00').toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' })) : calBtn.dataset.empty;
+    calBtn.classList.toggle('is-set', !!dateInput.value);
+  };
+  const openCal = (open) => {
+    if (!calPop) return;
+    calPop.hidden = !open;
+    calBtn.setAttribute('aria-expanded', String(open));
+    if (open) {
+      const sel = dateInput.value ? new Date(dateInput.value + 'T12:00') : dayAt([...Array(CAL_DAYS)].findIndex((_, n) => calOk.has(isoDay(dayAt(n)))));
+      calMonth = new Date(sel.getFullYear(), sel.getMonth(), 1, 12);
+      drawCal();
+    }
+  };
+  const markDays = () => {
+    datePick.querySelectorAll('.of__day').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.iso === dateInput.value)));
+    calLabel();
+  };
+  const buildDays = () => {
+    calOk.clear();
+    if (calBtn) for (let n = 0; n <= CAL_DAYS; n++) { const d = dayAt(n); if (usable(d, n)) calOk.add(isoDay(d)); }
+    datePick.querySelectorAll('.of__day--big').forEach((b) => {
+      const n = +b.dataset.offset, d = dayAt(n);
+      b.dataset.iso = isoDay(d);
+      const sm = d.toLocaleDateString(locale, { month: 'short', day: 'numeric' }).replace(/\./g, '');
+      b.querySelector('small').textContent = cap(sm);
+      b.disabled = !usable(d, n);
+    });
+    if (dateInput.value && !calOk.has(dateInput.value) && ![...datePick.querySelectorAll('.of__day')].some((b) => b.dataset.iso === dateInput.value && !b.disabled)) dateInput.value = '';
+    markDays();
+  };
+  calBtn?.addEventListener('click', (e) => { e.stopPropagation(); openCal(calPop.hidden); });
+  calPop?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const nav = e.target.closest('.of__calnav');
+    if (nav && !nav.disabled) { calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth() + Number(nav.dataset.m), 1, 12); drawCal(); return; }
+    const day = e.target.closest('.of__calday');
+    if (!day || day.disabled) return;
+    dateInput.value = day.dataset.iso;
+    markDays();
+    openCal(false);
+    dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+    timeSel.focus();
+  });
+  document.addEventListener('click', () => openCal(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && calPop && !calPop.hidden) { openCal(false); calBtn.focus(); } });
+  datePick.addEventListener('click', (e) => {
+    const b = e.target.closest('.of__day');
+    if (!b || b.disabled) return;
+    dateInput.value = b.dataset.iso;
+    markDays();
+    dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+    timeSel.focus();
+  });
+  const setType = () => {
+    const type = form.querySelector('[name="order-type"]').dataset.type;
+    form.querySelectorAll('.of__group').forEach((g) => {
+      const on = g.dataset.type === type;
+      g.hidden = !on;
+      if (!on) g.querySelectorAll('.of__num').forEach((q) => { q.value = 0; });
+    });
+    // Platters need 24 hours notice, so the earliest pickup date is tomorrow.
+    const min = new Date();
+    if (type === 'platters') min.setDate(min.getDate() + 1);
+    dateInput.min = isoDay(min);
+    if (dateInput.value && dateInput.value < dateInput.min) dateInput.value = '';
+    buildDays();
+    fillTimes();
+    syncFillings();
+    render();
+  };
+  form.addEventListener('input', (e) => {
+    // Tick box: ticking adds 1 of the item, unticking removes it
+    if (e.target.matches('.of__check')) {
+      const q = e.target.closest('.of__row').querySelector('.of__num');
+      q.value = e.target.checked ? Math.max(1, parseInt(q.value, 10) || 0) : 0;
+    }
+    syncFillings();
+    render();
+  });
+  form.addEventListener('change', syncFillings);
+  // Quantity: tap − or + (no keyboard on phones)
+  form.addEventListener('click', (e) => {
+    const b = e.target.closest('.of__step');
+    if (!b) return;
+    const q = b.parentElement.querySelector('.of__num');
+    q.value = Math.min(50, Math.max(0, (parseInt(q.value, 10) || 0) + Number(b.dataset.step)));
+    q.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+
+  // Keep the order while it's being filled in, so switching EN/PL (or reloading) doesn't lose it.
+  // Saved in this browser tab only; cleared once the order is placed (thank-you page).
+  const SAVE = `polkadeli-order-${form.querySelector('[name="order-type"]').value}`;
+  const FIELDS = ['name', 'phone', 'email', 'notes', 'pickup-date', 'pickup-time'];
+  const save = () => {
+    const state = { fields: {}, rows: {} };
+    FIELDS.forEach((n) => { state.fields[n] = form.querySelector(`[name="${n}"]`).value; });
+    rows.forEach((r) => {
+      const qty = parseInt(r.querySelector('.of__num').value, 10) || 0;
+      const ticks = [...r.querySelectorAll('.of__choices')].map((f) => [...f.querySelectorAll('input:checked')].map((i) => i.value));
+      if (qty || ticks.some((t) => t.length)) state.rows[r.dataset.key] = { qty, ticks };
+    });
+    try { sessionStorage.setItem(SAVE, JSON.stringify(state)); } catch {}
+  };
+  let saved = null;
+  try { saved = JSON.parse(sessionStorage.getItem(SAVE) || 'null'); } catch {}
+  if (saved) {
+    rows.forEach((r) => {
+      const s = saved.rows?.[r.dataset.key];
+      if (!s) return;
+      r.querySelector('.of__num').value = Math.min(50, Math.max(0, s.qty | 0));
+      r.querySelectorAll('.of__choices').forEach((f, i) => {
+        f.querySelectorAll('input').forEach((x) => { x.checked = (s.ticks?.[i] || []).includes(x.value); });
+      });
+    });
+    FIELDS.forEach((n) => { if (n !== 'pickup-time' && saved.fields?.[n]) form.querySelector(`[name="${n}"]`).value = saved.fields[n]; });
+  }
+  form.addEventListener('input', save);
+  form.addEventListener('change', save);
+  const field = (n) => form.querySelector(`[name="${n}"]`).value.trim();
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    // Close the phone keyboard before paying (it would otherwise pop up while we hand over to Clover)
+    if (document.activeElement && document.activeElement !== sendBtn) document.activeElement.blur();
+    syncFillings();
+    // Re-check the time list right before paying: a time less than 30 minutes away drops off, and the form asks for a new one.
+    fillTimes();
+    if (!form.reportValidity()) return;
+    const { items, total } = render();
+    if (!items.length) { error.hidden = false; error.scrollIntoView({ block: 'center' }); return; }
+    payErr.hidden = true;
+    sendBtn.disabled = true;
+    sendBtn.textContent = sendBtn.dataset.busy;
+    const type = form.querySelector('[name="order-type"]').value;
+    const order = {
+      lang: form.dataset.lang, type, date: field('pickup-date'), time: field('pickup-time'),
+      name: field('name'), phone: field('phone'), email: field('email'), notes: field('notes'),
+      items: items.map(({ key, qty, filling, extras, remove }) => ({ key, qty, filling, extras, remove })),
+    };
+    try {
+      const res = await fetch('/api/checkout', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(order) });
+      const out = await res.json();
+      if (!res.ok || !out.href) throw new Error(out.error || res.status);
+      if (out.test) {
+        // Test mode (Clover not connected yet): email the order to the store, marked not paid.
+        const summary = items.map((x) => `${x.qty} x ${x.name}: ${money(x.qty * x.price)}`).join('\n');
+        await fetch('/', { method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({
+          'form-name': 'pickup-order', status: 'TEST ORDER, not paid (online payment not switched on yet)',
+          pickup: `${order.date} ${order.time}`, 'order-type': type === 'platters' ? 'Platter order' : 'Deli order',
+          name: order.name, phone: order.phone, email: order.email,
+          order: summary + (order.notes ? `\nNotes: ${order.notes}` : ''), total: `${money(total)} incl. MD tax`,
+        }).toString() });
+      }
+      location.href = out.href;
+    } catch (err) {
+      console.error(err);
+      payErr.hidden = false;
+      sendBtn.disabled = false;
+      sendBtn.textContent = sendLabel;
+    }
+  });
+  // Coming back with the browser's Back button from Clover: make the button usable again.
+  const sendLabel = sendBtn.textContent;
+  addEventListener('pageshow', () => { sendBtn.disabled = false; sendBtn.textContent = sendLabel; });
+  // Back from Clover after a failed payment
+  if (new URLSearchParams(location.search).get('payment') === 'failed') document.querySelector('.of__payfail').hidden = false;
+  setType();
+  // The time list is built from the date, so put the saved time back once it exists
+  if (saved?.fields?.['pickup-time'] && [...timeSel.options].some((o) => o.value === saved.fields['pickup-time'])) timeSel.value = saved.fields['pickup-time'];
+  render();
+</script>

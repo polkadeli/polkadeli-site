@@ -31,6 +31,8 @@
   --font-body: 'Roboto Condensed', 'Arial Narrow', sans-serif;
   --font-nav: 'Barlow', 'Helvetica Neue', sans-serif;
   --font-display: 'Fredericka the Great', Georgia, serif;
+  --font-heading: 'Lora', Georgia, serif;          /* redesign: headings */
+  --font-ui: 'Mulish', 'Helvetica Neue', sans-serif; /* redesign: body, nav, buttons */
 
   /* Type sizes */
   --text-sm: 15px;
@@ -51,7 +53,7 @@
   /* Layout */
   --width-card: 740px;
   --width-page: 1040px;
-  --header-height: 56px;
+  --header-height: 84px;
   --radius-pill: 999px;
 
   /* Motion */

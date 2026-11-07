@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Garlic bulb doodle (tall neck, round bulb, dashed cloves), drawn to match the pierogi doodles -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 150" fill="none" stroke="#231f20" stroke-linecap="round" stroke-linejoin="round">
+  <!-- open top of the neck -->
+  <ellipse stroke-width="5" cx="60" cy="10" rx="9.5" ry="5" transform="rotate(-10 60 10)" />
+  <!-- neck and bulb outline -->
+  <path stroke-width="5.5" d="M51 12 C 52 30, 51 42, 46 52 C 38 62, 18 74, 14 98 C 10 120, 26 134, 42 135 Q 60 137 78 135 C 94 134, 110 120, 106 98 C 102 74, 82 62, 74 52 C 69 42, 68 30, 69 9" />
+  <!-- middle clove -->
+  <path stroke-width="4.5" d="M57 60 C 45 80, 42 112, 52 134" />
+  <path stroke-width="4.5" d="M63 60 C 75 80, 78 112, 68 134" />
+  <!-- outer clove dashes -->
+  <path stroke-width="4" d="M40 74 C 33 84, 30 94, 30 104" stroke-dasharray="14 9" />
+  <path stroke-width="4" d="M80 74 C 87 84, 90 94, 90 104" stroke-dasharray="14 9" />
+  <path stroke-width="4" d="M24 100 C 24 110, 27 118, 33 124" />
+  <path stroke-width="4" d="M96 100 C 96 110, 93 118, 87 124" />
+  <!-- little roots -->
+  <path stroke-width="3.5" d="M52 137 Q 49 141 47 146" />
+  <path stroke-width="3.5" d="M57 137 Q 56 142 55 147" />
+  <path stroke-width="3.5" d="M63 137 Q 64 142 65 147" />
+  <path stroke-width="3.5" d="M68 137 Q 71 141 73 146" />
+</svg>

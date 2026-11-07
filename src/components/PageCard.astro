@@ -1,11 +1,11 @@
 ---
 /**
  * Inner-page template: full-bleed photo background with a centered frosted
- * card that holds the logo, a spaced-out page title and the page content.
+ * card that holds the page content.
  * Matches the layout of every inner page on the current site.
  */
 interface Props {
-  title: string;      // page title, shown letter-spaced under the logo
+  title: string;      // page title, read by screen readers and search engines (not shown)
   background: string; // path to the background photo in /public
   wide?: boolean;     // wider card for multi-column pages
 }
@@ -13,8 +13,7 @@ const { title, background, wide = false } = Astro.props;
 ---
 <section class="page" style={`--page-bg: url('${background}')`}>
   <div class:list={['page-card', { 'page-card--wide': wide }]}>
-    <a class="page-card__logo" href="/"><img src="/logo.svg" alt="Polka Deli home" width="520" height="176" /></a>
-    <h1 class="page-card__title">{title}</h1>
+    <h1 class="visually-hidden">{title}</h1>
     <slot />
   </div>
 </section>

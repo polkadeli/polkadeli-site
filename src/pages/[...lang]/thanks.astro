@@ -1,0 +1,80 @@
+---
+import { langOf, langPaths, href, ui } from '../../i18n.js';
+export const getStaticPaths = langPaths;
+import Base from '../../layouts/Base.astro';
+import { stores } from '../../data/site.js';
+import '../../styles/thanks.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+const ss = stores[0]; // online orders are picked up in Silver Spring
+const check = '<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square"/></svg>';
+---
+<Base title={t.thanksTitle} description={t.thanksDesc} noindex>
+  <section class="ty">
+    <div class="ty__wrap">
+      <span class="ty__check" set:html={check} />
+
+      {/* Contact form (no ?order=) */}
+      <div class="ty__msg" data-default>
+        <h1>{t.thanksMsgTitle}</h1>
+        <p>{t.thanksMsg}</p>
+        <a class="ty__btn" href={href('/', lang)}>{t.backHome}</a>
+      </div>
+
+      {/* Paid online order (?order=paid) */}
+      <div class="ty__msg" data-order="paid" hidden>
+        <h1>{t.thanksPaidTitle}</h1>
+        <p data-intro>{t.thanksPaidText}</p>
+        <div class="ty__store">
+          <p class="ty__no" data-no hidden></p>
+          <p class="ty__label" data-label>{t.pickupAt}</p>
+          <p class="ty__city" data-when>{ss.city}, MD</p>
+          <p class="ty__addr">{ss.street},<br />{ss.locality}</p>
+          <a class="ty__link" href={ss.maps} target="_blank" rel="noopener">{t.directions}</a>
+        </div>
+        <p class="ty__small">{t.questions} <a href={ss.phoneHref} class="nobr">{ss.phone}</a></p>
+        <a class="ty__btn" href={href('/deli-menu', lang)}>{t.backMenu}</a>
+      </div>
+
+      {/* Old form (?order=1) and test mode (?order=test) */}
+      <div class="ty__msg" data-order="1" hidden>
+        <h1>{t.thanksOrderTitle}</h1>
+        <p>{t.thanksOrder}</p>
+        <a class="ty__btn" href={href('/deli-menu', lang)}>{t.backMenu}</a>
+      </div>
+      <div class="ty__msg" data-order="test" hidden>
+        <h1>{t.thanksOrderTitle}</h1>
+        <p>{t.thanksTest}</p>
+        <a class="ty__btn" href={href('/deli-menu', lang)}>{t.backMenu}</a>
+      </div>
+    </div>
+    <script>
+      // ?order=paid after Clover payment, ?order=test in test mode, ?order=1 from the old form
+      const kind = new URLSearchParams(location.search).get('order');
+      const msg = kind && document.querySelector(`[data-order="${kind}"]`);
+      if (msg) {
+        // Order placed: forget the saved order form
+        try { sessionStorage.removeItem('polkadeli-order-deli'); sessionStorage.removeItem('polkadeli-order-platters'); } catch {}
+        document.querySelector('[data-default]').hidden = true;
+        msg.hidden = false;
+      }
+      // Pick-up day and time, passed in the address after payment (?date=2026-11-07&time=12:30)
+      const q = new URLSearchParams(location.search);
+      const d = q.get('date'); const tm = q.get('time');
+      const no = q.get('no');
+      const noEl = document.querySelector('[data-no]');
+      if (noEl && /^\d{1,7}$/.test(no || '')) { noEl.textContent = `${document.documentElement.lang === 'pl' ? 'Zamówienie' : 'Order'} #${no}`; noEl.hidden = false; }
+      const when = document.querySelector('[data-when]');
+      if (when && /^\d{4}-\d{2}-\d{2}$/.test(d || '') && /^\d{2}:\d{2}$/.test(tm || '')) {
+        const pl = document.documentElement.lang === 'pl';
+        const day = new Date(`${d}T12:00:00Z`).toLocaleDateString(pl ? 'pl-PL' : 'en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: 'UTC' });
+        const [h, m] = tm.split(':').map(Number);
+        const clock = pl ? tm : `${((h + 11) % 12) + 1}:${String(m).padStart(2, '0')}\u00a0${h < 12 ? 'am' : 'pm'}`;
+        // Box reads: PICK-UP / Saturday, November 7 / 12:30 pm / address (date and time on their own lines)
+        when.replaceChildren(day.replace(/^./, (c) => c.toUpperCase()), document.createElement('br'), clock);
+        document.querySelector('[data-label]').textContent = pl ? 'Odbiór' : 'Pick-up';
+        document.querySelector('[data-intro]').textContent = pl ? 'Zamówienie jest opłacone. Paragon wyślemy e-mailem.' : 'Your order is paid. Your receipt is on its way by email.';
+      }
+    </script>
+  </section>
+</Base>
