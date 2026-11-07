@@ -40,23 +40,37 @@ export default async (req) => {
   }
   let event;
   try { event = JSON.parse(raw); } catch { return new Response('Bad request', { status: 400 }); }
-  const status = String(event.status ?? event.Status ?? '').toUpperCase();
-  const sessionId = event.data ?? event.Data;
-  if (status !== 'APPROVED' || !sessionId) { await note(`ignored: status ${status || 'none'}`); return ok('ignored'); }
+  // Clover's field names vary in case and nesting, so look through the whole message.
+  const strings = [];
+  const keys = [];
+  const walk = (v, path) => {
+    if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) { keys.push(path + k); walk(x, `${path}${k}.`); }
+    else if (typeof v === 'string') strings.push([path.slice(0, -1), v]);
+  };
+  walk(event, '');
+  const pick = (name) => strings.find(([k]) => k.split('.').pop().toLowerCase() === name)?.[1];
+  const status = String(pick('status') ?? '').toUpperCase();
+  if (status !== 'APPROVED') { await note(`ignored: status ${status || 'none'}; fields ${keys.join(',')}`); return ok('ignored'); }
 
+  // The checkout session id is whichever value in the message matches an order we saved.
   const store = getStore('orders');
-  const order = await store.get(sessionId, { type: 'json' });
-  if (!order) { console.warn('Clover webhook: no saved order for', sessionId); await note('no saved order for this checkout'); return ok('unknown'); }
+  let sessionId; let order;
+  for (const [, v] of strings) {
+    if (!/^[0-9a-f-]{20,}$/i.test(v)) continue;
+    const o = await store.get(v, { type: 'json' }).catch(() => null);
+    if (o) { sessionId = v; order = o; break; }
+  }
+  if (!order) { console.warn('Clover webhook: no saved order matched'); await note(`no saved order matched; fields ${keys.join(',')}`); return ok('unknown'); }
   if (order.status === 'paid') return ok('already done');
 
   const site = new URL(req.url).origin; // the address this request came to (staging or live)
-  await sendOrderEmail(site, order, `PAID online (Clover payment ${event.id ?? event.Id ?? ''})`);
+  await sendOrderEmail(site, order, `PAID online (Clover payment ${pick('id') ?? ''})`);
   await store.setJSON(sessionId, { ...order, status: 'paid', paidAt: new Date().toISOString() });
   await note('order emailed');
 
   // Print the order on the Clover Station. A failure here never blocks the email above.
   try {
-    const printed = await printOrder(order, event.id ?? event.Id);
+    const printed = await printOrder(order, pick('id'));
     console.log('Clover print:', JSON.stringify(printed));
   } catch (e) {
     console.error('Clover print failed:', e.message);
