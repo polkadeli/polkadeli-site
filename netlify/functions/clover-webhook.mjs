@@ -6,6 +6,7 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { getStore } from '@netlify/blobs';
 import { sendOrderEmail } from '../lib/order-email.mjs';
+import { sendCustomerEmail } from '../lib/customer-email.mjs';
 import { printOrder } from '../lib/clover-print.mjs';
 
 const ok = (msg = 'ok') => new Response(msg, { status: 200 });
@@ -67,6 +68,14 @@ export default async (req) => {
   await sendOrderEmail(site, order, `PAID online (Clover payment ${pick('id') ?? ''})`);
   await store.setJSON(sessionId, { ...order, status: 'paid', paidAt: new Date().toISOString() });
   await note('order emailed');
+
+  // The customer's own confirmation email (ours, instead of Clover's plain receipt).
+  try {
+    const sent = await sendCustomerEmail(order, site);
+    console.log('Customer email:', sent);
+  } catch (e) {
+    console.error('Customer email failed:', e.message);
+  }
 
   // Print the order on the Clover Station. A failure here never blocks the email above.
   try {

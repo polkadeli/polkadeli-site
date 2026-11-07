@@ -100,3 +100,22 @@ export function customerEmail(order, site) {
 
   return { subject, html, text };
 }
+
+// Sends the confirmation through Resend (resend.com). Without RESEND_API_KEY it does nothing,
+// so orders keep working before the email service is set up.
+export async function sendCustomerEmail(order, site) {
+  const key = (process.env.RESEND_API_KEY || '').trim();
+  if (!key) return 'skipped: no RESEND_API_KEY';
+  const { subject, html, text } = customerEmail(order, site);
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
+    body: JSON.stringify({
+      from: process.env.ORDER_EMAIL_FROM || 'Polka Deli <orders@polkadelimd.com>',
+      to: [order.customer.email],
+      reply_to: 'info@polkadelimd.com',
+      subject, html, text,
+    }),
+  });
+  return res.ok ? 'sent' : `failed ${res.status}: ${(await res.text()).slice(0, 200)}`;
+}
