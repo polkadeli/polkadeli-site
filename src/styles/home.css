@@ -527,3 +527,8 @@ html[lang='pl'] .hero h1 {
     font-size: 30px;
   }
 }
+
+/* Parcel band: wraps onto even lines on phones */
+.strip {
+  text-wrap: balance;
+}

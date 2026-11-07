@@ -374,12 +374,8 @@ html[lang='pl'] .hero--b h1 {
 
   .hb-foot .hero-signup h2 {
     margin-bottom: 10px;
-    font-size: min(17px, 3.9vw); /* first line of the form stays on one line */
-    white-space: nowrap;
-  }
-
-  html[lang='pl'] .hb-foot .hero-signup h2 {
-    font-size: min(17px, 3.45vw); /* the Polish line is longer */
+    font-size: 17px; /* longer heading now wraps onto two even lines (KK 2026-11-07) */
+    text-wrap: balance;
   }
 
   .hb-foot .hero-signup__fields {
@@ -564,14 +560,15 @@ html[lang='pl'] .hero--b h1 {
     grid-template-columns: 1fr;
   }
 
+  /* Two lines on phones: the question, then the answer (KK 2026-11-07) */
   .strip {
     padding: 11px 10px;
-    font-size: min(16px, 3.3vw);
-    white-space: nowrap;
+    font-size: min(16px, 4vw);
+    line-height: 1.4;
   }
 
-  html[lang='pl'] .strip {
-    font-size: min(16px, 3.4vw);
+  .strip br.br-phone {
+    display: inline;
   }
 }
 
@@ -591,4 +588,9 @@ html[lang='pl'] .hero--b h1 {
   body:has(.hero--b) .site-header:not(.is-solid) .phone-menu__list {
     top: calc(100% + 34px);
   }
+}
+
+/* Line break in the parcel band shows on phones only */
+.strip .br-phone {
+  display: none;
 }

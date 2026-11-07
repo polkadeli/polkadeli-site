@@ -91,7 +91,7 @@ const offers = [
         </div>
       </form>
     </div>
-    <p class="strip">{t.shipping}</p>
+    <p class="strip">{t.shipping.split(/(?<=\?) /).map((part, i) => i ? <><br class="br-phone" /> {part}</> : part)}</p>
   </section>
 
   <section class="section">
