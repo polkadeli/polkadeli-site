@@ -283,3 +283,11 @@
   height: 28px;
   padding: 0 10px;
 }
+
+/* Tighter pill: bigger number, little padding, text ends where the times end (KK 2026-11-07) */
+.vs__phone-btn {
+  height: 26px;
+  padding: 0 8px;
+  margin-right: -8px;
+  font-size: 14px;
+}
