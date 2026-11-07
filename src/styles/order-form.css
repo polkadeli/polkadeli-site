@@ -882,9 +882,10 @@
   color: var(--color-red);
 }
 
-/* "Customize (optional)" heading is grey, not red (KK 2026-11-07) */
+/* "Remove ingredients (optional)" heading: grey and not bold (KK 2026-11-07) */
 .of .of__remove legend {
   color: #6b6b6b;
+  font-weight: 400;
 }
 
 .of__remove .of__choice input {
