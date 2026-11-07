@@ -43,8 +43,9 @@
   color: var(--color-red);
 }
 
-/* Phone number: small red pill; text lines up with the end of the times */
-.vs__btn {
+/* Phone number: small red pill; text lines up with the end of the times.
+   Two classes so it beats the shared 36px pill rule in base.css whatever order the CSS files load in. */
+.vs__top .vs__btn {
   display: inline-flex;
   align-items: center;
   height: 26px;
