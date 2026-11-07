@@ -1,6 +1,5 @@
 /* Contact pop-up (Base layout): opened from the top menu "Contact", the footer and the privacy page. */
 .contact-dialog {
-  position: relative;
   width: min(560px, calc(100vw - 32px));
   max-height: min(90vh, 760px);
   overflow: auto;
@@ -131,4 +130,20 @@
     grid-template-columns: 1fr;
     gap: 0;
   }
+}
+
+/* Privacy policy link under the Send button (KK 2026-11-07) */
+.ct__privacy {
+  margin: 16px 0 0;
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
+
+.ct__privacy a {
+  color: #6b6b6b;
+}
+
+.contact-dialog:focus,
+.contact-dialog:focus-visible {
+  outline: none;
 }

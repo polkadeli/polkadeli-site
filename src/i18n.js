@@ -65,7 +65,7 @@ export const ui = {
     sendMessage: 'Send us a message',
     copy: 'Polka Deli · Polish Food & Market',
     privacy: 'Privacy',
-    privacyPolicy: 'Privacy Policy',
+    privacyPolicy: 'Privacy policy',
     closePrivacy: 'Close privacy policy',
     // Home
     tagline: 'Authentic Polish food, made fresh daily',

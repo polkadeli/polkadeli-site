@@ -836,3 +836,44 @@
     height: 27px;
   }
 }
+
+/* EN | PL sits after the Order now button; thin line between the contact icons and social icons (KK 2026-11-07) */
+.site-header__bar > .lang-switch {
+  margin-right: 0;
+  margin-left: 16px;
+}
+
+.site-header__social {
+  padding-left: 12px;
+  margin-left: 6px;
+  border-left: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.is-solid .site-header__social {
+  border-color: #d9d9d9;
+}
+
+/* Phones: envelope moves from the header into the menu, next to the social icons */
+@media (max-width: 900px) {
+  .site-header__bar > .mail-link {
+    display: none;
+  }
+
+  .phone-menu {
+    margin-right: 0;
+  }
+}
+
+.drawer__mail {
+  position: relative;
+  margin-right: 17px;
+}
+
+.drawer__mail::after {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  right: -13px;
+  border-right: 1px solid rgba(255, 255, 255, 0.4);
+}
