@@ -121,3 +121,42 @@
     margin-bottom: 14px;
   }
 }
+
+/* Smaller cards: city and state as a small red label, tighter text (KK 2026-11-07) */
+.vs__store {
+  padding: 20px 22px;
+}
+
+.vs__store h2 {
+  margin: 0 0 4px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.3;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+.vs__addr {
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.vs__label {
+  margin-top: 0;
+  font-size: 11px;
+}
+
+.vs__store table {
+  font-size: 14px;
+}
+
+.vs__store td {
+  padding: 4px 0;
+}
+
+.vs__btn {
+  padding: 0 18px;
+  font-size: 15px;
+}
