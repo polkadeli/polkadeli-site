@@ -177,3 +177,24 @@
 .vs__addr {
   margin-bottom: 4px;
 }
+
+/* City on the left, phone number opposite it on the right (KK 2026-11-07) */
+.vs__main {
+  align-items: stretch;
+}
+
+.vs__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.vs__top h2 {
+  margin: 0;
+}
+
+.vs__top .vs__phone {
+  margin: 0;
+}

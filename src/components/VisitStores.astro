@@ -10,9 +10,8 @@ const t = ui[lang];
   {stores.map((s) => (
     <div class="vs__store">
       <div class="vs__main">
-        <h2>{s.city}</h2>
+        <div class="vs__top"><h2>{s.city}</h2><a class="vs__phone" href={s.phoneHref}>{s.phone}</a></div>
         <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener">{s.street},<br />{s.locality}</a></p>
-        <a class="vs__phone" href={s.phoneHref}>{s.phone}</a>
       </div>
       <div class="vs__hours">
         <p class="vs__label">{t.storeHours}</p>
