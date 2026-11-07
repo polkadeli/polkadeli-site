@@ -5,16 +5,14 @@ import '../styles/visit-stores.css';
 import { langOf, hours, tr, ui } from '../i18n.js';
 const lang = langOf(Astro.url);
 const t = ui[lang];
-// Full state names for the red label on each card (KK 2026-11-07)
-const states = { MD: { en: 'Maryland', pl: 'Maryland' }, VA: { en: 'Virginia', pl: 'Wirginia' } };
 ---
 <div class="vs">
   {stores.map((s) => (
     <div class="vs__store">
       <div class="vs__main">
-        <h2>{s.city}, {states[s.locality.split(', ')[1].split(' ')[0]][lang]}</h2>
+        <h2>{s.city}</h2>
         <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener">{s.street},<br />{s.locality}</a></p>
-        <a class="vs__btn" href={s.phoneHref}>{s.phone}</a>
+        <a class="vs__phone" href={s.phoneHref}>{s.phone}</a>
       </div>
       <div class="vs__hours">
         <p class="vs__label">{t.storeHours}</p>
