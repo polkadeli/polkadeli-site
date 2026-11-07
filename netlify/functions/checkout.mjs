@@ -98,14 +98,18 @@ export default async (req, context) => {
     body: JSON.stringify({
       customer: { firstName, lastName: rest.join(' ') || undefined, email: customer.email, phoneNumber: customer.phone.replace(/\D/g, '') },
       shoppingCart: {
-        lineItems: lines.map((l, i) => ({
-          name: l.name,
-          price: l.price,
-          unitQty: l.qty,
-          // Pickup details ride on the first item so they show on the Clover receipt.
-          note: i === 0 ? clean(pickupNote, 250) : undefined,
-          taxRates: [{ name: 'MD sales tax', rate: Math.round(TAX_MD * 1e7) }],
-        })),
+        // Tax goes on as its own line (same total) rather than Clover taxRates, which need a matching
+        // tax rate set up in the Clover account.
+        lineItems: [
+          ...lines.map((l, i) => ({
+            name: l.name,
+            price: l.price,
+            unitQty: l.qty,
+            // Pickup details ride on the first item so they show on the Clover receipt.
+            note: i === 0 ? clean(pickupNote, 250) : undefined,
+          })),
+          ...(tax > 0 ? [{ name: `MD sales tax ${+(TAX_MD * 100).toFixed(2)}%`, price: tax, unitQty: 1 }] : []),
+        ],
       },
       redirectUrls: { success: `${thanks}?order=paid`, failure: `${site}${lang === 'pl' ? '/pl' : ''}/order${type === 'platters' ? '/platters' : ''}?payment=failed` },
     }),
