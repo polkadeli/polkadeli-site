@@ -816,3 +816,23 @@
     border-top: 1px solid #e6e6e6;
   }
 }
+
+/* Envelope icon next to the phone icon: opens the contact pop-up */
+.mail-link {
+  margin-right: 6px;
+}
+
+.is-solid .mail-link {
+  color: var(--color-ink);
+}
+
+@media (max-width: 900px) {
+  .mail-link {
+    margin-right: 4px;
+  }
+
+  .mail-link svg {
+    width: 27px;
+    height: 27px;
+  }
+}

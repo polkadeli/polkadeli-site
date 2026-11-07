@@ -1,0 +1,134 @@
+/* Contact pop-up (Base layout): opened from the top menu "Contact", the footer and the privacy page. */
+.contact-dialog {
+  position: relative;
+  width: min(560px, calc(100vw - 32px));
+  max-height: min(90vh, 760px);
+  overflow: auto;
+  padding: 36px 36px 32px;
+  font-family: var(--font-ui);
+  color: #1f1f1f;
+  background: var(--color-white);
+  border: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.contact-dialog::backdrop {
+  background: rgba(15, 10, 8, 0.6);
+}
+
+.contact-dialog h2 {
+  margin: 0 48px 10px 0;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+.contact-dialog__text {
+  margin: 0 0 22px;
+  font-size: 16px;
+  color: #5e5e5e;
+}
+
+.contact-dialog__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  line-height: 1;
+  color: #1f1f1f;
+  background: none;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
+
+.contact-dialog__close:hover {
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.ct__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Labels not bold; light grey fields without outlines, like the order form */
+.ct__field {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 400;
+  color: #5e5e5e;
+}
+
+.ct__field input,
+.ct__field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 11px 14px;
+  font: inherit;
+  font-size: 16px;
+  color: #1f1f1f;
+  background: #f4f3f0;
+  border: 1px solid transparent;
+  border-radius: 0;
+}
+
+.ct__field textarea {
+  resize: vertical;
+}
+
+.ct__field input:focus,
+.ct__field textarea:focus {
+  outline: 2px solid var(--color-red);
+  outline-offset: -1px;
+}
+
+.ct__send {
+  height: 36px;
+  padding: 0 28px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-red);
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background var(--ease-fast);
+}
+
+.ct__send:hover,
+.ct__send:focus-visible {
+  background: var(--color-red-dark);
+}
+
+/* Spam trap: hidden from people */
+.contact__trap {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Phones: the pop-up fills the screen */
+@media (max-width: 600px) {
+  .contact-dialog {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 28px 20px 24px;
+  }
+
+  .contact-dialog h2 {
+    font-size: 26px;
+  }
+
+  .ct__two {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

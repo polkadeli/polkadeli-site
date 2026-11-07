@@ -4,7 +4,6 @@ export const getStaticPaths = langPaths;
 import Base from '../../layouts/Base.astro';
 import VisitStores from '../../components/VisitStores.astro';
 import AboutUs from '../../components/AboutUs.astro';
-import SocialIcons from '../../components/SocialIcons.astro';
 import '../../styles/visit.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
@@ -15,27 +14,4 @@ const t = ui[lang];
   <!-- About us (Maria and Joanna), under the store hours -->
   <div class="visit-about"><AboutUs /></div>
 
-  <div class="visit-rest">
-    <section class="ct" id="contact" aria-labelledby="contact-title">
-      <div class="ct__info">
-        <h2 id="contact-title">{t.contactTitle}</h2>
-        <p>{t.contactText[0]} <span class="nobr">{t.contactText[1]}</span></p>
-        <div class="ct__follow">
-          <span>{t.followUs}</span>
-          <SocialIcons size={22} />
-        </div>
-      </div>
-
-      <form class="ct__form" name="contact" method="POST" action={href('/thanks', lang)} data-netlify="true" netlify-honeypot="company">
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="contact__trap"><label>{t.leaveEmpty} <input name="company" tabindex="-1" autocomplete="off" /></label></p>
-        <div class="ct__two">
-          <label class="ct__field">{t.name} *<input name="name" type="text" autocomplete="name" required /></label>
-          <label class="ct__field">{t.email} *<input name="email" type="email" autocomplete="email" required /></label>
-        </div>
-        <label class="ct__field">{t.message}<textarea name="message" rows="5"></textarea></label>
-        <button class="ct__send" type="submit">{t.send}</button>
-      </form>
-    </section>
-  </div>
 </Base>

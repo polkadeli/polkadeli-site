@@ -9,6 +9,7 @@ import '../styles/base.css';
 import '../styles/header.css';
 import '../styles/footer.css';
 import '../styles/legal.css';
+import '../styles/contact.css';
 const lang = langOf(Astro.url);
 const t = ui[lang];
 const {
@@ -115,6 +116,10 @@ const ogImage = new URL(image, Astro.site).href;
           ))}
         </ul>
       </div>
+      <!-- Envelope icon: opens the contact pop-up (no "Contact" word in the menu, KK 2026-11-07) -->
+      <a class="mail-link social-link" href={href('/find-us#contact', lang)} aria-label={t.sendMessage} title={t.sendMessage}>
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.8 6.5 12 13l8.2-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </a>
       <div class="site-header__social"><SocialIcons size={24} /></div>
       <!-- Order now: choose pickup (our order page) or delivery (Uber Eats) -->
       <div class="order-menu">
@@ -177,6 +182,23 @@ const ogImage = new URL(image, Astro.site).href;
     </div>
   </footer>
 
+  <!-- Contact form pop-up: opened by any link to /find-us#contact (top menu, footer, privacy page) -->
+  <dialog class="contact-dialog" id="contact" aria-labelledby="contact-title">
+    <button type="button" class="contact-dialog__close" aria-label={t.closeContact}>×</button>
+    <h2 id="contact-title">{t.contactTitle}</h2>
+    <p class="contact-dialog__text">{t.contactPopupText}</p>
+    <form class="ct__form" name="contact" method="POST" action={href('/thanks', lang)} data-netlify="true" netlify-honeypot="company">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="contact__trap"><label>{t.leaveEmpty} <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+      <div class="ct__two">
+        <label class="ct__field">{t.name} *<input name="name" type="text" autocomplete="name" required /></label>
+        <label class="ct__field">{t.email} *<input name="email" type="email" autocomplete="email" required /></label>
+      </div>
+      <label class="ct__field">{t.message}<textarea name="message" rows="5"></textarea></label>
+      <button class="ct__send" type="submit">{t.send}</button>
+    </form>
+  </dialog>
+
   <dialog class="privacy-dialog" id="privacy" aria-labelledby="privacy-title">
     <div class="privacy-dialog__head">
       <h2 id="privacy-title">{t.privacyPolicy}</h2>
@@ -206,6 +228,20 @@ const ogImage = new URL(image, Astro.site).href;
     privacy.addEventListener('click', (e) => { if (e.target === privacy) privacy.close(); });
     privacy.addEventListener('close', () => { if (location.hash === '#privacy') history.replaceState(null, '', location.pathname); });
     if (location.hash === '#privacy') openPrivacy();
+
+    // Contact pop-up: links to /find-us#contact open it here instead of changing page.
+    const contact = document.getElementById('contact');
+    const openContact = (e) => {
+      e?.preventDefault();
+      if (!drawer.hidden) setOpen(false);
+      if (privacy.open) privacy.close();
+      if (!contact.open) contact.showModal();
+    };
+    document.querySelectorAll('a[href$="/find-us#contact"]').forEach((a) => a.addEventListener('click', openContact));
+    contact.querySelector('.contact-dialog__close').addEventListener('click', () => contact.close());
+    contact.addEventListener('click', (e) => { if (e.target === contact) contact.close(); });
+    contact.addEventListener('close', () => { if (location.hash === '#contact') history.replaceState(null, '', location.pathname); });
+    if (location.hash === '#contact') openContact();
 
     // Phone dropdown in the header
     const pBtn = document.querySelector('.phone-menu__btn');
