@@ -90,7 +90,7 @@ export function customerEmail(order, site, payment = {}) {
       ${row('Subtotal', money(order.subtotal), `${small}padding-top:12px;`)}
       ${row('MD sales tax 6%', money(order.tax), small)}
       ${row('Total paid', money(order.total), `font:700 16px/1.4 ${SANS};padding:8px 0 0;border-bottom:0;`)}
-      ${paidWith.length ? `<tr><td colspan="2" style="padding:6px 0 0;font:13px/1.5 ${SANS};color:${MUTED};">${paidWith.map(esc).join('<br>')}</td></tr>` : ''}
+      ${paidWith.length ? `<tr><td colspan="2" align="center" style="padding:16px 0 0;text-align:center;font:13px/1.5 ${SANS};color:${MUTED};">${paidWith.map(esc).join('<br>')}</td></tr>` : ''}
     </table>
   </td></tr>
   <tr><td align="center" style="padding:28px 32px 32px;">
