@@ -598,3 +598,11 @@ html[lang='pl'] .hero--b h1 {
 .strip .br-phone {
   display: none;
 }
+
+/* Desktop and tablets: mailing-list heading on one line (KK 2026-11-07) */
+@media (min-width: 901px) {
+  .hb-foot .hero-signup h2 {
+    font-size: 16px;
+    white-space: nowrap;
+  }
+}
