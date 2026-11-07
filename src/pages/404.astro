@@ -1,0 +1,16 @@
+---
+// "Page not found". Netlify shows dist/404.html for any missing address. English only.
+import Base from '../layouts/Base.astro';
+import '../styles/thanks.css';
+---
+<Base title="Page not found | Polka Deli" description="This page doesn't exist." noindex>
+  <section class="ty">
+    <div class="ty__wrap">
+      <div class="ty__msg">
+        <h1>Page not found</h1>
+        <p>This page is harder to find than the vowels in&nbsp;chrząszcz.</p>
+        <a class="ty__btn" href="/">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Base>

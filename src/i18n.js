@@ -112,6 +112,7 @@ export const ui = {
     orderDesc: 'Order pierogi, sandwiches, entrees and platters online for pick-up at Polka Deli in Silver Spring, MD.',
     pickupOnly: 'Online orders are for pick-up at our Silver\u00a0Spring store only.',
     pickupSS: 'Order a day ahead. Pick-up in Silver\u00a0Spring only.',
+    menuTagline: 'Hard to pronounce, easy to love.', // English only: Polish readers don't need it
     orderIntroDeli: 'Choose your items and a pick-up time, then pay online.',
     orderIntroPlatters: 'Choose your platters and a pick-up time, then pay online. Platters need to be ordered a day ahead.',
     plattersOrderTitle: 'Order Party Platters for Pick-up in Silver Spring · Polka Deli',
@@ -258,6 +259,7 @@ export const ui = {
     orderDesc: 'Zamów online pierogi, kanapki, dania i tace z odbiorem w Polka Deli w Silver Spring, MD.',
     pickupOnly: 'Zamówienia online można odebrać tylko w naszym sklepie w Silver\u00a0Spring.',
     pickupSS: 'Zamów dzień wcześniej. Odbiór tylko w\u00a0Silver\u00a0Spring.',
+    menuTagline: '',
     orderIntroDeli: 'Wybierz dania i godzinę odbioru, a potem zapłać online.',
     orderIntroPlatters: 'Wybierz tace i godzinę odbioru, a potem zapłać online. Tace trzeba zamówić dzień wcześniej.',
     plattersOrderTitle: 'Zamów tace z odbiorem w Silver Spring · Polka Deli',
