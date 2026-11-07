@@ -19,3 +19,46 @@
     padding: 0 20px;
   }
 }
+
+/* Desktop: photo, story and the two store cards stacked on the right, all in one row (KK 2026-11-07) */
+@media (min-width: 1101px) {
+  .visit__wrap {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .visit .au {
+    grid-template-columns: 0.62fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .visit .au__photo {
+    aspect-ratio: 3 / 4;
+  }
+
+  .visit .au__text h2 {
+    font-size: 38px;
+  }
+
+  .visit .au__text h3 {
+    font-size: 22px;
+  }
+
+  .visit .au__text p {
+    font-size: 17px;
+  }
+
+  .visit .vs {
+    grid-template-columns: 1fr;
+    margin-top: 0;
+  }
+
+  .visit .vs__store {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 24px 26px;
+  }
+}
