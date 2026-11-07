@@ -496,3 +496,18 @@ html[lang='pl'] .hero h1 {
   font-family: var(--font-ui);
   font-weight: 700;
 }
+
+/* Phones: card photos zoomed out so more of each dish shows (KK 2026-11-07) */
+@media (max-width: 900px) {
+  .show__ph img[src$='/media/deli-table.jpg'] {
+    transform: scale(1.35);
+  }
+
+  .show__ph img[src$='/media/kielbasa.jpg'] {
+    transform: scale(1.1);
+  }
+
+  .show__ph img[src$='/media/pierogi.jpg'] {
+    transform: scale(1.12);
+  }
+}
