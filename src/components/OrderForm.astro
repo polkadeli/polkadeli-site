@@ -198,7 +198,7 @@ const shown = groups.filter((g) => g.type === type);
   const pad = (n) => String(n).padStart(2, '0');
   const isoDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   const dateInput = form.querySelector('[name="pickup-date"]');
-  // Pick-up times: every 15 minutes while the store is open, last one 30 minutes before closing.
+  // Pick-up times: every 15 minutes, first one 30 minutes after opening, last one 30 minutes before closing.
   // Today: only times at least 30 minutes from now (store time).
   const timeSel = form.querySelector('[name="pickup-time"]');
   const hours = JSON.parse(timeSel.dataset.hours);
@@ -213,7 +213,7 @@ const shown = groups.filter((g) => g.type === type);
     if (!dateInput.value) { timeSel.append(opt('', timeSel.dataset.pickdate, true)); return; }
     const [y, mo, d] = dateInput.value.split('-').map(Number);
     const span = hours[new Date(y, mo - 1, d).getDay()];
-    let start = span ? span[0] : 0;
+    let start = span ? span[0] + 30 : 0;
     const end = span ? span[1] - 30 : -1;
     const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
     if (dateInput.value === isoDay(now)) start = Math.max(start, Math.ceil((now.getHours() * 60 + now.getMinutes() + 30) / 15) * 15);
