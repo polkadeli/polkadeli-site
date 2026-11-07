@@ -226,7 +226,7 @@ export const ui = {
     privacyLink: 'Polityka prywatności',
     subscribe: 'Zapisz się',
     shipping: 'W naszych sklepach nadasz paczki do Polski i za granicę',
-    offersTitle: 'Przyjdź na pierogi, zostań na\u00a0kiełbasę',
+    offersTitle: 'Po pierogi i\u00a0nie\u00a0tylko',
     exploreMenu: 'Zobacz całe menu',
     aboutHello: ['Dzień dobry!', ' Cieszymy się, że tu jesteś!'],
     aboutClose: 'Serdecznie zapraszamy!',
