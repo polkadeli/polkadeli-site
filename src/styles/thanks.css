@@ -1,16 +1,8 @@
-/* Thank-you page: photo strip like the Deli Menu, then a centred message. */
+/* Thank-you page: a centred message (no photo, KK 2026-11-07). */
 .ty {
   font-family: var(--font-ui);
   color: #1f1f1f;
   text-align: center;
-}
-
-.ty__banner {
-  display: block;
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  object-position: center 72%;
 }
 
 .ty__wrap {
