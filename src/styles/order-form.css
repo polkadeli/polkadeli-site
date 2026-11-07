@@ -130,11 +130,18 @@
   margin-top: 22px;
 }
 
+/* Thin line between pick-up time and the customer's details (replaces the "Your details" heading) */
+.of__rule {
+  margin: 24px 0 18px;
+  border: 0;
+  border-top: 1px solid #d9d9d9;
+}
+
 .of__field {
   display: block;
   margin-bottom: 12px;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400; /* field labels not bold (KK 2026-11-07) */
   letter-spacing: 0.06em;
   color: #5e5e5e;
 }

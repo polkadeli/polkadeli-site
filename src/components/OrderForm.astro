@@ -110,7 +110,7 @@ const shown = groups.filter((g) => g.type === type);
             <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
           </div>
 
-          <h3>{t.yourDetails}</h3>
+          <hr class="of__rule" />
           <label class="of__field">{t.fullName}<input name="name" type="text" autocomplete="name" required /></label>
           <label class="of__field">{t.phone}<input name="phone" type="tel" autocomplete="tel" required /></label>
           <label class="of__field">{t.email}<input name="email" type="email" autocomplete="email" required /></label>
