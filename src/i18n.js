@@ -347,11 +347,11 @@ const pl = {
     // Days
     'Mon–Fri': 'Pon–Pt', Saturday: 'Sobota', Sunday: 'Niedziela',
     // Home page cards
-    'Kielbasa and Deli': 'Kiełbasy i wędliny', 'Polish Groceries': 'Polskie produkty spożywcze',
+    'Kielbasa and Deli': 'Kiełbasy i wędliny', 'Polish groceries': 'Polskie produkty spożywcze',
     Sandwiches: 'Kanapki', 'Hearty Entrees': 'Dania obiadowe', Soups: 'Zupy',
     'Cold Cut Platters': 'Tace wędlin', 'Party Trays': 'Tace bankietowe', 'Cake Platters': 'Zestawy ciast', Breads: 'Pieczywo', 'Bread Trays': 'Tace pieczywa', 'Deli Meats & Cheeses': 'Wędliny i sery',
     Kielbasa: 'Kiełbasy', 'Deli Meats and Cheese': 'Wędliny i sery', 'Blintzes, Noodles': 'Naleśniki, makarony',
-    'Marinated Goods': 'Przetwory', Cheeses: 'Sery', 'Hand-made Pierogi': 'Ręcznie lepione pierogi', 'Sweets, Baked Goods and more': 'Słodycze, wypieki i wiele więcej', 'Blintzes and Dumplings': 'Naleśniki i kluski', 'Pickles and Sauerkraut': 'Ogórki i kapusta kiszona', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Tace',
+    'Marinated Goods': 'Przetwory', Cheeses: 'Sery', 'Hand-made pierogi': 'Ręcznie lepione pierogi', 'Sweets, Baked Goods and more': 'Słodycze, wypieki i wiele więcej', 'Blintzes and Dumplings': 'Naleśniki i kluski', 'Pickles and Sauerkraut': 'Ogórki i kapusta kiszona', 'Sweets and Baked Goods': 'Słodycze i wypieki', Platters: 'Tace',
     // Menu
     Entrees: 'Dania główne', Fresh: 'Biała', Smoked: 'Wędzona', Ham: 'Szynka', Turkey: 'Indyk', Fried: 'Smażone', 'Side of potato salad': 'Sałatka jarzynowa',
     '12 pieces': '12 sztuk', '6 pieces': '6 sztuk',
@@ -373,9 +373,9 @@ const pl = {
     'Soup of the Day': 'Zupa dnia', 'One of four in rotation: sour rye, borscht, split pea or pickle soup': 'Na zmianę: żurek, barszcz, grochówka lub ogórkowa',
     // Platters
     'Serves 15–18': '15–18 osób', 'Serves 6': '6 osób', 'Serves 8–10': '8–10 osób',
-    'Kielbasa Platter': 'Półmisek kiełbas', 'Variety of smoked kielbasa': 'Wybór kiełbas wędzonych',
-    'Cheese Platter': 'Półmisek serów', 'Variety of cheese': 'Wybór serów',
-    'Mixed Platter': 'Półmisek mieszany', 'Variety of kielbasa, cheese and cold cuts': 'Kiełbasy, sery i wędliny',
+    'Kielbasa Platter': 'Taca kiełbas', 'Variety of smoked kielbasa': 'Wybór kiełbas wędzonych',
+    'Cheese Platter': 'Taca serów', 'Variety of cheese': 'Wybór serów',
+    'Mixed Platter': 'Taca mieszana', 'Variety of kielbasa, cheese and cold cuts': 'Kiełbasy, sery i wędliny',
     'Bread Tray': 'Taca pieczywa',
     'Polish Feast': 'Polska uczta', '3 pork schnitzels': '3 kotlety schabowe', '3 stuffed cabbages': '3 gołąbki',
     '6 grilled kielbasas with kraut and onion': '6 kiełbas z grilla z kapustą i cebulą', '12 Pierogi (potato & cheese)': '12 pierogów ruskich',
