@@ -327,6 +327,11 @@
   border-top: 0;
 }
 
+/* Subtotal and tax amounts are not bold; only the total is (KK 2026-11-07) */
+.of__sub b {
+  font-weight: 400;
+}
+
 .of__filling:required:invalid {
   border-color: var(--color-red);
   color: var(--color-red);
