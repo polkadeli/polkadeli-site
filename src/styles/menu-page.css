@@ -731,3 +731,8 @@
     padding-bottom: 0;
   }
 }
+
+/* Platters banner: the spread of boards on the rustic table (KK 2026-11-07) */
+.mp-title--photo img[src$='/platters-table.jpg'] {
+  object-position: center 68%;
+}
