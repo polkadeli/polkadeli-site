@@ -806,3 +806,17 @@
     text-align: right;
   }
 }
+
+/* Heading + grey line under it on phones: keep them close (KK 2026-11-07) */
+.mp-group__head {
+  row-gap: 2px;
+}
+
+.mp-group__head .mp-group__title {
+  line-height: 1.1;
+}
+
+.mp-group__head .mp-email {
+  margin: 0;
+  line-height: 1.3;
+}
