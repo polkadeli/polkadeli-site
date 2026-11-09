@@ -736,3 +736,20 @@
 .mp-title--photo img[src$='/platters-table.jpg'] {
   object-position: center 68%;
 }
+
+/* Phones: tighter line spacing in ingredient lines and lists (KK 2026-11-09) */
+@media (max-width: 600px) {
+  .mp-desc {
+    font-size: 15px;
+    line-height: 1.25;
+  }
+
+  .mp-list {
+    font-size: 15px;
+    line-height: 1.3;
+  }
+
+  .mp-list li {
+    padding: 0 0 0 16px;
+  }
+}
