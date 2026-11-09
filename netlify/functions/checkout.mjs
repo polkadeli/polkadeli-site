@@ -89,7 +89,10 @@ export default async (req, context) => {
   const tax = Math.round(subtotal * TAX_MD);
   const order = { type, date, time, customer, notes, lines, subtotal, tax, total: subtotal + tax, lang, created: new Date().toISOString() };
 
-  const site = new URL(req.url).origin; // the address this request came to (staging or live)
+  let site = new URL(req.url).origin; // the address this request came to (staging or live)
+  // Clover only accepts https return addresses. If this request came in over plain http
+  // (e.g. a new domain before its certificate is ready), send customers back via the Netlify address.
+  if (site.startsWith('http://') && !/localhost|127\.0\.0\.1/.test(site)) site = 'https://polkadeli.netlify.app';
   const thanks = `${site}${lang === 'pl' ? '/pl' : ''}/thanks`;
   const merchant = process.env.CLOVER_MERCHANT_ID || 'XESF2ZXD2SF94'; // Polka Deli's Clover merchant ID (not secret)
   const token = (process.env.CLOVER_PRIVATE_TOKEN || '').trim();
