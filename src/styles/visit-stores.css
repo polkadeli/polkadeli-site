@@ -22,7 +22,12 @@
 /* City + phone and the hours share one width, so the button ends where the times end */
 .vs__block {
   width: fit-content;
+  min-width: 240px; /* as wide as the English cards, so Polish (shorter 24-hour times) lines up the same */
   max-width: 100%;
+}
+
+:lang(pl) .vs__hours td:last-child {
+  text-align: right;
 }
 
 .vs__top {
@@ -67,6 +72,7 @@
 }
 
 .vs__hours {
+  width: 100%;
   border-collapse: collapse;
   font-size: 14px;
 }
