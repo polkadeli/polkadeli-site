@@ -602,21 +602,6 @@
   margin-top: 0;
 }
 
-/* Deli Menu: link to the Platters page */
-.mp-see {
-  font-family: var(--font-heading);
-  font-size: 22px;
-}
-
-.mp-see a {
-  color: var(--color-red) !important;
-  text-decoration: none;
-}
-
-.mp-see a:hover {
-  text-decoration: underline;
-}
-
 /* Platters page: keep the order button above the content */
 .mp--platters .mp-orderdock {
   position: relative;
