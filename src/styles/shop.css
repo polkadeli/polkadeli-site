@@ -25,6 +25,14 @@
   font-size: 48px;
 }
 
+.shop__head .shop__sub {
+  margin: 0 0 4px;
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--color-red);
+}
+
 .shop__head p {
   max-width: 44em;
   margin: 0;
@@ -209,10 +217,3 @@
   }
 }
 
-/* Small playful line under an aisle list, e.g. pickles */
-.aisle__quip {
-  margin: 10px 0 0;
-  font-size: 14px;
-  font-style: italic;
-  color: var(--color-red);
-}
