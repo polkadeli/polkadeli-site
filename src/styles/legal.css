@@ -1,23 +1,24 @@
-/* Long-form text pages such as Privacy: readable column, simple headings. */
+/* Privacy policy pop-up and its text. */
 
 .legal {
-  max-width: 620px;
-  margin: var(--space-4) auto 0;
+  font-family: var(--font-ui);
+  font-size: 16px;
   text-align: left;
+  color: #1f1f1f;
 }
 
 .legal__date {
   margin: 0 0 var(--space-5);
   font-size: var(--text-sm);
-  text-align: center;
   color: var(--color-muted);
 }
 
 .legal h2 {
   margin: var(--space-6) 0 var(--space-2);
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--color-red-heading);
+  font-family: var(--font-heading);
+  font-size: 21px;
+  font-weight: 500;
+  color: #1f1f1f;
 }
 
 .legal p,
@@ -31,4 +32,55 @@
 
 .legal li + li {
   margin-top: var(--space-2);
+}
+
+.privacy-dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(84vh, 900px);
+  overflow: auto;
+  padding: 0;
+  border: 0;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.privacy-dialog::backdrop {
+  background: rgba(15, 10, 8, 0.6);
+}
+
+.privacy-dialog__head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 28px;
+  background: var(--color-white);
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.privacy-dialog__head h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 28px;
+}
+
+.privacy-dialog__close {
+  width: 40px;
+  height: 40px;
+  font-size: 28px;
+  line-height: 1;
+  color: #1f1f1f;
+  background: none;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+}
+
+.privacy-dialog__close:hover {
+  color: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.privacy-dialog__body {
+  padding: 20px 28px 32px;
 }

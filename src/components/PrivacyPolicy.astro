@@ -1,0 +1,113 @@
+---
+// Privacy policy text, shown in a pop-up (see Base.astro). Update the date when the policy changes.
+import { business, stores } from '../data/site.js';
+import { langOf, href } from '../i18n.js';
+const lang = langOf(Astro.url);
+const effective = lang === 'pl' ? '6 listopada 2026' : 'November 6, 2026';
+const contact = href('/find-us#contact', lang);
+---
+{lang === 'pl' ? (
+<article class="legal" lang="pl">
+  <p class="legal__date">Obowiązuje od {effective}</p>
+
+  <p>Polka Deli („my”) prowadzi tę stronę, polkadelimd.com, dla naszych sklepów w Silver&nbsp;Spring, MD i Vienna, VA. Zbieramy tylko to, czego potrzebujemy, aby Ci odpowiedzieć, realizować Twoje zamówienia i wysyłać newsletter, jeśli się na niego zapiszesz. Nigdy nie sprzedajemy Twoich danych.</p>
+
+  <h2>Jakie dane zbieramy</h2>
+  <ul>
+    <li><strong>Newsletter.</strong> Twoje imię i adres e-mail, gdy zapiszesz się do newslettera.</li>
+    <li><strong>Formularz kontaktowy.</strong> Twoje imię, adres e-mail i wiadomość, gdy do nas piszesz.</li>
+    <li><strong>Zamówienia online.</strong> Twoje imię i nazwisko, numer telefonu, adres e-mail, godzinę odbioru i zamówione produkty. Płatności obsługuje Clover; nigdy nie widzimy ani nie przechowujemy pełnego numeru Twojej karty.</li>
+    <li><strong>Podstawowe dane techniczne.</strong> Jak każda strona internetowa, nasz dostawca hostingu automatycznie otrzymuje standardowe informacje, takie jak adres IP i rodzaj przeglądarki, aby strona mogła się wczytać i była bezpieczna.</li>
+  </ul>
+
+  <h2>Jak je wykorzystujemy</h2>
+  <ul>
+    <li>Aby wysyłać Ci newsletter: wiadomości i oferty, takie jak promocje, kupony i godziny otwarcia w święta. Wysyłamy tylko kilka e-maili w roku.</li>
+    <li>Aby odpowiadać na Twoje pytania i pomagać przy zamówieniach.</li>
+    <li>Aby przygotowywać zamówienia z odbiorem oraz wysyłać potwierdzenia i informacje o zamówieniu.</li>
+    <li>Aby strona działała sprawnie, bezpiecznie i bez spamu.</li>
+  </ul>
+
+  <h2>Kto nam pomaga</h2>
+  <p>Do prowadzenia strony korzystamy z kilku zaufanych usług. Przetwarzają one Twoje dane wyłącznie po to, aby świadczyć nam swoje usługi:</p>
+  <ul>
+    <li><strong>Netlify</strong> utrzymuje tę stronę i odbiera wiadomości, zapisy do newslettera i dane zamówień.</li>
+    <li><strong>Nasz serwis newslettera</strong> przechowuje listę adresów i wysyła nasze e-maile.</li>
+    <li><strong>Clover</strong> obsługuje płatności za zamówienia online z odbiorem na swojej bezpiecznej stronie i przekazuje zamówienia do sklepu; nigdy nie widzimy pełnego numeru Twojej karty.</li>
+    <li><strong>Google</strong> udostępnia czcionki użyte na tej stronie oraz mapy, do których prowadzą nasze adresy, a <strong>Uber Eats</strong> obsługuje zamówienia składane w swojej aplikacji. Gdy z nich korzystasz, obowiązują ich własne polityki prywatności.</li>
+    <li>Linki do <strong>Facebooka i Instagrama</strong> prowadzą do tych serwisów, które mają własne polityki prywatności.</li>
+  </ul>
+  <p>Nie sprzedajemy, nie wynajmujemy ani nie wymieniamy Twoich danych osobowych i nie udostępniamy ich nikomu do celów marketingowych.</p>
+
+  <h2>Wypisanie się z newslettera i Twoje prawa</h2>
+  <ul>
+    <li>Każdy newsletter ma na dole link do <strong>wypisania się</strong>. Jedno kliknięcie i nie ma Cię na liście.</li>
+    <li>W każdej chwili możesz poprosić o wgląd, poprawienie lub usunięcie danych, które o Tobie mamy, przez <a href={contact}>formularz kontaktowy</a>.</li>
+  </ul>
+
+  <h2>Jak długo przechowujemy dane</h2>
+  <p>Twój e-mail pozostaje na liście newslettera, dopóki się nie wypiszesz. Wiadomości kontaktowe przechowujemy tylko tak długo, jak potrzebujemy, aby Ci pomóc, a dane zamówień tak długo, jak wymagają tego przepisy podatkowe i księgowe.</p>
+
+  <h2>Bezpieczeństwo</h2>
+  <p>Ta strona korzysta z bezpiecznego połączenia (https), a usługi, z których korzystamy, chronią Twoje dane zgodnie ze standardami branżowymi. Żadna strona nie jest w pełni bezpieczna, ale zbieramy tylko to, czego potrzebujemy, co ogranicza ryzyko.</p>
+
+  <h2>Zmiany tej polityki</h2>
+  <p>Jeśli zmienimy sposób przetwarzania Twoich danych, zaktualizujemy tę politykę i datę na górze.</p>
+
+  <h2>Kontakt</h2>
+  <p>Masz pytania o prywatność? Napisz do nas przez <a href={contact}>formularz kontaktowy</a> lub zadzwoń pod numer <a href={stores[0].phoneHref}>{stores[0].phone}</a> (Silver&nbsp;Spring) albo <a href={stores[1].phoneHref}>{stores[1].phone}</a> (Vienna).</p>
+
+  <p><em>W razie rozbieżności obowiązuje angielska wersja tej polityki.</em></p>
+</article>
+) : (
+<article class="legal">
+  <p class="legal__date">Effective {effective}</p>
+
+  <p>Polka Deli ("we", "us") runs this website, polkadelimd.com, for our stores in Silver&nbsp;Spring, MD and Vienna, VA. We keep things simple: we only collect what we need to answer you, fill your orders, and send you deli news you asked for. We never sell your information.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Mailing list.</strong> Your name and email address when you join our mailing list.</li>
+    <li><strong>Contact form.</strong> Your name, email address and message when you write to us.</li>
+    <li><strong>Online orders.</strong> Your name, phone number, email address, pick-up time and what you ordered. Payments are handled by Clover; we never see or store your full card number.</li>
+    <li><strong>Basic technical data.</strong> Like every website, our hosting provider automatically receives standard information such as your IP address and browser type so the site can load and stay secure.</li>
+  </ul>
+
+  <h2>How we use it</h2>
+  <ul>
+    <li>To send you our newsletter: exclusive news and offers, such as specials, coupons and holiday hours. We send only a handful of emails a year.</li>
+    <li>To reply to your questions and help with your orders.</li>
+    <li>To prepare your pick-up orders and send receipts and order updates.</li>
+    <li>To keep the website running, secure and free of spam.</li>
+  </ul>
+
+  <h2>Who helps us</h2>
+  <p>We use a few trusted services to run the site. They handle your information only to provide their service to us:</p>
+  <ul>
+    <li><strong>Netlify</strong> hosts this website and receives contact messages, mailing list sign-ups and order details.</li>
+    <li><strong>Our email newsletter service</strong> stores the mailing list and sends our emails.</li>
+    <li><strong>Clover</strong> processes payments for online pick-up orders on its secure page and sends the orders to our store; we never see your full card number.</li>
+    <li><strong>Google</strong> provides the fonts on this site and the maps our address links open, and <strong>Uber Eats</strong> handles orders placed through its app. When you use those, their own privacy policies apply.</li>
+    <li><strong>Facebook and Instagram</strong> links take you to those sites, which have their own privacy policies.</li>
+  </ul>
+  <p>We don't sell, rent or trade your personal information, and we don't share it with anyone for their own marketing.</p>
+
+  <h2>Unsubscribing and your choices</h2>
+  <ul>
+    <li>Every newsletter has an <strong>unsubscribe</strong> link at the bottom. One click and you're off the list.</li>
+    <li>You can ask us to see, correct or delete the information we have about you at any time through the <a href={contact}>contact form</a>.</li>
+  </ul>
+
+  <h2>How long we keep it</h2>
+  <p>We keep your email on our mailing list until you unsubscribe. We keep contact messages only as long as we need them to help you, and order records as long as required for taxes and accounting.</p>
+
+  <h2>Keeping it safe</h2>
+  <p>This site uses a secure (https) connection, and the services we use protect your data with industry-standard security. No website can be perfectly secure, but we only collect what we need, which keeps the risk small.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If we change how we handle your information, we'll update this policy and the date at the top.</p>
+
+  <h2>Contact us</h2>
+  <p>Questions about your privacy? Send us a message using the <a href={contact}>contact form</a>, or call us at <a href={stores[0].phoneHref}>{stores[0].phone}</a> (Silver&nbsp;Spring) or <a href={stores[1].phoneHref}>{stores[1].phone}</a> (Vienna).</p>
+</article>
+)}

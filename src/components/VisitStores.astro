@@ -1,0 +1,19 @@
+---
+// Compact card per store on the About us page: city, address and call button on the left, hours on the right.
+import { stores } from '../data/site.js';
+import '../styles/visit-stores.css';
+import { langOf, hours, tr, ui } from '../i18n.js';
+const lang = langOf(Astro.url);
+const t = ui[lang];
+---
+<div class="vs">
+  {stores.map((s) => (
+    <div class="vs__store">
+      <div class="vs__block">
+        <div class="vs__top"><h2>{s.city}</h2><a class="vs__btn vs__phone-btn" href={s.phoneHref}>{s.phone}</a></div>
+        <table class="vs__hours" aria-label={t.storeHours}>{s.hours.map(([d, h]) => <tr><td>{tr(lang, d)}</td><td>{hours(lang, h)}</td></tr>)}</table>
+      </div>
+      <p class="vs__addr"><a href={s.maps} target="_blank" rel="noopener">{s.street},<br />{s.locality}</a></p>
+    </div>
+  ))}
+</div>

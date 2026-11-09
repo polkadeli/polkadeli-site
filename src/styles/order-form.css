@@ -1,0 +1,1163 @@
+/* Online order form (menu page). */
+
+.of {
+  padding: 64px 0 90px;
+  scroll-margin-top: calc(var(--header-height) + 50px);
+  font-family: var(--font-ui);
+  color: #1f1f1f;
+}
+
+.of__group legend,
+.of__title {
+  font-family: var(--font-heading);
+}
+
+.of__title {
+  margin: 0 0 8px;
+  font-weight: 500;
+  font-size: 40px;
+}
+
+.of__intro {
+  margin: 0 0 30px;
+  color: #5e5e5e;
+}
+
+.of__cols {
+  display: grid;
+  align-items: start;
+}
+
+.of__group legend {
+  padding: 0 12px 0 0;
+  font-size: 26px;
+  color: var(--color-red-heading);
+}
+
+.of__row {
+  display: grid;
+  gap: 6px 16px;
+}
+
+.of__name {
+  cursor: pointer;
+}
+
+.of__price {
+  font-weight: 700;
+  color: var(--color-red);
+}
+
+.of__qty {
+  font: inherit;
+  text-align: center;
+  border: 1px solid #bdbdbd;
+}
+
+.of__field input:focus,
+.of__field select:focus,
+.of__field textarea:focus,
+.of__qty:focus {
+  outline: 2px solid var(--color-red);
+  outline-offset: -1px;
+  border-color: var(--color-red);
+}
+
+.of__side {
+  position: sticky;
+  top: calc(var(--header-height) + 70px);
+}
+
+.of__box {
+  padding: 26px;
+}
+
+.of__box h3 {
+  margin: 0 0 12px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.of__box h3 + .of__field {
+  margin-top: 0;
+}
+
+.of__timewrap + h3 {
+  margin-top: 22px;
+}
+
+/* Thin line between pick-up time and the customer's details (replaces the "Your details" heading) */
+.of__rule {
+  margin: 14px 0 0;
+  border: 0; /* no visible line (KK 2026-11-09) */
+}
+
+.of__field {
+  display: block;
+  margin-bottom: 8px; /* a little tighter (KK 2026-11-09) */
+  font-size: 13px;
+  font-weight: 400; /* field labels not bold (KK 2026-11-07) */
+  letter-spacing: 0.06em;
+  color: #5e5e5e;
+}
+
+.of__field input,
+.of__field select,
+.of__field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 7px 12px; /* less tall (KK 2026-11-09) */
+  font: inherit;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: #1f1f1f;
+  background: #fff;
+  border: 1px solid transparent; /* white fields without outlines (KK 2026-11-07) */
+  border-radius: 0;
+}
+
+.of__summary {
+  margin: 18px 0 14px;
+  padding-top: 0; /* no line above the totals (KK 2026-11-09) */
+}
+
+.of__empty,
+.of__lines {
+  margin: 0;
+  font-size: 14px;
+}
+
+.of__empty {
+  color: #5e5e5e;
+}
+
+.of__lines {
+  padding: 0;
+  list-style: none;
+}
+
+.of__lines li,
+.of__total {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 3px 0;
+}
+
+.of__total {
+  margin: 8px 0 0;
+  padding: 8px 0 3px;
+  font-weight: 700;
+  border-top: 1px solid #d9d9d9;
+}
+
+.of__error,
+.of__total b {
+  color: var(--color-red);
+}
+
+.of__error {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.of__send {
+  width: 100%;
+  padding: 13px 20px;
+  font: inherit;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-red);
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.of__send:focus-visible,
+.of__send:hover {
+  background: var(--color-red-dark);
+}
+
+@media (max-width: 900px) {
+  .of {
+    padding: 44px 0 60px;
+  }
+
+  .of__title {
+    font-size: 32px;
+  }
+
+  .of__side {
+    position: static;
+  }
+
+  .of__box {
+    padding: 20px;
+  }
+}
+
+.of__group,
+.of__items,
+.of__side {
+  min-width: 0;
+}
+
+.of__intro {
+  margin-bottom: 36px;
+}
+
+.of__title {
+  margin-bottom: 10px;
+}
+
+.of p.of__intro {
+  margin-bottom: 44px;
+}
+
+.of__qty {
+  width: 48px;
+  padding: 6px 4px;
+}
+
+@media (max-width: 900px) {
+  .of__row {
+    grid-template-columns: 1fr auto auto;
+  }
+
+  .of__qty {
+    width: 48px;
+  }
+}
+
+.of__price {
+  justify-self: end;
+}
+
+.of__cols {
+  grid-template-columns: calc((100% - 64px) / 2 + 72px) 1fr;
+  gap: 48px;
+}
+
+@media (max-width: 900px) {
+  .of__cols {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+.of__sub {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  font-size: 14px;
+  border-top: 1px solid #d9d9d9;
+}
+
+.of__taxline {
+  margin-top: 0;
+  padding-top: 2px;
+  border-top: 0;
+}
+
+/* Subtotal and tax amounts are not bold; only the total is (KK 2026-11-07) */
+.of__sub b {
+  font-weight: 400;
+}
+
+.of__group[hidden] {
+  display: none;
+}
+
+/* Fixed pickup store (Silver Spring only) */
+.of__box .of__store {
+  margin: 2px 0 18px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.of__store b {
+  color: #1f1f1f;
+}
+
+/* "Pickup at Silver Spring only" notice: its own line, red, with a red bar on the left */
+.of .of__notice {
+  margin: 14px 0 12px;
+  padding: 4px 0 4px 16px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-red);
+  border-left: 4px solid var(--color-red);
+}
+
+.of .of__intro {
+  text-wrap: balance;
+}
+
+.of__paynote {
+  margin: 10px 0 0;
+  font-size: 13.5px;
+  color: #5e5e5e;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.of__send:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.of__payfail {
+  margin: 0 0 18px;
+}
+
+/* ---------- Tick box at the start of each item row ---------- */
+
+.of__check {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--color-red);
+  cursor: pointer;
+}
+
+.of__row {
+  grid-template-columns: 20px minmax(0, 1fr) auto auto;
+  column-gap: 14px;
+}
+
+.of__row .of__check { grid-column: 1; grid-row: 1; }
+.of__row .of__name { grid-column: 2; grid-row: 1; }
+.of__row .of__price { grid-column: 3; grid-row: 1; margin-right: 10px; }
+.of__row .of__qty { grid-column: 4; grid-row: 1; }
+
+/* Link to the other order page, under the last card (like "Party platters and trays →" on the menu) */
+
+/* ---------- Order sections laid out like the menu cards ---------- */
+
+.of__group {
+  margin: 0 0 24px;
+  padding: 30px 32px 26px;
+  border: 0;
+  background: #f6f4f1;
+  border-radius: 14px;
+}
+
+.of h3.of__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 22px;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.15;
+  color: var(--color-red-heading);
+}
+
+.of__row {
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.of__group .of__row:first-of-type {
+  padding-top: 0;
+}
+
+.of__group .of__row:last-of-type {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.of__check {
+  margin-top: 4px;
+}
+
+.of__name {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* Descriptions wrap into even lines, like on the menu ("…4 pierogi, kraut, / grilled onions…") */
+.of__desc {
+  text-wrap: balance;
+}
+
+/* Description or list runs under the item line, like on the menu */
+.of__desc,
+.of__list {
+  grid-column: 2 / -1;
+  grid-row: 2;
+  margin: 2px 0 0;
+  font-size: 16.5px;
+  line-height: 1.55;
+  color: #444;
+}
+
+.of__list {
+  margin-top: 4px;
+  padding: 0;
+  list-style: none;
+}
+
+.of__list li {
+  position: relative;
+  padding: 1px 0 1px 16px;
+}
+
+.of__list li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+}
+
+.of__price {
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.of__note {
+  margin: 14px 0 0;
+  font-size: 16.5px;
+  font-style: italic;
+  color: #444;
+}
+
+.of__box {
+  background: #f6f4f1;
+  border-radius: 14px;
+}
+
+@media (max-width: 900px) {
+  .of__group {
+    padding: 24px 20px 18px;
+  }
+
+  .of__heading {
+    font-size: 26px;
+  }
+}
+
+/* Phones: give the item name room next to the price and quantity */
+@media (max-width: 600px) {
+  .of__group {
+    padding: 22px 16px 16px;
+  }
+
+  .of__row {
+    grid-template-columns: 20px minmax(0, 1fr) auto auto;
+    column-gap: 10px;
+  }
+
+  .of__row .of__price {
+    margin-right: 0;
+  }
+
+  .of__qty {
+    width: 44px;
+  }
+
+  .of__desc,
+  .of__list {
+    font-size: 16px;
+  }
+}
+
+/* Price and quantity sit beside the name and its description, so the description isn't pushed down */
+.of__row:has(.of__desc, .of__list) .of__price,
+.of__row:has(.of__desc, .of__list) .of__qty {
+  grid-row: 1 / span 2;
+  align-self: start;
+}
+
+.of__row:has(.of__desc, .of__list) .of__desc,
+.of__row:has(.of__desc, .of__list) .of__list {
+  grid-column: 2 / 3;
+}
+
+.of__row {
+  row-gap: 0;
+}
+
+.of .of__note {
+  margin-top: 16px;
+}
+
+/* Names stay bold when the item is ticked */
+.of__row.is-picked .of__name {
+  font-weight: 700;
+}
+
+/* ---------- Choices (pierogi filling, fresh or smoked): tick marks shown once the item is ticked ---------- */
+.of__choices {
+  grid-column: 2 / -1;
+  grid-row: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  min-width: 0;
+  margin: 10px 0 2px;
+  padding: 0;
+  border: 0;
+}
+
+.of__row:not(.is-picked) .of__choices {
+  display: none;
+}
+
+.of__choices legend {
+  float: left;
+  font-family: var(--font-ui);
+  width: 100%;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #5e5e5e;
+}
+
+.of__choice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Round radio buttons drawn as square tick boxes, to match the item tick boxes */
+.of__choice input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: grid;
+  place-content: center;
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  background: #fff;
+  border: 1.5px solid #767676;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.of__choice input:checked {
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.of__choice input:checked::after {
+  content: '';
+  width: 5px;
+  height: 10px;
+  margin-top: -2px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.of__choice input:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+/* Still no choice made when trying to pay: show it in red */
+.of__row.is-picked .of__choices:has(input:required:invalid) legend {
+  color: var(--color-red);
+}
+
+/* Menu items get more room, the pick-up and payment box is narrower */
+@media (min-width: 901px) {
+  .of__cols {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    gap: 40px;
+  }
+}
+
+/* Wide screens: a little more room so the pick-up address fits on one line */
+@media (min-width: 1200px) {
+  .of__cols {
+    grid-template-columns: minmax(0, 1fr) 420px;
+  }
+
+  .of__store .of__br {
+    display: none;
+  }
+}
+
+/* Space between the pay button and the note under it */
+.of p.of__paynote {
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+/* Pick-up time list: own arrow, like the other fields */
+.of__field select[name="pickup-time"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231f1f1f' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 12px center;
+  cursor: pointer;
+}
+
+/* Date a little narrower, so the time list has room for "11:20 am" */
+
+.of__field select[name="pickup-time"] {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 28px;
+  background-position: right 10px center;
+}
+
+.of__nowrap {
+  white-space: nowrap;
+}
+
+/* Leave-out ticks sit under the choice ticks */
+.of__choices.of__remove {
+  grid-row: 5;
+  margin-top: 16px;
+}
+
+/* Paid extras (fried pierogi) sit under the filling ticks */
+.of__choices.of__extra {
+  grid-row: 4;
+}
+
+/* Leave-out ticks look different from the add ticks: red heading, white circles, dark gray X when ticked,
+   and the ingredient is crossed out, so it's clear these take something away */
+.of .of__choices legend {
+  color: var(--color-red);
+}
+
+/* "Remove ingredients (optional)" heading: grey and not bold (KK 2026-11-07) */
+.of .of__remove legend {
+  color: #6b6b6b;
+  font-weight: 400;
+}
+
+.of__remove .of__choice input {
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  border-color: #c4c4c4;
+  border-radius: 50%;
+}
+
+.of__remove .of__choice input:checked {
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 1.5l7 7M8.5 1.5l-7 7' stroke='%23444444' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 8px 8px;
+  border-color: #c4c4c4;
+}
+
+.of__remove .of__choice input:checked::after {
+  content: none;
+}
+
+.of__remove .of__choice {
+  color: #6b6b6b;
+}
+
+.of__remove .of__choice:has(input:checked) {
+  color: #9a9a9a;
+  text-decoration: line-through;
+}
+
+/* Ticked item with no description (pierogi): the quantity box no longer pushes the choices down */
+.of__row.is-picked:not(:has(.of__desc, .of__list)):has(.of__choices) .of__qty {
+  align-self: start;
+  margin-bottom: -18px;
+}
+
+/* Tick boxes sit closer to their heading */
+.of__choices legend {
+  margin-bottom: -4px;
+}
+
+/* Item tick boxes drawn by hand, like the choice ticks, so the browser's focus ring
+   doesn't make them look smaller when clicked */
+.of .of__check {
+  -webkit-appearance: none;
+  appearance: none;
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border: 1.5px solid #767676;
+  border-radius: 3px;
+}
+
+.of .of__check:checked {
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.of .of__check:checked::after {
+  content: '';
+  width: 6px;
+  height: 11px;
+  margin-top: -2px;
+  border: solid #fff;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.of .of__check:focus,
+.of .of__choice input:focus {
+  outline: none;
+}
+
+.of .of__check:focus-visible,
+.of .of__choice input:focus-visible {
+  outline: none;
+}
+
+/* Outline only while using the keyboard (Safari also shows it after a mouse click) */
+.uses-keyboard .of .of__check:focus-visible,
+.uses-keyboard .of .of__choice input:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 2px;
+}
+
+/* Pick-up day picker: big Today / Tomorrow buttons, then two weeks of small day buttons */
+.of__date {
+  position: relative;
+}
+
+.of__quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.of__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 2px;
+  font: inherit;
+  font-family: var(--font-ui);
+  letter-spacing: 0;
+  color: #1f1f1f;
+  background: #fff;
+  border: 1px solid #bdbdbd;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.of__day:hover:not(:disabled) {
+  border-color: var(--color-red);
+}
+
+.of__day[aria-pressed='true'] {
+  color: #fff;
+  background: var(--color-red);
+  border-color: var(--color-red);
+}
+
+.of__day:disabled {
+  color: #b5b5b5;
+  background: #f1f1f1;
+  border-color: #e3e3e3;
+  cursor: default;
+}
+
+.of__day--big {
+  min-height: 48px; /* a little lower (KK 2026-11-07) */
+  padding: 4px 2px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.of__day--big small {
+  font-size: 13px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Real (invisible) field so the browser still asks for a date before paying */
+.of__field .of__dateval {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Phones: more room under the small red headings, and every tick list in one column */
+@media (max-width: 600px) {
+  .of__choices {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 16px;
+  }
+
+  .of__choices.of__remove {
+    margin-top: 20px;
+  }
+}
+
+/* Phones: description sits right under the name; price and quantity box stay beside both */
+@media (max-width: 600px) {
+  .of__row:has(.of__desc, .of__list) .of__price,
+  .of__row:has(.of__desc, .of__list) .of__qty {
+    grid-row: 1 / span 2;
+  }
+}
+
+/* Phones: prices 2px smaller */
+@media (max-width: 600px) {
+  .of__row .of__price {
+    font-size: 15px;
+  }
+}
+
+/* Phones: tick lists sit closer together */
+@media (max-width: 600px) {
+  .of__choices {
+    gap: 4px;
+  }
+
+  .of__choices legend {
+    margin-bottom: 6px;
+  }
+}
+
+/* Quantity: − number + (no keyboard on phones) */
+.of__row .of__qty {
+  display: inline-flex;
+  align-items: stretch;
+  width: auto;
+  height: 34px;
+  padding: 0;
+  margin: 0;
+  background: #fff;
+  border: 1px solid #bdbdbd;
+  justify-self: end;
+  align-self: start;
+}
+
+.of__step {
+  width: 30px;
+  padding: 0;
+  font: inherit;
+  font-size: 20px;
+  line-height: 1;
+  color: #1f1f1f;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.of__row:not(.is-picked) .of__step[data-step="-1"] {
+  color: #c4c4c4;
+}
+
+.of__num {
+  width: 24px;
+  padding: 0;
+  font: inherit;
+  font-size: 16px;
+  text-align: center;
+  color: inherit;
+  background: none;
+  border: 0;
+  outline: none;
+  pointer-events: none;
+}
+
+.of__step:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: -2px;
+}
+
+/* Phones: name with the − 1 + box beside it, description, then the red price */
+@media (max-width: 600px) {
+  .of__row,
+  .of__row:has(.of__desc, .of__list) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+  }
+
+  .of__row .of__check {
+    display: none;
+  }
+
+  .of__row .of__name,
+  .of__row:has(.of__desc, .of__list) .of__name {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+  }
+
+  .of__row .of__qty,
+  .of__row:has(.of__desc, .of__list) .of__qty,
+  .of__row.is-picked:not(:has(.of__desc, .of__list)):has(.of__choices) .of__qty {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: start;
+    margin: -5px 0 0;
+    height: 30px;
+  }
+
+  .of__step {
+    width: 28px;
+    font-size: 18px;
+  }
+
+  .of__num {
+    width: 20px;
+    font-size: 15px;
+  }
+
+  .of__row:has(.of__desc, .of__list) .of__desc,
+  .of__row:has(.of__desc, .of__list) .of__list {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 2px;
+  }
+
+  .of__row .of__price,
+  .of__row:has(.of__desc, .of__list) .of__price {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: start;
+    margin: 4px 0 0;
+  }
+
+  .of__row .of__choices {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Phones: descriptions 1px smaller so they fit on fewer lines */
+@media (max-width: 600px) {
+  .of__row .of__desc,
+  .of__row .of__list {
+    font-size: 15px;
+  }
+}
+
+/* Phones: choice lists go under the price */
+@media (max-width: 600px) {
+  .of__row .of__choices { grid-row: 4; }
+  .of__row .of__choices.of__extra { grid-row: 5; }
+  .of__row .of__choices.of__remove { grid-row: 6; }
+}
+
+/* Phones: "Leave out" circles are smaller than the tick boxes, so pull that list up to match */
+@media (max-width: 600px) {
+  .of__remove legend {
+    margin-bottom: 1px;
+  }
+}
+
+/* Platters: other pick-up days in a drop-down list, styled like the time list */
+
+/* Phones and tablets: "Online orders are for pick-up…" in a red band, edge to edge (desktop keeps the red line on the left) */
+@media (max-width: 900px) {
+  .of .of__notice {
+    margin: 14px calc(50% - 50vw) 16px;
+    padding: 12px 20px;
+    font-size: 18px;
+    line-height: 1.35;
+    color: #fff;
+    text-align: center;
+    text-wrap: balance;
+    background: var(--color-red);
+    border-left: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .of .of__notice {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}
+
+/* Phones and tablets: intro line centered under the red band, same size as it */
+@media (max-width: 900px) {
+  .of p.of__intro {
+    font-size: 18px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .of p.of__intro {
+    font-size: 16px;
+  }
+}
+
+/* Platters: pick-up day from a calendar that pops up */
+.of__cal {
+  position: relative;
+  margin-top: 6px;
+}
+
+.of__field .of__calbtn {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: left;
+  color: #767676;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24'%3E%3Crect x='3' y='5' width='18' height='16' fill='none' stroke='%231f1f1f' stroke-width='1.6'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4' stroke='%231f1f1f' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border: 1px solid #bdbdbd;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.of__field .of__calbtn.is-set {
+  color: var(--color-ink, #1f1f1f);
+}
+
+.of__calbtn:focus-visible,
+.of__calbtn[aria-expanded="true"] {
+  outline: 2px solid var(--color-red);
+  outline-offset: -1px;
+  border-color: var(--color-red);
+}
+
+.of__calpop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 14px;
+  font-weight: 400;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.14);
+}
+
+.of__calhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.of__calhead b {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.of__calnav {
+  width: 34px;
+  height: 34px;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-ink, #1f1f1f);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.of__calnav:disabled {
+  color: #d0d0d0;
+  cursor: default;
+}
+
+.of__calgrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.of__calgrid i {
+  padding-bottom: 4px;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  color: #767676;
+  text-transform: uppercase;
+}
+
+.of__calday {
+  aspect-ratio: 1;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-ink, #1f1f1f);
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.of__calday:not(:disabled):hover {
+  border-color: var(--color-red);
+}
+
+.of__calday:disabled {
+  font-weight: 400;
+  color: #c8c8c8;
+  cursor: default;
+}
+
+.of__calday[aria-pressed="true"] {
+  color: #fff;
+  background: var(--color-red);
+}
+
+/* Phones and tablets: page title centered and closer to the photo banner */
+@media (max-width: 900px) {
+  .of {
+    padding-top: 22px;
+  }
+
+  .of .of__title {
+    text-align: center;
+  }
+}
+
+/* Phones and tablets: the red "Online orders are for pick-up…" band sits directly under the photo, above the page title */
+@media (max-width: 900px) {
+  .of {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-page .of {
+    padding-top: 0;
+  }
+
+  .of .of__notice {
+    order: -1;
+    margin-top: 0;
+    margin-bottom: 22px;
+  }
+}
+
+/* Phones: no "Choose your items and a pick-up time…" line */
+@media (max-width: 600px) {
+  .of p.of__intro {
+    display: none;
+  }
+
+  .of .of__title {
+    margin-bottom: 26px;
+  }
+}

@@ -1,72 +1,219 @@
-/* Shop ("Groceries"): four columns of red underlined categories, then a photo grid. */
+/* Shop: store-aisle layout. Category list on the left, a photo banner and product list per aisle. */
 
-.groceries {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-5);
-  text-align: left;
+.shop {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px 90px;
+  font-family: var(--font-ui);
+  color: #1f1f1f;
 }
 
-.groceries__group + .groceries__group {
-  margin-top: var(--space-5);
-}
-
-.groceries__title {
-  margin: 0 0 var(--space-1);
-  font-size: var(--text-xl);
-  font-weight: 700;
-  text-transform: uppercase;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  color: var(--color-red-shop);
-}
-
-.groceries__tag {
-  text-transform: none;
-}
-
-.groceries__list {
+.shop h1,
+.shop h2 {
   margin: 0;
-  padding: 0;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  line-height: 1.12;
+}
+
+.shop__head {
+  padding: 44px 0 28px;
+}
+
+.shop__head h1 {
+  margin-bottom: 8px;
+  font-size: 48px;
+}
+
+.shop__head p {
+  max-width: 44em;
+  margin: 0;
+  color: #5e5e5e;
+}
+
+.shop__body {
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.aisle {
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
+.aisle__title {
+  font-size: 26px !important;
+  color: var(--color-red-heading);
+}
+
+.aisle__title span {
+  font-family: var(--font-ui);
+  font-size: 0.55em;
+  color: #5e5e5e;
+}
+
+.aisle__list {
+  column-gap: 40px;
+  margin: 6px 0 0;
   list-style: none;
-  line-height: 1.45;
 }
 
-.groceries__note {
-  display: block;
-  font-size: var(--text-sm);
-  color: var(--color-muted);
+.aisle__list li {
+  break-inside: avoid;
 }
 
-.photo-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-5);
-  margin: var(--space-7) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.photo-grid img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+.aisle__list em {
+  font-style: normal;
+  font-size: 13px;
+  color: #5e5e5e;
 }
 
 @media (max-width: 900px) {
-  .groceries,
-  .photo-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .shop {
+    padding: 0 20px 60px;
   }
-}
 
-@media (max-width: 480px) {
-  .groceries {
+  .shop__head {
+    padding: 44px 0 28px;
+  }
+
+  .shop__head h1 {
+    font-size: 38px;
+  }
+
+  .shop__body {
     grid-template-columns: 1fr;
   }
 
-  .photo-grid {
-    gap: var(--space-3);
+  .aisle__title {
+    font-size: 24px !important;
+  }
+
+  .aisle__list {
+    columns: 2;
+  }
+}
+
+/* Categories as soft warm-gray cards (same as the Our Menu page) */
+
+/* Smaller product text */
+
+/* Round photo beside each category title, no line under the title */
+.aisle__title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 6px;
+  border-bottom: 0 !important;
+}
+
+.aisle__dot {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Title sits above the card; only the product list is on the soft card */
+.aisle {
+  margin-bottom: 36px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+}
+
+@media (max-width: 900px) {
+  .aisle {
+    padding: 0;
+  }
+}
+
+/* No thin lines on the Shop page */
+.aisle__list li {
+  border-bottom: 0;
+}
+
+/* Category list text lines up with the page title; red marker sits just outside */
+
+/* Products as a plain comma-separated list under each title (no card, no columns).
+   Each product stays on one line; lines break only between products. */
+.aisle__list {
+  columns: auto;
+  margin-top: 8px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.aisle__list li {
+  display: inline;
+  padding: 0;
+  white-space: nowrap;
+}
+
+.aisle__list li:not(:last-child)::after {
+  content: ',';
+}
+
+.aisle__list li + li::before {
+  content: ' ';
+  white-space: normal;
+}
+
+@media (max-width: 900px) {
+  .aisle__list {
+    padding: 0;
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  /* Phones: smaller intro with tighter lines */
+  .shop__head p {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+}
+
+/* No category list on the side: the categories sit in two columns */
+.shop__body {
+  display: block;
+}
+
+.shop__aisles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 56px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .shop__aisles {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Thin photo strip across the top, like the menu pages */
+.shop-strip img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 50%;
+}
+
+@media (max-width: 900px) {
+  .shop-strip img {
+    height: 96px;
+  }
+}
+
+
+/* Phones: "Polish & European Goods" on one line */
+@media (max-width: 600px) {
+  html[lang='en'] .shop__head h1 {
+    font-size: min(38px, 7.4vw);
+    white-space: nowrap;
   }
 }

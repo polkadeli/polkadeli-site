@@ -1,0 +1,45 @@
+{
+  "_help": "Silver Spring holiday hours and closed days for online pick-up orders. One line per day. Closed all day: { \"date\": \"2026-12-25\", \"closed\": true, \"note\": \"Christmas\" }. Shorter hours: { \"date\": \"2026-12-24\", \"open\": \"10:00 am\", \"close\": \"2:00 pm\", \"note\": \"Christmas Eve\" }. Pick-up times still start 30 minutes after opening and end 1 hour before closing. Days not listed use the normal hours.",
+  "days": [
+    {
+      "date": "2026-11-26",
+      "closed": true,
+      "note": "Thanksgiving Day"
+    },
+    {
+      "date": "2026-11-27",
+      "closed": true,
+      "note": "Day after Thanksgiving"
+    },
+    {
+      "date": "2026-12-25",
+      "closed": true,
+      "note": "Christmas Day"
+    },
+    {
+      "date": "2026-12-26",
+      "closed": true,
+      "note": "December 26"
+    },
+    {
+      "date": "2027-01-01",
+      "closed": true,
+      "note": "New Year's Day"
+    },
+    {
+      "date": "2027-05-31",
+      "closed": true,
+      "note": "Memorial Day"
+    },
+    {
+      "date": "2027-07-04",
+      "closed": true,
+      "note": "Independence Day"
+    },
+    {
+      "date": "2027-09-06",
+      "closed": true,
+      "note": "Labor Day"
+    }
+  ]
+}

@@ -1,87 +1,221 @@
 ---
 import { business, stores, nav } from '../data/site.js';
+import { features } from '../data/features.js';
+import { langOf, href, switchHref, hours, tr, ui } from '../i18n.js';
 import SocialIcons from '../components/SocialIcons.astro';
+import PrivacyPolicy from '../components/PrivacyPolicy.astro';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/header.css';
 import '../styles/footer.css';
+import '../styles/legal.css';
+import '../styles/contact.css';
+const lang = langOf(Astro.url);
+const t = ui[lang];
 const {
-  title = 'Polka Deli · Polish Food & Market in Silver Spring, MD and Vienna, VA',
-  description = 'Authentic Polish groceries and food prepared daily. Kielbasa, deli meats, pierogi, cheese, sweets and party platters in Silver Spring, MD and Vienna, VA.',
+  title = t.siteTitle,
+  description = t.siteDesc,
+  overlay = false, // true: header sits transparent over a full-screen photo (home page)
+  noindex = false, // true: keep mockup/preview pages out of search engines
+  image = '/images/og-image.jpg', // picture shown when the page is shared (Facebook, iMessage, etc.)
 } = Astro.props;
-const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const path = Astro.url.pathname.replace(/^\/pl(?=\/|$)/, '').replace(/\/$/, '') || '/';
+const link = (n) => ({ href: href(n.href, lang), label: t.nav[n.href] ?? n.label, on: path === n.href, children: (n.children ?? []).map(link) });
+const links = nav.filter((n) => features.shop || n.href !== '/shop').map(link);
+// Links to this same page in English and in Polish (EN | PL switch)
+const sw = { en: switchHref(Astro.url, 'en'), pl: switchHref(Astro.url, 'pl') };
+// Search engines: one listing per store, with hours, so Google can show them in Maps and search
+const days = { 'Mon–Fri': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], Saturday: ['Saturday'], Sunday: ['Sunday'] };
+const to24h = (x) => x.replace(/(\d{1,2}):(\d{2}) (am|pm)/, (_, h, m, ap) => `${String((+h % 12) + (ap === 'pm' ? 12 : 0)).padStart(2, '0')}:${m}`);
+const site = 'https://www.polkadelimd.com';
 const jsonLd = stores.map((s) => ({
   '@context': 'https://schema.org',
   '@type': 'GroceryStore',
+  '@id': `${site}/#${s.city.toLowerCase().replace(/ /g, '-')}`,
   name: `Polka Deli ${s.city}`,
-  url: 'https://www.polkadelimd.com',
+  description: t.siteDesc,
+  url: `${site}/find-us/`,
+  image: `${site}/images/og-image.jpg`,
+  logo: `${site}/apple-touch-icon.png`,
   telephone: s.phone,
+  priceRange: '$$',
+  hasMap: s.maps,
   address: { '@type': 'PostalAddress', streetAddress: s.street, addressLocality: s.locality.split(',')[0], addressRegion: s.locality.split(', ')[1].split(' ')[0], postalCode: s.locality.split(' ').pop(), addressCountry: 'US' },
-  sameAs: [business.facebook],
+  openingHoursSpecification: s.hours.map(([d, h]) => {
+    const [opens, closes] = h.split(' – ').map(to24h);
+    return { '@type': 'OpeningHoursSpecification', dayOfWeek: days[d], opens, closes };
+  }),
+  sameAs: [business.facebook, business.instagram],
 }));
+// This page's address (canonical) and the share-card details
+const canonical = new URL(sw[lang], Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang} translate="no">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- The site has its own EN | PL switch, so stop Chrome offering Google Translate -->
+  <meta name="google" content="notranslate" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
   <link rel="icon" href="/favicon.ico" sizes="48x48" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400&family=Fredericka+the+Great&family=Roboto+Condensed:wght@400;500;700&family=Lora:ital,wght@0,500;0,600;1,500&family=Mulish:wght@400;600;700&display=swap" rel="stylesheet" />
+  {!noindex && <link rel="canonical" href={canonical} />}
+  {features.polish && <link rel="alternate" hreflang="en" href={new URL(sw.en, Astro.site)} />}
+  {features.polish && <link rel="alternate" hreflang="pl" href={new URL(sw.pl, Astro.site)} />}
+  {features.polish && <link rel="alternate" hreflang="x-default" href={new URL(sw.en, Astro.site)} />}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Polka Deli" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content={lang === 'pl' ? 'pl_PL' : 'en_US'} />
+  <meta property="og:locale:alternate" content={lang === 'pl' ? 'en_US' : 'pl_PL'} />
+  <meta name="twitter:card" content="summary_large_image" />
   <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <nav class="site-nav" aria-label="Main">
-      <ul class="site-nav__links">
-        {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
-      </ul>
-      <SocialIcons />
-      <a class="header-order" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
-    </nav>
-    <button class="menu-button" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">
-      <span></span><span></span><span></span>
-    </button>
+  <a class="skip-link" href="#main">{t.skip}</a>
+  <header class:list={['site-header', overlay ? 'site-header--overlay' : 'is-solid']}>
+    <div class="site-header__bar">
+      <a class="site-header__logo" href={href('/', lang)} aria-label={t.home}>
+        <img class="logo-white" src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
+        <img class="logo-color" src="/logo.svg" alt="Polka Deli, Polish Food & Market" width="190" height="64" />
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <ul class="site-nav__links">
+          {links.map((n) => n.children.length ? (
+            <li class="nav-drop">
+              <a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}<svg class="nav-drop__caret" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" /></svg></a>
+              <ul class="nav-drop__list">{n.children.map((c) => <li><a href={c.href}>{c.label}</a></li>)}</ul>
+            </li>
+          ) : <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="phone-menu">
+        <button type="button" class="phone-menu__btn social-link" aria-label={t.callStore} aria-expanded="false" aria-controls="phone-list">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+        </button>
+        <ul class="phone-menu__list" id="phone-list" hidden>
+          {stores.map((s) => (
+            <li><a href={s.phoneHref}><span class="phone-menu__city">{s.city}, {s.locality.split(', ')[1].split(' ')[0]}</span><span class="phone-menu__num">{s.phone}</span></a></li>
+          ))}
+        </ul>
+      </div>
+      <!-- Envelope icon: opens the contact pop-up (no "Contact" word in the menu, KK 2026-11-07) -->
+      <a class="mail-link social-link" href={href('/find-us#contact', lang)} aria-label={t.sendMessage} title={t.sendMessage}>
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.8 6.5 12 13l8.2-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="site-header__social"><SocialIcons size={24} /></div>
+      <!-- Order now: choose pickup (our order page) or delivery (Uber Eats) -->
+      <div class="order-menu">
+        <button type="button" class="header-order order-menu__btn" aria-expanded="false" aria-controls="order-list">{t.orderNow}</button>
+        <ul class="order-menu__list" id="order-list" hidden>
+          {features.onlineOrdering && <li><a href={href('/order', lang)}><b>{t.pickupTitle}</b><small>{t.pickupHint}</small></a></li>}
+          <li><a class="order-menu__uber" href={business.uberEats} target="_blank" rel="noopener"><img src="/images/uber-eats-wide.png" alt="" width="127" height="56" /><span><b>{t.deliveryTitle}</b><small>{t.deliveryHint}</small></span></a></li>
+        </ul>
+      </div>
+      <!-- EN | PL after the Order now button (KK 2026-11-07) -->
+      {features.polish && <div class="lang-switch" role="group" aria-label={t.language}>
+        <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+        <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
+      </div>}
+      <button class="menu-button" type="button" aria-label={t.openMenu} aria-expanded="false" aria-controls="drawer">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
   <div class="drawer" id="drawer" hidden>
-    <button class="drawer__close" type="button" aria-label="Close menu">×</button>
+    <button class="drawer__close" type="button" aria-label={t.closeMenu}>×</button>
     <ul class="drawer__links">
-      {nav.map((n) => <li><a href={n.href} aria-current={path === n.href ? 'page' : undefined}>{n.label}</a></li>)}
+      {links.map((n) => <li><a href={n.href} aria-current={n.on ? 'page' : undefined}>{n.label}</a></li>)}
     </ul>
-    <a class="header-order header-order--drawer" href={business.uberEats} target="_blank" rel="noopener">Order with Uber Eats</a>
-    <div class="drawer__social"><SocialIcons size={26} /></div>
+    {features.polish && <div class="lang-switch lang-switch--drawer" role="group" aria-label={t.language}>
+      <a href={sw.en} hreflang="en" lang="en" aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+      <a href={sw.pl} hreflang="pl" lang="pl" aria-current={lang === 'pl' ? 'true' : undefined}>PL</a>
+    </div>}
+    <!-- Store addresses (phone menu). Ordering is on the menu and platter pages. -->
+    <div class="drawer__stores">
+      {stores.map((st) => (
+        <div class="drawer__store">
+          <p class="drawer__label">{st.city}, {st.locality.split(', ')[1].split(' ')[0]}</p>
+          <a class="drawer__addr" href={st.maps} target="_blank" rel="noopener">{st.street}</a>
+          <a class="drawer__phone" href={st.phoneHref}>{st.phone}</a>
+        </div>
+      ))}
+    </div>
+    <!-- On phones the envelope lives here in the menu, not in the header (KK 2026-11-07) -->
+    <div class="drawer__social">
+      <a class="social-link drawer__mail" href={href('/find-us#contact', lang)} aria-label={t.sendMessage} title={t.sendMessage}>
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="1.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.8 6.5 12 13l8.2-6.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+      </a>
+      <SocialIcons size={26} />
+    </div>
   </div>
 
   <main id="main"><slot /></main>
 
   <footer class="site-footer">
-    <div class="footer-brand">
-      <a href="/" aria-label="Polka Deli home"><img src="/logo-white.svg" alt="Polka Deli, Polish Food & Market" width="240" height="81" /></a>
-    </div>
-    <div class="footer-columns">
-      {stores.map((s) => (
+    <div class="site-footer__inner">
+      <div class="footer-columns">
+        {stores.map((s) => (
+          <div class="footer-column">
+            <h2>{s.city}</h2>
+            <p><a href={s.maps}>{s.street},<br />{s.locality}</a></p>
+            <p><a href={s.phoneHref}>{s.phone}</a></p>
+            <dl class="footer-hours">{s.hours.map(([d, h]) => <div><dt>{tr(lang, d)}</dt><dd>{hours(lang, h)}</dd></div>)}</dl>
+          </div>
+        ))}
         <div class="footer-column">
-          <h2>{s.city}</h2>
-          <p><a href={s.maps}>{s.street}<br />{s.locality}</a></p>
-          <p><a href={s.phoneHref}>{s.phone}</a></p>
-          <ul class="footer-hours">{s.hours.map(([d, h]) => <li><span>{d}</span>{h}</li>)}</ul>
+          <h2>{t.contactUs}</h2>
+          <p><a href={href('/find-us#contact', lang)}>{t.sendMessage}</a></p>
+          <div class="footer-social"><SocialIcons size={24} /></div>
         </div>
-      ))}
-      <div class="footer-column">
-        <h2>Online</h2>
-        <p><a href={`mailto:${business.email}`}>{business.email}</a></p>
-        <p><a href={business.uberEats} target="_blank" rel="noopener">Order on Uber Eats</a></p>
-        <div class="footer-social"><SocialIcons size={26} /></div>
+      </div>
+      <div class="footer-copy">
+        <span>© {new Date().getFullYear()} {t.copy}</span>
+        <span>{lang === 'en' && <><a href="/how-to-pronounce-chrzaszcz" rel="nofollow">How do you say chrząszcz?</a><span class="footer-copy__dot" aria-hidden="true">·</span></>}<a href={href('/#privacy', lang)} data-privacy>{t.privacy}</a></span>
       </div>
     </div>
-    <p class="footer-copy">© {new Date().getFullYear()} Polka Deli · Polish Food &amp; Market · <a href="/privacy">Privacy</a></p>
   </footer>
+
+  <!-- Contact form pop-up: opened by any link to /find-us#contact (top menu, footer, privacy page) -->
+  <dialog class="contact-dialog" id="contact" aria-labelledby="contact-title">
+    <button type="button" class="contact-dialog__close" aria-label={t.closeContact}>×</button>
+    <h2 id="contact-title">{t.contactTitle}</h2>
+    <p class="contact-dialog__text">{t.contactPopupText.split(/(?<=\?) /).map((part, i) => i ? <><br class="br-desktop" />{part}</> : part)}</p>
+    <form class="ct__form" name="contact" method="POST" action={href('/thanks', lang)} data-netlify="true" netlify-honeypot="company">
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="contact__trap"><label>{t.leaveEmpty} <input name="company" tabindex="-1" autocomplete="off" /></label></p>
+      <div class="ct__two">
+        <label class="ct__field">{t.name} *<input name="name" type="text" autocomplete="name" required /></label>
+        <label class="ct__field">{t.email} *<input name="email" type="email" autocomplete="email" required /></label>
+      </div>
+      <label class="ct__field">{t.message}<textarea name="message" rows="5"></textarea></label>
+      <div class="ct__foot">
+        <a class="ct__privacy" href={href('/#privacy', lang)} data-privacy>{t.privacyPolicy}</a>
+        <button class="ct__send" type="submit">{t.send}</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="privacy-dialog" id="privacy" aria-labelledby="privacy-title">
+    <div class="privacy-dialog__head">
+      <h2 id="privacy-title">{t.privacyPolicy}</h2>
+      <button type="button" class="privacy-dialog__close" aria-label={t.closePrivacy}>×</button>
+    </div>
+    <div class="privacy-dialog__body"><PrivacyPolicy /></div>
+  </dialog>
 
   <script>
     const burger = document.querySelector('.menu-button');
@@ -95,6 +229,57 @@ const jsonLd = stores.map((s) => ({
     burger.addEventListener('click', () => setOpen(true));
     close.addEventListener('click', () => setOpen(false));
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !drawer.hidden) setOpen(false); });
+
+    // Privacy policy pop-up: any link with data-privacy opens it; /#privacy opens it on load.
+    const privacy = document.getElementById('privacy');
+    const openPrivacy = (e) => { e?.preventDefault(); if (!privacy.open) privacy.showModal(); };
+    document.querySelectorAll('[data-privacy]').forEach((a) => a.addEventListener('click', openPrivacy));
+    privacy.querySelector('.privacy-dialog__close').addEventListener('click', () => privacy.close());
+    privacy.addEventListener('click', (e) => { if (e.target === privacy) privacy.close(); });
+    privacy.addEventListener('close', () => { if (location.hash === '#privacy') history.replaceState(null, '', location.pathname); });
+    if (location.hash === '#privacy') openPrivacy();
+
+    // Contact pop-up: links to /find-us#contact open it here instead of changing page.
+    const contact = document.getElementById('contact');
+    const openContact = (e) => {
+      e?.preventDefault();
+      if (!drawer.hidden) setOpen(false);
+      if (privacy.open) privacy.close();
+      if (!contact.open) contact.showModal();
+    };
+    document.querySelectorAll('a[href$="/find-us#contact"]').forEach((a) => a.addEventListener('click', openContact));
+    contact.querySelector('.contact-dialog__close').addEventListener('click', () => contact.close());
+    contact.addEventListener('click', (e) => { if (e.target === contact) contact.close(); });
+    contact.addEventListener('close', () => { if (location.hash === '#contact') history.replaceState(null, '', location.pathname); });
+    if (location.hash === '#contact') openContact();
+
+    // Phone dropdown in the header
+    const pBtn = document.querySelector('.phone-menu__btn');
+    const pList = document.getElementById('phone-list');
+    const setPhone = (open) => { pBtn.setAttribute('aria-expanded', String(open)); pList.hidden = !open; };
+    pBtn.addEventListener('click', (e) => { e.stopPropagation(); setPhone(pList.hidden); });
+    document.addEventListener('click', (e) => { if (!pList.hidden && !e.target.closest('.phone-menu')) setPhone(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !pList.hidden) { setPhone(false); pBtn.focus(); } });
+
+    // Order now dropdown in the header
+    const oBtn = document.querySelector('.order-menu__btn');
+    const oList = document.getElementById('order-list');
+    const setOrder = (open) => { oBtn.setAttribute('aria-expanded', String(open)); oList.hidden = !open; };
+    oBtn.addEventListener('click', (e) => { e.stopPropagation(); setOrder(oList.hidden); });
+    document.addEventListener('click', (e) => { if (!oList.hidden && !e.target.closest('.order-menu')) setOrder(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !oList.hidden) { setOrder(false); oBtn.focus(); } });
+
+    // Overlay header: transparent over the home page photo, then a see-through white bar.
+    const header = document.querySelector('.site-header--overlay');
+    if (header) {
+      // Turns white when the bar reaches the element marked data-solid-at (the home headline).
+      const mark = document.querySelector('[data-solid-at]');
+      const point = () => (mark ? mark.getBoundingClientRect().top + scrollY - header.offsetHeight : 40);
+      const update = () => header.classList.toggle('is-solid', scrollY > point());
+      addEventListener('scroll', update, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
   </script>
 </body>
 </html>
