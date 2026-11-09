@@ -1115,3 +1115,32 @@
     text-align: center;
   }
 }
+
+/* Phones and tablets: the red "Online orders are for pick-up…" band sits directly under the photo, above the page title */
+@media (max-width: 900px) {
+  .of {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-page .of {
+    padding-top: 0;
+  }
+
+  .of .of__notice {
+    order: -1;
+    margin-top: 0;
+    margin-bottom: 22px;
+  }
+}
+
+/* Phones: no "Choose your items and a pick-up time…" line */
+@media (max-width: 600px) {
+  .of p.of__intro {
+    display: none;
+  }
+
+  .of .of__title {
+    margin-bottom: 26px;
+  }
+}
