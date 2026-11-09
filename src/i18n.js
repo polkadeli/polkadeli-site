@@ -163,7 +163,7 @@ export const ui = {
     shopTitle: 'Polish & European Groceries · Polka Deli',
     shopDesc: 'Polish and European goods at Polka Deli: kielbasa, cheese, deli meats, frozen pierogi and blintzes, jars, sweets and baked goods.',
     shopH1: 'Polish & European Goods',
-    shopIntro: 'Stay tuned for our online store as we build it out.',
+    shopIntro: 'Our pickles are kind of a big dill. Stay tuned for our online store as we build it out.',
     shopCats: 'Grocery categories',
     // Visit us
     visitTitle: 'Store Hours & Directions · Polka Deli',
