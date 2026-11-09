@@ -109,10 +109,11 @@
   display: block;
   width: 100%;
   margin-top: 4px;
-  padding: 10px 12px;
+  padding: 7px 12px; /* less tall (KK 2026-11-09) */
   font: inherit;
   font-weight: 400;
   font-size: 16px;
+  line-height: 1.4;
   letter-spacing: 0;
   color: #1f1f1f;
   background: #fff;
@@ -596,6 +597,8 @@
 /* Date a little narrower, so the time list has room for "11:20 am" */
 
 .of__field select[name="pickup-time"] {
+  padding-top: 7px;
+  padding-bottom: 7px;
   padding-right: 28px;
   background-position: right 10px center;
 }
