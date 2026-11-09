@@ -4,6 +4,7 @@
 // customer to Clover's secure payment page. Paid orders are emailed to the store through
 // Netlify Forms (form "pickup-order"); in test mode (no Clover keys) the page emails it itself.
 import { stores } from '../data/site.js';
+import specialDays from '../data/special-hours.json';
 import { orderItems, pierogiNote, platterHeadings } from '../data/orderItems.js';
 import '../styles/order-form.css';
 import { langOf, href, tr, ui } from '../i18n.js';
@@ -16,6 +17,8 @@ const toMin = (s) => { const [, h, m, ap] = s.match(/(\d{1,2}):(\d{2}) (am|pm)/)
 const dayNums = { 'Mon–Fri': [1, 2, 3, 4, 5], Saturday: [6], Sunday: [0] };
 const openHours = Array(7).fill(null);
 ss.hours.forEach(([days, span]) => { const [a, b] = span.split(' – '); (dayNums[days] || []).forEach((d) => { openHours[d] = [toMin(a), toMin(b)]; }); });
+// Holiday hours and closed days (src/data/special-hours.json): date -> [open, close] in minutes, or null when closed.
+const specialHours = Object.fromEntries(specialDays.days.map((d) => [d.date, d.closed ? null : [toMin(d.open), toMin(d.close)]]));
 
 const label = (i) => i.group === 'pierogi' ? `Pierogi, ${tr(lang, i.size)}` : i.group === 'entrees' ? `${tr(lang, i.base)}${i.note ? ` ${tr(lang, i.note)}` : ''}` : tr(lang, i.name);
 const pick = (group) => orderItems.filter((i) => i.group === group).map((i) => ({ ...i, label: label(i), serves: i.serves && tr(lang, i.serves) }));
@@ -107,7 +110,7 @@ const shown = groups.filter((g) => g.type === type);
             <input class="of__dateval" name="pickup-date" type="text" required tabindex="-1" aria-hidden="true" autocomplete="off" inputmode="none" />
           </div>
           <div class="of__timewrap">
-            <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
+            <label class="of__field">{t.time}<select name="pickup-time" required data-hours={JSON.stringify(openHours)} data-special={JSON.stringify(specialHours)} data-lang={lang} data-pickdate={t.pickDateFirst} data-pick={t.chooseTime} data-none={t.noTimesLeft}><option value="" selected disabled>{t.pickDateFirst}</option></select></label>
           </div>
 
           <hr class="of__rule" />
@@ -202,6 +205,10 @@ const shown = groups.filter((g) => g.type === type);
   // Today: only times at least 30 minutes from now (store time).
   const timeSel = form.querySelector('[name="pickup-time"]');
   const hours = JSON.parse(timeSel.dataset.hours);
+  const special = JSON.parse(timeSel.dataset.special || '{}');
+  const isoOf = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  // Opening hours for one day: holiday hours / closed days first, otherwise the normal weekly hours.
+  const spanOn = (d) => (isoOf(d) in special ? special[isoOf(d)] : hours[d.getDay()]);
   const label = (m) => {
     const h = Math.floor(m / 60), mm = String(m % 60).padStart(2, '0');
     return timeSel.dataset.lang === 'pl' ? `${h}:${mm}` : `${h % 12 || 12}:${mm} ${h < 12 ? 'am' : 'pm'}`;
@@ -212,7 +219,7 @@ const shown = groups.filter((g) => g.type === type);
     timeSel.replaceChildren();
     if (!dateInput.value) { timeSel.append(opt('', timeSel.dataset.pickdate, true)); return; }
     const [y, mo, d] = dateInput.value.split('-').map(Number);
-    const span = hours[new Date(y, mo - 1, d).getDay()];
+    const span = spanOn(new Date(y, mo - 1, d));
     let start = span ? span[0] + 30 : 0;
     const end = span ? span[1] - 60 : -1;
     const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
@@ -237,8 +244,8 @@ const shown = groups.filter((g) => g.type === type);
   const locale = datePick.dataset.locale;
   const storeNow = () => new Date(new Date().toLocaleString('en-US', { timeZone: 'America/New_York' }));
   const dayAt = (n) => { const d = storeNow(); d.setHours(12, 0, 0, 0); d.setDate(d.getDate() + n); return d; };
-  const lastTimeToday = () => { const n = storeNow(); const span = hours[n.getDay()]; return span ? (n.getHours() * 60 + n.getMinutes() + 30) <= span[1] - 60 : false; };
-  const usable = (d, n) => hours[d.getDay()] && isoDay(d) >= dateInput.min && (n > 0 || lastTimeToday());
+  const lastTimeToday = () => { const n = storeNow(); const span = spanOn(n); return span ? (n.getHours() * 60 + n.getMinutes() + 30) <= span[1] - 60 : false; };
+  const usable = (d, n) => spanOn(d) && isoDay(d) >= dateInput.min && (n > 0 || lastTimeToday());
   const cap = (x) => x.charAt(0).toUpperCase() + x.slice(1);
   // Platters calendar: tomorrow up to 60 days ahead, closed days greyed out
   const CAL_DAYS = 60;

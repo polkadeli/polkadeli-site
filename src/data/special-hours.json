@@ -1,0 +1,4 @@
+{
+  "_help": "Silver Spring holiday hours and closed days for online pick-up orders. One line per day. Closed all day: { \"date\": \"2026-12-25\", \"closed\": true, \"note\": \"Christmas\" }. Shorter hours: { \"date\": \"2026-12-24\", \"open\": \"10:00 am\", \"close\": \"2:00 pm\", \"note\": \"Christmas Eve\" }. Pick-up times still start 30 minutes after opening and end 1 hour before closing. Days not listed use the normal hours.",
+  "days": []
+}
