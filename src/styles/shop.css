@@ -209,3 +209,11 @@
   }
 }
 
+
+/* Phones: "Polish & European Goods" on one line */
+@media (max-width: 600px) {
+  html[lang='en'] .shop__head h1 {
+    font-size: min(38px, 7.4vw);
+    white-space: nowrap;
+  }
+}
