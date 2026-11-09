@@ -96,7 +96,7 @@
 
 .of__field {
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 8px; /* a little tighter (KK 2026-11-09) */
   font-size: 13px;
   font-weight: 400; /* field labels not bold (KK 2026-11-07) */
   letter-spacing: 0.06em;
