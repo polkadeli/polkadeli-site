@@ -409,13 +409,13 @@ html[lang='pl'] .hero--b h1 {
   body:has(.hero--b) .site-header__logo {
     position: absolute;
     left: 50%;
-    top: 30px;
+    top: 11px; /* same top as in the white bar */
     transform: translateX(-50%);
     transition: top 0.3s ease;
   }
 
   body:has(.hero--b) .site-header__logo img {
-    height: 84px;
+    height: 76px;
     transition: height 0.3s ease;
   }
 
@@ -433,13 +433,16 @@ html[lang='pl'] .hero--b h1 {
   }
 
   /* Menu button on the left (the menu slides in from the left), phone on the right */
+  /* Menu and phone icons sit exactly where they are in the white bar after scrolling, so they never jump (KK 2026-11-09) */
   body:has(.hero--b) .menu-button {
     order: -1;
-    margin: 0 auto 0 0;
+    align-self: flex-start;
+    margin: 14px auto 0 0;
   }
 
   body:has(.hero--b) .phone-menu {
-    margin: 0 -8px 0 auto;
+    align-self: flex-start;
+    margin: 15px -8px 0 auto;
   }
 
   /* Home on phones: Order now button under the logo (hidden once you scroll and the bar shrinks) */
@@ -447,7 +450,7 @@ html[lang='pl'] .hero--b h1 {
     display: block;
     position: absolute;
     left: 50%;
-    top: 128px;
+    top: 101px;
     transform: translateX(-50%);
   }
 
