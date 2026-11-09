@@ -24,10 +24,10 @@
   to = "/#privacy"
   status = 301
 
-# About is now a section on the home page
+# Old Wix About page -> new About us page
 [[redirects]]
   from = "/about"
-  to = "/#about"
+  to = "/find-us"
   status = 301
 
 # The home page mockup became the real home page (2026-11-06)
