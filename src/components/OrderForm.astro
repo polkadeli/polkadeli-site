@@ -91,7 +91,7 @@ const shown = groups.filter((g) => g.type === type);
           <h3>{t.pickup}</h3>
           <!-- Online orders are for pickup at Silver Spring only (Vienna doesn't take online orders) -->
           <input type="hidden" name="store" value={ss.city} />
-          <p class="of__store"><span class="of__nowrap">{ss.street},</span><br /><span class="of__nowrap">{ss.locality}</span></p>
+          <p class="of__store"><span class="of__nowrap">{ss.street},</span><br class="of__br" /> <span class="of__nowrap">{ss.locality}</span></p>
           <!-- Pick-up day: deli = Today / Tomorrow buttons; platters = calendar pop-up (filled in by the script below) -->
           <div class="of__field of__date" role="group" aria-label={t.date} data-locale={lang === 'pl' ? 'pl-PL' : 'en-US'}>
             {t.date}

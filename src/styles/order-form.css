@@ -389,6 +389,11 @@
   line-height: 1.5;
 }
 
+/* Descriptions wrap into even lines, like on the menu ("…4 pierogi, kraut, / grilled onions…") */
+.of__desc {
+  text-wrap: balance;
+}
+
 /* Description or list runs under the item line, like on the menu */
 .of__desc,
 .of__list {
@@ -574,6 +579,17 @@
   .of__cols {
     grid-template-columns: minmax(0, 1fr) 360px;
     gap: 40px;
+  }
+}
+
+/* Wide screens: a little more room so the pick-up address fits on one line */
+@media (min-width: 1200px) {
+  .of__cols {
+    grid-template-columns: minmax(0, 1fr) 420px;
+  }
+
+  .of__store .of__br {
+    display: none;
   }
 }
 
